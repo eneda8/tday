@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+    <h1>Edit Post</h1>
+    <form action="/posts/<%=post._id%>?_method=PUT" method="POST">
+        <label for="rating">Enter a number between 1 and 5</label>
+        <input type="number" name="post[rating]" value="<%=post.rating%>" min="1" max="5">
+        </input>
+        <br>
+        <div>
+            <label for="body">Write about your day(optional)</label>
+            <br>
+            <textarea rows="15" cols ="28" name="post[body]"><%=post.body%></textarea>
+        </div>
+        <button>Update Post</button>
+    </form>
+    <a href="/posts/<%=post._id%>">Back to Post</a>
+</body>
+</html>
