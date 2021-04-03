@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const getToday = function() {
   const date = new Date() 
-  const today = (date.getMonth() +1).toString().padStart(2, 0) + '/' + date.getDate().toString().padStart(2, 0) + "/" + date.getFullYear().toString()  
+  const today = (date.getMonth() +1).toString()+ '/' + date.getDate().toString()+ "/" + date.getFullYear().toString().slice(2)  
   return today;
 }
 

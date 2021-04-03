@@ -1,25 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-</head>
-<body>
-    <h1>Edit Post</h1>
-    <form action="/posts/<%=post._id%>?_method=PUT" method="POST">
-        <label for="rating">Enter a number between 1 and 5</label>
-        <input type="number" name="post[rating]" value="<%=post.rating%>" min="1" max="5">
-        </input>
-        <br>
-        <div>
-            <label for="body">Write about your day(optional)</label>
-            <br>
-            <textarea rows="15" cols ="28" name="post[body]"><%=post.body%></textarea>
-        </div>
-        <button>Update Post</button>
-    </form>
-    <a href="/posts/<%=post._id%>">Back to Post</a>
-</body>
-</html>
+<% layout("layouts/boilerplate")%>
+
+<div class="row">
+    <h1 class="text-center">Edit Post</h1>
+    <div class="col-6 offset-3">
+        <form action="/posts/<%=post._id%>?_method=PUT" method="POST?_method=PUT">
+            <div class="mb-3">
+                <label class="form-label" for="rating">Enter a number between 1 and 5:</label>
+                <input class="form-control text-center" value="<%=post.rating%>" type="number" id="rating" name="post[rating]" min="1" max="5">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="body">Write about your day <span class="text-muted">(optional)</span>:</label>
+                <textarea class="form-control" rows="5"cols="22" type="text" name="post[body]"><%=post.body%></textarea>
+            </div>
+            <div class="mb-3">
+                <button class="btn btn-success">Update Post</button>
+            </div>
+        </form>
+        <a href="/posts/<%=post._id%>">Back to Post</a>
+    </div>
+</div>
