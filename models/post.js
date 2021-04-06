@@ -20,7 +20,10 @@ const PostSchema = new Schema({
       type: Number,
       required: true
     },
-    body: String,
+    body: {
+      type: String,
+      required: true
+    }
   },
   {timestamps: true, //Don't pass it in the schema itself, pass it as an option in constructor
   setDefaultsOnInsert: true
