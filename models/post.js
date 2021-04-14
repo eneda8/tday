@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const User = require("./user");
 
 const getToday = function() {
   const date = new Date() 
@@ -12,10 +13,12 @@ const PostSchema = new Schema({
       type: String,
       default: getToday()
     },
-    author: {
-      type:String,
-      default: "author"
-    },
+    user: [
+      {
+      type: Schema.Types.ObjectId,
+      ref: "User"
+      }
+    ],
       rating: {
       type: Number,
       required: true
