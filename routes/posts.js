@@ -15,25 +15,35 @@ const validatePost = (req, res, next) => {
     }
 }
 router.get("/:id", catchAsync(async (req,res) => {
-    const post = await Post.findById(req.params.id)
-    res.render("show", {post})
+    const post = await Post.findById(req.params.id);
+    if (!post) {
+        req.flash('error', 'Post not found!');
+        return res.redirect('/today');
+    }
+    res.render("show", {post});
 }))
 
 router.get("/:id/edit", catchAsync(async (req,res) => {
     const post = await Post.findById(req.params.id)
+    if (!post) {
+        req.flash('error', 'Post not found!');
+        return res.redirect('/today');
+    }
     res.render("edit", {post})
 }))
 
 router.put("/:id", validatePost, catchAsync(async (req,res) => {
     const {id} = req.params;
-    const post = await Post.findByIdAndUpdate(id, {...req.body.post}) 
-    res.redirect(`/posts/${post._id}`)
+    const post = await Post.findByIdAndUpdate(id, {...req.body.post}) ;
+    req.flash('success', 'New post updated!');
+    res.redirect(`/posts/${post._id}`);
 }))
 
 router.delete("/:id", catchAsync(async (req,res) => {
     const {id} = req.params;
     await Post.findByIdAndDelete(id);
-    res.redirect("/today")
+    req.flash('success', 'New post deleted!')
+    res.redirect("/today");
 }))
 
 module.exports = router;

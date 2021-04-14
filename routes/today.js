@@ -20,16 +20,6 @@ const validatePost = (req, res, next) => {
         next();
     }
 }
-const validateUser = (req, res, next) => {  
-    const {error} = userSchema.validate(req.body);
-    if(error) {
-        const msg = error.details.map(el => el.message).join(',')
-        throw new ExpressError(msg, 400)
-    } else {
-        next();
-    }
-}
-
 
 router.get("/", (req,res) => {
     res.render("home")
@@ -37,19 +27,27 @@ router.get("/", (req,res) => {
 
 router.get("/index", catchAsync(async (req, res) => {
     const posts = await Post.find({}).sort({date:-1});
-    res.render("index", {posts})
+    res.render("index", {posts});
 }))
 
 router.get("/today", catchAsync(async (req, res) =>{
     const today = getToday();
     const posts = await Post.find({date: today}).sort({date:-1});
-    res.render("today", {posts})
+    res.render("today", {posts});
+}))
+
+router.delete("/today", catchAsync(async (req,res) => {
+    const {id} = req.params;
+    await Post.findByIdAndDelete(id);
+    req.flash('success', 'New post deleted!')
+    res.redirect("/today");
 }))
 
 router.post("/", validatePost, catchAsync(async (req,res) => {
-    const post = new Post(req.body.post)
-    await post.save()
-    res.redirect(`/posts/${post._id}`)
+    const post = new Post(req.body.post);
+    await post.save();
+    req.flash('success', 'New post submitted!');
+    res.redirect(`/posts/${post._id}`);
 }))
 
 module.exports = router;
