@@ -6,9 +6,13 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const ExpressError = require("./utils/ExpressError");
 const methodOverride = require("method-override");
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
+const User = require("./models/user");
 
-const posts = require("./routes/posts");
-const today = require("./routes/today");
+const userRoutes = require("./routes/users");
+const postRoutes = require("./routes/posts");
+const todayRoutes = require("./routes/today");
 
 mongoose.connect("mongodb://localhost:27017/todai", {
     useNewUrlParser: true,
@@ -57,14 +61,34 @@ const sessionConfig = {
 app.use(session(sessionConfig))
 app.use(flash());
 
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+
+passport.serializeUser(function(user, done) {
+    done(null, user.id);
+});
+  
+passport.deserializeUser(function(id, done) {
+    User.findById(id, function(err, user) {
+      done(err, user);
+    });
+});
+
 app.use((req, res, next) => {
+    if (!['/login', '/register', '/'].includes(req.originalUrl)) {
+        req.session.returnTo = req.originalUrl;
+    }
+    console.log(req.originalUrl);
+    res.locals.currentUser = req.user;
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
     next();
 })
 
-app.use("/posts", posts);
-app.use("/", today);
+app.use("/", userRoutes);
+app.use("/posts", postRoutes);
+app.use("/", todayRoutes);
 
 
 app.all("*", (req, res, next) => {

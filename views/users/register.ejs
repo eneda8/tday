@@ -1,0 +1,60 @@
+<% layout("layouts/boilerplate")%>
+
+<h1>Register</h1>
+<form action="/register" method="POST" class="validated-form" novalidate>
+    <div class="mb-3">
+        <label class="form-label" for="username">Username</label>
+        <input class="form-control" type="text" id="username" name="username" required>
+        <div class="valid-feedback">
+            Looks good!
+        </div>
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="email">Email</label>
+        <input class="form-control" type="email" id="email" name="email" required>
+        <div class="valid-feedback">
+            Looks good!
+        </div>
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="password">Password</label>
+        <input class="form-control" type="password" id="password" name="password" required>
+        <div class="valid-feedback">
+            Looks good!
+        </div>
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="birthday">Birthday</label>
+        <input class="form-control" type="date" id="birthday" name="birthday" min="1900-01-01" max="2001-01-01">
+        <div class="valid-feedback">
+            Looks good!
+        </div>
+        <div class="invalid-feedback">
+            You must be 10 years old to register.
+        </div>
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="gender">Gender</label>
+        <select class="custom-select" id="gender" name="gender" required>
+            <option selected value="">--Please choose an option--</option>
+            <option value="male">male</option>   
+            <option value="female">female</option>          
+        </select>
+        <div class="valid-feedback">
+            Looks good!
+        </div>
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="country">Country</label>
+        <select class="custom-select" id="country" name="country" required>
+            <option selected value="">--Please choose an option--</option> 
+            <%  for (country of countries) { %>
+                <option value="<%=country%>"><%=country%></option>
+            <%}%>        
+        </select>
+        <div class="valid-feedback">
+            Looks good!
+        </div>
+    </div>
+    <button class="btn btn-success">Register</button>
+</form>

@@ -10,6 +10,14 @@
           <a class="nav-link" href="/today">Today</a>
           <a class="nav-link" href="/index">All</a>
         </div>
+        <div class="navbar-nav ml-auto">
+          <% if(!currentUser) {  %> 
+          <a class="nav-link" href="/login">Login</a>
+          <a class="nav-link" href="/register">Register</a>
+          <% } else { %> 
+          <a class="nav-link" href="/logout">Logout</a>
+          <% }  %> 
+        </div>
       </div>
     </div>
   </nav>

@@ -4,6 +4,7 @@ const {postSchema, userSchema} = require("../schemas.js");
 const catchAsync = require("../utils/catchAsync");
 const ExpressError = require("../utils/ExpressError");
 const Post = require("../models/post");
+const {isLoggedIn} = require("../middleware");
 
 const getToday = function() {
     const date = new Date() 
@@ -25,25 +26,25 @@ router.get("/", (req,res) => {
     res.render("home")
 })
 
-router.get("/index", catchAsync(async (req, res) => {
+router.get("/index", isLoggedIn, catchAsync(async (req, res) => {
     const posts = await Post.find({}).sort({date:-1});
     res.render("index", {posts});
 }))
 
-router.get("/today", catchAsync(async (req, res) =>{
+router.get("/today", isLoggedIn, catchAsync(async (req, res) =>{
     const today = getToday();
     const posts = await Post.find({date: today}).sort({date:-1});
     res.render("today", {posts});
 }))
 
-router.delete("/today", catchAsync(async (req,res) => {
+router.delete("/today", isLoggedIn, catchAsync(async (req,res) => {
     const {id} = req.params;
     await Post.findByIdAndDelete(id);
     req.flash('success', 'New post deleted!')
     res.redirect("/today");
 }))
 
-router.post("/", validatePost, catchAsync(async (req,res) => {
+router.post("/", validatePost, isLoggedIn, catchAsync(async (req,res) => {
     const post = new Post(req.body.post);
     await post.save();
     req.flash('success', 'New post submitted!');
