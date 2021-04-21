@@ -1,50 +1,23 @@
 const express = require("express");
 const router = express.Router();
-const {postSchema, userSchema} = require("../schemas.js");
+const posts = require("../controllers/posts");
 const catchAsync = require("../utils/catchAsync");
-const ExpressError = require("../utils/ExpressError");
 const Post = require("../models/post");
-const {isLoggedIn} = require("../middleware");
+const {isLoggedIn, isAuthor, validatePost} = require("../middleware");
 
-const validatePost = (req, res, next) => {  
-    const {error} = postSchema.validate(req.body);
-    if(error) {
-        const msg = error.details.map(el => el.message).join(',')
-        throw new ExpressError(msg, 400)
-    } else {
-        next();
-    }
-}
-router.get("/:id", isLoggedIn, catchAsync(async (req,res) => {
-    const post = await Post.findById(req.params.id);
-    if (!post) {
-        req.flash('error', 'Post not found!');
-        return res.redirect('/today');
-    }
-    res.render("show", {post});
-}))
+router.route("/")
+    .get(isLoggedIn, catchAsync(posts.index))
+    .post(isLoggedIn, validatePost, catchAsync(posts.createPost));
 
-router.get("/:id/edit", isLoggedIn, catchAsync(async (req,res) => {
-    const post = await Post.findById(req.params.id)
-    if (!post) {
-        req.flash('error', 'Post not found!');
-        return res.redirect('/today');
-    }
-    res.render("edit", {post})
-}))
+router.get("/new", isLoggedIn, posts.renderNewForm);
 
-router.put("/:id", isLoggedIn, validatePost, catchAsync(async (req,res) => {
-    const {id} = req.params;
-    const post = await Post.findByIdAndUpdate(id, {...req.body.post}) ;
-    req.flash('success', 'New post updated!');
-    res.redirect(`/posts/${post._id}`);
-}))
+router.get("/today", isLoggedIn, catchAsync(posts.indexToday));
 
-router.delete("/:id", isLoggedIn, catchAsync(async (req,res) => {
-    const {id} = req.params;
-    await Post.findByIdAndDelete(id);
-    req.flash('success', 'New post deleted!')
-    res.redirect("/today");
-}))
+router.route("/:id")
+    .get(isLoggedIn, catchAsync(posts.showPost))
+    .put(isLoggedIn, isAuthor, validatePost, catchAsync(posts.updatePost))
+    .delete(isLoggedIn, isAuthor, catchAsync(posts.deletePost));
+
+router.get("/:id/edit", isLoggedIn, isAuthor, catchAsync(posts.renderEditForm))
 
 module.exports = router;

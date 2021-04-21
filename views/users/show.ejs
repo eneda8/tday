@@ -1,17 +1,17 @@
 <% layout("layouts/boilerplate")%>
 
-<h5 class="text-left">Today's Posts</h5>
+<h1 class=><%=user.username %>'s profile</h5>
+
 <div class="container">
-    <div class="row row-cols-auto">
+    <div class="row row-cols-auto bg-transparent">
         <%for (post of posts) { %> 
             <div class="col">
                 <div class="card mb-3" style="width: 18rem;">
                     <div class="card-body">
-                        <p class="card-title fs-5"><%=post.rating%> <i class="bi bi-calendar2-plus"></i></p>
-                        <p class="card-subtitle mb-1 text-muted"><%=post.author%></p>
+                        <p class="card-title fs-5"><%=post.date%>: <%=post.rating%> 
+                        <p class="card-subtitle mb-1 text-muted"><%=post.author.username%></p>
                         <p class="card-text mb-1"><%=post.body%></p>
                         <a href="/posts/<%=post._id%>" class="card-link">Read more</a>
-                        <a href="#" class="card-link">Visit profile</a>
                     </div>
                 </div>
             </div>

@@ -17,6 +17,11 @@ module.exports.userSchema = Joi.object({
     }).required()
 })
 
+module.exports.commentSchema = Joi.object({
+    comment: Joi.object({
+        body: Joi.string().required()
+    }).required()
+})
 
 
 

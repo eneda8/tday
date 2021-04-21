@@ -12,7 +12,7 @@ const User = require("./models/user");
 
 const userRoutes = require("./routes/users");
 const postRoutes = require("./routes/posts");
-const todayRoutes = require("./routes/today");
+const commentRoutes = require("./routes/comments");
 
 mongoose.connect("mongodb://localhost:27017/todai", {
     useNewUrlParser: true,
@@ -29,23 +29,12 @@ db.once("open", () => {
 
 const app = express();
 
-const validateUser = (req, res, next) => {  
-    const {error} = userSchema.validate(req.body);
-    if(error) {
-        const msg = error.details.map(el => el.message).join(',')
-        throw new ExpressError(msg, 400)
-    } else {
-        next();
-    }
-}
-
 app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 app.use(express.urlencoded({extended: true})); 
 app.use(methodOverride("_method"));
-
 app.use(express.static(path.join(__dirname, 'public')))
 
 const sessionConfig = {
@@ -71,7 +60,7 @@ passport.serializeUser(function(user, done) {
   
 passport.deserializeUser(function(id, done) {
     User.findById(id, function(err, user) {
-      done(err, user);
+        done(err, user);
     });
 });
 
@@ -81,6 +70,7 @@ app.use((req, res, next) => {
     }
     console.log(req.originalUrl);
     res.locals.currentUser = req.user;
+    console.log(`The currentUser is: ${req.user}`)
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
     next();
@@ -88,7 +78,7 @@ app.use((req, res, next) => {
 
 app.use("/", userRoutes);
 app.use("/posts", postRoutes);
-app.use("/", todayRoutes);
+app.use("/posts/:id/comments", commentRoutes);
 
 
 app.all("*", (req, res, next) => {

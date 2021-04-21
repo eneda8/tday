@@ -1,36 +1,47 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const User = require("./user");
-
-const getToday = function() {
-  const date = new Date() 
-  const today = (date.getMonth() +1).toString()+ '/' + date.getDate().toString()+ "/" + date.getFullYear().toString().slice(2)  
-  return today;
-}
+const {getToday} = require("../utils/getToday");
 
 const PostSchema = new Schema({
     date: {
       type: String,
       default: getToday()
     },
-    user: [
-      {
-      type: Schema.Types.ObjectId,
-      ref: "User"
-      }
-    ],
-      rating: {
+    rating: {
       type: Number,
       required: true
     },
     body: {
       type: String,
       required: true
-    }
+    },
+    author: [
+      {
+      type: Schema.Types.ObjectId,
+      ref: "User"
+      }
+    ],
+    comments: [
+      {
+      type: Schema.Types.ObjectId,
+      ref: "Comment"
+      }
+    ],
   },
   {timestamps: true, //Don't pass it in the schema itself, pass it as an option in constructor
   setDefaultsOnInsert: true
   } 
 ) 
-  
-  module.exports = mongoose.model("Post", PostSchema)
+
+// PostSchema.post("findOneAndDelete", async function (doc) {
+//   if(doc){
+//     await Comment.deleteMany({
+//       _id: {
+//         $in: doc.comments
+//       }
+//     })
+//   }
+// })
+
+module.exports = mongoose.model("Post", PostSchema)

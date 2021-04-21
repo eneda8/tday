@@ -1,0 +1,55 @@
+<% layout("layouts/boilerplate")%>
+
+<div class="row">
+    <div class="col-6 offset-3">
+        <div class="card mb-3" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title"><%=post.date%> : <%=post.rating%></h5>
+                <p class="card-text"><%=post.body%></p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item text-muted"><%=post.author.username%></li>
+                <!-- post.author.username not populating -->
+            </ul>
+            <div class="card-body">
+                <a href="/posts/<%=post._id%>/edit" class="card-link btn btn-info">Edit</a>
+                <form class="d-inline" action="/posts/<%=post._id%>?_method=DELETE" method="POST">
+                <button class="btn btn-danger">Delete</button>
+            </form>
+            </div>
+            <div class="card-footer text-muted">
+                2 days ago
+                <br>
+                <a href="/posts">All Posts</a> <a href="/posts/today">Today's Posts</a>
+
+            </div>
+            </div>
+    </div>
+    <div class="col-6">
+        <% if (currentUser) {%> 
+        <h2 class="mb-2">Leave a Comment</h2>
+            <form action="/posts/<%=post._id %>/comments" class="mb-3 validated-form" method="POST" novalidate>
+              <div class="">
+                <label class="form-label mb-2"for="body">Comment Text:</label>
+                <textarea class="form-control" name="comment[body]" id="body" cols="30" rows="3" required></textarea>
+                <div class="valid-feedback">Looks good!</div>
+              </div>
+              <button class="btn btn-success">Submit</button>
+            </form>
+            <% } %> 
+            <% for (let comment of post.comments) { %>
+              <div class="card mb-3">
+                <div class="card-body">
+                  <h5 class="card-title"><%=comment.author.username%></h5>
+                  <p class="card-text">"<%=comment.body%>"</p>
+                  <% if(currentUser && comment.author.equals(currentUser._id)) { %> 
+                    <!-- line 44 above is broken -->
+                  <form action="/posts/<%=post._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
+                  <button class="btn btn-sm btn-danger">Delete</button>
+                  </form>
+                  <% } %> 
+                </div>
+              </div> 
+            <% } %>
+      </div>
+</div>
