@@ -3,7 +3,7 @@
 <h1 class="text-center">How was your day?</h1>
 <div class="row">
     <div class="col-6 offset-3">
-        <form action="/posts" method="POST" novalidate class="validated-form">
+        <form action="/posts" method="POST" novalidate class="validated-form" enctype="multipart/form-data">
             <div class="mb-3">
                 <label class="form-label" for="rating">Enter a number between 1 and 5:</label>
                 <input class="form-control text-center" type="number" id="rating" name="post[rating]" min="1" max="5" required>
@@ -14,6 +14,11 @@
                 <textarea class="form-control" rows="5"cols="22" type="text" name="post[body]" required></textarea>
                 <div class="valid-feedback">Looks good!</div>
             </div>
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="image" name="image" onchange="document.getElementById('preview').src = window.URL.createObjectURL(this.files[0])">
+                <label class="custom-file-label" for="image">Choose image...</label>
+            </div>
+            <img class="img-fluid my-2" id="preview" width="100px"/> 
             <div class="mb-3">
                 <button class="btn btn-success">Submit</button>
             </div>

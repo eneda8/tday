@@ -1,6 +1,6 @@
 <% layout("layouts/boilerplate")%>
 
-<div class="row">
+<!-- <div class="row">
     <div class="col-6 offset-3">
         <div class="card mb-3" style="width: 18rem;">
             <div class="card-body">
@@ -9,7 +9,6 @@
             </div>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item text-muted"><%=post.author.username%></li>
-                <!-- post.author.username not populating -->
             </ul>
             <div class="card-body">
                 <a href="/posts/<%=post._id%>/edit" class="card-link btn btn-info">Edit</a>
@@ -43,7 +42,6 @@
                   <h5 class="card-title"><%=comment.author.username%></h5>
                   <p class="card-text">"<%=comment.body%>"</p>
                   <% if(currentUser && comment.author.equals(currentUser._id)) { %> 
-                    <!-- line 44 above is broken -->
                   <form action="/posts/<%=post._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
                   <button class="btn btn-sm btn-danger">Delete</button>
                   </form>
@@ -52,4 +50,76 @@
               </div> 
             <% } %>
       </div>
+</div> -->
+
+<div class="container-fluid">
+  <div class="row">
+  <div class="col"></div>
+  <div class="col-5 border">
+          <div class="card my-3 pt-2 pl-2 pr-2">
+              <div class="media pr-3">
+                  <img src="/images/defaultAvatar.png" class="pr-2" alt="">
+                  <div class="media-body">
+                      <h6 class="my-0"><%=post.date%>: <%=post.rating%></h5>
+                      <p class="card-subtitle mb-1 text-muted"><%=post.author.username%></p>
+                      <div class="text-wrap">
+                        <p class="my-2"><%=post.body%></p>
+                      </div>
+                      <% if(post.image) { %> 
+                        <img class="img-fluid d-block" src="<%=post.image.path%>" alt="">
+                      <% } %> 
+                      <div class="d-inline">
+                        <button class="btn btn-link d-inline p-0"><a href="/posts/<%=post._id%>/edit">Edit</a></button>
+                        <form class="d-inline" action="/posts/<%=post._id%>?_method=DELETE" method="POST">
+                          <button class="btn btn-link d-inline p-0">Delete</button>
+                        </form>
+                      </div>
+
+                      <div class="border-top border-bottom p-1 my-3">
+                        <h6>Comments</h6>
+                      </div>
+                      <% if (currentUser) {%> 
+                        <div class="media mt-3 mb-1 pl-2 ">
+                          <a class="mr-3" href="#">
+                            <img src="/images/defaultAvatarReply.png" alt="">
+                          </a>
+                            <div class="media-body">
+                              <form action="/posts/<%=post._id %>/comments" class="validated-form" method="POST" novalidate>
+                                <textarea class="form-control" name="comment[body]" id="body" cols="15" rows="3" placeholder="Post a comment" required></textarea>
+                                <div class="clearfix"><button class="btn btn-link btn-sm float-right">Submit</button></div>   
+                              </form>
+                            </div>
+                            <% } %>
+                        </div>
+                      <div id="commentDiv">
+                        <% for (let comment of post.comments) { %>
+                          <div class="media mb-3 pl-2 pt-1 card">
+                            <a class="mr-3" href="#">
+                              <img src="/images/defaultAvatarReply.png" alt="">
+                            </a>
+                            <div class="media-body">
+                              <p class="card-subtitle mb-1 text-muted"><%=comment.author.username%></p>
+                              <p class="my-1"><%=comment.body%></p>
+                              <small class="pb-2">Jan 12 9:03pm</small>
+                              <% if(currentUser && comment.author.equals(currentUser._id)) { %> 
+                                <div class="d-inline">
+                                  <form class="d-inline" action="/posts/<%=post._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
+                                  <button class="btn btn-link btn-sm d-inline pl-0">Delete</button>
+                                  </form>
+                                </div>
+                              <% } %> 
+                            </div>
+                          </div>
+                          <% } %>
+                      </div>
+
+                  </div>
+              </div>
+          </div>
+  </div>
+  <div class="col"></div>
+  </div>   
 </div>
+
+
+

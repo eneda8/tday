@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const Post = require("../models/post");
 const countries = require("../countries");
 
 module.exports.renderRegisterForm = (req, res) => {
@@ -46,10 +47,8 @@ module.exports.logout = (req,res) => {
     res.redirect("/posts");
 }
 
-module.exports.showUserProfile = async (req, res) => {
-    const {username} = req.params.username;
-    const user = await User.findOne({username}).populate("posts").populate("comments"); 
-    // populate not working
+module.exports.showUserProfile = async(req, res) => {
+    const user = await User.findOne({username : req.params.username}).populate("posts").populate("comments"); 
     if(!user){
         req.flash("error", "User not found!")
         return res.redirect("/posts");

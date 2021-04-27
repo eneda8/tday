@@ -3,7 +3,7 @@
 <h1 class="text-center">Edit Post</h1>
 <div class="row">
     <div class="col-6 offset-3">
-        <form action="/posts/<%=post._id%>?_method=PUT" method="POST" novalidate class="validated-form">
+        <form action="/posts/<%=post._id%>?_method=PUT" method="POST" novalidate class="validated-form" enctype="multipart/form-data">
             <div class="mb-3">
                 <label class="form-label" for="rating">Enter a number between 1 and 5:</label>
                 <input class="form-control text-center" value="<%=post.rating%>" type="number" id="rating" name="post[rating]" min="1" max="5" required>
@@ -14,8 +14,21 @@
                 <textarea class="form-control" rows="5"cols="22" type="text" name="post[body]" required><%=post.body%></textarea>
                 <div class="valid-feedback">Looks good!</div>
             </div>
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="image" name="image"  onchange="document.getElementById('preview').src = window.URL.createObjectURL(this.files[0])"
+                <% if(post.image){ %>value="<%=post.image.filename%>"<% }%>>
+                <label class="custom-file-label" for="customFile">Choose an image...</label>
+            </div>
+            <img class="img-fluid my-2" id="preview" width="100px"/> 
+            <% if(post.image) { %> 
+            <div >
+                <label class="d-block" for="deleteImage">Delete Image?</label>
+                <img class="img-fluid" src="<%=post.image.thumbnail%>" alt="">
+                <input class="form-check-input" type="checkbox" name="deleteImage[]" value="<%=post.image.filename%>">
+            </div>           
+            <% }  %>  
             <div class="mb-3">
-                <button class="btn btn-success">Update Post</button>
+                <button class="btn btn-success mt-3">Update Post</button>
             </div>
         </form>
         <a href="/posts/<%=post._id%>">Back to Post</a>

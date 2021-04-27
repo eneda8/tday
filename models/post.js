@@ -3,6 +3,15 @@ const Schema = mongoose.Schema;
 const User = require("./user");
 const {getToday} = require("../utils/getToday");
 
+const ImageSchema = new Schema({
+  path: String,
+  filename: String
+});
+
+ImageSchema.virtual("thumbnail").get(function() {
+  return this.path.replace("/upload", "/upload/w_200")
+});
+
 const PostSchema = new Schema({
     date: {
       type: String,
@@ -16,12 +25,11 @@ const PostSchema = new Schema({
       type: String,
       required: true
     },
-    author: [
-      {
+    image: ImageSchema,
+    author: {
       type: Schema.Types.ObjectId,
       ref: "User"
-      }
-    ],
+      },
     comments: [
       {
       type: Schema.Types.ObjectId,

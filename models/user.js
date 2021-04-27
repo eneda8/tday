@@ -2,6 +2,19 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const passportLocalMongoose = require("passport-local-mongoose");
 
+const AvatarSchema = new Schema({
+    url: {
+        type: String,
+        default: "/images/defaultAvatar.png"
+    },
+    filename: String,
+  });
+  
+  AvatarSchema.virtual("thumbnail").get(function() {
+    return this.url.replace("/upload"), "/upload/w_64"
+  })
+  
+
 const userSchema = new Schema({
     email: {
         type: String,
@@ -20,15 +33,22 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
+    avatar: [AvatarSchema],
     posts: [ 
         {
         type: Schema.Types.ObjectId,
         ref: "Post" 
         }
+    ],
+    comments: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "Comment"
+        }
     ]
 }) 
   
 userSchema.plugin(passportLocalMongoose, {
-    selectFields : "birthday gender country"});
+    selectFields : "birthday gender country avatar"});
 
 module.exports = mongoose.model("User", userSchema);

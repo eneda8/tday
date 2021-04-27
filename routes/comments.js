@@ -9,6 +9,8 @@ const catchAsync = require("../utils/catchAsync");
 
 router.post("/", isLoggedIn, validateComment, catchAsync(comments.createComment));
 
+router.put("/:commentId", isLoggedIn, isCommentAuthor, catchAsync(comments.editComment));
+
 router.delete("/:commentId", isLoggedIn, isCommentAuthor, catchAsync(comments.deleteComment));
 
 module.exports = router;

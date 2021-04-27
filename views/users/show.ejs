@@ -1,20 +1,35 @@
 <% layout("layouts/boilerplate")%>
 
-<h1 class=><%=user.username %>'s profile</h5>
+<h1 class=><%=user.username%>'s profile</h5>
 
-<div class="container">
-    <div class="row row-cols-auto bg-transparent">
-        <%for (post of posts) { %> 
-            <div class="col">
-                <div class="card mb-3" style="width: 18rem;">
-                    <div class="card-body">
-                        <p class="card-title fs-5"><%=post.date%>: <%=post.rating%> 
-                        <p class="card-subtitle mb-1 text-muted"><%=post.author.username%></p>
-                        <p class="card-text mb-1"><%=post.body%></p>
-                        <a href="/posts/<%=post._id%>" class="card-link">Read more</a>
+
+    <div class="container-fluid">
+        <div class="row">
+        <div class="col"></div>
+        <div class="col-5 border">
+            <a href="/posts/new">Add Post</a>
+            <%for (post of user.posts) { %> 
+                <div class="card mb-3 mt-1 pt-2 pl-2">
+                    <div class="media pr-3">
+                        <img src="/images/defaultAvatar.png" class="pr-2" alt="">
+                        <div class="media-body">
+                            <h6 class="my-0"><%=post.rating%></h5>
+                            <p class="card-subtitle mb-1 text-muted"><%=post.author.username%></p>
+                            <% if(post.image) { %> 
+                                <img class="img-fluid" src="<%=post.image.path%>" alt="">
+                            <% } %> 
+                            <div class="text-wrap">
+                                <p class="my-0"><%=post.body%></p>
+                            </div>
+                            <div class="d-block">
+                                <small class="mr-3"><a href="/posts/<%=post._id%>" class="card-link">Read replies</a></small>
+                                <small class=""><a href="/u/<%=post.author.username%>" class="card-link">Visit profile</a></small>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        <% } %> 
+                <% } %> 
+        </div>
+        <div class="col"></div>
+        </div>   
     </div>
-</div>
