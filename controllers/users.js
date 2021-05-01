@@ -12,8 +12,9 @@ module.exports.renderRegisterForm = (req, res) => {
 
 module.exports.register = async (req,res, next) => {
     try{
-        const {email, username, password, birthday, gender, country} = req.body;
-        const user = new User({email, username, birthday, gender, country});
+        const {email, username, password, birthday, gender, country, avatar} = req.body;
+        const user = new User({email, username, birthday, gender, country, avatar});
+        user.avatar = req.file;
         const registeredUser = await User.register(user, password);
         req.login(registeredUser, err => {
             if(err) return next(err);
@@ -58,7 +59,7 @@ module.exports.showUserProfile = async(req, res) => {
         req.flash("error", "Something went wrong!")
         return res.redirect("/posts");
     }
-res.render("users/show", {user, posts});
+    res.render("users/show", {user, posts});
 };
 
   

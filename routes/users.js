@@ -5,6 +5,9 @@ const catchAsync = require("../utils/catchAsync");
 const User = require("../models/user");
 const users = require("../controllers/users");
 const {isLoggedIn} = require("../middleware");
+const multer = require("multer");
+const {storage} = require("../cloudinary");
+const upload = multer({storage});
 
 router.get("/", (req, res) => {
     res.render("home");
@@ -12,7 +15,7 @@ router.get("/", (req, res) => {
 
 router.route("/register")
     .get(users.renderRegisterForm)
-    .post(catchAsync(users.register));
+    .post(upload.single("avatar"),catchAsync(users.register));
 
 router.route("/login")
     .get(users.renderLoginForm)

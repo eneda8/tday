@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 const passportLocalMongoose = require("passport-local-mongoose");
 
 const AvatarSchema = new Schema({
-    url: {
+    path: {
         type: String,
         default: "/images/defaultAvatar.png"
     },
@@ -11,7 +11,7 @@ const AvatarSchema = new Schema({
   });
   
   AvatarSchema.virtual("thumbnail").get(function() {
-    return this.url.replace("/upload"), "/upload/w_64"
+    return this.path.replace("/upload"), "/upload/w_64"
   })
   
 
@@ -33,7 +33,7 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    avatar: [AvatarSchema],
+    avatar: AvatarSchema,
     posts: [ 
         {
         type: Schema.Types.ObjectId,
