@@ -5,16 +5,28 @@ const ObjectID = require('mongodb').ObjectID;
 const {cloudinary} = require("../cloudinary");
 
 module.exports.index = async (req, res) => {
-    const posts = await Post.find({}).populate("author");
-        // populate not working
+    const posts = await Post.find({})
+    for(post of posts) {
+        await post.populate("author").populate({
+            path: "image",
+            populate:{path: "path"}
+        }).execPopulate();
+    }
+    // posts.sort({date:-1});
     res.render("posts/index", {posts});
 } 
 
 module.exports.indexToday= async (req, res) =>{
-        const today = getToday();
-        const posts = await Post.find({date: today}).populate("author").sort({date:-1});
-            // populate not working
-        res.render("posts/today", {posts});
+    const today = getToday();
+    const posts = await Post.find({date: today});
+    for(post of posts) {
+        await post.populate("author").populate({
+            path: "image",
+            populate:{path: "path"}
+        }).execPopulate();
+    }
+    // posts.sort({date:-1});
+    res.render("posts/today", {posts});
 }
 
 module.exports.renderNewForm = (req, res) => { 
@@ -40,7 +52,7 @@ module.exports.showPost = async (req,res) => {
         req.flash("error", "Post not found!")
         return res.redirect("/posts");
     }
-    const post = await Post.findById(id)
+    const post = await Post.findById(id);
     await post.populate("author").populate({
         path: "comments",
         populate:{path: "author"}
@@ -55,7 +67,6 @@ module.exports.showPost = async (req,res) => {
 
 module.exports.renderEditForm = async (req,res) => {
     const post = await Post.findById(req.params.id);
-    console.log(post);
     if(!post){
         req.flash("error", "Post not found!")
         return res.redirect("/posts");
@@ -71,7 +82,6 @@ module.exports.updatePost = async (req,res) => {
     }
     if(req.body.deleteImage){
         await cloudinary.uploader.destroy(req.body.deleteImage[0])
-        console.log(req.body)
         await post.updateOne({$set: {image: null}});
     } 
     await post.save();

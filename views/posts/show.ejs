@@ -1,67 +1,15 @@
 <% layout("layouts/boilerplate")%>
 
-<!-- <div class="row">
-    <div class="col-6 offset-3">
-        <div class="card mb-3" style="width: 18rem;">
-            <div class="card-body">
-                <h5 class="card-title"><%=post.date%> : <%=post.rating%></h5>
-                <p class="card-text"><%=post.body%></p>
-            </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item text-muted"><%=post.author.username%></li>
-            </ul>
-            <div class="card-body">
-                <a href="/posts/<%=post._id%>/edit" class="card-link btn btn-info">Edit</a>
-                <form class="d-inline" action="/posts/<%=post._id%>?_method=DELETE" method="POST">
-                <button class="btn btn-danger">Delete</button>
-            </form>
-            </div>
-            <div class="card-footer text-muted">
-                2 days ago
-                <br>
-                <a href="/posts">All Posts</a> <a href="/posts/today">Today's Posts</a>
-
-            </div>
-            </div>
-    </div>
-    <div class="col-6">
-        <% if (currentUser) {%> 
-        <h2 class="mb-2">Leave a Comment</h2>
-            <form action="/posts/<%=post._id %>/comments" class="mb-3 validated-form" method="POST" novalidate>
-              <div class="">
-                <label class="form-label mb-2"for="body">Comment Text:</label>
-                <textarea class="form-control" name="comment[body]" id="body" cols="30" rows="3" required></textarea>
-                <div class="valid-feedback">Looks good!</div>
-              </div>
-              <button class="btn btn-success">Submit</button>
-            </form>
-            <% } %> 
-            <% for (let comment of post.comments) { %>
-              <div class="card mb-3">
-                <div class="card-body">
-                  <h5 class="card-title"><%=comment.author.username%></h5>
-                  <p class="card-text">"<%=comment.body%>"</p>
-                  <% if(currentUser && comment.author.equals(currentUser._id)) { %> 
-                  <form action="/posts/<%=post._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
-                  <button class="btn btn-sm btn-danger">Delete</button>
-                  </form>
-                  <% } %> 
-                </div>
-              </div> 
-            <% } %>
-      </div>
-</div> -->
-
 <div class="container-fluid">
   <div class="row">
   <div class="col"></div>
   <div class="col-5 border">
           <div class="card my-3 pt-2 pl-2 pr-2">
               <div class="media pr-3">
-                  <img src="/images/defaultAvatar.png" class="pr-2" alt="">
+                  <a href="/u/<%=post.author.username%>"><img src="<%=post.author.avatar.thumbnail%>" class="pr-2" alt=""></a>
                   <div class="media-body">
                       <h6 class="my-0"><%=post.date%>: <%=post.rating%></h5>
-                      <p class="card-subtitle mb-1 text-muted"><%=post.author.username%></p>
+                      <p class="card-subtitle mb-1 text-muted"><a href="/u/<%=post.author.username%>"><%=post.author.username%></a></p>
                       <div class="text-wrap">
                         <p class="my-2"><%=post.body%></p>
                       </div>
@@ -80,12 +28,12 @@
                       </div>
                       <% if (currentUser) {%> 
                         <div class="media mt-3 mb-1 pl-2 ">
-                          <a class="mr-3" href="#">
-                            <img src="/images/defaultAvatarReply.png" alt="">
+                          <a class="mr-3" href="/u/<%=currentUser.username%>">
+                            <img src="<%=currentUser.avatar.thumbnail%>" alt="">
                           </a>
                             <div class="media-body">
                               <form action="/posts/<%=post._id %>/comments" class="validated-form" method="POST" novalidate>
-                                <textarea class="form-control" name="comment[body]" id="body" cols="15" rows="3" placeholder="Post a comment" required></textarea>
+                                <textarea class="form-control" name="comment[body]" id="body" cols="15" rows="1" placeholder="Post a comment" required></textarea>
                                 <div class="clearfix"><button class="btn btn-link btn-sm float-right">Submit</button></div>   
                               </form>
                             </div>
@@ -94,8 +42,8 @@
                       <div id="commentDiv">
                         <% for (let comment of post.comments) { %>
                           <div class="media mb-3 pl-2 pt-1 card">
-                            <a class="mr-3" href="#">
-                              <img src="/images/defaultAvatarReply.png" alt="">
+                            <a class="mr-3" href="/u/<%=comment.author.username%>">
+                              <img src="<%=comment.author.avatar.thumbnail%>" alt="">
                             </a>
                             <div class="media-body">
                               <p class="card-subtitle mb-1 text-muted"><%=comment.author.username%></p>

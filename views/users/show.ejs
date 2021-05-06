@@ -2,7 +2,7 @@
 
 <h1 class=><%=user.username%>'s profile</h5>
 
-    <img src="<%=user.avatar.path%>" alt="">
+    <img class="img-thumbnail rounded-circle" src="<%=user.avatar.profile%>" alt="">
 
     <div class="container-fluid">
         <div class="row">
@@ -12,7 +12,7 @@
             <%for (post of user.posts) { %> 
                 <div class="card mb-3 mt-1 pt-2 pl-2">
                     <div class="media pr-3">
-                        <img src="/images/defaultAvatar.png" class="pr-2" alt="">
+                        <img src="<%=user.avatar.thumbnail%>" class="pr-2" alt="">
                         <div class="media-body">
                             <h6 class="my-0"><%=post.rating%></h5>
                             <p class="card-subtitle mb-1 text-muted"><%=post.author.username%></p>
