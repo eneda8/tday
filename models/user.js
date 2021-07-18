@@ -21,7 +21,7 @@ const AvatarSchema = new Schema({
   })
 
   AvatarSchema.virtual("profile").get(function() {
-    return this.path.replace("/upload", "/upload/w_150,h_150,c_thumb,c_fill,r_max")
+    return this.path.replace("/upload", "/upload/w_150,h_150,c_fill")
   })
   
 
@@ -40,8 +40,11 @@ const userSchema = new Schema({
         required: true
     },
     country:{
-        type: String,
-        required: true
+        name: {
+            type: String,
+            required: true
+        },
+        flag: String
     },
     avatar: AvatarSchema,
     posts: [ 

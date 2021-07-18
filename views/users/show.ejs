@@ -1,36 +1,63 @@
 <% layout("layouts/boilerplate")%>
-
-<h1 class=><%=user.username%>'s profile</h5>
-
-    <img class="img-thumbnail rounded-circle" src="<%=user.avatar.profile%>" alt="">
-
-    <div class="container-fluid">
-        <div class="row">
-        <div class="col"></div>
-        <div class="col-5 border">
-            <a href="/posts/new">Add Post</a>
-            <%for (post of user.posts) { %> 
-                <div class="card mb-3 mt-1 pt-2 pl-2">
-                    <div class="media pr-3">
-                        <img src="<%=user.avatar.thumbnail%>" class="pr-2" alt="">
-                        <div class="media-body">
-                            <h6 class="my-0"><%=post.rating%></h5>
-                            <p class="card-subtitle mb-1 text-muted"><%=post.author.username%></p>
-                            <% if(post.image) { %> 
-                                <img class="img-fluid" src="<%=post.image.path%>" alt="">
+    <div class="row py-5 px-4">
+        <div class="col-md-5 mx-auto">
+            <div class="bg-white shadow rounded overflow-hidden">
+                <div class="px-4 pt-0 pb-4 cover" style="background-color: #343a40">
+                    <div class="media align-items-end" style="transform: translateY(6rem)">
+                        <div class="mr-3">
+                            <img src="<%=user.avatar.path%>" alt="" width="150" height="150" class="rounded my-3 img-thumbnail">
+                            <% if(currentUser && user._id.equals(currentUser._id)) { %>
+                            <a href="#" class="btn btn-outline-dark btn-sm btn-block">Edit profile</a>
                             <% } %> 
-                            <div class="text-wrap">
-                                <p class="my-0"><%=post.body%></p>
-                            </div>
-                            <div class="d-block">
-                                <small class="mr-3"><a href="/posts/<%=post._id%>" class="card-link">Read replies</a></small>
-                                <small class=""><a href="/u/<%=post.author.username%>" class="card-link">Visit profile</a></small>
-                            </div>
+                        </div>
+                        <div class="media-body mb-5 text-white">
+                            <h4 class="mt-0 mb-0">@<%=user.username%></h4>
+                            <p class="small mb-4"> <i class="geo" style="font-size: 2rem; color: white"></i><img src="<%=user.country.flag%>"></p>
                         </div>
                     </div>
                 </div>
-                <% } %> 
+                <div class="bg-light p-3 d-flex justify-content-end text-center">
+                    <ul class="list-inline mb-0">
+                        <li class="list-inline-item">
+                            <h5 class="font-weight-bold mb-0 d-block">215</h5><small class="text-muted">Posts</small>
+                        </li>
+                        <li class="list-inline-item">
+                            <h5 class="font-weight-bold mb-0 d-block">745</h5><small class="text-muted">Followers</small>
+                        </li>
+                        <li class="list-inline-item">
+                            <h5 class="font-weight-bold mb-0 d-block">340</h5><small class="text-muted">Following</small>
+                        </li>
+                    </ul>
+                </div>
+                <div class="px-4 py-3">
+                    <h5 class="my-1">About</h5>
+                    <div class="p-4 rounded shadow-sm bg-light">
+                        <p class="font-italic mb-0">User bio goes here</p>
+                    </div>
+                </div>
+                <div class="py-4 px-4">
+                    <h5 class="mb-0">Recent posts</h5>
+                    <%for (post of user.posts) { %> 
+                        <div class="card mb-3 mt-1 pt-2 pl-2">
+                            <div class="media pr-3">
+                                <img src="<%=user.avatar.thumbnail%>" class="pr-2" alt="">
+                                <div class="media-body">
+                                    <h6 class="my-0"><%=post.date%>: <%=post.rating%></h5>
+                                    <p class="card-subtitle mb-1 text-muted"><img class="d-inline" src="<%=user.country.flag%>" alt="">  @<%=user.username%></p>
+                                    <% if(post.image) { %> 
+                                        <img class="img-fluid" src="<%=post.image.fullsize%>" alt="">
+                                    <% } %> 
+                                    <div class="text-wrap">
+                                        <p class="my-0"><%=post.body%></p>
+                                    </div>
+                                    <div class="d-block">
+                                        <small class="mr-3"><a href="/posts/<%=post._id%>" class="card-link">Show more</a></small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <% } %> 
+                </div>
+            </div>
         </div>
-        <div class="col"></div>
-        </div>   
     </div>

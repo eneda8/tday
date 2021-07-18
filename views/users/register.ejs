@@ -51,16 +51,24 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label" for="country">Country</label>
-                            <select class="custom-select" id="country" name="country" required>
+                            <label class="form-label" for="country[name]">Country</label>
+                            <select class="custom-select" id="countryName" name="country[name]" required>
                                 <option selected value="">--Please choose an option--</option> 
-                                <%  for (country of countries) { %>
-                                    <option value="<%=country%>"><%=country%></option>
+                                <%  for (let country of countries) { %>
+                                    <option value="<%=country["name"]%>"><%=country["name"]%></option>
                                 <%}%>        
                             </select>
                             <div class="valid-feedback">
                                 Looks good!
                             </div>
+                        </div>
+                        <div class="mb-3 collapse">
+                            <label class="form-label" for="country[flag]">Flag</label>
+                            <select class="custom-select" id="flag" name="country[flag]">
+                                <%  for (let country of countries) { %>
+                                    <option value="<%=country["flag"]%>"><%=country["flag"]%></option>
+                                <%}%>        
+                            </select>
                         </div>
                         <p>Profile photo:</p>
                         <div class="custom-file mb-3">
@@ -69,9 +77,21 @@
                         </div>
                         <img class="img-fluid my-2" id="preview" width="100px"/> 
                         <button class="btn btn-success btn-block">Register</button>
+                        <p class="text-center mt-3">Already registered? <a href="/login">Login</a></p>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    const countrySelect = document.querySelector("#countryName");
+    const flagSelect = document.querySelector("#flag");
+    countrySelect.addEventListener("change", (e) => {
+        let choice = e.target.value;
+        let selectedCountry = countries.filter(obj => Object.values(obj).includes(choice));
+        let flagFile = selectedCountry[0]["flag"];
+        flagSelect.value = flagFile; 
+    })
+</script>

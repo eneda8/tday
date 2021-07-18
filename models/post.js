@@ -12,6 +12,11 @@ ImageSchema.virtual("thumbnail").get(function() {
   return this.path.replace("/upload", "/upload/w_200")
 });
 
+ImageSchema.virtual("fullsize").get(function() {
+  return this.path.replace("/upload", "/upload/w_350")
+});
+
+
 const PostSchema = new Schema({
     date: {
       type: String,
