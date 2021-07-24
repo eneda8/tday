@@ -4,6 +4,7 @@ if(process.env.NODE_ENV !== "production") {
 
 const express = require("express");
 const path = require("path");
+const favicon = require("serve-favicon")
 const mongoose = require("mongoose");
 const ejsMate = require("ejs-mate");
 const session = require('express-session');
@@ -13,6 +14,7 @@ const methodOverride = require("method-override");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user");
+
 
 const userRoutes = require("./routes/users");
 const postRoutes = require("./routes/posts");
@@ -36,6 +38,8 @@ const app = express();
 app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
+
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
 
 app.use(express.urlencoded({extended: true})); 
 app.use(methodOverride("_method"));
@@ -85,6 +89,7 @@ app.use("/", userRoutes);
 app.use("/posts", postRoutes);
 app.use("/posts/:id/comments", commentRoutes);
 
+app.get('/favicon.ico', (req, res) => res.status(204).end());
 
 app.all("*", (req, res, next) => {
     req.session.returnTo = req.session.previousReturnTo;

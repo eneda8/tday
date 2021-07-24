@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-
+const {getTimestamp} = require("../utils/getToday");
 
 const commentSchema = new Schema ({
     body: String,
@@ -8,7 +8,10 @@ const commentSchema = new Schema ({
         type: Schema.Types.ObjectId,
         ref: "User"
     },
-    timestamp: Date,
+    timestamp: {
+        type: String,
+        default: getTimestamp()
+    }
 }, 
     {
     timestamps: true, 

@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const User = require("./user");
-const {getToday} = require("../utils/getToday");
+const {getToday, getTimestamp} = require("../utils/getToday");
+
 
 const ImageSchema = new Schema({
   path: String,
@@ -22,6 +23,10 @@ const PostSchema = new Schema({
       type: String,
       default: getToday()
     },
+    timestamp: {
+      type: String,
+      default: getTimestamp()
+    },
     rating: {
       type: Number,
       required: true
@@ -41,6 +46,9 @@ const PostSchema = new Schema({
       ref: "Comment"
       }
     ],
+    likes: {
+      type: Number
+    }
   },
   {timestamps: true, //Don't pass it in the schema itself, pass it as an option in constructor
   setDefaultsOnInsert: true

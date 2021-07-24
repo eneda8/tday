@@ -1,12 +1,14 @@
 const Post = require("../models/post");
 const User = require("../models/user");
 const Comment = require("../models/comment");
+const {getTimestamp} = require("../utils/getToday");
 
 module.exports.createComment = async (req, res) => {
     const post = await Post.findById(req.params.id);
     const user = await User.findById(req.user._id);
     const comment = new Comment(req.body.comment);
     comment.author = req.user._id;
+    comment.timestamp = getTimestamp();
     post.comments.push(comment);
     user.comments.push(comment);
     await comment.save();

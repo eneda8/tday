@@ -16,14 +16,20 @@
                       <% if(post.image) { %> 
                         <img class="img-fluid d-block" src="<%=post.image.path%>" alt="">
                       <% } %> 
+                      
                       <div class="d-inline">
-                        <button class="btn btn-link d-inline p-0"><a href="/posts/<%=post._id%>/edit">Edit</a></button>
+                        <small class="pb-1"><%=post.timestamp%></small>
+                        <% if(post.createdAt !== post.updatedAt){ %>
+                        <small class="pb-1 text-muted">Edited</small>
+                        <% } %>
+                        <% if(currentUser && post.author.equals(currentUser._id)) { %> 
+                        <button class="btn btn-link btn-sm  d-inline pt-0"><a href="/posts/<%=post._id%>/edit">Edit</a></button>
                         <form class="d-inline" action="/posts/<%=post._id%>?_method=DELETE" method="POST">
-                          <button class="btn btn-link d-inline p-0">Delete</button>
+                          <button class="btn btn-link btn-sm  d-inline pt-0">Delete</button>
                         </form>
                       </div>
-
-                      <div class="border-top border-bottom p-1 my-2">
+                      <% } %>
+                      <div class="border-top border-bottom p-1 my-1">
                         <h6 class="mb-0">Comments</h6>
                       </div>
                       <% if (currentUser) {%> 
@@ -41,7 +47,7 @@
                         </div>
                       <div id="commentDiv">
                         <% for (let comment of post.comments) { %>
-                          <hr class="my-2">
+                          <hr class="my-1">
                             <div class="media mb-0 pl-2 pt-1">
                               <a class="mr-3" href="/u/<%=comment.author.username%>">
                                 <img src="<%=comment.author.avatar.thumbnail%>" alt="">
@@ -49,11 +55,11 @@
                               <div class="media-body">
                                 <h6 class="my-0 card-subtitle d-inline"><a href="/u/<%=comment.author.username%>">@<%=comment.author.username%></a>   <img class="d-inline" src="<%=comment.author.country.flag%>" alt=""></h6>
                                   <p class="my-1"><%=comment.body%></p>
-                                  <small class="pb-2">Jan 12 9:03pm</small>
+                                  <small class="pb-1"><%=comment.timestamp%></small>
                                   <% if(currentUser && comment.author.equals(currentUser._id)) { %> 
                                   <div class="d-inline">
                                     <form class="d-inline" action="/posts/<%=post._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
-                                    <button class="btn btn-link btn-sm d-inline pl-0">Delete</button>
+                                    <button class="btn btn-link btn-sm d-inline p-1">Delete</button>
                                     </form>
                                   </div>
                                 <% } %> 

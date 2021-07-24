@@ -42,16 +42,24 @@
                             <div class="media pr-3">
                                 <img src="<%=user.avatar.thumbnail%>" class="pr-2" alt="">
                                 <div class="media-body">
-                                    <h6 class="my-0"><%=post.date%>: <%=post.rating%></h5>
-                                    <p class="card-subtitle mb-1 text-muted"><img class="d-inline" src="<%=user.country.flag%>" alt="">  @<%=user.username%></p>
-                                    <% if(post.image) { %> 
-                                        <img class="img-fluid" src="<%=post.image.fullsize%>" alt="">
-                                    <% } %> 
+                                    <h6 class="my-0"><%=post.date%>: <%=post.rating%></h6>
+                                    <p class="card-subtitle mb-1 text-muted">@<%=user.username%></p>
                                     <div class="text-wrap">
                                         <p class="my-0"><%=post.body%></p>
                                     </div>
+                                    <% if(post.image) { %> 
+                                        <div class="d-block">
+                                            <img class="img-fluid" src="<%=post.image.fullsize%>" alt="">
+                                        </div>
+                                    <% } %> 
+                                    <div class="d-inline">
+                                        <small class="pb-1"><%=post.timestamp%></small>
+                                        <% if(post.__v !== 0){ %>
+                                        <small class="pb-1 text-muted">Edited</small>
+                                        <% } %>
+                                    </div>
                                     <div class="d-block">
-                                        <small class="mr-3"><a href="/posts/<%=post._id%>" class="card-link">Show more</a></small>
+                                        <small class="mr-3"><a href="/posts/<%=post._id%>" class="card-link">See more</a></small>
                                     </div>
                                 </div>
                             </div>
