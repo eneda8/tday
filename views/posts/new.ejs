@@ -1,17 +1,29 @@
 <% layout("layouts/boilerplate")%>
 
-<h1 class="text-center">How was your day?</h1>
+
 <div class="row">
     <div class="col-6 offset-3">
-        <form action="/posts" method="POST" novalidate class="validated-form" enctype="multipart/form-data">
-            <div class="mb-3">
-                <label class="form-label" for="rating">Enter a number between 1 and 5:</label>
-                <input class="form-control text-center" type="number" id="rating" name="post[rating]" min="1" max="5" required>
+        <form action="/posts" method="POST" novalidate class="mb-3 validated-form" enctype="multipart/form-data">
+            <div>
+                <h6 class="">How was your day?</h6>
+                  <label class="form-label mb-3"for="post[rating]"></label>
+                  <fieldset class="starability-basic">
+                    <input type="radio" id="second-rate1" name="post[rating]" value=1 />
+                    <label for="second-rate1" title="Terrible">1 star</label>
+                    <input type="radio" id="second-rate2" name="post[rating]" value=2 />
+                    <label for="second-rate2" title="Not good">2 stars</label>
+                    <input type="radio" id="second-rate3" name="post[rating]" value=3 />
+                    <label for="second-rate3" title="Average">3 stars</label>
+                    <input type="radio" id="second-rate4" name="post[rating]" value=4 />
+                    <label for="second-rate4" title="Very good">4 stars</label>
+                    <input type="radio" id="second-rate5" name="post[rating]" value=5 />
+                    <label for="second-rate5" title="Amazing">5 stars</label>
+                  </fieldset>
                 <div class="valid-feedback">Looks good!</div>
             </div>
-            <div class="mb-3">
-                <label class="form-label" for="body">Write about your day:</label>
-                <textarea class="form-control" rows="5"cols="22" type="text" name="post[body]" required></textarea>
+            <div class="mb-3 mt-0">
+                <label class="form-label mt-0" for="body">Jot down your thoughts or post an image:</label>
+                <textarea class="form-control" rows="5"cols="10" type="text" name="post[body]" required></textarea>
                 <div class="valid-feedback">Looks good!</div>
             </div>
             <div class="custom-file">

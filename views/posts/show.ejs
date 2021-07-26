@@ -8,43 +8,41 @@
               <div class="media pr-3">
                   <a href="/u/<%=post.author.username%>"><img src="<%=post.author.avatar.thumbnail%>" class="pr-2" alt=""></a>
                   <div class="media-body">
-                      <h6 class="card-subtitle mb-1 text-muted d-inline"><a href="/u/<%=post.author.username%>">@<%=post.author.username%></a>  <img class="d-inline" src="<%=post.author.country.flag%>" alt=""></h6>
-                      <h6 class="my-0"><%=post.date%>: <%=post.rating%></h6>
-                      <div class="text-wrap">
-                        <p class="my-2"><%=post.body%></p>
-                      </div>
-                      <% if(post.image) { %> 
-                        <img class="img-fluid d-block" src="<%=post.image.path%>" alt="">
-                      <% } %> 
-                      
-                      <div class="d-inline">
-                        <small class="pb-1"><%=post.timestamp%></small>
-                        <% if(post.createdAt !== post.updatedAt){ %>
-                        <small class="pb-1 text-muted">Edited</small>
-                        <% } %>
-                        <% if(currentUser && post.author.equals(currentUser._id)) { %> 
-                        <button class="btn btn-link btn-sm  d-inline pt-0"><a href="/posts/<%=post._id%>/edit">Edit</a></button>
-                        <form class="d-inline" action="/posts/<%=post._id%>?_method=DELETE" method="POST">
-                          <button class="btn btn-link btn-sm  d-inline pt-0">Delete</button>
-                        </form>
-                      </div>
+                    <p class="card-subtitle mb-1 text-muted d-inline"><a href="/u/<%=post.author.username%>">@<%=post.author.username%></a>  <img class="d-inline" style="width: 17px" src="<%=post.author.country.flag%>" alt=""> : <span class="star star<%=post.rating%>"></span></p>
+                    <div class="text-wrap">
+                      <p class="my-2"><%=post.body%></p>
+                    </div>
+                    <% if(post.image) { %> 
+                      <img class="img-fluid d-block" src="<%=post.image.path%>" alt="">
+                    <% } %> 
+                    <div class="d-inline">
+                      <small class="pb-1"><%=post.timestamp%></small>
+                      <% if(post.__v !== 0){ %>
+                      <small class="pb-1 text-muted">Edited</small>
                       <% } %>
-                      <div class="border-top border-bottom p-1 my-1">
-                        <h6 class="mb-0">Comments</h6>
+                      <% if(currentUser && post.author.equals(currentUser._id)) { %> 
+                      <button class="btn btn-link btn-sm  d-inline pt-0"><a href="/posts/<%=post._id%>/edit">Edit</a></button>
+                      <form class="d-inline" action="/posts/<%=post._id%>?_method=DELETE" method="POST">
+                        <button class="btn btn-link btn-sm  d-inline pt-0">Delete</button>
+                      </form>
+                    </div>
+                    <% } %>
+                    <div class="border-top border-bottom p-1 my-1">
+                      <h6 class="mb-0">Comments</h6>
+                    </div>
+                    <% if (currentUser) {%> 
+                      <div class="media mt-3 mb-1 pl-2">
+                        <a class="mr-3" href="/u/<%=currentUser.username%>">
+                          <img src="<%=currentUser.avatar.thumbnail%>" alt="">
+                        </a>
+                          <div class="media-body">
+                            <form action="/posts/<%=post._id %>/comments" class="validated-form" method="POST" novalidate>
+                              <textarea class="form-control" name="comment[body]" id="body" cols="15" rows="1" placeholder="Post a comment" required></textarea>
+                              <div class="clearfix"><button class="btn btn-link btn-sm float-right">Submit</button></div>   
+                            </form>
+                          </div>
+                          <% } %>
                       </div>
-                      <% if (currentUser) {%> 
-                        <div class="media mt-3 mb-1 pl-2">
-                          <a class="mr-3" href="/u/<%=currentUser.username%>">
-                            <img src="<%=currentUser.avatar.thumbnail%>" alt="">
-                          </a>
-                            <div class="media-body">
-                              <form action="/posts/<%=post._id %>/comments" class="validated-form" method="POST" novalidate>
-                                <textarea class="form-control" name="comment[body]" id="body" cols="15" rows="1" placeholder="Post a comment" required></textarea>
-                                <div class="clearfix"><button class="btn btn-link btn-sm float-right">Submit</button></div>   
-                              </form>
-                            </div>
-                            <% } %>
-                        </div>
                       <div id="commentDiv">
                         <% for (let comment of post.comments) { %>
                           <hr class="my-1">

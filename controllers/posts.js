@@ -26,7 +26,7 @@ module.exports.indexToday= async (req, res) =>{
         }).execPopulate();
     }
     // posts.sort({date:-1});
-    res.render("posts/today", {posts});
+    res.render("posts/today", {posts, today});
 }
 
 module.exports.renderNewForm = (req, res) => { 
