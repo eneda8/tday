@@ -2,7 +2,7 @@
     <div class="row py-5 px-4">
         <div class="col-md-5 mx-auto">
             <div class="bg-white shadow rounded overflow-hidden">
-                <div class="px-4 pt-0 pb-4 cover" style="background-color: #343a40">
+                <div class="px-4 pt-0 pb-4 cover" style="background-image: url('https://images.unsplash.com/photo-1622495548018-4fc6f78d7bef?ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80')">
                     <div class="media align-items-end" style="transform: translateY(6rem)">
                         <div class="mr-3">
                             <img src="<%=user.avatar.path%>" alt="" width="150" height="150" class="rounded my-3 img-thumbnail">
@@ -42,7 +42,7 @@
                             <div class="media pr-3">
                                 <img src="<%=user.avatar.thumbnail%>" class="pr-2" alt="">
                                 <div class="media-body">
-                                    <p class="my-0"><%=post.date%>: <span class="star star<%=post.rating%>"></span></p>
+                                    <p class="my-0"><%=post.date%>: <span class="star star<%=post.rating%>-result"></span></p>
                                     <p class="card-subtitle mb-1 text-muted">@<%=user.username%></p>
                                     <div class="text-wrap">
                                         <p class="my-0"><%=post.body%></p>

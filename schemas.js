@@ -4,6 +4,7 @@ module.exports.postSchema = Joi.object({
     post: Joi.object({
         rating: Joi.number().required().min(1).max(5),
         body: Joi.string().required(),
+        timestamp: Joi.date()
         // image: Joi.string()
     }).required(),
     deleteImage: Joi.array()

@@ -1,6 +1,6 @@
 const Post = require("../models/post");
 const User = require("../models/user");
-const {getToday} = require("../utils/getToday");
+const {getToday, getTimestamp} = require("../utils/getToday");
 const ObjectID = require('mongodb').ObjectID;
 const {cloudinary} = require("../cloudinary");
 
@@ -38,6 +38,7 @@ module.exports.createPost = async (req, res, next) => {
     post.image = req.file;
     post.author = req.user._id;
     const user = await User.findById(req.user._id);
+    post.timestamp = getTimestamp();
     user.posts.push(post);
     await post.save();
     await user.save();

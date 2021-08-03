@@ -15,7 +15,8 @@ module.exports.getToday = function() {
   );
 }
 
-module.exports.getTimestamp= function() {
-    return new Date().toLocaleString('en-US');
+module.exports.getTimestamp = function() {
+  const timestamp = new Date().toLocaleString("en-US");
+    return timestamp;
   }
   

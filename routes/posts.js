@@ -12,15 +12,18 @@ router.route("/")
     .get(isLoggedIn, catchAsync(posts.index))
     .post(isLoggedIn, upload.single("image"), validatePost, catchAsync(posts.createPost));
 
-router.get("/new", isLoggedIn, posts.renderNewForm);
+// router.get("/new", isLoggedIn, posts.renderNewForm);
 
-router.get("/today", isLoggedIn, catchAsync(posts.indexToday));
+router.get("/today", isLoggedIn, catchAsync(posts.indexToday))
+    .post(isLoggedIn, upload.single("image"), validatePost, catchAsync(posts.createPost));
 
 router.route("/:id")
     .get(isLoggedIn, catchAsync(posts.showPost))
     .put(isLoggedIn, isAuthor, upload.single("image"), validatePost, catchAsync(posts.updatePost))
+    .post(isLoggedIn, upload.single("image"), validatePost, catchAsync(posts.createPost))
     .delete(isLoggedIn, isAuthor, catchAsync(posts.deletePost));
 
 router.get("/:id/edit", isLoggedIn, isAuthor, catchAsync(posts.renderEditForm))
+    .post(isLoggedIn, upload.single("image"), validatePost, catchAsync(posts.createPost))
 
 module.exports = router;
