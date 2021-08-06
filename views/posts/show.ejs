@@ -18,7 +18,7 @@
                     <% } %> 
                     <div class="d-inline">
                       <small class="pb-1"><%=post.timestamp%></small>
-                      <% if(post.__v !== 0){ %>
+                      <% if(post.edited){ %>
                       <small class="pb-1 text-muted">Edited</small>
                       <% } %>
                       <% if(currentUser && post.author.equals(currentUser._id)) { %> 

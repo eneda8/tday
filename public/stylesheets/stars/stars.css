@@ -25,7 +25,7 @@
   float: left;
 }
 
-.rating > input[type=radio] { display: none ; } 
+.rating > input[type=radio] { display:none; } 
 .rating > label:before { 
   margin: 5px;
   font-size: 2em;

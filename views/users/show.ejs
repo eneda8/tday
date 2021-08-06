@@ -54,12 +54,12 @@
                                     <% } %> 
                                     <div class="d-inline">
                                         <small class="pb-1"><%=post.timestamp%></small>
-                                        <% if(post.__v !== 0){ %>
+                                        <% if(post.edited){ %>
                                         <small class="pb-1 text-muted">Edited</small>
                                         <% } %>
                                     </div>
                                     <div class="d-block">
-                                        <small class="mr-3"><a href="/posts/<%=post._id%>" class="card-link">See more</a></small>
+                                        <small class="mr-3"><a href="/posts/<%=post._id%>" class="card-link">Comments</a></small>
                                     </div>
                                 </div>
                             </div>

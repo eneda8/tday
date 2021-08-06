@@ -85,6 +85,7 @@ module.exports.updatePost = async (req,res) => {
         await cloudinary.uploader.destroy(req.body.deleteImage[0])
         await post.updateOne({$set: {image: null}});
     } 
+    post.edited = true;
     await post.save();
     req.flash("success", "Post updated!");
     res.redirect(`/posts/${post._id}`)

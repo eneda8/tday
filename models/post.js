@@ -33,7 +33,8 @@ const PostSchema = new Schema({
     },
     body: {
       type: String,
-      required: true
+      required: true,
+
     },
     image: ImageSchema,
     author: {
@@ -43,15 +44,17 @@ const PostSchema = new Schema({
     comments: [
       {
       type: Schema.Types.ObjectId,
-      ref: "Comment"
+      ref: "Comment",
       }
     ],
     likes: {
       type: Number
-    }
+    },
+    edited: Boolean
   },
+  //options
   {timestamps: true,
-  setDefaultsOnInsert: true
+  setDefaultsOnInsert: true,
   } 
 ) 
 
