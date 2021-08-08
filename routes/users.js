@@ -25,4 +25,8 @@ router.get("/logout", users.logout);
 
 router.get("/u/:username", isLoggedIn, catchAsync(users.showUserProfile));
 
+router.route("/settings")
+    .get(isLoggedIn, catchAsync(users.showUserSettings))
+    .put(isLoggedIn, upload.single("avatar"), catchAsync(users.updateUserSettings))
+
 module.exports = router;

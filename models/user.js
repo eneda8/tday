@@ -47,6 +47,12 @@ const userSchema = new Schema({
         flag: String
     },
     avatar: AvatarSchema,
+    displayName: String,
+    bio: String,
+    coverColor: {
+        type: String,
+        default: "#343a40"
+    },
     posts: [ 
         {
         type: Schema.Types.ObjectId,

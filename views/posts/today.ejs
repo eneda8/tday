@@ -12,7 +12,8 @@
                     <div class="media pr-3">
                         <a href="/u/<%=post.author.username%>"><img src="<%=post.author.avatar.thumbnail%>" class="pr-2" alt=""></a>
                         <div class="media-body">
-                            <p class="card-subtitle mb-1 text-muted d-inline"><a href="/u/<%=post.author.username%>">@<%=post.author.username%></a>  <img class="d-inline" style="width: 17px" src="<%=post.author.country.flag%>" alt=""> : <span class="star star<%=post.rating%>-result"></span></p>
+                            <p class="card-subtitle mb-1 d-inline"><strong><a href="/u/<%=post.author.username%>"><%=post.author.displayName%></a></strong> @<%=post.author.username%> <img class="d-inline" style="width: 17px" src="<%=post.author.country.flag%>" alt=""></p>
+                            <p><span class="star star<%=post.rating%>-result"></span></p>
                             <div class="text-wrap">
                                 <p><%=post.body%></p>
                             </div>

@@ -1,0 +1,44 @@
+<% layout("layouts/boilerplate")%>
+
+<div class="container d-flex justify-content-center align-items-center mb-5">
+    <div class="row">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h5 class="mt-3">Edit Profile</h5>
+                    <form action="/settings?_method=PUT" method="POST" class="validated-form" novalidate enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label class="form-label" for="displayName">Display name</label>
+                            <input class="form-control" type="text" id="displayName" name="displayName" value="<%=user.displayName%>">
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="bio">Bio</label>
+                            <textarea class="form-control" id="bio" name="bio"><%=user.bio%></textarea>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+                        <p>Profile photo:</p>
+                        <div class="custom-file mb-3">
+                            <input type="file" class="custom-file-input" id="avatar" name="avatar" onchange="document.getElementById('preview').src = window.URL.createObjectURL(this.files[0])">
+                            <label class="custom-file-label" for="avatar">Choose an image...</label>
+                        </div>
+                        <img class="img-fluid my-2" id="preview" width="100px"/> 
+                        <div class="mb-3">
+                            <label for="coverColor">Profile cover color:</label>
+                            <input type="color" name="coverColor" id="coverColor" value="<%=user.coverColor%>">
+                        </div>
+                        <div>
+                            <button type="button" class="btn btn-secondary">Cancel</button>
+                            <button type="submit" class="btn btn-success">Save</button>
+                            <a href="/u/<%=user.username%>" class="">Cancel</a></p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

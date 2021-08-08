@@ -66,4 +66,27 @@ module.exports.showUserProfile = async(req, res) => {
     res.render("users/show", {user, posts});
 };
 
-  
+module.exports.showUserSettings = async(req, res) => {
+    const user = await User.findOne({username: req.user.username})
+    if(!user){
+        req.flash("error", "User not found!")
+        return res.redirect("/posts");
+    }
+    res.render("users/settings", {user});
+};
+    
+module.exports.updateUserSettings = async(req, res) => {
+    const {displayName, bio, coverColor} = req.body;
+    const user = await User.findOneAndUpdate({username: req.user.username}, {...req.body})
+    if(req.file){
+        user.avatar = req.file;
+    }
+
+    if(!user){
+        req.flash("error", "User not found!")
+        return res.redirect("/posts");
+    }
+    user.save()
+    req.flash("success", "Preferences updated");
+    res.redirect(`/u/${user.username}`) 
+};
