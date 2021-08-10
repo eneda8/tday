@@ -44,7 +44,10 @@ const userSchema = new Schema({
             type: String,
             required: true
         },
-        flag: String
+        flag: {
+            type: String,
+            default: "/images/flags/US.png"
+        }
     },
     avatar: AvatarSchema,
     displayName: String,
@@ -66,7 +69,14 @@ const userSchema = new Schema({
         }
     ]
 }) 
-  
+
+userSchema.statics.random = async function() {
+    const count = await this.countDocuments();
+    const rand = Math.floor(Math.random() * count);
+    const randomDoc = await this.findOne().skip(rand);
+    return randomDoc;
+  };
+
 userSchema.plugin(passportLocalMongoose, {
     selectFields : "birthday gender country avatar"});
 

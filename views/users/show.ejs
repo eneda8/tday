@@ -41,7 +41,7 @@
                     <%for (post of user.posts) { %> 
                         <div class="card mb-3 mt-1 pt-2 pl-2">
                             <div class="media pr-3">
-                                <img src="<%=user.avatar.thumbnail%>" class="pr-2" alt="">
+                                <img src="<%=user.avatar.thumbnail%>" class="pr-2" alt="" style="width: 45px; border-radius: 50%">
                                 <div class="media-body">
                                     <p class="card-subtitle mt-1"><strong><%=user.displayName%></strong><span class="text-muted">@<%=user.username%></span></p>
                                     <p class="mb-1 mt-0 "><%=post.date%>: <span class="star star<%=post.rating%>-result"></span></p>
