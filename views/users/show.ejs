@@ -1,32 +1,32 @@
 <% layout("layouts/boilerplate")%>
-    <div class="row py-5 px-4">
-        <div class="col-md-5 mx-auto">
+    <div class="row py-3 px-4">
+        <div class="col-md-8 col-lg-5 mx-auto">
             <div class="bg-white shadow rounded overflow-hidden">
                 <div class="px-4 pt-0 pb-4 cover" style="background-color: <%=user.coverColor%>">
                     <div class="media align-items-end" style="transform: translateY(6rem)">
                         <div class="mr-3">
-                            <img src="<%=user.avatar.path%>" alt="" width="150" height="150" class="rounded my-3 img-thumbnail">
+                            <img src="<%=user.avatar.path%>" alt="" width="200" height="200" class="rounded my-3 img-thumbnail">
                             <% if(currentUser && user._id.equals(currentUser._id)) { %>
                             <a href=""" data-toggle="modal" id="editProfileLink" data-target="#editProfileModal" class="btn btn-outline-dark btn-sm btn-block">Edit profile</a>
                             <% } %> 
                         </div>
-                        <div class="media-body mb-5 text-white">
-                            <h4 class="my-0"><%=user.displayName%></h4>
-                            <h6 class="mt-0 mb-0">@<%=user.username%></h6>
-                            <p class="small mb-4"><img src="<%=user.country.flag%>"></p>
+                        <div class="mb-5 text-white">
+                            <h4 class="my-1"><%=user.displayName%></h4>
+                            <h6 class="py-1">@<%=user.username%></h6>
+                            <p class="small mb-5"><img src="/images/pin.png" alt="">  <img src="<%=user.country.flag%>"></p>
                         </div>
                     </div>
                 </div>
                 <div class="bg-light p-3 d-flex justify-content-end text-center">
                     <ul class="list-inline mb-0">
                         <li class="list-inline-item">
-                            <h5 class="font-weight-bold mb-0 d-block">215</h5><small class="text-muted">Posts</small>
+                            <h5 class="font-weight-bold mb-0 d-block"><%=postCount%></h5><small class="text-muted">Posts</small>
                         </li>
                         <li class="list-inline-item">
-                            <h5 class="font-weight-bold mb-0 d-block">745</h5><small class="text-muted">Followers</small>
+                            <h5 class="font-weight-bold mb-0 d-block"><%=commentCount%></h5><small class="text-muted">Comments</small>
                         </li>
                         <li class="list-inline-item">
-                            <h5 class="font-weight-bold mb-0 d-block">340</h5><small class="text-muted">Following</small>
+                            <h5 class="font-weight-bold mb-0 d-block">14</h5><small class="text-muted">Streak</small>
                         </li>
                     </ul>
                 </div>

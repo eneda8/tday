@@ -1,5 +1,7 @@
 const User = require("../models/user");
 const Post = require("../models/post");
+const Comment = require("../models/comment");
+
 const countries = require("../countries");
 
 module.exports.renderRegisterForm = (req, res) => {
@@ -53,17 +55,18 @@ module.exports.logout = (req,res) => {
 }
 
 module.exports.showUserProfile = async(req, res) => {
-    const user = await User.findOne({username : req.params.username}).populate("posts").populate("comments"); 
+    const user = await User.findOne({username : req.params.username})
+    .populate("posts").populate("comments"); 
     if(!user){
         req.flash("error", "User not found!")
         return res.redirect("/posts");
     }
-    const posts = Post.find().where("author.username").equals(user.username);
-    if(!posts){
-        req.flash("error", "Something went wrong!")
-        return res.redirect("/posts");
-    }
-    res.render("users/show", {user, posts});
+    const postCount = await Post.find({"author": user}).countDocuments(function(err, count){
+        return count;
+    });
+    const commentCount = await Comment.find({"author": user}).countDocuments((err, count) => count)
+
+    res.render("users/show", {user, postCount, commentCount});
 };
 
 module.exports.showUserSettings = async(req, res) => {

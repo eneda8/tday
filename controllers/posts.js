@@ -5,27 +5,19 @@ const ObjectID = require('mongodb').ObjectID;
 const {cloudinary} = require("../cloudinary");
 
 module.exports.index = async (req, res) => {
-    const posts = await Post.find({})
+    const posts = await Post.find({}).sort({"createdAt": -1});
     for(post of posts) {
-        await post.populate("author").populate({
-            path: "image",
-            populate:{path: "path"}
-        }).execPopulate();
+        await post.populate("author").execPopulate();
     }
-    // posts.sort({date:-1});
     res.render("posts/index", {posts});
 } 
 
 module.exports.indexToday= async (req, res) =>{
     const today = getToday();
-    const posts = await Post.find({date: today});
+    const posts = await Post.find({date: today}).sort({"createdAt": -1});
     for(post of posts) {
-        await post.populate("author").populate({
-            path: "image",
-            populate:{path: "path"}
-        }).execPopulate();
+        await post.populate("author").execPopulate();
     }
-    // posts.sort({date:-1});
     res.render("posts/today", {posts, today});
 }
 
@@ -39,10 +31,9 @@ module.exports.createPost = async (req, res, next) => {
     post.author = req.user._id;
     const user = await User.findById(req.user._id);
     post.timestamp = getTimestamp();
-    user.posts.push(post);
+    user.posts.unshift(post);
     await post.save();
     await user.save();
-    console.log(`Post created: ${post}`)
     req.flash("success", "New post submitted!");
     res.redirect(`/posts/${post._id}`)
 }
