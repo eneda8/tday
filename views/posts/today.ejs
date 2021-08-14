@@ -1,10 +1,11 @@
 <% layout("layouts/boilerplate")%>
 
-<div class="container-fluid">
-    <div class="row">
-    <div class="col"></div>
-    <div class="col-5 border">
+<div class="container-fluid mb-4">
+    <div class="row py-3 px-4">
+    <div class="col-md-8 col-lg-5 mx-auto border">
         <h5 class="text-left"><%=today%></h5>
+        <h6 class="text-left">10 random posts from today</h5>
+        <button type="button" class="btn btn-small" title="refresh for 5 more posts"><a href="/posts/today">🗘</button>
         <a href="" data-toggle="modal" id="newPostLink" data-target="#newPostModal">Add Post</a>
         <% if(posts){ %>
             <%for (post of posts) { %> 
@@ -37,7 +38,5 @@
                 </div>
                 <% } %> 
         <% }%>
-    </div>
-    <div class="col"></div>
-    </div>   
+    </div> 
 </div>

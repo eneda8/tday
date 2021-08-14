@@ -13,6 +13,10 @@ router.get("/", (req, res) => {
     res.render("home");
 })
 
+router.get("/data", (req,res) => {
+    res.render("data");
+})
+
 router.route("/register")
     .get(users.renderRegisterForm)
     .post(upload.single("avatar"),catchAsync(users.register));

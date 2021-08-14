@@ -1,9 +1,8 @@
 <% layout("layouts/boilerplate")%>
 
 <div class="container-fluid">
-    <div class="row">
-    <div class="col .d-xs-block"></div>
-    <div class="col-5 border">
+    <div class="row py-3 px-4">
+    <div class="col-md-8 col-lg-5 mx-auto border">
         <h5 class="text-left">All Posts</h5>
         <a class="" href="" data-toggle="modal" id="newPostLink" data-target="#newPostModal">Add Post</a>
         <%for (post of posts) { %> 
@@ -36,6 +35,4 @@
             </div>
         <% } %> 
     </div>
-    <div class="col .d-xs-block"></div>
-    </div>   
 </div>

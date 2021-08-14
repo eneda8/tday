@@ -51,7 +51,7 @@ module.exports.login = (req,res) => {
 module.exports.logout = (req,res) => {
     req.logout();
     req.flash("success", "Goodbye!");
-    res.redirect("/posts");
+    res.redirect("/");
 }
 
 module.exports.showUserProfile = async(req, res) => {
@@ -61,10 +61,8 @@ module.exports.showUserProfile = async(req, res) => {
         req.flash("error", "User not found!")
         return res.redirect("/posts");
     }
-    const postCount = await Post.find({"author": user}).countDocuments(function(err, count){
-        return count;
-    });
-    const commentCount = await Comment.find({"author": user}).countDocuments((err, count) => count)
+    const postCount = await Post.find({"author": user}).countDocuments((count) => count);
+    const commentCount = await Comment.find({"author": user}).countDocuments((count) => count)
 
     res.render("users/show", {user, postCount, commentCount});
 };

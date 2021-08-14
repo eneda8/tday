@@ -13,8 +13,8 @@ module.exports.index = async (req, res) => {
 } 
 
 module.exports.indexToday= async (req, res) =>{
-    const today = getToday();
-    const posts = await Post.find({date: today}).sort({"createdAt": -1});
+    const today = getToday()
+    const posts = await Post.random(10);
     for(post of posts) {
         await post.populate("author").execPopulate();
     }

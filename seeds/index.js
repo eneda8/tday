@@ -52,7 +52,7 @@ const seedDB = async () => {
         // post.image = faker.image();
         const user = await User.random();
         post.author = user;
-        user.posts.push(post);
+        user.posts.unshift(post);
         await post.save();
         await user.save();
     }
