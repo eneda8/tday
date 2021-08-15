@@ -2,6 +2,8 @@ const ExpressError = require("./utils/ExpressError");
 const {postSchema, userSchema, commentSchema} = require("./schemas.js");
 const Post = require("./models/post");
 const Comment = require("./models/comment");
+const User = require("./models/user");
+const {getToday} = require("./utils/getToday");
 
 module.exports.validatePost = (req, res, next) => {  
     const {error} = postSchema.validate(req.body);
@@ -49,4 +51,18 @@ module.exports.isCommentAuthor = async(req, res, next) => {
         return res.redirect(`/posts/${id}`)
     }
     next();
+}
+
+module.exports.hasPostedToday = async(req, res, next) => {
+    const today = getToday();
+    const user = await User.findById(req.user._id);
+    const post = await Post.find({"author": user, "date": today});
+    if(post.length){
+        user.postedToday = true;
+        req.flash("error", "Sorry, you've already posted once today!")
+        return res.redirect("/posts/today")
+    } else{
+        user.postedToday = false;
+    }
+    next()
 }

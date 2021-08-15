@@ -8,8 +8,10 @@
       <div class="navbar-nav">
         <a class="nav-link" href="/">Home</a>
         <a class="nav-link" href="/posts/today">Today's Posts</a>
-        <% if(currentUser) {  %> 
+        <% if(currentUser && (currentUser.postedToday === false)) {  %> 
         <a class="nav-link" href="" data-toggle="modal" id="newPostLink" data-target="#newPostModal">New Post</a>
+        <% } %>
+        <% if(currentUser && (currentUser.postedToday === true)) {  %> 
         <a class="nav-link" href="" data-toggle="modal" id="editPostLink" data-target="#editPostModal">Edit Today's Post</a>
         <% } %>
       </div>

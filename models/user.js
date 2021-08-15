@@ -67,13 +67,18 @@ const userSchema = new Schema({
             type: Schema.Types.ObjectId,
             ref: "Comment"
         }
-    ]
+    ],
+    postedToday: {
+        type: Boolean,
+        default: false
+    }
 }) 
 
 userSchema.statics.random = async function() {
     const count = await this.countDocuments();
     const rand = Math.floor(Math.random() * count);
-    const randomDoc = await this.findOne().skip(rand);
+    const randomDoc = await this.findOne().where({ "postedToday" : false }).skip(rand);
+    console.log(randomDoc);
     return randomDoc;
   };
 

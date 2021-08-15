@@ -7,20 +7,21 @@ const countries = require("../countries");
 module.exports.renderRegisterForm = (req, res) => {
     if (req.isAuthenticated()) {
         req.flash("error", "You are already logged in!");
-        return res.redirect('/posts');
+        return res.redirect('/posts/today');
     }
     res.render("users/register", {countries})
 }
 
 module.exports.register = async (req,res, next) => {
     try{
-        const {email, username, password, birthday, gender, country, avatar} = req.body;
-        const user = new User({email, username, birthday, gender, country, avatar});
+        const {email, username, password, birthday, gender, country, avatar, displayName} = req.body;
+        const user = new User({email, username, birthday, gender, country, avatar, displayName});
         if(req.file){
             user.avatar = req.file;
         } else {
             user.avatar = {}
         }
+        user.postedToday = false;
         const registeredUser = await User.register(user, password);
         req.login(registeredUser, err => {
             if(err) return next(err);
@@ -36,14 +37,14 @@ module.exports.register = async (req,res, next) => {
 module.exports.renderLoginForm = (req,res) => {
     if (req.isAuthenticated()) {
         req.flash("error", "You are already logged in!");
-        return res.redirect('/posts');
+        return res.redirect('/posts/today');
     }
     res.render("users/login")
 }
 
 module.exports.login = (req,res) => {
     req.flash("success", "Welcome back!");
-    const redirectUrl = req.session.returnTo || "/posts";
+    const redirectUrl = req.session.returnTo || "/posts/today";
     delete req.session.returnTo;
     res.redirect(redirectUrl);
 }
@@ -59,7 +60,7 @@ module.exports.showUserProfile = async(req, res) => {
     .populate("posts").populate("comments"); 
     if(!user){
         req.flash("error", "User not found!")
-        return res.redirect("/posts");
+        return res.redirect("/posts/today");
     }
     const postCount = await Post.find({"author": user}).countDocuments((count) => count);
     const commentCount = await Comment.find({"author": user}).countDocuments((count) => count)
@@ -71,7 +72,7 @@ module.exports.showUserSettings = async(req, res) => {
     const user = await User.findOne({username: req.user.username})
     if(!user){
         req.flash("error", "User not found!")
-        return res.redirect("/posts");
+        return res.redirect("/posts/today");
     }
     res.render("users/settings", {user});
 };
@@ -85,7 +86,7 @@ module.exports.updateUserSettings = async(req, res) => {
 
     if(!user){
         req.flash("error", "User not found!")
-        return res.redirect("/posts");
+        return res.redirect("/posts/today");
     }
     user.save()
     req.flash("success", "Preferences updated");

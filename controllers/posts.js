@@ -15,14 +15,16 @@ module.exports.index = async (req, res) => {
 module.exports.indexToday= async (req, res) =>{
     const today = getToday()
     const posts = await Post.random(10);
-    for(post of posts) {
-        await post.populate("author").execPopulate();
+    if(posts){
+        for(post of posts) {
+            await post.populate("author").execPopulate();
+        }
     }
     res.render("posts/today", {posts, today});
 }
 
 module.exports.renderNewForm = (req, res) => { 
-res.render("posts/new")
+    res.render("posts/new")
 }
 
 module.exports.createPost = async (req, res, next) => {
@@ -32,6 +34,7 @@ module.exports.createPost = async (req, res, next) => {
     const user = await User.findById(req.user._id);
     post.timestamp = getTimestamp();
     user.posts.unshift(post);
+    user.postedToday = true;
     await post.save();
     await user.save();
     req.flash("success", "New post submitted!");
@@ -82,10 +85,20 @@ module.exports.updatePost = async (req,res) => {
     res.redirect(`/posts/${post._id}`)
 }
 
-module.exports.deletePost = async (req,res) => {
+module.exports.deletePost = async(req, res) => {
     const {id} = req.params;
+    const user = await User.findById(req.user._id).populate("posts");
+    const today = getToday();
+    const post = await Post.findById(id).populate("author");
+    if(post.date === today){
+        user.posts.shift();
+        user.postedToday = false;
+        user.save();
+    } else {
+        user.posts.pull(id)
+        user.save()
+    }
     await Post.findByIdAndDelete(id);
-    req.flash("success", "Post deleted!")
-    res.redirect("/posts")
+    req.flash("success", "Post deleted");
+    res.redirect("/posts/today");
 }
-

@@ -4,7 +4,9 @@
     <div class="row py-3 px-4">
     <div class="col-md-8 col-lg-5 mx-auto border">
         <h5 class="text-left">All Posts</h5>
+        <% if(currentUser && (currentUser.postedToday === false)) {  %> 
         <a class="" href="" data-toggle="modal" id="newPostLink" data-target="#newPostModal">Add Post</a>
+        <% } %> 
         <%for (post of posts) { %> 
             <div class="card mb-3 mt-1 pt-2 pl-2">
                 <div class="media pr-3">

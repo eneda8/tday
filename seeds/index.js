@@ -23,7 +23,7 @@ db.once("open", () => {
 
 const seedDB = async () => {
     // register new users with faker
-    // for(let i =0; i < 200; i++) {
+    // for(let i =0; i < 500; i++) {
     //     const email = faker.internet.email();
     //     const username = faker.internet.userName();
     //     const password = faker.internet.password();
@@ -41,20 +41,24 @@ const seedDB = async () => {
     //     user.displayName = faker.name.findName();
     //     user.bio = faker.lorem.sentence();
     //     user.coverColor = faker.internet.color();
+    //     user.postedToday = false;
     //     const registeredUser = await User.register(user, password);
     // }
 
     // /make fake posts
-    for(let i = 0; i<600; i++){
+    for(let i = 0; i<550; i++){
         const rating = Math.floor(Math.random() * 5) + 1;
         const body = faker.lorem.sentence();
         const post = new Post({rating, body});
         // post.image = faker.image();
         const user = await User.random();
-        post.author = user;
-        user.posts.unshift(post);
-        await post.save();
-        await user.save();
+        if(user){
+            post.author = user;
+            user.postedToday = true;
+            user.posts.unshift(post);
+            await post.save();
+            await user.save();
+        }
     }
 }
 

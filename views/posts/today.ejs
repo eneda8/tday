@@ -6,7 +6,9 @@
         <h5 class="text-left"><%=today%></h5>
         <h6 class="text-left">10 random posts from today</h5>
         <button type="button" class="btn btn-small" title="refresh for 5 more posts"><a href="/posts/today">🗘</button>
+        <% if(currentUser && (currentUser.postedToday === false)) {  %> 
         <a href="" data-toggle="modal" id="newPostLink" data-target="#newPostModal">Add Post</a>
+        <% } %> 
         <% if(posts){ %>
             <%for (post of posts) { %> 
                 <div class="card mb-3 mt-1 pt-2 pl-2">

@@ -1,31 +1,24 @@
 <% layout("layouts/boilerplate")%>
-
-
-<div class="row">
-    <div class="col-6 offset-3">
+<div class="row py-3 px-4">
+    <div class="col-md-8 col-lg-5 mx-auto">
         <form action="/posts" method="POST" novalidate class="mb-3 validated-form" enctype="multipart/form-data">
-            <div>
-                <h6 class="">How was your day?</h6>
-                  <label class="form-label mb-3"for="post[rating]"></label>
-                  <fieldset class="starability-basic">
-                    <input type="radio" id="second-rate1" name="post[rating]" value=1 />
-                    <label for="second-rate1" title="Terrible">1 star</label>
-                    <input type="radio" id="second-rate2" name="post[rating]" value=2 />
-                    <label for="second-rate2" title="Not good">2 stars</label>
-                    <input type="radio" id="second-rate3" name="post[rating]" value=3 />
-                    <label for="second-rate3" title="Average">3 stars</label>
-                    <input type="radio" id="second-rate4" name="post[rating]" value=4 />
-                    <label for="second-rate4" title="Very good">4 stars</label>
-                    <input type="radio" id="second-rate5" name="post[rating]" value=5 />
-                    <label for="second-rate5" title="Amazing">5 stars</label>
-                  </fieldset>
+            <h6 class="">How was your day?</h6>
+            <div class="">
+                <label class=""for="post[rating]"></label>
+                <fieldset class="rating d-block">
+                <input type="radio" id="star5" name="post[rating]" value=5 /><label class = "" for="star5" title="Amazing"></label>
+                <input type="radio" id="star4" name="post[rating]" value=4 /><label class = "" for="star4" title="Very good"></label>
+                <input type="radio" id="star3" name="post[rating]" value=3 /><label class = "" for="star3" title="Average"></label>
+                <input type="radio" id="star2" name="post[rating]" value=2 /><label class = "" for="star2" title="Not good"></label>
+                <input type="radio" id="star1" name="post[rating]" value=1 /><label class = "" for="star1" title="Terrible"></label>
+                </fieldset>
                 <div class="valid-feedback">Looks good!</div>
-            </div>
-            <div class="mb-3 mt-0">
+            </div>  
+            <div class="">
                 <label class="form-label mt-0" for="body">Jot down your thoughts or post an image:</label>
                 <textarea class="form-control" rows="5"cols="10" type="text" name="post[body]" required></textarea>
                 <div class="valid-feedback">Looks good!</div>
-            </div>
+            </div>    
             <div class="custom-file">
                 <input type="file" class="custom-file-input" id="image" name="image" onchange="document.getElementById('preview').src = window.URL.createObjectURL(this.files[0])">
                 <label class="custom-file-label" for="image">Choose image...</label>
