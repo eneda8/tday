@@ -33,8 +33,7 @@ const PostSchema = new Schema({
     },
     body: {
       type: String,
-      required: true,
-
+      required: false
     },
     image: ImageSchema,
     author: {

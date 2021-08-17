@@ -2,7 +2,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="editPostModalLabel">Edit Post</h5>
+          <h6 class="modal-title" id="editPostModalLabel">Update Today's Rating</h6>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -14,18 +14,18 @@
                     <p class="">Current rating: <span class="star star<%=post.rating%>-result"></span></p>
                     <label class="form-label mb-3"for="rating"></label>
                     <fieldset class="rating">
-                        <input type="radio" id="star5-edit" name="post[rating]" value=5 /><label class = "" for="star5-edit" title="Amazing"></label>
-                        <input type="radio" id="star4-edit" name="post[rating]" value=4 /><label class = "" for="star4-edit" title="Very good"></label>
-                        <input type="radio" id="star3-edit" name="post[rating]" value=3 /><label class = "" for="star3-edit" title="Average"></label>
-                        <input type="radio" id="star2-edit" name="post[rating]" value=2 /><label class = "" for="star2-edit" title="Not good"></label>
-                        <input type="radio" id="star1-edit" name="post[rating]" value=1 /><label class = "" for="star1-edit" title="Terrible"></label>
+                        <input type="radio" id="star5-edit" name="post[rating]" value="5"><label class = "" for="star5-edit" title="Amazing"></label>
+                        <input type="radio" id="star4-edit" name="post[rating]" value="4"><label class = "" for="star4-edit" title="Very good"></label>
+                        <input type="radio" id="star3-edit" name="post[rating]" value="3"><label class = "" for="star3-edit" title="Average"></label>
+                        <input type="radio" id="star2-edit" name="post[rating]" value="2"><label class = "" for="star2-edit" title="Not good"></label>
+                        <input type="radio" id="star1-edit" name="post[rating]" value="1"><label class = "" for="star1-edit" title="Terrible"></label>
                     </fieldset>
 
                     <div class="valid-feedback">Looks good!</div>
                 </div>
                 <div class="mb-3 mt-0">
                     <label class="form-label mt-0" for="body">Jot down your thoughts or post an image:</label>
-                    <textarea class="form-control" rows="5"cols="10" type="text" name="post[body]" required><%=post.body%></textarea>
+                    <textarea class="form-control" rows="5"cols="10" type="text" name="post[body]"><%=post.body%></textarea>
                     <div class="valid-feedback">Looks good!</div>
                 </div>
                 <div class="custom-file">

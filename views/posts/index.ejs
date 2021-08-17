@@ -2,8 +2,8 @@
 
 <div class="container-fluid">
     <div class="row py-3 px-4">
-    <div class="col-md-8 col-lg-5 mx-auto border">
-        <h5 class="text-left">All Posts</h5>
+    <div class="col-md-8 col-lg-5 mx-auto border bg-light">
+        <h5 class="text-left font-weight-bold mt-3">All Ratings</h5>
         <% if(currentUser && (currentUser.postedToday === false)) {  %> 
         <a class="" href="" data-toggle="modal" id="newPostLink" data-target="#newPostModal">Add Post</a>
         <% } %> 
@@ -12,8 +12,8 @@
                 <div class="media pr-3">
                     <a href="/u/<%=post.author.username%>"><img style="width:45px; border-radius: 50%" src="<%=post.author.avatar.thumbnail%>" class="pr-2" alt=""></a>
                     <div class="media-body">
-                        <p class="card-subtitle mb-1 d-inline"><strong><a href="/u/<%=post.author.username%>"><%=post.author.displayName%></a></strong> @<%=post.author.username%> <img class="d-inline" style="width: 17px" src="<%=post.author.country.flag%>" alt=""></p>
-                        <p class="mb-2"><%=post.date%>: <span class="star star<%=post.rating%>-result"></span></p>
+                        <p class="card-subtitle mb-1 d-inline"><strong><a href="/u/<%=post.author.username%>"><%=post.author.displayName%></a></strong> <span class="text-muted"> @<%=post.author.username%> </span><img class="d-inline" style="width: 17px" src="<%=post.author.country.flag%>" alt=""></p>
+                        <p class="mb-2"><span class="mark"><%=post.date%>:</span><span class="star star<%=post.rating%>-result"></span></p>
                         <div class="text-wrap">
                             <p><%=post.body%></p>
                         </div>
@@ -38,3 +38,5 @@
         <% } %> 
     </div>
 </div>
+
+<%- include('../partials/edit')%>

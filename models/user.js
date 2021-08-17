@@ -74,14 +74,6 @@ const userSchema = new Schema({
     }
 }) 
 
-userSchema.statics.random = async function() {
-    const count = await this.countDocuments();
-    const rand = Math.floor(Math.random() * count);
-    const randomDoc = await this.findOne().where({ "postedToday" : false }).skip(rand);
-    console.log(randomDoc);
-    return randomDoc;
-  };
-
 userSchema.plugin(passportLocalMongoose, {
     selectFields : "birthday gender country avatar"});
 

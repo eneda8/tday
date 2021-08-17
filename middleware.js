@@ -53,16 +53,24 @@ module.exports.isCommentAuthor = async(req, res, next) => {
     next();
 }
 
-module.exports.hasPostedToday = async(req, res, next) => {
+module.exports.setPostedToday = async(req, res, next) => {
+    const today = getToday();
+    const user = await User.findById(req.user._id);
+    const post = await Post.find({"author": user, "date": today});
+    if(post){
+        user.set("postedToday", true)
+    } else {
+        user.set("postedToday", false);
+    }
+    next()
+}
+
+module.exports.blockDuplicatePost = async (req, res, next) => {
     const today = getToday();
     const user = await User.findById(req.user._id);
     const post = await Post.find({"author": user, "date": today});
     if(post.length){
-        user.postedToday = true;
         req.flash("error", "Sorry, you've already posted once today!")
         return res.redirect("/posts/today")
-    } else{
-        user.postedToday = false;
-    }
-    next()
+    } else next()
 }

@@ -13,7 +13,14 @@ module.exports.index = async (req, res) => {
 } 
 
 module.exports.indexToday= async (req, res) =>{
-    const today = getToday()
+    const today = new Date().toLocaleDateString(
+        'en-US',
+        {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        }
+      )
     const posts = await Post.random(10);
     if(posts){
         for(post of posts) {
@@ -100,5 +107,5 @@ module.exports.deletePost = async(req, res) => {
     }
     await Post.findByIdAndDelete(id);
     req.flash("success", "Post deleted");
-    res.redirect("/posts/today");
+    res.redirect(`/u/${user.username}`);
 }

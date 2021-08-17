@@ -780,6 +780,10 @@ const countries = [
         flag: "/images/flags/SE.png"
     },
     {
+        name: "Switzerland",
+        flag: "/images/flags/SW.png"
+    },
+    {
         name: "Singapore",
         flag: "/images/flags/SG.png"
     },
@@ -788,8 +792,12 @@ const countries = [
         flag: "/images/flags/SH.png"
     },
     {
-        name: "Slovenia",
+        name: "Slovakia",
         flag: "/images/flags/SK.png"
+    },
+    {
+        name: "Slovenia",
+        flag: "/images/flags/SI.png"
     },
     {
         name: "Sierra Leone",
