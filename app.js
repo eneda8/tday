@@ -9,6 +9,7 @@ const mongoose = require("mongoose");
 const ejsMate = require("ejs-mate");
 const session = require('express-session');
 const flash = require('connect-flash');
+const castAggregation = require('mongoose-cast-aggregation');
 const ExpressError = require("./utils/ExpressError");
 const methodOverride = require("method-override");
 const passport = require("passport");
@@ -32,6 +33,9 @@ db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", () => {
     console.log("Database connected");
 });
+
+
+mongoose.plugin(castAggregation);
 
 const app = express();
 

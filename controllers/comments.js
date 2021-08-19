@@ -8,9 +8,10 @@ module.exports.createComment = async (req, res) => {
     const user = await User.findById(req.user._id);
     const comment = new Comment(req.body.comment);
     comment.author = req.user._id;
+    comment.post = post;
     comment.timestamp = getTimestamp();
     post.comments.push(comment);
-    user.comments.push(comment);
+    user.comments.unshift(comment);
     await comment.save();
     await post.save();
     await user.save();

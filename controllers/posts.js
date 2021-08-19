@@ -21,13 +21,16 @@ module.exports.indexToday= async (req, res) =>{
           day: 'numeric',
         }
       )
-    const posts = await Post.random(10);
-    if(posts){
+    try{
+        const posts = await Post.random(10);
         for(post of posts) {
-            await post.populate("author").execPopulate();
+             post.populate("author").execPopulate();
         }
+        res.render("posts/today", {posts, today});
+    } catch(e) {
+        req.flash("error", `No posts yet today!`)
+        res.redirect("/")
     }
-    res.render("posts/today", {posts, today});
 }
 
 module.exports.renderNewForm = (req, res) => { 
@@ -59,7 +62,6 @@ module.exports.showPost = async (req,res) => {
         path: "comments",
         populate:{path: "author"}
     }).execPopulate();
-
     if(!post){
         req.flash("error", "Post not found!")
         return res.redirect("/posts");

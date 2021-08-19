@@ -36,36 +36,77 @@
                         <p class="text-muted mb-0"><%=user.bio%></p>
                     </div>
                 </div>
-                <div class="py-4 px-4">
-                    <h5 class="mb-0">Recent ratings</h5>
-                    <% if(user.posts.length) { for (post of user.posts) { %> 
-                        <div class="card mb-3 mt-1 pt-2 pl-2">
-                            <div class="media pr-3">
-                                <img src="<%=user.avatar.thumbnail%>" class="pr-2" alt="" style="width: 45px; border-radius: 50%">
-                                <div class="media-body">
-                                    <p class="card-subtitle mt-1"><strong><a href="/u/<%=user.username%>"><%=user.displayName%></a></strong><span class="text-muted">  @<%=user.username%></span>  <img class="d-inline" style="width: 17px" src="<%=user.country.flag%>" alt=""></p>
-                                    <p class="mb-1 mt-0 "> <span class="mark"><%=post.date%>:</span> <span class="star star<%=post.rating%>-result"></span></p>
-                                    <div class="text-wrap">
-                                        <p class="my-0"><%=post.body%></p>
-                                    </div>
-                                    <% if(post.image) { %> 
-                                        <div class="d-block">
-                                            <img class="img-fluid" src="<%=post.image.fullsize%>" alt="">
+                <nav>
+                    <div class="nav nav-tabs mx-4" id="nav-tab" role="tablist">
+                      <a class="nav-link active" id="nav-posts-tab" data-toggle="tab" href="#nav-posts" role="tab" aria-controls="nav-posts" aria-selected="true">Ratings</a>
+                      <a class="nav-link" id="nav-comments-tab" data-toggle="tab" href="#nav-comments" role="tab" aria-controls="nav-comments" aria-selected="false">Comments</a>
+                      <a class="nav-link" id="nav-data-tab" data-toggle="tab" href="#nav-data" role="tab" aria-controls="nav-data" aria-selected="false">Data</a>
+                    </div>
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-posts" role="tabpanel" aria-labelledby="nav-posts-tab">
+                        <% if(!user.posts.length) { %>
+                            <h6 class="text-center my-5">No posts yet!</h6>
+                        <% } else { for (post of user.posts) { %> 
+                                <div class="media mb-0 mt-2 mx-4 pl-2 pt-1">
+                                    <a class="mr-3" href="/u/<%=user.username%>">
+                                        <img src="<%=user.avatar.thumbnail%>" alt="" style="width:45px; border-radius: 50%">
+                                    </a>
+                                    <div class="media-body">
+                                        <h6 class="card-subtitle mt-1"><strong><a href="/u/<%=user.username%>"><%=user.displayName%></a></strong><span class="text-muted">  @<%=user.username%></span>  <img class="d-inline" style="width: 17px" src="<%=user.country.flag%>" alt=""></h6>
+                                        <p class="mb-1 mt-0" style="font-size: 14px"> <span class="mark"><%=post.date%>:</span> <span class="star star<%=post.rating%>-result"></span></p>
+                                        <div class="text-wrap">
+                                            <p class="my-0"><%=post.body%></p>
                                         </div>
-                                    <% } %> 
-                                    <div class="d-inline">
-                                        <small class="pb-1"><%=post.timestamp%></small>
-                                        <% if(post.edited){ %>
-                                        <small class="pb-1 text-muted">Edited</small>
-                                        <% } %>
-                                    </div>
-                                    <div class="d-inline">
-                                        <small class="mr-3"><a href="/posts/<%=post._id%>" class="card-link">See more</a></small>
+                                        <% if(post.image) { %> 
+                                            <div class="d-block">
+                                                <img class="img-fluid" src="<%=post.image.fullsize%>" alt="">
+                                            </div>
+                                        <% } %> 
+                                        <div class="d-inline">
+                                            <small class="pb-1"><%=post.timestamp%></small>
+                                            <% if(post.edited){ %>
+                                            <small class="pb-1 text-muted">Edited</small>
+                                            <% } %>
+                                        </div>
+                                        <div class="d-inline">
+                                            <small class="mr-3"><a href="/posts/<%=post._id%>" class="card-link">See more</a></small>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <% } } %> 
+                            <hr class="my-2 mx-3"> 
+                            <% } } %> 
+                    </div>
+                    <div class="tab-pane fade" id="nav-comments" role="tabpanel" aria-labelledby="nav-comments-tab">
+                        <% if(!comments.length) { %>
+                        <h6 class="text-center my-5">No comments yet!</h6>
+                        <% } %> 
+                        <% for (let comment of comments) { %>
+                              <div class="media mb-0 mt-2 mx-4 pl-2 pt-1">
+                                <a class="mr-3" href="/u/<%=comment.author.username%>">
+                                  <img src="<%=comment.author.avatar.thumbnail%>" alt="" style="width:45px; border-radius: 50%">
+                                </a>
+                                <div class="media-body">
+                                  <h6 class="my-0 card-subtitle d-inline"><strong><a href="/u/<%=comment.author.username%>"><%=comment.author.displayName%></a></strong> <span class="text-muted">@<%=comment.author.username%></span>  <img class="d-inline" style="width: 17px" src="<%=comment.author.country.flag%>" alt=""></h6>
+                                    <p class="my-1"><%=comment.body%></p>
+                                    <small class="pb-1"><%=comment.timestamp%></small>
+                                    <button class="btn btn-link btn-sm pb-0"><a href="/posts/<%=comment.post%>" >OP</a></button>
+                                    <% if(currentUser && comment.author.equals(currentUser._id)) { %> 
+                                    <div class="d-inline">
+                                      <form class="d-inline" action="/posts/<%=post._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
+                                      <button class="btn btn-link btn-sm d-inline pb-0">Delete</button>
+                                      </form>
+                                    </div>
+                                  <% } %> 
+                                </div>
+                              </div> 
+                              <hr class="my-1 mx-4">                   
+                            <% } %>
+                    </div>
+                    <div class="tab-pane fade" id="nav-data" role="tabpanel" aria-labelledby="nav-data-tab">
+                        <h6 class="text-center my-5">Stay tuned!</h6>
+                    </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -119,4 +160,3 @@
     </div>
     </div>
 
-<%- include('../partials/edit')%>

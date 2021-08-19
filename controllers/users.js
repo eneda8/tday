@@ -1,7 +1,6 @@
 const User = require("../models/user");
 const Post = require("../models/post");
 const Comment = require("../models/comment");
-
 const countries = require("../countries");
 
 module.exports.renderRegisterForm = (req, res) => {
@@ -22,6 +21,7 @@ module.exports.register = async (req,res, next) => {
             user.avatar = {}
         }
         user.postedToday = false;
+        user.country.flag = countries.filter(obj => Object.values(obj).includes(user.country.name))[0]["flag"];
         const registeredUser = await User.register(user, password);
         req.login(registeredUser, err => {
             if(err) return next(err);
@@ -64,8 +64,8 @@ module.exports.showUserProfile = async(req, res) => {
     }
     const postCount = await Post.find({"author": user}).countDocuments((count) => count);
     const commentCount = await Comment.find({"author": user}).countDocuments((count) => count)
-
-    res.render("users/show", {user, postCount, commentCount});
+    const comments = await Comment.find({"author": user}).sort({"createdAt": -1}).populate("author");
+    res.render("users/show", {user, postCount, commentCount, comments});
 };
 
 module.exports.showUserSettings = async(req, res) => {

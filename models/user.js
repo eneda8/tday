@@ -46,7 +46,7 @@ const userSchema = new Schema({
         },
         flag: {
             type: String,
-            default: "/images/flags/US.png"
+            // default: "/images/flags/US.png"
         }
     },
     avatar: AvatarSchema,
