@@ -24,7 +24,7 @@ module.exports.indexToday= async (req, res) =>{
     try{
         const posts = await Post.random(10);
         for(post of posts) {
-             post.populate("author").execPopulate();
+            await post.populate("author").execPopulate();
         }
         res.render("posts/today", {posts, today});
     } catch(e) {
@@ -46,6 +46,7 @@ module.exports.createPost = async (req, res, next) => {
     user.posts.unshift(post);
     user.postedToday = true;
     await post.save();
+    user.todaysPost = post._id; 
     await user.save();
     req.flash("success", "New post submitted!");
     res.redirect(`/posts/${post._id}`)
@@ -102,6 +103,7 @@ module.exports.deletePost = async(req, res) => {
     if(post.date === today){
         user.posts.shift();
         user.postedToday = false;
+        user.todaysPost = ""
         user.save();
     } else {
         user.posts.pull(id)

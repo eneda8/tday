@@ -12,7 +12,8 @@
         <a class="nav-link" href="" data-toggle="modal" id="newPostLink" data-target="#newPostModal">Rate Today</a>
         <% } %>
         <% if(currentUser && (currentUser.postedToday === true)) {  %> 
-        <a class="nav-link" href="" data-toggle="modal" id="editPostLink" data-target="#editPostModal">Update Rating</a>
+        <!-- <a class="nav-link" href="" data-toggle="modal" id="editPostLink" data-target="#editPostModal">Update Rating</a> -->
+        <a href="/posts/<%=currentUser.todaysPost%>" class="nav-link">My Rating</a>
         <% } %>
       </div>
       <div class="navbar-nav ml-auto mr-2">
@@ -40,4 +41,3 @@
 </nav>
 
 <%- include('../partials/new')%>
-

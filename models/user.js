@@ -71,6 +71,9 @@ const userSchema = new Schema({
     postedToday: {
         type: Boolean,
         default: false
+    },
+    todaysPost: {
+        type: String
     }
 }) 
 

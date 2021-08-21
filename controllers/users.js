@@ -83,12 +83,11 @@ module.exports.updateUserSettings = async(req, res) => {
     if(req.file){
         user.avatar = req.file;
     }
-
     if(!user){
         req.flash("error", "User not found!")
         return res.redirect("/posts/today");
     }
     user.save()
-    req.flash("success", "Preferences updated");
+    req.flash("success", "Profile updated!");
     res.redirect(`/u/${user.username}`) 
 };
