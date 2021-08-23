@@ -32,11 +32,11 @@ const seedDB = async () => {
         const gender = ["female", "male"][Math.round(Math.random())];
         const country = faker.address.country();
         const user = new User({email, username, password, birthday, gender});
-        user.country.name = country;
+        // user.country.name = country;
         user.country.flag = countries[country];
         // //american seed data-----------
-        // user.country.name = "United States of America";
-        // user.country.flag = "/images/flags/US.png";
+        user.country.name = "United States of America";
+        user.country.flag = "/images/flags/US.png";
         // // -------------
         user.avatar = {}; 
         user.avatar.path = faker.internet.avatar();
@@ -48,7 +48,7 @@ const seedDB = async () => {
     }
 
     // /make fake posts
-    for(let i = 0; i<1101; i++){
+    for(let i = 0; i<1200; i++){
         const rating = Math.floor(Math.random() * 5) + 1;
         const body = faker.lorem.sentence();
         const user = await User.findOne().where({ "postedToday" : false })      

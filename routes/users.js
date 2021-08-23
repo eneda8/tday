@@ -10,7 +10,8 @@ const {storage} = require("../cloudinary");
 const upload = multer({storage});
 
 router.get("/", (req, res) => {
-    res.render("home");
+    const today = new Date().toLocaleString('en-us', {weekday:'long'});
+    res.render("home", {today});
 })
 
 router.get("/data", (req,res) => {

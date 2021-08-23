@@ -1,0 +1,192 @@
+.paper{
+    color: #444;
+    /* line-height: 20px; */
+    border: 1px solid #d2d2d2;
+    background: #fff;
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(#d9eaf3), color-stop(4%, #fff)) 0 4px;
+    background: -webkit-linear-gradient(top, #d9eaf3 0%, #fff 8%) 0 4px;
+    background: -moz-linear-gradient(top, #d9eaf3 0%, #fff 8%) 0 4px;
+    background: -ms-linear-gradient(top, #d9eaf3 0%, #fff 8%) 0 4px;
+    background: -o-linear-gradient(top, #d9eaf3 0%, #fff 8%) 0 4px;
+    background: linear-gradient(top, #d9eaf3 0%, #fff 8%) 0 4px;
+    -webkit-background-size: 100% 20px;
+    -moz-background-size: 100% 20px;
+    -ms-background-size: 100% 20px;
+    -o-background-size: 100% 20px;
+    background-size: 100% 20px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.07);
+    -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.07);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.07);
+    width: 100%;
+    height: 10000px;
+}
+
+.paper::before {
+    content: '';
+    position: absolute;
+    width: 4px;
+    top: 0;
+    left: 50px;
+    bottom: 0;
+    border: 1px solid;
+    border-color: transparent #efe4e4;
+    height: 950px;
+}
+
+/* stars and headline */
+
+.content {
+    text-align: center;
+  }
+
+h1{
+    font-family: "Courgette", cursive;
+}
+
+.logo {
+    font-family: "Courgette", cursive;
+}
+
+.content  .i {
+color: #FFC107;
+font-size: 1.5em;
+}
+.content span {
+position: relative;
+display: inline-block;
+}
+.content  span:before, .content  span:after {
+position: absolute;
+content: "";
+background-color: #282828;
+width: 40px;
+height: 2px;
+top: 40%;
+}
+.content  span:before {
+left: -45px;
+}
+.content  span:after {
+right: -45px;
+}
+
+.wrapper {
+display: block;
+border: none;
+font-size: 14px;
+transform: translateX(-35%);
+}
+
+.wrapper input {
+border: 0;
+width: 1px;
+height: 1px;
+overflow: hidden;
+clip: rect(1px 1px 1px 1px);
+clip: rect(1px, 1px, 1px, 1px);
+opacity: 0;
+
+}
+
+.wrapper label {
+float: right;
+color: #C8C8C8;
+translate
+}
+
+.wrapper label:before {
+margin: 5px;
+content: "★";
+display: inline-block;
+font-size: 3.5em;
+color: #ccc;
+-webkit-user-select: none;
+-moz-user-select: none;
+user-select: none;
+}
+
+.wrapper input:checked ~ label:before {
+color: #FFC107;
+}
+
+.wrapper label:hover ~ label:before {
+color: #ffdb70;
+}
+
+.wrapper label:hover:before {
+color: #FFC107;
+}
+
+
+/* blinking cursor  */
+.blinking-cursor {
+    font-weight: 100;
+    font-size: 30px;
+    color: #2E3D48;
+    -webkit-animation: 1s blink step-end infinite;
+    -moz-animation: 1s blink step-end infinite;
+    -ms-animation: 1s blink step-end infinite;
+    -o-animation: 1s blink step-end infinite;
+    animation: 1s blink step-end infinite;
+  }
+  
+  @keyframes "blink" {
+    from, to {
+      color: transparent;
+    }
+    50% {
+      color: black;
+    }
+  }
+  
+  @-moz-keyframes blink {
+    from, to {
+      color: transparent;
+    }
+    50% {
+      color: black;
+    }
+  }
+  
+  @-webkit-keyframes "blink" {
+    from, to {
+      color: transparent;
+    }
+    50% {
+      color: black;
+    }
+  }
+  
+  @-ms-keyframes "blink" {
+    from, to {
+      color: transparent;
+    }
+    50% {
+      color: black;
+    }
+  }
+  
+  @-o-keyframes "blink" {
+    from, to {
+      color: transparent;
+    }
+    50% {
+      color: black;
+    }
+  }
+
+  .icon-round {
+    display: inline-block;
+    width: 100%;
+    font-size: 45px;
+    color: #FFC107;
+    line-height: 80px;
+    text-align: center;
+}
+
+.features {
+    left: 135px
+}
