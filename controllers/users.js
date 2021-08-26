@@ -12,26 +12,27 @@ module.exports.renderRegisterForm = (req, res) => {
 }
 
 module.exports.register = async (req,res, next) => {
-    try{
-        const {email, username, password, birthday, gender, country, avatar, displayName} = req.body;
-        const user = new User({email, username, birthday, gender, country, avatar, displayName});
-        if(req.file){
-            user.avatar = req.file;
-        } else {
-            user.avatar = {}
-        }
-        user.postedToday = false;
-        user.country.flag = countries.filter(obj => Object.values(obj).includes(user.country.name))[0]["flag"];
-        const registeredUser = await User.register(user, password);
-        req.login(registeredUser, err => {
-            if(err) return next(err);
-            req.flash("success", `Welcome to todai, ${req.user.username}!`);
-            res.redirect("/posts/today");
-        })
-    } catch(e) {
-        req.flash("error", `${e.message}.`, "Please try again!");
-        res.redirect("/register")
+    const {email, username, password, birthday, gender, country, avatar, displayName} = req.body;
+    const user = new User({email, username, birthday, gender, country, avatar, displayName});
+    if(req.file){
+        user.avatar = req.file;
+    } else {
+        user.avatar = {}
     }
+    user.postedToday = false;
+    user.country.flag = countries.filter(obj => Object.values(obj).includes(user.country.name))[0]["flag"];
+    const registeredUser = await User.register(user, password);
+    await req.login(registeredUser, err => {
+        if(err) {
+            req.flash("error", `${err.message}. Please try again!`);
+            res.redirect("/register")
+        }
+        else {
+            req.flash("success", `Welcome to todai, ${req.user.username}!`);
+            res.redirect(`/u/${username}`);
+        }
+    })
+
 }
 
 module.exports.renderLoginForm = (req,res) => {

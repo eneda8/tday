@@ -33,7 +33,7 @@
     bottom: 0;
     border: 1px solid;
     border-color: transparent #efe4e4;
-    height: 950px;
+    height: 100vh;
 }
 
 /* stars and headline */
@@ -94,7 +94,6 @@ opacity: 0;
 .wrapper label {
 float: right;
 color: #C8C8C8;
-translate
 }
 
 .wrapper label:before {
