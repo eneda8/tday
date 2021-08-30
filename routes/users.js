@@ -18,6 +18,7 @@ router.get("/", (req, res) => {
     }
 })
 
+
 router.get("/data", (req,res) => {
     res.render("data");
 })
@@ -32,10 +33,10 @@ router.route("/login")
 
 router.get("/logout", users.logout);
 
-router.get("/u/:username", isLoggedIn, catchAsync(users.showUserProfile));
+router.get("/u/:username", isLoggedIn, setPostedToday, catchAsync(users.showUserProfile));
 
 router.route("/settings")
-    .get(isLoggedIn, catchAsync(users.showUserSettings))
-    .put(isLoggedIn, upload.single("avatar"), catchAsync(users.updateUserSettings))
+    .get(isLoggedIn, setPostedToday, catchAsync(users.showUserSettings))
+    .put(isLoggedIn, setPostedToday, upload.single("avatar"), catchAsync(users.updateUserSettings))
 
 module.exports = router;

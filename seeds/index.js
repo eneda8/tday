@@ -48,7 +48,7 @@ const seedDB = async () => {
     // }
 
     // /make fake posts
-    for(let i = 0; i<1200; i++){
+    for(let i = 0; i<1201; i++){
         const rating = Math.floor(Math.random() * 5) + 1;
         const body = faker.lorem.sentence();
         const user = await User.findOne().where({ "postedToday" : false })      
@@ -58,6 +58,7 @@ const seedDB = async () => {
             post.author = user;
             user.postedToday = true;
             user.posts.unshift(post);
+            user.todaysPost = post._id;
             await post.save();
             await user.save();
         }

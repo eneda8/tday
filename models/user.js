@@ -23,7 +23,7 @@ const AvatarSchema = new Schema({
   AvatarSchema.virtual("profile").get(function() {
     return this.path.replace("/upload", "/upload/w_150,h_150,c_fill")
   })
-  
+
 
 const userSchema = new Schema({
     email: {
@@ -68,6 +68,12 @@ const userSchema = new Schema({
             ref: "Comment"
         }
     ],
+    journals: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "Journal"
+        }
+    ], 
     postedToday: {
         type: Boolean,
         default: false

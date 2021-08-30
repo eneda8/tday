@@ -20,6 +20,7 @@ const User = require("./models/user");
 const userRoutes = require("./routes/users");
 const postRoutes = require("./routes/posts");
 const commentRoutes = require("./routes/comments");
+const journalRoutes = require("./routes/journals");
 
 mongoose.connect("mongodb://localhost:27017/todai", {
     useNewUrlParser: true,
@@ -90,6 +91,7 @@ app.use((req, res, next) => {
 })
 
 app.use("/", userRoutes);
+app.use("/write", journalRoutes)
 app.use("/posts", postRoutes);
 app.use("/posts/:id/comments", commentRoutes);
 

@@ -50,6 +50,8 @@ h1{
     font-family: "Courgette", cursive;
 }
 
+/* paper background */
+
 .content  .i {
 color: #FFC107;
 font-size: 1.5em;
@@ -177,6 +179,7 @@ color: #FFC107;
     }
   }
 
+  /* features */
   .icon-round {
     display: inline-block;
     width: 100%;

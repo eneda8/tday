@@ -3,6 +3,7 @@ const {postSchema, userSchema, commentSchema} = require("./schemas.js");
 const Post = require("./models/post");
 const Comment = require("./models/comment");
 const User = require("./models/user");
+const Journal = require("./models/journal");
 const {getToday} = require("./utils/getToday");
 
 module.exports.validatePost = (req, res, next) => {  
@@ -49,6 +50,16 @@ module.exports.isCommentAuthor = async(req, res, next) => {
     if (!comment.author.equals(req.user._id)) {
         req.flash("error", "You do not have permission to do that!");
         return res.redirect(`/posts/${id}`)
+    }
+    next();
+}
+
+module.exports.isJournalAuthor = async(req, res, next) => {
+    const {id, journalId} = req.params; 
+    const journal = await Journal.findById(journalId);
+    if (!journal.author.equals(req.user._id)) {
+        req.flash("error", "You do not have permission to do that!");
+        return res.redirect(`/u/${id}`)
     }
     next();
 }

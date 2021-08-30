@@ -40,7 +40,10 @@
                     <div class="nav nav-tabs mx-4" id="nav-tab" role="tablist">
                       <a class="nav-link active" id="nav-posts-tab" data-toggle="tab" href="#nav-posts" role="tab" aria-controls="nav-posts" aria-selected="true">Ratings</a>
                       <a class="nav-link" id="nav-comments-tab" data-toggle="tab" href="#nav-comments" role="tab" aria-controls="nav-comments" aria-selected="false">Comments</a>
+                      <% if(currentUser && user._id.equals(currentUser._id)) { %>
                       <a class="nav-link" id="nav-data-tab" data-toggle="tab" href="#nav-data" role="tab" aria-controls="nav-data" aria-selected="false">Data</a>
+                      <a class="nav-link" id="nav-journals-tab" data-toggle="tab" href="#nav-journals" role="tab" aria-controls="nav-journals" aria-selected="false">Journals</a>
+                      <% } %> 
                     </div>
                 </nav>
                 <div class="tab-content" id="nav-tabContent">
@@ -105,6 +108,27 @@
                     </div>
                     <div class="tab-pane fade" id="nav-data" role="tabpanel" aria-labelledby="nav-data-tab">
                         <h6 class="text-center my-5">Stay tuned!</h6>
+                    </div>
+                    <% if(currentUser && user._id.equals(currentUser._id)) { %>
+                    <div class="tab-pane fade" id="nav-journals" role="tabpanel" aria-labelledby="nav-journals-tab">
+                            <% if(!user.journals.length) { %>
+                                <h6 class="text-center my-5">No journals yet!</h6>
+                                <a href="/write" class="text-decoration-none">Write</a>
+                            <% } else { for (journal of user.journals) { %> 
+                                    <div class="media mb-0 mt-2 mx-4 pl-2 pt-1">
+                                        <div class="media-body">
+                                            <p class="my-0 font-weight-bold"><a href="/write/<%=journal._id%>"><%=journal.date%></a></p>
+                                            <% if(journal.edited) { %> 
+                                            <p class="text-muted">Edited <%=journal.editedTime%></p>
+                                            <% } %> 
+                                            <p class="my-0"><%=journal.body%></p>
+                                            </div>
+                                        </div>
+                                        <hr class="my-2 mx-3"> 
+                                        <% } } %>  
+                                    </div>
+                    </div>
+                    <% } %> 
                     </div>
                     </div>
                 </div>
