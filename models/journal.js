@@ -2,16 +2,15 @@ const mongoose = require("mongoose");
 const mongooseFieldEncryption = require("mongoose-field-encryption").fieldEncryption;
 const Schema = mongoose.Schema;
 const User = require("./user");
-const {getToday, getTimestamp} = require("../utils/getToday");
+// const {getToday, getTimestamp} = require("../utils/getToday");
 
 const JournalSchema = new Schema({
     date: {
       type: String,
-      default: getTimestamp()
     },
     body: {
       type: String,
-      required: false
+      required: true
     },
     author: {
       type: Schema.Types.ObjectId,
@@ -31,7 +30,7 @@ const JournalSchema = new Schema({
 
 
 
-JournalSchema.plugin(mongooseFieldEncryption, { fields: ["body"], secret: "some secret key" });
+JournalSchema.plugin(mongooseFieldEncryption, { fields: ["body"], secret: `${process.env.JOURNAL_SECRET}` });
 
 
 module.exports = mongoose.model("Journal", JournalSchema)

@@ -21,9 +21,9 @@
                         <a href="/u/<%=post.author.username%>"><img style="width:45px; border-radius: 50%" src="<%=post.author.avatar.thumbnail%>" class="pr-2" alt=""></a>
                         <div class="media-body">
                             <p class="card-subtitle mb-1 d-inline"><strong><a href="/u/<%=post.author.username%>"><%=post.author.displayName%></a></strong><span class="text-muted"> @<%=post.author.username%>  </span><img class="d-inline" style="width: 17px" src="<%=post.author.country.flag%>" alt=""></p>
-                            <p><span class="star star<%=post.rating%>-result"></span></p>
+                            <p class="mb-0"><span class="star star<%=post.rating%>-result"></span></p>
                             <div class="text-wrap">
-                                <p><%=post.body%></p>
+                                <p class="mb-0"><%=post.body%></p>
                             </div>
                             <% if(post.image) { %> 
                                 <div class="d-block">
@@ -31,14 +31,10 @@
                                 </div>
                             <% } %> 
                             <div class="d-inline">
-                                <small class="pb-1"><%=post.timestamp%></small>
+                                <small class="pb-1"><a href="/posts/<%=post._id%>" class="card-link"><%=post.timestamp%></a></small>
                                 <% if(post.edited){ %>
                                 <small class="pb-1 text-muted">Edited</small>
                                 <% } %>
-                            </div>
-                            <div class="d-block">
-                                <small class="mr-3"><a href="/posts/<%=post._id%>" class="card-link">See more</a></small>
-                                <small class=""><a href="/u/<%=post.author.username%>" class="card-link">Visit profile</a></small>
                             </div>
                         </div>
                     </div>

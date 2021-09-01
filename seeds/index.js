@@ -41,7 +41,7 @@ const seedDB = async () => {
     //     user.avatar = {}; 
     //     user.avatar.path = faker.internet.avatar();
     //     user.displayName = faker.name.findName();
-    //     user.bio = "This is an fake account used to generate data for demonstration purposes."
+    //     user.bio = "This is a fake account used to generate data for demonstration purposes."
     //     user.coverColor = faker.internet.color();
     //     user.postedToday = false;
     //     const registeredUser = await User.register(user, password);

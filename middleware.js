@@ -68,10 +68,12 @@ module.exports.setPostedToday = async(req, res, next) => {
     const today = getToday();
     const user = await User.findById(req.user._id);
     const post = await Post.find({"author": user, "date": today});
-    if(post){
-        user.set("postedToday", true)
+    if(post.length){
+        user.postedToday = true;
+        await user.save();
     } else {
-        user.set("postedToday", false);
+        user.postedToday = false;
+        await user.save()
     }
     next()
 }

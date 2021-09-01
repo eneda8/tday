@@ -13,6 +13,7 @@ module.exports.index = async (req, res) => {
 } 
 
 module.exports.indexToday= async (req, res) =>{
+    const user = await User.findById(req.user._id);
     const today = new Date().toLocaleDateString(
         'en-US',
         {
@@ -28,8 +29,8 @@ module.exports.indexToday= async (req, res) =>{
         }
         res.render("posts/today", {posts, today});
     } catch(e) {
-        req.flash("error", `No posts yet today!`)
-        res.redirect("/")
+        req.flash("error", `No ratings yet today!`)
+        res.redirect(`/u/${user.username}`)
     }
 }
 
@@ -48,14 +49,14 @@ module.exports.createPost = async (req, res, next) => {
     await post.save();
     user.todaysPost = post._id; 
     await user.save();
-    req.flash("success", "New post submitted!");
+    req.flash("success", "New rating submitted!");
     res.redirect(`/posts/${post._id}`)
 }
 
 module.exports.showPost = async (req,res) => { 
     const {id} = req.params;
     if (!ObjectID.isValid(id)) {
-        req.flash("error", "Post not found!")
+        req.flash("error", "Rating not found!")
         return res.redirect("/posts");
     }
     const post = await Post.findById(id);
@@ -64,7 +65,7 @@ module.exports.showPost = async (req,res) => {
         populate:{path: "author"}
     }).execPopulate();
     if(!post){
-        req.flash("error", "Post not found!")
+        req.flash("error", "Rating not found!")
         return res.redirect("/posts");
     }
     res.render("posts/show", {post})
@@ -73,7 +74,7 @@ module.exports.showPost = async (req,res) => {
 module.exports.renderEditForm = async (req,res) => {
     const post = await Post.findById(req.params.id);
     if(!post){
-        req.flash("error", "Post not found!")
+        req.flash("error", "Rating not found!")
         return res.redirect("/posts");
     }
     res.render("posts/edit", {post})
@@ -91,7 +92,7 @@ module.exports.updatePost = async (req,res) => {
     } 
     post.edited = true;
     await post.save();
-    req.flash("success", "Post updated!");
+    req.flash("success", "Rating updated!");
     res.redirect(`/posts/${post._id}`)
 }
 
@@ -109,7 +110,8 @@ module.exports.deletePost = async(req, res) => {
         user.posts.pull(id)
         user.save()
     }
-    await Post.findByIdAndDelete(id);
-    req.flash("success", "Post deleted");
+    if(post.image) await cloudinary.uploader.destroy(post.image.filename);
+    await post.remove();
+    req.flash("success", "Rating deleted");
     res.redirect(`/u/${user.username}`);
 }

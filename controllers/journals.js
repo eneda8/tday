@@ -50,7 +50,7 @@ module.exports.renderEditJournal = async(req, res, next) => {
 
 module.exports.updateJournal = async (req,res) => {
     const {journalId} = req.params;
-    const journal = await Journal.findByIdAndUpdate(journalId, {...req.body.journal} ) 
+    const journal = await Journal.findOneAndUpdate({_id: journalId}, {...req.body.journal} ) 
     journal.edited = true;
     await journal.save();
     journal.editedTime = new Date(journal.updatedAt).toLocaleString("en-US");
@@ -63,10 +63,10 @@ module.exports.updateJournal = async (req,res) => {
 module.exports.deleteJournal = async(req, res, next) => {
     const {journalId} = req.params;
     const user = await User.findById(req.user._id).populate("journals");
-    const journal = await Journal.findById(journalId).populate("author");
-    user.journals.pull(journalId)
-    user.save();
-    await Journal.findByIdAndDelete(journalId);
+    const journal = await Journal.findById(journalId);
+    await user.journals.pull(journalId)
+    await user.save();
+    await journal.remove();
     req.flash("success", "Journal deleted");
     res.redirect(`/u/${user.username}`);
 }

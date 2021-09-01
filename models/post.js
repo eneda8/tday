@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const User = require("./user");
 const {getToday, getTimestamp} = require("../utils/getToday");
+const {cloudinary} = require("../cloudinary");
+
 
 
 const ImageSchema = new Schema({

@@ -49,7 +49,7 @@
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="nav-posts" role="tabpanel" aria-labelledby="nav-posts-tab">
                         <% if(!user.posts.length) { %>
-                            <h6 class="text-center my-5">No posts yet!</h6>
+                            <h6 class="text-center my-5">No ratings yet!</h6>
                         <% } else { for (post of user.posts) { %> 
                                 <div class="media mb-0 mt-2 mx-4 pl-2 pt-1">
                                     <a class="mr-3" href="/u/<%=user.username%>">
@@ -67,20 +67,20 @@
                                             </div>
                                         <% } %> 
                                         <div class="d-inline">
-                                            <small class="pb-1"><%=post.timestamp%></small>
+                                            <small class="pb-1"><a href="/posts/<%=post._id%>" class="card-link"><%=post.timestamp%></a></small>
                                             <% if(post.edited){ %>
                                             <small class="pb-1 text-muted">Edited</small>
                                             <% } %>
                                         </div>
                                         <div class="d-inline">
-                                            <small class="mr-3"><a href="/posts/<%=post._id%>" class="card-link">See more</a></small>
+                                            <small class="mr-3"></small>
                                         </div>
                                     </div>
                                 </div>
                             <hr class="my-2 mx-3"> 
                             <% } } %> 
                     </div>
-                    <div class="tab-pane fade" id="nav-comments" role="tabpanel" aria-labelledby="nav-comments-tab">
+                    <div class="tab-pane fade mb-3 pt-2" id="nav-comments" role="tabpanel" aria-labelledby="nav-comments-tab">
                         <% if(!comments.length) { %>
                         <h6 class="text-center my-5">No comments yet!</h6>
                         <% } %> 
@@ -91,9 +91,16 @@
                                 </a>
                                 <div class="media-body">
                                   <h6 class="my-0 card-subtitle d-inline"><strong><a href="/u/<%=comment.author.username%>"><%=comment.author.displayName%></a></strong> <span class="text-muted">@<%=comment.author.username%></span>  <img class="d-inline" style="width: 17px" src="<%=comment.author.country.flag%>" alt=""></h6>
-                                    <p class="my-1"><%=comment.body%></p>
+                                    
+                                        <% if(comment.post) {%> 
+                                        <p class="my-1">
+                                            <a href="/posts/<%=comment.post._id%>"class="card-link" >@<%=comment.post.author.username%></a> <%=comment.body%>
+                                        </p>
+                                        <% } else { %> 
+                                            <p class="my-1">@[deleted] <%=comment.body%></p>
+                                        <% }%>
                                     <small class="pb-1"><%=comment.timestamp%></small>
-                                    <button class="btn btn-link btn-sm pb-0"><a href="/posts/<%=comment.post%>" >OP</a></button>
+                                    <small></small>
                                     <% if(currentUser && comment.author.equals(currentUser._id)) { %> 
                                     <div class="d-inline">
                                       <form class="d-inline" action="/posts/<%=post._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
@@ -106,36 +113,63 @@
                               <hr class="my-1 mx-4">                   
                             <% } %>
                     </div>
-                    <div class="tab-pane fade" id="nav-data" role="tabpanel" aria-labelledby="nav-data-tab">
+
+                  
+                  
+                    <!-- data tab start -->
+                    <!-- <div class="tab-pane fade" id="nav-data" role="tabpanel" aria-labelledby="nav-data-tab">
                         <h6 class="text-center my-5">Stay tuned!</h6>
-                    </div>
-                    <% if(currentUser && user._id.equals(currentUser._id)) { %>
-                    <div class="tab-pane fade" id="nav-journals" role="tabpanel" aria-labelledby="nav-journals-tab">
-                            <% if(!user.journals.length) { %>
-                                <h6 class="text-center my-5">No journals yet!</h6>
-                                <a href="/write" class="text-decoration-none">Write</a>
-                            <% } else { for (journal of user.journals) { %> 
-                                    <div class="media mb-0 mt-2 mx-4 pl-2 pt-1">
-                                        <div class="media-body">
-                                            <p class="my-0 font-weight-bold"><a href="/write/<%=journal._id%>"><%=journal.date%></a></p>
-                                            <% if(journal.edited) { %> 
-                                            <p class="text-muted">Edited <%=journal.editedTime%></p>
-                                            <% } %> 
-                                            <p class="my-0"><%=journal.body%></p>
-                                            </div>
-                                        </div>
-                                        <hr class="my-2 mx-3"> 
-                                        <% } } %>  
+                    </div> -->  
+                    <!-- data tab end -->
+                     <!-- old journals tab -->   
+
+                    <!-- old journals tab end -->
+                    <!-- new data/ journals tab start -->
+
+                    <% if(currentUser && user._id.equals(currentUser._id)) { %> 
+                        <!-- data tab start -->
+                        <div class="tab-pane fade" id="nav-data" role="tabpanel" aria-labelledby="nav-data-tab">
+                            <h6 class="text-center my-5">Stay tuned!</h6>
+                        </div> 
+                        <!-- data tab end -->
+                        <!-- new journals tab start -->
+                        <div class="tab-pane fade" id="nav-journals" role="tabpanel" aria-labelledby="nav-journals-tab">
+                            <div class="text-center">
+                                <button class="btn btn-outline btn-warning mt-3" type="button"><a href="/write" class="text-dark">Write</a></button>
+                            </div>
+
+                            <div class="accordion mx-4 my-3" id="journalsAccordion">
+                                <% let index= 0; %> 
+                                <% for (let journal of user.journals) { %> 
+                                <% index++ %> 
+                                <div class="card">
+                                    <div class="card-header" id="heading-<%=index%>">
+                                        <h6 class="mb-0">
+                                            <a class="text-dark text-monospace text-decoration-underline" href="/write/<%=journal._id%>"><%=journal.date%></a>
+                                            <button class="btn btn-link text-warning ml-1 p-0" type="button" data-toggle="collapse" data-target="#journal-<%=index%>" aria-expanded="false" aria-controls="journal-<%=index%>"><i class="fas fa-caret-down"></i></button>
+                                        </h6>
                                     </div>
-                    </div>
+                                    <div id="journal-<%=index%>" class="collapse" aria-labelledby="heading-<%=index%>" data-parent="#journalsAccordion" >
+                                        <div class="card-body">
+                                            <% if(journal.edited = true) { %> 
+                                            <small><%journal.editedTime%></small>
+                                            <% } %> 
+                                            <p class="text-monospace"><%= journal.body %></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <% } %> 
+                            </div>
+                        
+                        </div>
+                    
+                    
                     <% } %> 
-                    </div>
-                    </div>
+                    
                 </div>
             </div>
         </div>
     </div>
-
 <!-- Edit profile modal -->
 <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModal" aria-hidden="true">
     <div class="modal-dialog">
@@ -183,4 +217,3 @@
         </div>
     </div>
     </div>
-

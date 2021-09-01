@@ -2,6 +2,7 @@ const User = require("../models/user");
 const Post = require("../models/post");
 const Comment = require("../models/comment");
 const countries = require("../countries");
+const {cloudinary} = require("../cloudinary");
 
 module.exports.renderRegisterForm = (req, res) => {
     if (req.isAuthenticated()) {
@@ -45,9 +46,10 @@ module.exports.renderLoginForm = (req,res) => {
 
 module.exports.login = (req,res) => {
     req.flash("success", "Welcome back!");
-    const redirectUrl = req.session.returnTo || "/posts/today";
-    delete req.session.returnTo;
-    res.redirect(redirectUrl);
+    // const redirectUrl = req.session.returnTo || "/posts/today";
+    // delete req.session.returnTo;
+    // res.redirect(redirectUrl);
+    res.redirect("/posts/today")
 }
 
 module.exports.logout = (req,res) => {
@@ -65,7 +67,11 @@ module.exports.showUserProfile = async(req, res) => {
     }
     const postCount = await Post.find({"author": user}).countDocuments((count) => count);
     const commentCount = await Comment.find({"author": user}).countDocuments((count) => count)
-    const comments = await Comment.find({"author": user}).sort({"createdAt": -1}).populate("author");
+    const comments = await Comment.find({"author": user}).sort({"createdAt": -1}).populate("author")
+    .populate({
+        path: "post", 
+        populate: {path: "author"}
+    });
     res.render("users/show", {user, postCount, commentCount, comments});
 };
 
@@ -80,9 +86,12 @@ module.exports.showUserSettings = async(req, res) => {
     
 module.exports.updateUserSettings = async(req, res) => {
     const {displayName, bio, coverColor} = req.body;
-    const user = await User.findOneAndUpdate({username: req.user.username}, {...req.body})
+    const user = await User.findById(req.user._id);
+    const oldAvatar = user.avatar;
+    await user.update({...req.body});
     if(req.file){
         user.avatar = req.file;
+        await cloudinary.uploader.destroy(oldAvatar.filename)
     }
     if(!user){
         req.flash("error", "User not found!")
