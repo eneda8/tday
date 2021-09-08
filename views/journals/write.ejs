@@ -4,6 +4,7 @@
         <title>Write</title> 
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="/stylesheets/write.css"/>
+        <link rel="stylesheet" type="text/css" href="/stylesheets/styles.css"/>
         <link rel="apple-touch-icon" sizes="180x180" href="/favicon_io/apple-touch-icon.png">
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon_io/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon_io/favicon-16x16.png">
@@ -16,46 +17,27 @@
         <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.min.js"></script>
     </head>
     <body spellcheck="false"> 
-        <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-warning">
-            <div class="container-fluid">
-              <a class="navbar-brand font-weight-bold logo" href="/">todae</a>
-              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-              <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav ml-auto mr-2">
-                    <% if(!currentUser) {  %> 
-                    <a class="nav-link text-dark" href="/login">login</a>
-                    <a class="nav-link text-dark" href="/register">sign up</a>
-                    <% } else { %> 
-                    <li class="nav-item dropdown mr-auto">
-                      <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><img class="p-0" src="<%=currentUser.avatar.thumbnail%>" style= "border-radius: 50%;"alt=""></a>
-                      <div class="dropdown-menu" style="min-width: 5rem">
-                        <a class="dropdown-item p-2" href="/u/<%=currentUser.username%>">Profile</a>
-                        <a class="dropdown-item p-2" href="/settings">Settings</a>
-                        <a class="dropdown-item p-2" href="/logout">Logout</a>
-                      </div>
-                    </li>
-                    <% }  %>
-                </div>
-                </div>
-              </div>
-            </div>
-          </nav>
+      <%- include("../partials/navbar") %>
           <main>
               <h6 class="text-muted text-center text-monospace">Write to your heart's content.</h6>
               <small class="text-muted text-center text-monospace d-block">(Journal entries are 100% private and encrypted.)</small>
               <div class="paper text-wrap">
-                <form action="/write" class="" method="POST" novalidate>
-                  <label for="journal[date]" class="text-monospace small mb-0"><%=today%></label>
-                  <input type="hidden" class="" name="journal[date]" for="journal[date]" value="<%=today%>">
-                  <textarea autofocus="autofocus" class="text-monospace text-wrap px-0 ml-0" rows="50" cols="100" name="journal[body]"></textarea>   
+                <form action="/write" class="validated-form" method="POST" novalidate>
+                  <div>
+                    <label for="journal[date]" class="text-monospace small mb-0"><%=today%></label>
+                    <input type="hidden" class="" name="journal[date]" for="journal[date]" value="<%=today%>">
+                    <textarea autofocus="autofocus" class="text-monospace text-wrap px-0 ml-0" rows="50" cols="100" name="journal[body]" required></textarea>
+                    <div class="invalid-feedback">
+                      This field cannot be empty!
+                    </div>  
+                  </div>
                   <button type="button" class="btn btn-sm btn-outline btn-secondary my-3" onclick="window.history.back();">Cancel</button>               
                   <button class="btn btn-sm btn-outline btn-warning my-3" type="submit">Submit</button>  
                 </form>
               </div>
           </main>
          
+          <%- include("../partials/footer") %>
           <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
           <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
           <script src='/javascripts/validateForms.js'></script>

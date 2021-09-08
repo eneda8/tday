@@ -22,33 +22,7 @@
 
     </head>
     <body class="d-flex flex-column vh-100">
-        <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-warning">
-            <div class="container-fluid">
-              <a class="navbar-brand font-weight-bold logo" href="/">todae</a>
-              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-              <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav ml-auto mr-2">
-                    <% if(!currentUser) {  %> 
-                    <a class="nav-link text-dark" href="/login">login</a>
-                    <a class="nav-link text-dark" href="/register">sign up</a>
-                    <% } else { %> 
-                    <li class="nav-item dropdown mr-auto">
-                      <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><img class="p-0" src="<%=currentUser.avatar.thumbnail%>" style= "border-radius: 50%;"alt=""></a>
-                      <div class="dropdown-menu" style="min-width: 5rem">
-                        <a class="dropdown-item p-2" href="/u/<%=currentUser.username%>">Profile</a>
-                        <a class="dropdown-item p-2" href="/settings">Settings</a>
-                        <a class="dropdown-item p-2" href="/logout">Logout</a>
-                      </div>
-                    </li>
-                    <% }  %>
-                </div>
-                </div>
-              </div>
-            </div>
-          </nav>
-          
+        <%- include("./partials/navbar") %>    
         <main class="container-fluid paper">
             <div class="container my-5">
 
@@ -56,7 +30,7 @@
                     <div class="col">
                         <div class="content">
                             <h1>How's your <%=today %>?</h1>
-                            <span class="i">★</span>
+                            <p class="text-center font-weight-bold">──────<span class="text-warning">★</span>──────</p>
                         </div>
                     </div>
                 </div>
@@ -85,9 +59,9 @@
                 </div>
                 <div class="row justify-content-center mb-5 mt-3">
                     <div class="col-md-7 text-center bg-light p-3">
-                        <h2 class="font-weight-medium">Meet <strong>todai<sup style="font-size: 12px">&copy</sup></strong></h2>
+                        <h3 class="font-weight-medium">meet <strong style="font-family: 'Courgette">todai<sup style="font-size: 12px">&copy</sup></strong></h3>
                         <h6 class="">A quick self-reflection tool & the world's first collective online journal</h6>
-                        <a href="/data" class="text-decoration-none">Explore more</a>
+                        <!-- <a href="/data" class="text-decoration-none">Explore more</a> -->
                     </div>
                 </div>
                 </div>
@@ -97,12 +71,12 @@
                         <div class="col text-center border-right">
                             <div class="icon-round align-items-center"><i class="far fa-calendar-alt"></i></div>
                             <h5 class="font-medium">Quick self-reflection</h5>
-                            <p class="">Todai allows you to practice self-reflection in a quick, easy way. Rate your day on a scale of 1-5. If you have time, jot down a few thoughts. With daily self-reflection, over time, you'll gain a clearer picture of your weeks, months and years.</p>
+                            <p class="">Todai allows you to practice self-reflection in a quick, easy way. Rate your day on a scale of 1-5. If you have time, jot down a few thoughts. Over time, with daily self-reflection, you'll gain a clearer picture of your weeks, months and years.</p>
                         </div>
                         <div class="col text-center border-right">
                             <div class="icon-round"><i class=""><i class="fas fa-globe"></i></i></div>
                             <h5 class="font-medium">A global perspective</h5>
-                            <p class=""> Read through the latest anonymous Todai entries from all around the world and maybe how you feel about your day will change. A global perspective allows us to cultivate gratitude and aspire towards a better tomorrow.</p>
+                            <p class="">Read through the latest anonymous Todai entries from all around the world and maybe how you feel about your day will change. A global perspective allows us to cultivate gratitude and aspire towards a better tomorrow.</p>
                         </div>
                         <div class="col text-center border-right">
                             <div class="icon-round"><i class="fas fa-chart-line"></i></i></div>
@@ -118,12 +92,9 @@
                 </div>
             </div>
         </main>
-        <footer class="footer bg-dark py-3 pl-4 mt-auto">
-            <span class="text-muted">&copytodai 2021</span>
-        </footer>
+        <%- include("./partials/footer") %>
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
         <script src='/javascripts/validateForms.js'></script>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">      
-    </body>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">   
 </html>

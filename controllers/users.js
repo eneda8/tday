@@ -4,6 +4,15 @@ const Comment = require("../models/comment");
 const countries = require("../countries");
 const {cloudinary} = require("../cloudinary");
 
+module.exports.renderHomePage = (req, res) => {
+    if(req.user){
+        return res.redirect("/posts/today");
+    } else {
+        const today = new Date().toLocaleString('en-us', {weekday:'long'});
+        res.render("home", {today});
+    }
+}
+
 module.exports.renderRegisterForm = (req, res) => {
     if (req.isAuthenticated()) {
         req.flash("error", "You are already logged in!");
@@ -13,8 +22,8 @@ module.exports.renderRegisterForm = (req, res) => {
 }
 
 module.exports.register = async (req,res, next) => {
-    const {email, username, password, birthday, gender, country, avatar, displayName} = req.body;
-    const user = new User({email, username, birthday, gender, country, avatar, displayName});
+    const {username, displayName, email, password, birthyear, gender, country, avatar} = req.body;
+    const user = new User({username, displayName, email, birthyear, gender, country, avatar});
     if(req.file){
         user.avatar = req.file;
     } else {

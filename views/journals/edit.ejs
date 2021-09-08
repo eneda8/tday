@@ -16,32 +16,7 @@
         <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.min.js"></script>
     </head>
     <body spellcheck="false"> 
-        <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-warning">
-            <div class="container-fluid">
-              <a class="navbar-brand font-weight-bold logo" href="/">todae</a>
-              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-              <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav ml-auto mr-2">
-                    <% if(!currentUser) {  %> 
-                    <a class="nav-link text-dark" href="/login">login</a>
-                    <a class="nav-link text-dark" href="/register">sign up</a>
-                    <% } else { %> 
-                    <li class="nav-item dropdown mr-auto">
-                      <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><img class="p-0" src="<%=currentUser.avatar.thumbnail%>" style= "border-radius: 50%;"alt=""></a>
-                      <div class="dropdown-menu" style="min-width: 5rem">
-                        <a class="dropdown-item p-2" href="/u/<%=currentUser.username%>">Profile</a>
-                        <a class="dropdown-item p-2" href="/settings">Settings</a>
-                        <a class="dropdown-item p-2" href="/logout">Logout</a>
-                      </div>
-                    </li>
-                    <% }  %>
-                </div>
-                </div>
-              </div>
-            </div>
-          </nav>
+      <%- include("../partials/navbar") %>
           <main>
               <h6 class="text-muted text-center text-monospace">Edit Journal</h6>
               <div class="paper text-wrap ">
@@ -51,10 +26,11 @@
             </form>
         </div>
           </main>
-         
-          <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-          <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
-          <script src='/javascripts/validateForms.js'></script>
-          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">      
+        </main>
+        <%- include("../partials/footer") %>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+        <script src='/javascripts/validateForms.js'></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">   
     </body>
 </html>

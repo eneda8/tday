@@ -87,6 +87,6 @@ const userSchema = new Schema({
 }) 
 
 userSchema.plugin(passportLocalMongoose, {
-    selectFields : "birthday gender country avatar"});
+    selectFields : "gender country avatar"});
 
 module.exports = mongoose.model("User", userSchema);

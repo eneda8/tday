@@ -10,18 +10,21 @@
         <div class="modal-body">
             <form action="/posts/<%=currentUser.todaysPost%>?_method=PUT" method="POST" novalidate class="mb-3 validated-form" enctype="multipart/form-data">
                 <div>
-                    <h6 class="">How was your day?</h6>
                     <p class="">Current rating: <span class="star star<%=post.rating%>-result"></span></p>
-                    <label class="form-label mb-3"for="rating"></label>
-                    <fieldset class="rating">
-                        <input type="radio" id="star5-edit" name="post[rating]" value="5"><label class = "" for="star5-edit" title="Amazing"></label>
-                        <input type="radio" id="star4-edit" name="post[rating]" value="4"><label class = "" for="star4-edit" title="Very good"></label>
-                        <input type="radio" id="star3-edit" name="post[rating]" value="3"><label class = "" for="star3-edit" title="Average"></label>
-                        <input type="radio" id="star2-edit" name="post[rating]" value="2"><label class = "" for="star2-edit" title="Not good"></label>
-                        <input type="radio" id="star1-edit" name="post[rating]" value="1"><label class = "" for="star1-edit" title="Terrible"></label>
-                    </fieldset>
+                    <p>New rating:</p>
+                    <div>
+                        <label class="form-label mb-3"for="rating"></label>
+                        <fieldset class="rating" required>
+                            <input type="radio" id="star5-edit" name="post[rating]" value="5" required><label class = "" for="star5-edit" title="Amazing"></label>
+                            <input type="radio" id="star4-edit" name="post[rating]" value="4" required><label class = "" for="star4-edit" title="Very good"></label>
+                            <input type="radio" id="star3-edit" name="post[rating]" value="3" required><label class = "" for="star3-edit" title="Average"></label>
+                            <input type="radio" id="star2-edit" name="post[rating]" value="2" required><label class = "" for="star2-edit" title="Not good"></label>
+                            <input type="radio" id="star1-edit" name="post[rating]" value="1" required><label class = "" for="star1-edit" title="Terrible"></label>
+                        </fieldset>
+                        <div class="valid-feedback">Looks good!</div>
+                        <div class="invalid-feedback">This field is required.</div>
+                    </div>
 
-                    <div class="valid-feedback">Looks good!</div>
                 </div>
                 <div class="mb-3 mt-0">
                     <label class="form-label mt-0" for="body">Jot down your thoughts or post an image:</label>
@@ -31,18 +34,19 @@
                 <div class="custom-file">
                     <input type="file" class="custom-file-input" id="image" name="image" onchange="document.getElementById('preview').src = window.URL.createObjectURL(this.files[0])">
                     <label class="custom-file-label" for="image">Choose image...</label>
+                    <div class="valid-feedback">Looks good!</div>
                 </div>
                 <img class="img-fluid my-2" id="preview" width="100px"/> 
                 <% if(post.image) { %> 
-                    <div >
-                        <label class="d-block" for="deleteImage">Delete Image?</label>
-                        <img class="img-fluid" src="<%=post.image.thumbnail%>" alt="">
-                        <input class="form-check-input" type="checkbox" name="deleteImage[]" value="<%=post.image.filename%>">
-                    </div>           
+                <div >
+                    <label class="d-block" for="deleteImage">Delete Image?</label>
+                    <img class="img-fluid" src="<%=post.image.thumbnail%>" alt="">
+                    <input class="form-check-input" type="checkbox" name="deleteImage[]" value="<%=post.image.filename%>">
+                </div>           
                 <% }  %>  
                 <hr class="my-2">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-warning">Update</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-warning">Update</button>
 
             </form>
         </div>

@@ -1,3 +1,64 @@
+/* stars and headline */
+
+h1{
+  font-family: "Courgette", cursive;
+}
+
+.logo {
+  font-family: "Courgette", cursive;
+}
+
+.content {
+  text-align: center;
+}
+
+  .wrapper {
+  display: block;
+  border: none;
+  font-size: 14px;
+  transform: translateX(-35%);
+  }
+  
+  .wrapper input {
+  border: 0;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+  opacity: 0;
+  
+  }
+  
+  .wrapper label {
+  float: right;
+  color: #C8C8C8;
+  }
+  
+  .wrapper label:before {
+  margin: 5px;
+  content: "★";
+  display: inline-block;
+  font-size: 3.5em;
+  color: #ccc;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  }
+  
+  .wrapper input:checked ~ label:before {
+  color: #FFC107;
+  }
+  
+  .wrapper label:hover ~ label:before {
+  color: #ffdb70;
+  }
+  
+  .wrapper label:hover:before {
+  color: #FFC107;
+  }
+  
+/* paper background */
 .paper{
     color: #444;
     /* line-height: 20px; */
@@ -36,90 +97,6 @@
     height: 100vh;
 }
 
-/* stars and headline */
-
-.content {
-    text-align: center;
-  }
-
-h1{
-    font-family: "Courgette", cursive;
-}
-
-.logo {
-    font-family: "Courgette", cursive;
-}
-
-/* paper background */
-
-.content  .i {
-color: #FFC107;
-font-size: 1.5em;
-}
-.content span {
-position: relative;
-display: inline-block;
-}
-.content  span:before, .content  span:after {
-position: absolute;
-content: "";
-background-color: #282828;
-width: 40px;
-height: 2px;
-top: 40%;
-}
-.content  span:before {
-left: -45px;
-}
-.content  span:after {
-right: -45px;
-}
-
-.wrapper {
-display: block;
-border: none;
-font-size: 14px;
-transform: translateX(-35%);
-}
-
-.wrapper input {
-border: 0;
-width: 1px;
-height: 1px;
-overflow: hidden;
-clip: rect(1px 1px 1px 1px);
-clip: rect(1px, 1px, 1px, 1px);
-opacity: 0;
-
-}
-
-.wrapper label {
-float: right;
-color: #C8C8C8;
-}
-
-.wrapper label:before {
-margin: 5px;
-content: "★";
-display: inline-block;
-font-size: 3.5em;
-color: #ccc;
--webkit-user-select: none;
--moz-user-select: none;
-user-select: none;
-}
-
-.wrapper input:checked ~ label:before {
-color: #FFC107;
-}
-
-.wrapper label:hover ~ label:before {
-color: #ffdb70;
-}
-
-.wrapper label:hover:before {
-color: #FFC107;
-}
 
 
 /* blinking cursor  */
