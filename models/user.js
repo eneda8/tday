@@ -86,7 +86,6 @@ const userSchema = new Schema({
     }
 }) 
 
-userSchema.plugin(passportLocalMongoose, {
-    selectFields : "gender country avatar"});
+userSchema.plugin(passportLocalMongoose);
 
 module.exports = mongoose.model("User", userSchema);

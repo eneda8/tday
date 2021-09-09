@@ -11,7 +11,7 @@ const upload = multer({storage});
 
 router.route("/")
     .get(users.renderHomePage)
-    .post(passport.authenticate("local", {failureFlash: "Incorrect username or password. Please try again.", failureRedirect: "/login", }), users.login)
+    .post(passport.authenticate("local", {failureFlash: true, failureRedirect: "/login", }), users.login)
 
 router.get("/data", (req,res) => {
     res.render("data");
@@ -23,26 +23,7 @@ router.route("/register")
 
 router.route("/login")
     .get(users.renderLoginForm)
-    .post(passport.authenticate("local", {failureFlash: true, failureRedirect: "/login", }), users.login);
-
-// router.post('/login', function async (req, res, next) {
-//   const user = req.body;
-//   passport.authenticate('local', function(err, user, info) {
-//     if (err) { console.log(err); return next(err); }
-//     if (!user) { 
-//       console.log("!user")
-//       res.redirect('/login'); 
-//     }
-//     req.logIn(user, function(err) {
-//       if (err) { 
-//       console.log("logIn error", err); 
-//       req.flash("error", `${info.message}`)
-//       res.redirect("/login"); 
-//     }
-//       return res.redirect('/u/' + user.username);
-//     });
-//   })(req, res, next);
-// });
+    .post(passport.authenticate("local", {failureFlash: true, failureRedirect: "/login", }), users.login)
 
 router.get("/logout", users.logout);
 

@@ -65,7 +65,7 @@ app.use(flash());
 
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use(new LocalStrategy(User.authenticate()));
+passport.use(new LocalStrategy(User.authenticate(), {passReqToCallback: true}));
 
 passport.serializeUser(function(user, done) {
     done(null, user.id);
@@ -76,6 +76,9 @@ passport.deserializeUser(function(id, done) {
         done(err, user);
     });
 });
+
+// passport.serializeUser(User.serializeUser());
+// passport.deserializeUser(User.deserializeUser())
 
 app.use((req, res, next) => {
     if (!['/login', '/register', '/'].includes(req.originalUrl)) {

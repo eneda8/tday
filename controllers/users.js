@@ -22,27 +22,26 @@ module.exports.renderRegisterForm = (req, res) => {
 }
 
 module.exports.register = async (req,res, next) => {
-    const {username, displayName, email, password, birthyear, gender, country, avatar} = req.body;
-    const user = new User({username, displayName, email, birthyear, gender, country, avatar});
-    if(req.file){
+    try{
+        const {username, displayName, email, password, birthyear, gender, country, avatar} = req.body;
+        const user = new User({username, displayName, email, birthyear, gender, country, avatar});
+        if(req.file){
         user.avatar = req.file;
-    } else {
-        user.avatar = {}
-    }
-    user.postedToday = false;
-    user.country.flag = countries.filter(obj => Object.values(obj).includes(user.country.name))[0]["flag"];
-    const registeredUser = await User.register(user, password);
-    await req.login(registeredUser, err => {
-        if(err) {
-            req.flash("error", `${err.message}. Please try again!`);
-            res.redirect("/register")
+        } else {
+            user.avatar = {}
         }
-        else {
+        user.postedToday = false;
+        user.country.flag = countries.filter(obj => Object.values(obj).includes(user.country.name))[0]["flag"];
+        const registeredUser = await User.register(user, password);
+        req.login(registeredUser, err => {
+            if(err) return next(err); 
             req.flash("success", `Welcome to todai, ${req.user.username}!`);
             res.redirect(`/u/${username}`);
-        }
-    })
-
+        })
+    } catch(err) {
+        req.flash("error", `${err.message}. Please try again!`);
+        res.redirect("/register")
+    }               
 }
 
 module.exports.renderLoginForm = (req,res) => {
@@ -54,10 +53,7 @@ module.exports.renderLoginForm = (req,res) => {
 }
 
 module.exports.login = (req,res) => {
-    req.flash("success", "Welcome back!");
-    // const redirectUrl = req.session.returnTo || "/posts/today";
-    // delete req.session.returnTo;
-    // res.redirect(redirectUrl);
+    req.flash("success", `Welcome back, ${req.user.username}!`);
     res.redirect("/posts/today")
 }
 

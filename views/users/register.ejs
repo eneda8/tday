@@ -35,6 +35,9 @@
     <body class="d-flex flex-column vh-100">
         <%- include("../partials/navbar") %>
           <main class="container-fluid paper">
+            <div class="mt-3">
+                <%- include('../partials/flash')%>
+            </div>
             <div class="container d-flex justify-content-center align-items-center mt-4">
                 <div class="row">
                     <div class="col-md-6 offset-md-3 col-xl-6 offset-xl-4">
@@ -52,50 +55,42 @@
                                         <div class="col-md-6">
                                             <label class="form-label mb-0" for="username">Username</label>
                                             <input class="form-control" type="text" id="username" name="username" placeholder ="@" required>
-                                            <div class="valid-feedback">
-                                                Looks good!
-                                            </div>
+                                            <div class="valid-feedback">Looks good!</div>
+                                            <div class="invalid-feedback">Please enter a username.</div>
                                         </div>
                                         <div class="col-md-6">
                                             <label class="form-label mb-0" for="displayName">Display Name</label>
                                             <input class="form-control" type="text" id="displayName" name="displayName" required>
                                             <small id="passwordHelpInline" class="text-muted">
-                                                <i class="fas fa-info-circle text-warning"></i> Please don't use your real full name!
+                                                <i class="fas fa-info-circle text-info"></i> Please don't use your real full name.
                                             </small>
-                                            <div class="valid-feedback">
-                                                Looks good!
-                                            </div>
+                                            <div class="valid-feedback">Looks good!</div>
+                                            <div class="invalid-feedback">Please enter a display name.</div>
                                         </div>
                                     </div>
                                     <div class="form-row mt-3">
                                         <div class="col-md-6">
                                             <label class="form-label mb-0" for="email">Email</label>
                                             <input class="form-control" type="email" id="email" name="email" required>
-                                            <div class="valid-feedback">
-                                                Looks good!
-                                            </div>
+                                            <div class="valid-feedback">Looks good!</div>
+                                            <div class="invalid-feedback">Please enter a valid email.</div>
                                         </div>
                                         <div class="col-md-6">
                                             <label class="form-label mb-0" for="password">Password</label>
-                                            <input class="form-control" type="password" id="password" name="password" required>
+                                            <input class="form-control" type="password" id="password" name="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,10}$" required>
                                             <small id="" class="text-muted">
-                                                <i class="fas fa-info-circle text-warning"></i> Requirements: 8-20 characters. No spaces, special characters, or emojis.
+                                                <i class="fas fa-info-circle text-info"></i> 8-20 characters. Must contain at least one number, one uppercase letter, and one special character.
                                             </small>
-                                            <div class="valid-feedback">
-                                                Looks good!
-                                            </div>
+                                            <div class="valid-feedback">Looks good!</div>
+                                            <div class="invalid-feedback">Please enter a valid password.</div>
                                         </div>
                                     </div>
                                     <div class="form-row mt-3">
                                         <div class=" col-md-6">
                                             <label class="form-label mb-0" for="birthyear">Birth year </label>
                                             <input class="form-control" type="number" id="birthyear" name="birthyear" min="1920" max="2001" placeholder="" required>
-                                            <div class="valid-feedback">
-                                                Looks good!
-                                            </div>
-                                            <div class="invalid-feedback">
-                                                You must be between the ages of 10 and 120 years old to sign up.
-                                            </div>
+                                            <div class="valid-feedback">Looks good!</div>
+                                            <div class="invalid-feedback">You must be between the ages of 10 and 120 years old to sign up.</div>
                                         </div>
                                         <div class="col-md-6">
                                             <label class="form-label mb-0" for="gender">Gender</label>
@@ -104,12 +99,11 @@
                                                 <option value="male">male</option>   
                                                 <option value="female">female</option>          
                                             </select>
-                                            <div class="valid-feedback">
-                                                Looks good!
-                                            </div>
+                                            <div class="valid-feedback">Looks good!</div>
+                                            <div class="invalid-feedback">Please select a valid option.</div>
                                         </div>
                                         <small id="" class="form-text text-muted pl-1">
-                                            <i class="fas fa-info-circle text-warning"></i> This information is for data aggregation purposes only. Your choice is private and cannot be changed after you sign up. 
+                                            <i class="fas fa-info-circle text-info"></i> This information is for data aggregation purposes only. Your choice is private and cannot be changed after you sign up. 
                                         </small>
                                     </div>
                                     <div class="mt-3">
@@ -120,9 +114,8 @@
                                                 <option value="<%=country["name"]%>"><%=country["name"]%></option>
                                             <%}%>        
                                         </select>
-                                        <div class="valid-feedback">
-                                            Looks good!
-                                        </div>
+                                        <div class="valid-feedback">Looks good!</div>
+                                        <div class="invalid-feedback">Please select a valid option</div>
                                     </div>
                                     <div class="mt-3">
                                         <p class="mb-0">Avatar</p>
@@ -130,7 +123,7 @@
                                         <input type="file" class="custom-file-input" id="avatar" name="avatar" onchange="document.getElementById('preview').src = window.URL.createObjectURL(this.files[0])">
                                         <label class="custom-file-label" for="avatar">Choose an image...</label>
                                         <small id="" class="text-muted">
-                                            <i class="fas fa-info-circle text-warning"></i> No selfies - we encourage anonymity!
+                                            <i class="fas fa-info-circle text-info"></i> No selfies - we encourage anonymity :)
                                         </small>
                                     </div>
                                     <img class="img-fluid my-2" id="preview" width="100px"/> 
