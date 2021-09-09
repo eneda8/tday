@@ -87,3 +87,22 @@ module.exports.blockDuplicatePost = async (req, res, next) => {
         return res.redirect("/posts/today")
     } else next()
 }
+
+module.exports.checkPostStreak = async(req, res, next) => {
+    const today = new Date()
+    let yesterday = new Date(today);
+    yesterday.setDate(today.getDate() -1)
+    yesterday = yesterday.toLocaleDateString(
+        'en-US',
+        {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        }
+    );
+    const user = await User.findById(req.user._id);
+    const post = await Post.find({"author": user, "date": yesterday});
+    if(!post) {
+        user.postStreak = 0;
+    } else next() 
+}

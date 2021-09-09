@@ -10,9 +10,6 @@ router.route("/")
     .get(isLoggedIn, setPostedToday, catchAsync(journals.renderJournal))
     .post(isLoggedIn,catchAsync(journals.createJournal));
 
-router.route("/:journalId/edit")
-    .get(isLoggedIn, setPostedToday, isJournalAuthor, catchAsync(journals.renderEditJournal));
-
 router.route("/:journalId")
     .get(isLoggedIn, setPostedToday, isJournalAuthor, catchAsync(journals.showJournal))
     .put(isLoggedIn, setPostedToday, isJournalAuthor, catchAsync(journals.updateJournal))

@@ -46,6 +46,7 @@ module.exports.createPost = async (req, res, next) => {
     post.timestamp = getTimestamp();
     user.posts.unshift(post);
     user.postedToday = true;
+    user.postStreak ++; 
     await post.save();
     user.todaysPost = post._id; 
     await user.save();

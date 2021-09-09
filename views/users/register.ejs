@@ -33,114 +33,164 @@
         <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.min.js"></script>
     </head>
     <body class="d-flex flex-column vh-100">
-        <%- include("../partials/navbar") %>
-          <main class="container-fluid paper">
-            <div class="mt-3">
-                <%- include('../partials/flash')%>
+        <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-warning">
+            <div class="container-fluid">
+              <a class="navbar-brand font-weight-bold logo" href="/">todai</a>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                  <% if(currentUser) {  %> 
+                    <a class="nav-link" href="/posts/today">home</a>
+                    <a class="nav-link" href="#">data</a>
+                    <a class="nav-link" href="/write">write</a>
+                    <% if(currentUser.postedToday === false) {%> 
+                    <a class="nav-link" href="" data-toggle="modal" id="newPostLink" data-target="#newPostModal">rate today</a>
+                    <% } else {%>
+                    <a href="/posts/<%=currentUser.todaysPost%>" class="nav-link">my rating</a>
+                    <% } %>
+                  <% } %> 
+                </div>
+                <div class="navbar-nav ml-auto mr-2">
+                <% if(!currentUser) {  %> 
+                  <form action="/" method="POST" class="form-inline" novalidate>
+                    <div class="">
+                      <label class="d-inline" for="username"></label>
+                      <input type="text" class="form-control" placeholder="username" name="username" aria-label="Username" required>
+                      <label class="d-inline" for="password"></label>
+                      <input type="password" class="form-control" placeholder="password" name="password" aria-label="Password" required>
+                      <button class="btn btn-link p-0" type="submit"><a class="nav-link text-decoration-none">login</a></button>
+                    </div>
+                  </form>
+                  <button class="btn btn-link p-0"><a class="nav-link text-decoration-none" href="/register">sign up</a></button>
+                <% } else { %> 
+                  <form class="form-inline">
+                    <input class="form-control mr-sm-2" type="search" style = "height: 30px" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-sm btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
+                  </form>
+                <li class="nav-item dropdown mr-auto">
+                  <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="/u/<%=currentUser.username%>" role="button" aria-haspopup="true" aria-expanded="false"><img class="p-0" src="<%=currentUser.avatar.thumbnail%>" style= "border-radius: 50%;"alt=""></a>
+                  <div class="dropdown-menu" style="min-width: 5rem">
+                    <a class="dropdown-item p-2" href="/u/<%=currentUser.username%>">profile</a>
+                    <a class="dropdown-item p-2" href="/write">write</a>
+                    <a class="dropdown-item p-2" href="/settings">settings</a>
+                    <a class="dropdown-item p-2" href="/logout">logout</a>
+                  </div>
+                </li>
+                <% }  %>
+                </div>
+                </div>
+              </div>
             </div>
-            <div class="container d-flex justify-content-center align-items-center mt-4">
-                <div class="row">
-                    <div class="col-md-6 offset-md-3 col-xl-6 offset-xl-4">
-                        <div class="card mb-3">
-                            <div class="card-body">
-                                <div class="jumbotron jumbotron-fluid py-3">
-                                    <div class="container">
-                                      <p class="lead text-center">Join the world's first collective online journal</p>
-                                      <p class="text-warning text-center">──────<span>★</span>──────</p>
-                                      <h1 class="display-4 text-center ">todai</h1>
+          </nav>
+        <main class="container-fluid paper">
+        <div class="mt-3">
+            <%- include('../partials/flash')%>
+        </div>
+        <div class="container d-flex justify-content-center align-items-center mt-4">
+            <div class="row">
+                <div class="col-md-6 offset-md-3 col-xl-6 offset-xl-4">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="jumbotron jumbotron-fluid py-3">
+                                <div class="container">
+                                    <p class="lead text-center">Join the world's first collective online journal</p>
+                                    <p class="text-warning text-center">──────<span>★</span>──────</p>
+                                    <h1 class="display-4 text-center ">todai</h1>
+                                </div>
+                                </div>
+                            <form action="/register" method="POST" class="validated-form" novalidate enctype="multipart/form-data">
+                                <div class="form-row mt-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label mb-0" for="username">Username</label>
+                                        <input class="form-control" type="text" id="username" name="username" placeholder ="@" required>
+                                        <div class="valid-feedback">Looks good!</div>
+                                        <div class="invalid-feedback">Please enter a username.</div>
                                     </div>
-                                  </div>
-                                <form action="/register" method="POST" class="validated-form" novalidate enctype="multipart/form-data">
-                                    <div class="form-row mt-3">
-                                        <div class="col-md-6">
-                                            <label class="form-label mb-0" for="username">Username</label>
-                                            <input class="form-control" type="text" id="username" name="username" placeholder ="@" required>
-                                            <div class="valid-feedback">Looks good!</div>
-                                            <div class="invalid-feedback">Please enter a username.</div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="form-label mb-0" for="displayName">Display Name</label>
-                                            <input class="form-control" type="text" id="displayName" name="displayName" required>
-                                            <small id="passwordHelpInline" class="text-muted">
-                                                <i class="fas fa-info-circle text-info"></i> Please don't use your real full name.
-                                            </small>
-                                            <div class="valid-feedback">Looks good!</div>
-                                            <div class="invalid-feedback">Please enter a display name.</div>
-                                        </div>
-                                    </div>
-                                    <div class="form-row mt-3">
-                                        <div class="col-md-6">
-                                            <label class="form-label mb-0" for="email">Email</label>
-                                            <input class="form-control" type="email" id="email" name="email" required>
-                                            <div class="valid-feedback">Looks good!</div>
-                                            <div class="invalid-feedback">Please enter a valid email.</div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="form-label mb-0" for="password">Password</label>
-                                            <input class="form-control" type="password" id="password" name="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,10}$" required>
-                                            <small id="" class="text-muted">
-                                                <i class="fas fa-info-circle text-info"></i> 8-20 characters. Must contain at least one number, one uppercase letter, and one special character.
-                                            </small>
-                                            <div class="valid-feedback">Looks good!</div>
-                                            <div class="invalid-feedback">Please enter a valid password.</div>
-                                        </div>
-                                    </div>
-                                    <div class="form-row mt-3">
-                                        <div class=" col-md-6">
-                                            <label class="form-label mb-0" for="birthyear">Birth year </label>
-                                            <input class="form-control" type="number" id="birthyear" name="birthyear" min="1920" max="2001" placeholder="" required>
-                                            <div class="valid-feedback">Looks good!</div>
-                                            <div class="invalid-feedback">You must be between the ages of 10 and 120 years old to sign up.</div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="form-label mb-0" for="gender">Gender</label>
-                                            <select class="custom-select" id="gender" name="gender" required>
-                                                <option selected value="">─Please select an option─</option>
-                                                <option value="male">male</option>   
-                                                <option value="female">female</option>          
-                                            </select>
-                                            <div class="valid-feedback">Looks good!</div>
-                                            <div class="invalid-feedback">Please select a valid option.</div>
-                                        </div>
-                                        <small id="" class="form-text text-muted pl-1">
-                                            <i class="fas fa-info-circle text-info"></i> This information is for data aggregation purposes only. Your choice is private and cannot be changed after you sign up. 
+                                    <div class="col-md-6">
+                                        <label class="form-label mb-0" for="displayName">Display Name</label>
+                                        <input class="form-control" type="text" id="displayName" name="displayName" required>
+                                        <small id="passwordHelpInline" class="text-muted">
+                                            <i class="fas fa-info-circle text-info"></i> Please don't use your real full name.
                                         </small>
+                                        <div class="valid-feedback">Looks good!</div>
+                                        <div class="invalid-feedback">Please enter a display name.</div>
                                     </div>
-                                    <div class="mt-3">
-                                        <label class="form-label mb-0" for="country[name]">Country</label>
-                                        <select class="custom-select" id="countryName" name="country[name]" required>
-                                            <option value="">─Please select an option─</option> 
-                                            <%  for (let country of countries) { %>
-                                                <option value="<%=country["name"]%>"><%=country["name"]%></option>
-                                            <%}%>        
+                                </div>
+                                <div class="form-row mt-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label mb-0" for="email">Email</label>
+                                        <input class="form-control" type="email" id="email" name="email" required>
+                                        <div class="valid-feedback">Looks good!</div>
+                                        <div class="invalid-feedback">Please enter a valid email.</div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label mb-0" for="password">Password</label>
+                                        <input class="form-control" type="password" id="password" name="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,10}$" required>
+                                        <small id="" class="text-muted">
+                                            <i class="fas fa-info-circle text-info"></i> 8-20 characters. Must contain at least one number, one uppercase letter, and one special character.
+                                        </small>
+                                        <div class="valid-feedback">Looks good!</div>
+                                        <div class="invalid-feedback">Please enter a valid password.</div>
+                                    </div>
+                                </div>
+                                <div class="form-row mt-3">
+                                    <div class=" col-md-6">
+                                        <label class="form-label mb-0" for="birthyear">Birth year </label>
+                                        <input class="form-control" type="number" id="birthyear" name="birthyear" min="1920" max="2001" placeholder="" required>
+                                        <div class="valid-feedback">Looks good!</div>
+                                        <div class="invalid-feedback">You must be between the ages of 10 and 120 years old to sign up.</div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label mb-0" for="gender">Gender</label>
+                                        <select class="custom-select" id="gender" name="gender" required>
+                                            <option selected value="">─Please select an option─</option>
+                                            <option value="male">male</option>   
+                                            <option value="female">female</option>          
                                         </select>
                                         <div class="valid-feedback">Looks good!</div>
-                                        <div class="invalid-feedback">Please select a valid option</div>
+                                        <div class="invalid-feedback">Please select a valid option.</div>
                                     </div>
-                                    <div class="mt-3">
-                                        <p class="mb-0">Avatar</p>
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="avatar" name="avatar" onchange="document.getElementById('preview').src = window.URL.createObjectURL(this.files[0])">
-                                        <label class="custom-file-label" for="avatar">Choose an image...</label>
-                                        <small id="" class="text-muted">
-                                            <i class="fas fa-info-circle text-info"></i> No selfies - we encourage anonymity :)
-                                        </small>
-                                    </div>
-                                    <img class="img-fluid my-2" id="preview" width="100px"/> 
-                                    </div>
-                                    <button class="btn btn-warning btn-block">Sign Up</button>
-                                    <p class="text-center mt-3 mb-0">Already registered? <a href="/login">Login</a></p>
-                                </form>
-                            </div>
+                                    <small id="" class="form-text text-muted pl-1">
+                                        <i class="fas fa-info-circle text-info"></i> This information is for data aggregation purposes only. Your choice is private and cannot be changed after you sign up. 
+                                    </small>
+                                </div>
+                                <div class="mt-3">
+                                    <label class="form-label mb-0" for="country[name]">Country</label>
+                                    <select class="custom-select" id="countryName" name="country[name]" required>
+                                        <option value="">─Please select an option─</option> 
+                                        <%  for (let country of countries) { %>
+                                            <option value="<%=country["name"]%>"><%=country["name"]%></option>
+                                        <%}%>        
+                                    </select>
+                                    <div class="valid-feedback">Looks good!</div>
+                                    <div class="invalid-feedback">Please select a valid option</div>
+                                </div>
+                                <div class="mt-3">
+                                    <p class="mb-0">Avatar</p>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="avatar" name="avatar" onchange="document.getElementById('preview').src = window.URL.createObjectURL(this.files[0])">
+                                    <label class="custom-file-label" for="avatar">Choose an image...</label>
+                                    <small id="" class="text-muted">
+                                        <i class="fas fa-info-circle text-info"></i> No selfies - we encourage anonymity :)
+                                    </small>
+                                </div>
+                                <img class="img-fluid my-2" id="preview" width="100px"/> 
+                                </div>
+                                <button class="btn btn-warning btn-block">Sign Up</button>
+                                <p class="text-center mt-3 mb-0">Already registered? <a href="/login">Login</a></p>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
-        </main>
-        <%- include("../partials/footer") %>
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
-        <script src='/javascripts/validateForms.js'></script>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">   
+        </div>
+    </main>
+    <%- include("../partials/footer") %>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+    <script src='/javascripts/validateForms.js'></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">   
 </body>
 

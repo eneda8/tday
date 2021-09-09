@@ -83,6 +83,10 @@ const userSchema = new Schema({
     },
     todaysPost: {
         type: String
+    },
+    postStreak: {
+        type: Number,
+        default: 0
     }
 }) 
 
