@@ -22,6 +22,7 @@ db.once("open", () => {
 });
 
 
+
 const seedDB = async () => {
     // register new users with faker
     // for(let i =0; i < 100; i++) {
@@ -53,12 +54,31 @@ const seedDB = async () => {
         const body = faker.lorem.sentence();
         const user = await User.findOne().where({ "postedToday" : false })      
         // post.image = faker.image();
+        const checkPostStreak = async (user) => {
+            const today = new Date()
+            let yesterday = new Date(today);
+            yesterday.setDate(today.getDate() -1)
+            yesterday = yesterday.toLocaleDateString(
+                'en-US',
+                {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                }
+            );
+            const post = await Post.find({"author": user, "date": yesterday});
+            if(!post) {
+                user.postStreak = 0;
+            } 
+        }
         if(user){
+            await checkPostStreak(user);
             const post = new Post({rating, body});
             post.author = user;
             user.postedToday = true;
             user.posts.unshift(post);
             user.todaysPost = post._id;
+            user.postStreak ++; 
             await post.save();
             await user.save();
         }

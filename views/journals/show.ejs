@@ -20,7 +20,7 @@
           <main>
               <h6 class="text-muted text-center text-monospace"><%=journal.date%></h6>
               <div class="paper text-wrap ">
-                <textarea autofocus="autofocus" class="text-monospace text-wrap px-0 py-1 ml-0" rows="50" cols="100" name="journal[body]" disabled><%=journal.body%></textarea>                     
+                <textarea id="journalBody" autofocus="autofocus" class="text-monospace text-wrap px-0 py-1 ml-0" rows="50" cols="100" name="journal[body]" disabled><%=journal.body%></textarea>                     
                 <a class="small" href="/write/<%=journal._id%>/edit">Edit</a>
                 <form class="d-inline" action="/write/<%=journal._id%>?_method=DELETE" method="POST">
                     <button class="btn btn-link btn-sm d-inline p-1 small">Delete</button>

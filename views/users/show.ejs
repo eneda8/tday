@@ -7,7 +7,7 @@
                         <div class="mr-3">
                             <img src="<%=user.avatar.path%>" alt="" width="200" height="200" class="rounded my-3 img-thumbnail">
                             <% if(currentUser && user._id.equals(currentUser._id)) { %>
-                            <a href=""" data-toggle="modal" id="editProfileLink" data-target="#editProfileModal" class="btn btn-outline-dark btn-sm btn-block">Edit profile</a>
+                            <a href=""" data-toggle="modal" id="editProfileLink" data-target="#editProfileModal" class="btn btn-outline-secondary btn-sm btn-block">Edit profile <i class="fas fa-user-edit"></i></a>
                             <% } %> 
                         </div>
                         <div class="mb-5 text-white">
@@ -56,7 +56,8 @@
                                         <img src="<%=user.avatar.thumbnail%>" alt="" style="width:45px; border-radius: 50%">
                                     </a>
                                     <div class="media-body">
-                                        <h6 class="card-subtitle mt-1"><strong><a href="/u/<%=user.username%>"><%=user.displayName%></a></strong><span class="text-muted">  @<%=user.username%></span>  <img class="d-inline" style="width: 17px" src="<%=user.country.flag%>" alt="" title="<%=user.country.name %>"></h6>
+                                        <h6 class="card-subtitle mt-1"><strong><a href="/u/<%=user.username%>"><%=user.displayName%></a></strong>  <img class="d-inline" style="width: 17px" src="<%=user.country.flag%>" alt="" title="<%=user.country.name %>"></h6>
+                                        <small class="text-muted mb-0 d-block">@<%=user.username%></small>
                                         <p class="mb-1 mt-0" style="font-size: 14px"> <span class="mark"><%=post.date%>:</span> <span class="star star<%=post.rating%>-result"></span></p>
                                         <div class="text-wrap">
                                             <p class="my-0"><%=post.body%></p>
@@ -122,11 +123,13 @@
                         <!-- data tab end -->
                         <!-- new journals tab start -->
                         <div class="tab-pane fade" id="nav-journals" role="tabpanel" aria-labelledby="nav-journals-tab">
-                            <div class="text-center">
+                            <!-- <div class="text-center">
                                 <button class="btn btn-outline btn-warning mt-3" type="button"><a href="/write" class="text-dark">Write</a></button>
-                            </div>
+                            </div> -->
 
                             <div class="accordion mx-4 my-3" id="journalsAccordion">
+                                <button class="btn btn-link pl-0" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="">Expand/Collapse All</button>
+
                                 <% let index= 0; %> 
                                 <% for (let journal of user.journals) { %> 
                                 <% index++ %> 
@@ -137,7 +140,7 @@
                                             <button class="btn btn-link text-warning ml-1 p-0" type="button" data-toggle="collapse" data-target="#journal-<%=index%>" aria-expanded="false" aria-controls="journal-<%=index%>"><i class="fas fa-caret-down"></i></button>
                                         </h6>
                                     </div>
-                                    <div id="journal-<%=index%>" class="collapse" aria-labelledby="heading-<%=index%>" data-parent="#journalsAccordion" >
+                                    <div id="journal-<%=index%>" class="collapse multi-collapse" aria-labelledby="heading-<%=index%>"  >
                                         <div class="card-body">
                                             <% if(journal.edited = true) { %> 
                                             <small><%journal.editedTime%></small>

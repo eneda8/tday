@@ -58,8 +58,11 @@ module.exports.login = (req,res) => {
 }
 
 module.exports.logout = (req,res) => {
+    const today = new Date();
+    const hour = today.getHours()
+    let greeting = (hour <= 17) ? "Signed out, have a good day!" : "Signed out, have a good night!";
     req.logout();
-    req.flash("success", "Goodbye!");
+    req.flash("success", `${greeting}`);
     res.redirect("/");
 }
 

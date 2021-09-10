@@ -4,7 +4,7 @@ const Journal = require("../models/journal");
 const ObjectID = require('mongodb').ObjectID;
 const {getToday, getTimestamp} = require("../utils/getToday");
 
-module.exports.renderJournal =  (req, res) => {
+module.exports.renderJournal =  async (req, res) => {
     const today = getTimestamp()
     res.render("journals/write", {today});
 }
@@ -50,7 +50,9 @@ module.exports.renderEditJournal = async(req, res, next) => {
 
 module.exports.updateJournal = async (req,res) => {
     const {journalId} = req.params;
-    const journal = await Journal.findOneAndUpdate({_id: journalId}, {...req.body.journal} ) 
+    const journal = await Journal.findById(journalId);
+    journal.body = req.body.journal.body;
+    console.log(req.body.journal.body)
     journal.edited = true;
     await journal.save();
     journal.editedTime = new Date(journal.updatedAt).toLocaleString("en-US");

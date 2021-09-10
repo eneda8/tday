@@ -88,7 +88,6 @@ module.exports.updatePost = async (req,res) => {
         post.image = req.file;
     }
     if(req.body.deleteImage){
-        console.log(req.body.deleteImage)
         await cloudinary.uploader.destroy(req.body.deleteImage[0])
         await post.updateOne({$set: {image: null}});
     } 
@@ -107,6 +106,7 @@ module.exports.deletePost = async(req, res) => {
         user.posts.shift();
         user.postedToday = false;
         user.todaysPost = ""
+        user.postStreak --;
         user.save();
     } else {
         user.posts.pull(id)

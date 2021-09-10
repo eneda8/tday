@@ -49,7 +49,7 @@ main{
     border-color: transparent #efe4e4; 
 } 
 
-textarea{
+#journalBody{
     display: block; 
     border: none; 
     outline: none; 
