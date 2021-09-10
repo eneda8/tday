@@ -6,27 +6,52 @@
         <div class="media pr-3 text-wrap">
             <a href="/u/<%=post.author.username%>"><img src="<%=post.author.avatar.thumbnail%>" class="pr-2" alt="" style="width:45px; border-radius: 50%"></a>
             <div class="media-body text-wrap">
-              <p class="card-subtitle mb-1 d-inline"><strong><a href="/u/<%=post.author.username%>"><%=post.author.displayName%></a></strong>  <img class="d-inline" style="width: 17px" src="<%=post.author.country.flag%>" title="<%=post.author.country.name%>" alt=""></p>
-              <small class="text-muted mb-1 d-block">@<%=post.author.username%></small>
-              <p class="mb-2"><span class="mark"><%=post.date%>:</span> <span class="star star<%=post.rating%>-result"></span></p>
+              <div class="d-flex justify-content-between mt-2">
+                <p class="card-subtitle mb-1 d-inline"><strong><a href="/u/<%=post.author.username%>"><%=post.author.displayName%></a></strong>  <img class="d-inline" style="width: 17px" src="<%=post.author.country.flag%>" title="<%=post.author.country.name%>" alt=""> <small class="text-muted mb-1 d-block">@<%=post.author.username%></small></p>
+
+                <% if(currentUser && post.author.equals(currentUser._id)) { %> 
+                <div class="btn-group" title="More" >
+                  <button class="btn btn-sm text-dark mb-1 pb-1 bg-light rounded-circle" data-toggle="dropdown" style="height: 30px; width: 30px">...</button>
+                  <div class="dropdown-menu dropdown-menu-lg-right">
+                    <% if(canEdit === true) { %>
+                    <button class="dropdown-item pl-2"><a href="" data-toggle="modal" id="editPostLink" data-target="#editPostModal" class="text-decoration-none"><i class="fas fa-edit text-warning"></i> Edit</a></button>
+                    <% } %> 
+                    <form class="d-inline" action="/posts/<%=post._id%>?_method=DELETE" method="POST">
+                      <button class="dropdown-item pl-2 text-primary"><a><i class="fas fa-trash-alt text-danger"></i><span class="text-light">_</span>Delete</a></button>
+                    </form>
+                  </div>
+                </div>
+                <% } %>
+              </div>
+              <span class="badge badge-light mb-2"><%=post.date%>: <span class="star star<%=post.rating%>-result"></span></span> 
+              
               <div class="text-wrap">
                 <p class="my-2"><%=post.body%></p>
               </div>
               <% if(post.image) { %> 
                 <img class="img-fluid d-block" src="<%=post.image.path%>" alt="">
               <% } %> 
-              <div class="d-inline">
-                <small class="pb-1"><a href="/posts/<%=post._id%>" class="card-link"><%=post.timestamp%></a></small>
-                <% if(post.edited){ %>
-                <small class="pb-1 text-muted">Edited</small>
-                <% } %>
-                <% if(currentUser && post.author.equals(currentUser._id)) { %> 
-                <button class="btn btn-link btn-sm  d-inline pt-0 pb-0 mb-0"><a href="" data-toggle="modal" id="editPostLink" data-target="#editPostModal">Edit</a></button>
+              <div class="d-flex justify-content-between">
+                <div>
+                  <small class="pb-1"><a href="/posts/<%=post._id%>" class="card-link"><%=post.timestamp%></a></small>
+                  <% if(post.edited){ %>
+                  <small class="pb-1 text-muted">Edited</small>
+                  <% } %>
+                </div>
+                <div>
+                  <button class="btn btn-sm btn-link" title="Copy link" onclick="navigator.clipboard.writeText(window.location.href)"><i class="fas fa-link text-warning mr-2"></i></button>
+                  <form action="/posts/<%=post._id%>/bookmark" method="POST" class="d-inline">
+                    <button class="btn btn-sm btn-link" title="Bookmark"><i class="far fa-bookmark text-danger mr-2"></i></button>
+                  </form>
+                </div>
+                
+                <!-- <button class="btn btn-link btn-sm  d-inline p-0 m-0"><a href="" data-toggle="modal" id="editPostLink" data-target="#editPostModal"><i class="fas fa-edit text-warning"></i></a></button>
+                
                 <form class="d-inline" action="/posts/<%=post._id%>?_method=DELETE" method="POST">
-                  <button class="btn btn-link btn-sm  d-inline pt-0 pb-0 mb-0">Delete</button>
-                </form>
+                  <button class="btn btn-link btn-sm  d-inline p-0 pb-0 m-0"><i class="fas fa-trash-alt text-danger"></i></button>
+                </form> -->
               </div>
-              <% } %>
+               
               <div class="border-top border-bottom p-1 my-1">
                 <h6 class="mb-0">Comments</h6>
               </div>

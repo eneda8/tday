@@ -2,7 +2,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h6 class="modal-title" id="editPostModalLabel">Update Today's Rating</h6>
+          <h6 class="modal-title" id="editPostModalLabel">Edit Today's Rating</h6>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -35,8 +35,8 @@
                     <input type="file" class="custom-file-input" id="image" name="image" onchange="document.getElementById('preview').src = window.URL.createObjectURL(this.files[0])">
                     <label class="custom-file-label" for="image">Choose image...</label>
                     <div class="valid-feedback">Looks good!</div>
+                    <img class="img-fluid my-2" id="preview" width="100px" src=""> 
                 </div>
-                <img class="img-fluid my-2" id="preview" width="100px"/> 
                 <% if(post.image) { %> 
                 <div >
                     <label class="d-block" for="deleteImage">Delete Image?</label>

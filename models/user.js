@@ -77,6 +77,12 @@ const userSchema = new Schema({
             ref: "Journal"
         }
     ], 
+    bookmarks: [ 
+        {
+        type: Schema.Types.ObjectId,
+        ref: "Post" 
+        }
+    ],
     postedToday: {
         type: Boolean,
         default: false

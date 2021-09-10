@@ -1,9 +1,3 @@
-// module.exports.getToday = function() {
-//     const date = new Date() 
-//     const today = (date.getMonth() +1).toString()+ '/' + date.getDate().toString()+ "/" + date.getFullYear().toString().slice(2)  
-//     return today;
-//   }
-
 module.exports.getToday = function() {
   return new Date().toLocaleDateString(
     'en-US',
@@ -19,4 +13,9 @@ module.exports.getTimestamp = function() {
   const timestamp = new Date().toLocaleString("en-US");
     return timestamp;
   }
-  
+ 
+module.exports.within24Hours = function(post) {
+  let now = new Date();
+  let then = new Date(post.createdAt)
+  return ((now - then) /1000/60/60) < 24
+}

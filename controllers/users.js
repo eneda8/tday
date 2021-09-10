@@ -68,7 +68,10 @@ module.exports.logout = (req,res) => {
 
 module.exports.showUserProfile = async(req, res) => {
     const user = await User.findOne({username : req.params.username})
-    .populate("journals").populate("posts").populate("comments"); 
+    .populate("journals").populate("posts").populate("comments").populate({
+        path: "bookmarks",
+        populate: {path: "author"}
+    }); 
     if(!user){
         req.flash("error", "User not found!")
         return res.redirect("/posts/today");

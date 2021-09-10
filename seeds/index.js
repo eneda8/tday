@@ -52,7 +52,8 @@ const seedDB = async () => {
     for(let i = 0; i<1201; i++){
         const rating = Math.floor(Math.random() * 5) + 1;
         const body = faker.lorem.sentence();
-        const user = await User.findOne().where({ "postedToday" : false })      
+        const user = await User.findOne().where({ "postedToday" : false }) 
+        if (user.username === "e") continue;      
         // post.image = faker.image();
         const checkPostStreak = async (user) => {
             const today = new Date()

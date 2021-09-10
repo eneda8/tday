@@ -1,6 +1,6 @@
 const Post = require("../models/post");
 const User = require("../models/user");
-const {getToday, getTimestamp} = require("../utils/getToday");
+const {getToday, getTimestamp, within24Hours} = require("../utils/getToday");
 const ObjectID = require('mongodb').ObjectID;
 const {cloudinary} = require("../cloudinary");
 
@@ -40,10 +40,11 @@ module.exports.renderNewForm = (req, res) => {
 
 module.exports.createPost = async (req, res, next) => {
     const post = new Post(req.body.post);
+    post.date = getToday();
+    post.timestamp = getTimestamp();
     post.image = req.file;
     post.author = req.user._id;
     const user = await User.findById(req.user._id);
-    post.timestamp = getTimestamp();
     user.posts.unshift(post);
     user.postedToday = true;
     user.postStreak ++; 
@@ -65,11 +66,45 @@ module.exports.showPost = async (req,res) => {
         path: "comments",
         populate:{path: "author"}
     }).execPopulate();
+    const canEdit = within24Hours(post);
     if(!post){
         req.flash("error", "Rating not found!")
         return res.redirect("/posts");
     }
-    res.render("posts/show", {post})
+    res.render("posts/show", {post, canEdit})
+}
+
+module.exports.bookmarkPost = async(req, res) => {
+    try{
+        const {id} = req.params;
+        const post = await Post.findById(id);
+        const user = await User.findById(req.user._id);
+        user.bookmarks.unshift(post);
+        user.save()
+        req.flash("success", "Bookmark added!");
+        res.redirect(`/posts/${post._id}`)
+    } catch (e){
+        console.log(e)
+        req.flash("error", "Oops something went wrong!");
+        res.redirect(`/posts/${post._id}`)
+    }   
+}
+
+module.exports.unbookmarkPost = async(req, res) => {
+    try{
+        const {id} = req.params;
+        console.log(req.params)
+        const post = await Post.findById(id);
+        const user = await User.findById(req.user._id);
+        user.bookmarks.pull(id);
+        user.save()
+        req.flash("success", "Bookmark removed!");
+        res.redirect(`/u/${user.username}`)
+    } catch (e){
+        console.log(e)
+        req.flash("error", "Oops something went wrong!");
+        res.redirect(`/u/${user.username}`)
+    }   
 }
 
 module.exports.renderEditForm = async (req,res) => {
