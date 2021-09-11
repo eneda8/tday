@@ -4,7 +4,7 @@ const passport = require("passport");
 const catchAsync = require("../utils/catchAsync");
 const User = require("../models/user");
 const users = require("../controllers/users");
-const {isLoggedIn, setPostedToday, blockDuplicatePost, checkPostStreak} = require("../middleware");
+const {isLoggedIn, setPostedToday, blockDuplicatePost, checkPostStreak, isAccountOwner} = require("../middleware");
 const multer = require("multer");
 const {storage} = require("../cloudinary");
 const upload = multer({storage});
@@ -28,6 +28,8 @@ router.route("/login")
 router.get("/logout", users.logout);
 
 router.get("/u/:username", isLoggedIn, setPostedToday, checkPostStreak, catchAsync(users.showUserProfile));
+
+router.delete("/u/:username/delete", isLoggedIn, isAccountOwner, catchAsync(users.deleteAccount));
 
 router.route("/settings")
     .get(isLoggedIn, setPostedToday, catchAsync(users.showUserSettings))

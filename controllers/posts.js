@@ -27,7 +27,7 @@ module.exports.indexToday= async (req, res) =>{
         for(post of posts) {
             await post.populate("author").execPopulate();
         }
-        res.render("posts/today", {posts, today});
+        res.render("posts/today", {posts, today, within24Hours});
     } catch(e) {
         req.flash("error", `No ratings yet today!`)
         res.redirect(`/u/${user.username}`)

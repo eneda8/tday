@@ -1,8 +1,8 @@
 <% layout("layouts/boilerplate")%>
 
 <div class="row py-3 px-4">
-  <div class="col-md-8 col-lg-5 mx-auto">
-    <div class="card my-3 pt-2 pl-2 pr-2">
+  <div class="col-md-8 col-lg-5 mx-auto my-auto border bg-light">
+    <div class="card  my-3 pt-2 pl-2 pr-2">
         <div class="media pr-3 text-wrap">
             <a href="/u/<%=post.author.username%>"><img src="<%=post.author.avatar.thumbnail%>" class="pr-2" alt="" style="width:45px; border-radius: 50%"></a>
             <div class="media-body text-wrap">
@@ -23,7 +23,7 @@
                 </div>
                 <% } %>
               </div>
-              <span class="badge badge-light mb-2"><%=post.date%>: <span class="star star<%=post.rating%>-result"></span></span> 
+              <span class="badge badge-light mb-2" style="font-size: 13px"><%=post.date%>: <span class="star star<%=post.rating%>-result"></span></span>  
               
               <div class="text-wrap">
                 <p class="my-2"><%=post.body%></p>
@@ -39,6 +39,7 @@
                   <% } %>
                 </div>
                 <div>
+                  <a href="/posts/<%=post._id%>" class="text-decoration-none mr-2 p-0" title="Comments"><span class="text-muted" style="font-size: 13px;"><%=post.comments.length%></span> <i class="fas fa-comments text-primary"></i></a>
                   <button class="btn btn-sm btn-link" title="Copy link" onclick="navigator.clipboard.writeText(window.location.href)"><i class="fas fa-link text-warning mr-2"></i></button>
                   <form action="/posts/<%=post._id%>/bookmark" method="POST" class="d-inline">
                     <button class="btn btn-sm btn-link" title="Bookmark"><i class="far fa-bookmark text-danger mr-2"></i></button>
@@ -66,8 +67,8 @@
                         <div class="clearfix"><button class="btn btn-link btn-sm float-right">Submit</button></div>   
                       </form>
                     </div>
-                    <% } %>
                 </div>
+                <% } %>
                 <div id="commentDiv">
                   <% for (let comment of post.comments) { %>
                     <hr class="my-1">
@@ -96,8 +97,5 @@
     </div>
   </div>
  </div>   
-
-
-
 
 <%- include('../partials/edit')%>

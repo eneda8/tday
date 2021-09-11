@@ -8,7 +8,7 @@
           </button>
         </div>
         <div class="modal-body">
-            <form action="/posts/<%=currentUser.todaysPost%>?_method=PUT" method="POST" novalidate class="mb-3 validated-form" enctype="multipart/form-data">
+            <form action="/posts/<%=post._id%>?_method=PUT" method="POST" novalidate class="mb-3 validated-form" enctype="multipart/form-data">
                 <div>
                     <p class="">Current rating: <span class="star star<%=post.rating%>-result"></span></p>
                     <p>New rating:</p>

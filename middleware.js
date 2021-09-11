@@ -106,3 +106,14 @@ module.exports.checkPostStreak = async(req, res, next) => {
         user.postStreak = 0;
     } else next() 
 }
+
+module.exports.isAccountOwner = async(req, res, next) => {
+    const {username} = req.params; 
+    const user = await User.find({"username": username});
+    console.log("req.user._id:", req.user._id)
+    if (!user._id == req.user._id) {
+        req.flash("error", "You do not have permission to do that!");
+        return res.redirect("/posts/today")
+    }
+    next();
+}

@@ -1,8 +1,10 @@
 const User = require("../models/user");
 const Post = require("../models/post");
 const Comment = require("../models/comment");
+const Journal = require("../models/journal");
 const countries = require("../countries");
 const {cloudinary} = require("../cloudinary");
+const {within24Hours} = require("../utils/getToday");
 
 module.exports.renderHomePage = (req, res) => {
     if(req.user){
@@ -83,7 +85,7 @@ module.exports.showUserProfile = async(req, res) => {
         path: "post", 
         populate: {path: "author"}
     });
-    res.render("users/show", {user, postCount, commentCount, comments});
+    res.render("users/show", {user, postCount, commentCount, comments, within24Hours});
 };
 
 module.exports.showUserSettings = async(req, res) => {
@@ -112,3 +114,19 @@ module.exports.updateUserSettings = async(req, res) => {
     req.flash("success", "Profile updated!");
     res.redirect(`/u/${user.username}`) 
 };
+
+module.exports.deleteAccount = async(req, res) => {
+    const user = await User.findById(req.user._id);
+    user.posts = [];
+    user.comments = [];
+    user.journals = [];
+    user.bookmarks = [];
+    const posts = await Post.remove({"author": req.user._id});
+    const comments = await Comment.remove({"author": req.user._id});
+    const journals = await Journal.remove({"author": req.user._id});
+    await req.logout();
+    const deletedUser = await User.remove({"_id": user._id});
+    console.log("User account deleted")
+    req.flash("success", "User account deleted.");
+    res.redirect("/");
+}

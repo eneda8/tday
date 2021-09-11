@@ -49,59 +49,61 @@ const seedDB = async () => {
     // }
 
     // /make fake posts
-    for(let i = 0; i<1201; i++){
-        const rating = Math.floor(Math.random() * 5) + 1;
-        const body = faker.lorem.sentence();
-        const user = await User.findOne().where({ "postedToday" : false }) 
-        if (user.username === "e") continue;      
-        // post.image = faker.image();
-        const checkPostStreak = async (user) => {
-            const today = new Date()
-            let yesterday = new Date(today);
-            yesterday.setDate(today.getDate() -1)
-            yesterday = yesterday.toLocaleDateString(
-                'en-US',
-                {
-                year: 'numeric',
-                month: 'short',
-                day: 'numeric',
-                }
-            );
-            const post = await Post.find({"author": user, "date": yesterday});
-            if(!post) {
-                user.postStreak = 0;
-            } 
-        }
-        if(user){
-            await checkPostStreak(user);
-            const post = new Post({rating, body});
-            post.author = user;
-            user.postedToday = true;
-            user.posts.unshift(post);
-            user.todaysPost = post._id;
-            user.postStreak ++; 
-            await post.save();
-            await user.save();
-        }
-    }
-    //make fake comments
-    // for(let i = 0; i<2000; i++){
+    // for(let i = 0; i<1201; i++){
+    //     const rating = Math.floor(Math.random() * 5) + 1;
     //     const body = faker.lorem.sentence();
-    //     const timestamp = new Date().toLocaleString("en-US");
-    //     const comment = new Comment({body, timestamp});
-    //     const randUser = await User.aggregate([{ $sample: { size: 1 } }]);
-    //     const randPost = await Post.aggregate([{ $sample: { size: 1 } }]);
-    //     const user = await User.findById(randUser[0]._id);
-    //     const post = await Post.findById(randPost[0]._id);
-    //     comment.author = user._id;
-    //     comment.post = post._id;
-    //     await post.comments.push(comment);
-    //     await user.comments.unshift(comment);
-    //     await comment.save();
-    //     await user.save();
-    //     await post.save();
-    //     console.log(comment)
+    //     const user = await User.findOne().where({ "postedToday" : false }) 
+    //     if (user.username === "e") continue;      
+    //     // post.image = faker.image();
+    //     const checkPostStreak = async (user) => {
+    //         const today = new Date()
+    //         let yesterday = new Date(today);
+    //         yesterday.setDate(today.getDate() -1)
+    //         yesterday = yesterday.toLocaleDateString(
+    //             'en-US',
+    //             {
+    //             year: 'numeric',
+    //             month: 'short',
+    //             day: 'numeric',
+    //             }
+    //         );
+    //         const post = await Post.find({"author": user, "date": yesterday});
+    //         if(!post) {
+    //             user.postStreak = 0;
+    //         } 
+    //     }
+    //     if(user){
+    //         await checkPostStreak(user);
+    //         const post = new Post({rating, body});
+    //         post.author = user;
+    //         user.postedToday = true;
+    //         user.posts.unshift(post);
+    //         user.todaysPost = post._id;
+    //         user.postStreak ++; 
+    //         await post.save();
+    //         await user.save();
+    //     }
     // }
+    //make fake comments
+    let count = 0;
+    for(let i = 0; i<3000; i++){
+        const body = faker.lorem.sentence();
+        const timestamp = new Date().toLocaleString("en-US");
+        const comment = new Comment({body, timestamp});
+        const randUser = await User.aggregate([{ $sample: { size: 1 } }]);
+        const randPost = await Post.aggregate([{ $sample: { size: 1 } }]);
+        const user = await User.findById(randUser[0]._id);
+        const post = await Post.findById(randPost[0]._id);
+        comment.author = user._id;
+        comment.post = post._id;
+        await post.comments.push(comment);
+        await user.comments.unshift(comment);
+        await comment.save();
+        await user.save();
+        await post.save();
+        count++
+    }
+    console.log("comment count:", count);
 }
 
 seedDB().then(() => {
