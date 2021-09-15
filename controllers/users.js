@@ -90,11 +90,12 @@ module.exports.showUserProfile = async(req, res) => {
 
 module.exports.showUserSettings = async(req, res) => {
     const user = await User.findOne({username: req.user.username})
+    const creationDate = user.createdAt;
     if(!user){
         req.flash("error", "User not found!")
         return res.redirect("/posts/today");
     }
-    res.render("users/settings", {user});
+    res.render("users/settings", {user, creationDate});
 };
     
 module.exports.updateUserSettings = async(req, res) => {

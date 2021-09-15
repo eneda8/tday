@@ -38,16 +38,16 @@
                       </ul>
                 </div>
             </div>
-            <div class="bg-light border p-3">
-                <div class="card my-2 h-50 p-3">
+            <div class="bg-light shadow-sm rounded p-3 mb-5">
+                <div class="card my-2 h-50 p-3 border-0">
                     <h6 class="text-center">Today's Global Avg Rating: 3.4</h6>
                     <iframe>
                         <section>CHART GOES HERE</section>
                     </iframe>
                 </div>
             </div>
-            <div class="bg-light border p-3 mt-3">
-                <div class="card my-2 h-50 p-3">
+            <div class="bg-light shadow-sm p-3 mt-3">
+                <div class="card my-2 h-50 p-3 border-0">
                     <h6 class="text-center mt-3"><a href="https://global-mind.org/gcpdot/">Real-time GCP Dot</a></h6>
                     <div class="text-center">
                         <iframe src="https://global-mind.org/gcpdot/gcp.html" height="48" width="48" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
@@ -57,17 +57,17 @@
                 </div>
             </div>
         </div>
-        <div class="col-5 border bg-light mx-5">
+        <div class="col-5  bg-light shadow-sm rounded mx-5">
             <h5 class="text-left font-weight-bold mt-3"><%=today%></h5>
             <div>
-                <h6 class="text-left">10 random ratings from today <button type="button" class="btn btn-small d-inline" title="refresh for 10 more"><a href="/posts/today">🗘</button></h6>
+                <h6 class="text-left">10 random ratings from today <button type="button" class="btn btn-small d-inline" title="refresh for 10 more"><i class="fas fa-sync-alt text-right text-primary"></i></button></h6>
                 <% if(currentUser && (currentUser.postedToday === false)) {  %> 
                 <a href="" data-toggle="modal" id="newPostLink" data-target="#newPostModal">Add Rating</a>
                 <% } %> 
             </div>
             <% if(posts){ %>
                 <%for (post of posts) { %> 
-                    <div class="card mb-3 mt-1 pt-2 pl-2">
+                    <div class="card mb-3 mt-1 pt-2 pl-2 border-0">
                         <div class="media pr-3">
                             <a href="/u/<%=post.author.username%>"><img style="width:45px; border-radius: 50%" src="<%=post.author.avatar.thumbnail%>" class="pr-2" alt=""></a>
                             <div class="media-body text-wrap">
@@ -101,15 +101,23 @@
                                     <div>
                                     <small class="pb-1"><a href="/posts/<%=post._id%>" class="card-link"><%=post.timestamp%></a></small>
                                     <% if(post.edited){ %>
-                                    <small class="pb-1 text-muted">Edited</small>
+                                    <small class="pb-1 text-muted" title="<%=post.updatedAt%>">Edited</small>
                                     <% } %>
                                     </div>
                                     <div>
-                                        <a href="/posts/<%=post._id%>" class="text-decoration-none mr-2 p-0" title="Comments"><span class="text-muted" style="font-size: 13px;"><%=post.comments.length%></span> <i class="fas fa-comments text-muted"></i></a>  
-                                        <button class="btn btn-sm btn-link" title="Copy link" onclick="navigator.clipboard.writeText(window.location.href.slice(0,28)+'<%=post._id%>')"><i class="fas fa-link text-warning mr-2"></i></button>
-                                        <form action="/posts/<%=post._id%>/bookmark" method="POST" class="d-inline">
+                                        <a href="/posts/<%=post._id%>" class="text-decoration-none mr-2 p-0" title="Comments"><span class="text-muted" style="font-size: 13px;" title="Copy link"><%=post.comments.length%></span> <i class="fas fa-comments text-primary"></i></a>  
+
+                                        <a  class="btn btn-sm btn-link " role="button" onclick="navigator.clipboard.writeText(window.location.href.slice(0,28)+'<%=post._id%>')" ><i class="fas fa-link text-warning mr-2"></i></a>
+
+                                        <% if(currentUser.bookmarks.includes(post._id)) { %>
+                                            <form action="/posts/<%=post._id%>/bookmark?_method=DELETE" method="POST" class="d-inline">
+                                              <button class="btn btn-sm btn-link" type="submit" title="Remove bookmark"><i class="fas fa-bookmark text-danger"></i> <i class="far fa-times-circle text-secondary small"></i></button>
+                                            </form>
+                                          <%} else { %> 
+                                          <form action="/posts/<%=post._id%>/bookmark" method="POST" class="d-inline">
                                             <button class="btn btn-sm btn-link" title="Bookmark"><i class="far fa-bookmark text-danger mr-2"></i></button>
-                                        </form>
+                                          </form>
+                                          <% } %> 
                                     </div>
                                 </div>
                             </div>
@@ -135,30 +143,58 @@
             <% } else { %>
                 <h1 class="text-center">No posts yet!</h1>
             <% } %>
+            <button type="button" class="btn btn-small d-inline float-right" title="refresh for 10 more"><i class="fas fa-sync-alt text-right text-primary"></i></button>
+            
         </div>
-        <div class="col" >
-            <div class="bg-light border p-3">
-                <div class="card my-2" style="height: 250px;">
-                    <div class="card-body">
-                        USER PROFILE PREVIEW
-                    </div>
+        <div class="col">
+                <div class="" style="height: 200px;">
+                        <div class="bg-light shadow-sm rounded overflow-hidden" >
+                            <div class="px-4 pt-0 pb-4 cover" style="background-color: <%=currentUser.coverColor%>; height: 130px">
+                                
+                                <div class="media align-items-end">
+                                    <div class="mr-3">
+                                        <img src="<%=currentUser.avatar.path%>" alt="" width="120" height="120" class="rounded-circle my-3 img" style="transform: translateY(2.3rem)">
+                                    </div>
+                                    <div class="text-white pl-2 pb-2">
+                                        <h4 class="my-0"><a href="/u/<%=currentUser.username%>" class="stretched-link text-decoration-none text-white"><%=currentUser.displayName%></a></h4>
+                                        <p class="my-0"><span style="font-size: 10px"> @</span><%=currentUser.username%></p>
+                                        <p class="small"><i class="fas fa-map-marker-alt text-white"></i>  <img title="<%=currentUser.country.name %>" src="<%=currentUser.country.flag%>" width="17px"></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-light text-dark py-3 pr-3 pl-0 d-flex justify-content-end text-center">
+                                <ul class="list-inline mb-0">
+                                    <li class="list-inline-item">
+                                        <h5 class="font-weight-bold mb-0 d-block">25</h5><small class="text-muted">Posts</small>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <h5 class="font-weight-bold mb-0 d-block">10</h5><small class="text-muted">Comments</small>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <h5 class="font-weight-bold mb-0 d-block"><%=currentUser.postStreak%></h5><small class="text-muted">Streak</small>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <h5 class="font-weight-bold mb-0 d-block">4.9</h5><small class="text-muted">Avg. Rating</small>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                 </div>
-            </div>
-            <div class="bg-light border my-3 p-3">
+            <div class="bg-light shadow-sm rounded my-5 p-3">
                 <div class="card my-2" style="height: 100px;">
                     <div class="card-body">
                         DONATE TO TODAI
                     </div>
                 </div>
             </div>
-            <div class="bg-light border my-3 p-3">
+            <div class="bg-light shadow-sm rounded p-3">
                 <div class="card my-2" style="height: 150px;">
                     <div class="card-body">
                         MY DATA
                     </div>
                 </div>
             </div>
-            <div class="my-3 p-3">
+            <div class="mt-4">
                 <div class="text-muted" style="height: 150px;">
                     <a class="d-inline text-muted font-weight-light" href="#" style="font-size: 11px">About</a> |
                     <a class="d-inline text-muted font-weight-light" href="#" style="font-size: 11px">Privacy Policy</a> |
@@ -172,9 +208,5 @@
         </div>
     </div> 
 </div>
-<script>
-    const footer = document.querySelector("#footer");
-    footer.classList.add("collapse")
-</script>
 
 <%- include('../partials/edit')%>

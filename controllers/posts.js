@@ -56,6 +56,7 @@ module.exports.createPost = async (req, res, next) => {
 }
 
 module.exports.showPost = async (req,res) => { 
+    const user = await User.findById(req.user._id);
     const {id} = req.params;
     if (!ObjectID.isValid(id)) {
         req.flash("error", "Rating not found!")
@@ -71,7 +72,7 @@ module.exports.showPost = async (req,res) => {
         req.flash("error", "Rating not found!")
         return res.redirect("/posts");
     }
-    res.render("posts/show", {post, canEdit})
+    res.render("posts/show", {user, post, canEdit})
 }
 
 module.exports.bookmarkPost = async(req, res) => {
@@ -82,7 +83,7 @@ module.exports.bookmarkPost = async(req, res) => {
         user.bookmarks.unshift(post);
         user.save()
         req.flash("success", "Bookmark added!");
-        res.redirect(`/posts/${post._id}`)
+        res.redirect(`/u/${user.username}#nav-bookmarks`)
     } catch (e){
         console.log(e)
         req.flash("error", "Oops something went wrong!");
@@ -93,19 +94,23 @@ module.exports.bookmarkPost = async(req, res) => {
 module.exports.unbookmarkPost = async(req, res) => {
     try{
         const {id} = req.params;
-        console.log(req.params)
         const post = await Post.findById(id);
         const user = await User.findById(req.user._id);
         user.bookmarks.pull(id);
         user.save()
         req.flash("success", "Bookmark removed!");
-        res.redirect(`/u/${user.username}`)
+        res.redirect("back")
     } catch (e){
         console.log(e)
         req.flash("error", "Oops something went wrong!");
-        res.redirect(`/u/${user.username}`)
+        res.redirect("back")
     }   
 }
+
+// module.exports.copy = async(req, res) => {
+//     req.flash("success", "Link copied!");
+//     res.redirect("back");
+// }
 
 module.exports.renderEditForm = async (req,res) => {
     const post = await Post.findById(req.params.id);

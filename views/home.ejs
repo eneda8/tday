@@ -23,16 +23,16 @@
     </head>
     <body class="d-flex flex-column vh-100">
             <%- include("./partials/navbar") %>    
-        <main class="container-fluid paper">
+        <main class="container-fluid paper mb-0 pb-0">
             <div class="mt-3 ml-2 mb-0 position-fixed">
                 <%- include("./partials/flash") %>    
             </div>
-            <div class="container my-5">
+            <div class="container mt-5 mb-0">
                 <div class="row">
                     <div class="col">
                         <div class="content">
                             <h1>How's your <%=today %>?</h1>
-                            <p class="text-center font-weight-bold">──────<span class="text-warning">★</span>──────</p>
+                            <!-- <p class="text-center font-weight-bold">──────<span class="text-warning">★</span>──────</p> -->
                         </div>
                     </div>
                 </div>
@@ -51,43 +51,43 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col">
-                        <textarea disabled style="resize: none" class="blinking-cursor d-block border mx-auto rounded border-dark" cols="25" row="70">|</textarea>
+                    <div class="col mb-3">
+                        <textarea disabled style="resize: none" class="blinking-cursor d-block border mx-auto rounded border-dark" cols="20" row="70">|</textarea>
                     </div>
                 </div>
-                <div class="row justify-content-center">
+                <div class="row justify-content-center mb-4">
                     <button type="button" class="btn btn-outline btn-warning d-block my-3 "><a href="/register" class="text-dark">Sign Up</a></button>
                     <button type="button" class="btn btn-outline btn-dark d-block ml-3 my-3"><a href="/login" class="text-light">Login</a></button>
                 </div>
                 <div class="row justify-content-center mb-5 mt-3">
                     <div class="col-md-7 text-center bg-light p-3">
-                        <h3 class="font-weight-medium">meet <strong style="font-family: 'Courgette">todai<sup style="font-size: 12px">&copy</sup></strong></h3>
+                        <h4 class="">meet <strong style="font-family: 'Courgette" class="text-warning">todai<sup style="font-size: 12px">&copy</sup></strong></h4>
                         <h6 class="">A quick self-reflection tool & the world's first collective online journal</h6>
                         <!-- <a href="/data" class="text-decoration-none">Explore more</a> -->
                     </div>
                 </div>
                 </div>
-                <div class="container-fluid pl-5 pr-0 mt-4">
+                <div class="container-fluid px-5 pr-0 mt-4 mb-0 pt-3 pb-0">
                     <div class="row mb-5 features">
                         <!-- Column -->
-                        <div class="col text-center border-right">
-                            <div class="icon-round align-items-center"><i class="far fa-calendar-alt"></i></div>
-                            <h5 class="font-medium">Quick self-reflection</h5>
+                        <div class="col text-center border-right pl-5">
+                            <div class="icon-round align-items-center"><i class="far fa-calendar-alt text-warning"></i></div>
+                            <h5 class="font-weight-bold">Quick self-reflection</h5>
                             <p class="">Todai allows you to practice self-reflection in a quick, easy way. Rate your day on a scale of 1-5. If you have time, jot down a few thoughts. Over time, with daily self-reflection, you'll gain a clearer picture of your weeks, months and years.</p>
                         </div>
                         <div class="col text-center border-right">
-                            <div class="icon-round"><i class=""><i class="fas fa-globe"></i></i></div>
-                            <h5 class="font-medium">A global perspective</h5>
+                            <div class="icon-round" style="height: 80px"><i class=""><i class="fas fa-globe text-warning"></i></i></div>
+                            <h5 class="font-weight-bold">A global perspective</h5>
                             <p class="">Read through the latest anonymous Todai entries from all around the world and maybe how you feel about your day will change. A global perspective allows us to cultivate gratitude and aspire towards a better tomorrow.</p>
                         </div>
                         <div class="col text-center border-right">
-                            <div class="icon-round"><i class="fas fa-chart-line"></i></i></div>
-                            <h5 class="font-medium">Data-driven</h5>
+                            <div class="icon-round"><i class="fas fa-chart-line text-warning"></i></div>
+                            <h5 class="font-weight-bold">Data-driven</h5>
                             <p class="">We believe in healthy social comparison that is honest and data-driven. Track your own ratings over time (always private) and view local or global average ratings in real-time. Filter ratings by country, age, or gender or view the top trending keywords for today.</p>
                         </div>
-                        <div class="col  text-center">
-                            <div class="icon-round "><i class="far fa-bell-slash"></i></div>
-                            <h5 class="font-medium">No addiction</h5>
+                        <div class="col  text-center pr-5">
+                            <div class="icon-round "><i class="far fa-bell-slash text-warning"></i></div>
+                            <h5 class="font-weight-bold">No addiction</h5>
                             <p class="">Todai is a minimalist social-network. No followers. No notifications. No likes. No endless timeline. AKA, no addiction. You can only post once a day and we encourage anonymity to protect the integrity of all ratings. Todai is designed to help us connect to ourselves and to each other, without the toxicity. </p>
                         </div>
                     </div>

@@ -1,6 +1,6 @@
 <% if(success && success.length) {%>
-    <div class="alert alert-light alert-dismissible fade show border-success" role="alert">
-        <div class="mr-5" style="color: #28A745">
+    <div class="alert alert-light alert-dismissible fade show rounded border-success shadow my-0 bg-light" role="alert">
+        <div class="mr-5">
             <%= success %>
         </div>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -10,8 +10,8 @@
     <% } %>
     
     <% if(error && error.length) {%>
-    <div class="alert alert-light alert-dismissible fade show border-danger" role="alert">
-        <div class="mr-5" style="color: #DC3545;"><%= error %></div>
+    <div class="alert alert-light alert-dismissible fade show rounded border-danger shadow my-0 bg-light" role="alert">
+        <div class="mr-5"><%= error %></div>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -22,11 +22,6 @@
     .alert{
         width: fit-content;
         padding: 15px;
-        background-color: #fafafa;
         border-left: 6px solid #7f7f84;
-        margin-bottom: 10px;
-        -webkit-box-shadow: 0 5px 8px -6px rgba(0,0,0,.2);
-            -moz-box-shadow: 0 5px 8px -6px rgba(0,0,0,.2);
-            box-shadow: 0 5px 8px -6px rgba(0,0,0,.2)
     }
 </style>

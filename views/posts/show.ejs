@@ -1,8 +1,8 @@
 <% layout("layouts/boilerplate")%>
 
 <div class="row py-3 px-4">
-  <div class="col-md-8 col-lg-5 mx-auto my-auto border bg-light">
-    <div class="card  my-3 pt-2 pl-2 pr-2">
+  <div class="col-md-8 col-lg-5 mx-auto my-auto bg-light rounded shadow-sm">
+    <div class="card border-0 my-3 pt-2 pl-2 pr-2">
         <div class="media pr-3 text-wrap">
             <a href="/u/<%=post.author.username%>"><img src="<%=post.author.avatar.thumbnail%>" class="pr-2" alt="" style="width:45px; border-radius: 50%"></a>
             <div class="media-body text-wrap">
@@ -35,22 +35,24 @@
                 <div>
                   <small class="pb-1"><a href="/posts/<%=post._id%>" class="card-link"><%=post.timestamp%></a></small>
                   <% if(post.edited){ %>
-                  <small class="pb-1 text-muted">Edited</small>
+                  <small class="pb-1 text-muted" title="<%=post.updatedAt%>">Edited</small>
                   <% } %>
                 </div>
-                <div>
+                <div class="justify-content-around">
                   <a href="/posts/<%=post._id%>" class="text-decoration-none mr-2 p-0" title="Comments"><span class="text-muted" style="font-size: 13px;"><%=post.comments.length%></span> <i class="fas fa-comments text-primary"></i></a>
-                  <button class="btn btn-sm btn-link" title="Copy link" onclick="navigator.clipboard.writeText(window.location.href)"><i class="fas fa-link text-warning mr-2"></i></button>
+
+                  <button class="btn btn-sm btn-link d-inline" onclick="navigator.clipboard.writeText(window.location.href)" ><i class="fas fa-link text-warning mr-2"></i></button>
+
+                  <% if(currentUser.bookmarks.includes(post._id)) { %>
+                    <form action="/posts/<%=post._id%>/bookmark?_method=DELETE" method="POST" class="d-inline">
+                      <button class="btn btn-sm btn-link" type="submit" title="Remove bookmark"><i class="fas fa-bookmark text-danger"></i> <i class="far fa-times-circle text-secondary small"></i></button>
+                    </form>
+                  <%} else { %> 
                   <form action="/posts/<%=post._id%>/bookmark" method="POST" class="d-inline">
                     <button class="btn btn-sm btn-link" title="Bookmark"><i class="far fa-bookmark text-danger mr-2"></i></button>
                   </form>
+                  <% } %> 
                 </div>
-                
-                <!-- <button class="btn btn-link btn-sm  d-inline p-0 m-0"><a href="" data-toggle="modal" id="editPostLink" data-target="#editPostModal"><i class="fas fa-edit text-warning"></i></a></button>
-                
-                <form class="d-inline" action="/posts/<%=post._id%>?_method=DELETE" method="POST">
-                  <button class="btn btn-link btn-sm  d-inline p-0 pb-0 m-0"><i class="fas fa-trash-alt text-danger"></i></button>
-                </form> -->
               </div>
                
               <div class="border-top border-bottom p-1 my-1">
@@ -84,7 +86,7 @@
                             <% if(currentUser && comment.author.equals(currentUser._id)) { %> 
                             <div class="d-inline">
                               <form class="d-inline" action="/posts/<%=post._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
-                              <button class="btn btn-link btn-sm d-inline p-1">Delete</button>
+                                <button class="btn btn-link btn-sm d-inline pb-0" title="Delete comment"><i class="fas fa-trash-alt text-danger"></i></button>
                               </form>
                             </div>
                           <% } %> 

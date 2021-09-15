@@ -5,7 +5,7 @@
                 <div class="px-4 pt-0 pb-4 cover" style="background-color: <%=user.coverColor%>">
                     <div class="media align-items-end" style="transform: translateY(6rem)">
                         <div class="mr-3">
-                            <img src="<%=user.avatar.path%>" alt="" width="200" height="200" class="rounded my-3 img-thumbnail">
+                            <img src="<%=user.avatar.path%>" alt="" width="200" height="200" class="rounded-circle my-3 img-thumbnail">
                             <% if(currentUser && user._id.equals(currentUser._id)) { %>
                             <a href=""" data-toggle="modal" id="editProfileLink" data-target="#editProfileModal" class="btn btn-outline-dark btn-sm btn-block">Edit profile <i class="fas fa-user-edit"></i></a>
                             <% } %> 
@@ -13,7 +13,7 @@
                         <div class="mb-5 text-white">
                             <h4 class="my-1"><%=user.displayName%></h4>
                             <h6 class="py-1">@<%=user.username%></h6>
-                            <p class="small mb-5"><img src="/images/pin.png" alt="">  <img title="<%=user.country.name %>" src="<%=user.country.flag%>"></p>
+                            <p class="small mb-5"><i class="fas fa-map-marker-alt text-white"></i>  <img title="<%=user.country.name %>" src="<%=user.country.flag%>"></p>
                         </div>
                     </div>
                 </div>
@@ -38,18 +38,18 @@
                 </div>
                 <nav>
                     <div class="nav nav-tabs mx-4" id="nav-tab" role="tablist">
-                      <a class="nav-link active" id="nav-posts-tab" data-toggle="tab" href="#nav-posts" role="tab" aria-controls="nav-posts" aria-selected="true">Ratings</a>
-                      <a class="nav-link" id="nav-comments-tab" data-toggle="tab" href="#nav-comments" role="tab" aria-controls="nav-comments" aria-selected="false">Comments</a>
+                      <a class="nav-link active" id="nav-posts-tab" data-toggle="tab" href="#nav-posts" role="tab" aria-controls="nav-posts" aria-selected="true" data-toggle="tab" data-tab-history="true" data-tab-history-changer="push" data-tab-history-update-url="true">Ratings</a>
+                      <a class="nav-link" id="nav-comments-tab" data-toggle="tab" href="#nav-comments" role="tab" aria-controls="nav-comments" aria-selected="false" data-toggle="tab" data-tab-history="true" data-tab-history-changer="push" data-tab-history-update-url="true">Comments</a>
                       <% if(currentUser && user._id.equals(currentUser._id)) { %>
-                      <a class="nav-link" id="nav-data-tab" data-toggle="tab" href="#nav-data" role="tab" aria-controls="nav-data" aria-selected="false">Data</a>
-                      <a class="nav-link" id="nav-bookmarks-tab" data-toggle="tab" href="#nav-bookmarks" role="tab" aria-controls="nav-bookmarks" aria-selected="false">Bookmarks</a>
-                      <a class="nav-link" id="nav-journals-tab" data-toggle="tab" href="#nav-journals" role="tab" aria-controls="nav-journals" aria-selected="false">Journals</a>
+                      <a class="nav-link" id="nav-data-tab" data-toggle="tab" href="#nav-data" role="tab" aria-controls="nav-data" aria-selected="false" data-tab-history="true" data-tab-history-changer="push" data-tab-history-update-url="true">Data</a>
+                      <a class="nav-link" id="nav-bookmarks-tab" data-toggle="tab" href="#nav-bookmarks" role="tab" aria-controls="nav-bookmarks" aria-selected="false" data-tab-history="true" data-tab-history-changer="push" data-tab-history-update-url="true">Bookmarks</a>
+                      <a class="nav-link" id="nav-journals-tab" data-toggle="tab" href="#nav-journals" role="tab" aria-controls="nav-journals" aria-selected="false" data-tab-history="true" data-tab-history-changer="push" data-tab-history-update-url="true">Journals</a>
                       <% } %> 
                     </div>
                 </nav>
                 <div class="tab-content" id="nav-tabContent">
                     <!-- posts tab -->
-                    <div class="tab-pane fade show active" id="nav-posts" role="tabpanel" aria-labelledby="nav-posts-tab">
+                    <div class="tab-pane fade show active mb-3 pt-2" id="nav-posts" role="tabpanel" aria-labelledby="nav-posts-tab">
                         <% if(!user.posts.length) { %>
                             <h6 class="text-center my-5">No ratings yet!</h6>
                         <% } else { for (post of user.posts) { %> 
@@ -58,7 +58,7 @@
                                         <img src="<%=user.avatar.thumbnail%>" alt="" style="width:45px; border-radius: 50%">
                                     </a>
                                     <div class="media-body text-wrap">
-                                        <div class="d-flex justify-content-between mt-2">
+                                        <div class="d-flex justify-content-between">
                                             <p class="card-subtitle mt-1"><strong><a href="/u/<%=user.username%>"><%=user.displayName%></a></strong>  <img class="d-inline" style="width: 17px" src="<%=user.country.flag%>" alt="" title="<%=user.country.name %>"><small class="text-muted mb-0 d-block">@<%=user.username%></small></p>
                                             <!-- edit & delete dropdown menu-->
                                             <% if(currentUser && post.author.equals(currentUser._id)) { %> 
@@ -89,17 +89,17 @@
                                             <div class="d-inline">
                                                 <small class="pb-1"><a href="/posts/<%=post._id%>" class="card-link"><%=post.timestamp%></a></small>
                                                 <% if(post.edited){ %>
-                                                <small class="pb-1 text-muted">Edited</small>
+                                                <small class="pb-1 text-muted" title="<%=post.updatedAt%>">Edited</small>
                                                 <% } %>
                                             </div>
                                             <div class="d-flex justify-content-around">
                                                 
-                                                    <a href="/posts/<%=post._id%>" class="text-decoration-none mr-2 p-0" title="Comments"><span class="text-muted" style="font-size: 13px;"><%=post.comments.length%></span> <i class="fas fa-comments text-info"></i></a>
+                                                    <a href="/posts/<%=post._id%>" class="text-decoration-none mr-2 p-0" title="Comments"><span class="text-muted" style="font-size: 13px;"><%=post.comments.length%></span> <i class="fas fa-comments text-primary"></i></a>
                                                      
                                                      <button class="btn btn-sm btn-link p-0 mr-2" title="Copy link" onclick="navigator.clipboard.writeText(window.location.href.slice(0,22)+'posts/<%=post._id%>')"><i class="fas fa-link text-warning"></i></button>
-     
+
                                                      <form action="/posts/<%=post._id%>/bookmark" method="POST" class="d-inline">
-                                                         <button class="btn btn-sm btn-link p-0" title="Bookmark"><i class="fas fa-bookmark text-danger"></i></button>
+                                                         <button class="btn btn-sm btn-link p-0" title="Bookmark"><i class="far fa-bookmark text-danger"></i></button>
                                                      </form>
                                                  
                                             </div>
@@ -116,12 +116,11 @@
                         <% } %> 
                         <% for (let comment of comments) { %>
                               <div class="media mb-0 mt-2 mx-4 pl-2 pt-1">
-                                <a class="mr-3" href="/u/<%=comment.author.username%>">
-                                  <img src="<%=comment.author.avatar.thumbnail%>" alt="" style="width:45px; border-radius: 50%">
+                                <a class="mr-3" href="/u/<%=user.username%>">
+                                  <img src="<%=user.avatar.thumbnail%>" alt="" style="width:45px; border-radius: 50%">
                                 </a>
                                 <div class="media-body">
-                                  <h6 class="my-0 card-subtitle d-inline"><strong><a href="/u/<%=comment.author.username%>"><%=comment.author.displayName%></a></strong> <span class="text-muted">@<%=comment.author.username%></span>  <img class="d-inline" style="width: 17px" title="<%=comment.author.country.name%>" src="<%=comment.author.country.flag%>" alt=""></h6>
-                                    
+                                    <p class="card-subtitle mt-1"><strong><a href="/u/<%=user.username%>"><%=user.displayName%></a></strong>  <img class="d-inline" style="width: 17px" src="<%=user.country.flag%>" alt="" title="<%=user.country.name %>"><small class="text-muted mb-0 d-block">@<%=user.username%></small></p>
                                         <% if(comment.post) {%> 
                                         <p class="my-1">
                                             <a href="/posts/<%=comment.post._id%>"class="card-link" >@<%=comment.post.author.username%></a> <%=comment.body%>
@@ -134,7 +133,7 @@
                                     <% if(currentUser && comment.author.equals(currentUser._id)) { %> 
                                     <div class="d-inline">
                                       <form class="d-inline" action="/posts/<%=post._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
-                                      <button class="btn btn-link btn-sm d-inline pb-0">Delete</button>
+                                      <button class="btn btn-link btn-sm d-inline pb-0" title="Delete comment"><i class="fas fa-trash-alt text-danger"></i></button>
                                       </form>
                                     </div>
                                   <% } %> 
@@ -159,10 +158,25 @@
                                         <a class="mr-3" href="/u/<%=bookmark.author.username%>">
                                             <img src="<%=bookmark.author.avatar.thumbnail%>" alt="" style="width:45px; border-radius: 50%">
                                         </a>
-                                        <div class="media-body">
-                                            <h6 class="card-subtitle mt-1"><strong><a href="/u/<%=bookmark.author.username%>"><%=bookmark.author.displayName%></a></strong>  <img class="d-inline" style="width: 17px" src="<%=bookmark.author.country.flag%>" alt="" title="<%=bookmark.author.country.name %>"></h6>
-                                            <small class="text-muted mb-0 d-block">@<%=bookmark.author.username%></small>
-                                            <p class="mb-1 mt-0" style="font-size: 14px"> <span class="mark"><%=bookmark.date%>:</span> <span class="star star<%=bookmark.rating%>-result"></span></p>
+                                        <div class="media-body text-wrap">
+                                            <div class="d-flex justify-content-between mt-2">
+                                                <p class="card-subtitle mt-1"><strong><a href="/u/<%=bookmark.author.username%>"><%=bookmark.author.displayName%></a></strong>  <img class="d-inline" style="width: 17px" src="<%=bookmark.author.country.flag%>" alt="" title="<%=bookmark.author.country.name %>"><small class="text-muted mb-0 d-block">@<%=bookmark.author.username%></small></p>
+                                                <!-- edit & delete dropdown menu-->
+                                                <% if(currentUser && bookmark.author.equals(currentUser._id)) { %> 
+                                                    <div class="btn-group dropleft" title="More" >
+                                                      <button class="btn btn-sm text-dark mb-1 pb-1 bg-light rounded-circle" data-toggle="dropdown" style="height: 30px; width: 30px">...</button>
+                                                      <div class="dropdown-menu">
+                                                        <% if(within24Hours(bookmark) === true) { %>
+                                                        <button class="dropdown-item pl-2"><a href="" data-toggle="modal" id="editPostLink" data-target="#editPostModal" class="text-decoration-none"><i class="fas fa-edit text-warning"></i> Edit</a></button>
+                                                        <% } %> 
+                                                        <form class="d-inline" action="/posts/<%=bookmark._id%>?_method=DELETE" method="POST">
+                                                          <button class="dropdown-item pl-2 text-primary pb-0"><a><i class="fas fa-trash-alt text-danger"></i><span class="text-light">_</span>Delete</a></button>
+                                                        </form>
+                                                      </div>
+                                                    </div>
+                                                    <% } %>
+                                            </div>
+                                            <span class="badge badge-light mb-2 mt-2" style="font-size: 13px"><%=post.date%>: <span class="star star<%=post.rating%>-result"></span></span>  
                                             <div class="text-wrap">
                                                 <p class="my-0"><%=bookmark.body%></p>
                                             </div>
@@ -171,14 +185,21 @@
                                                     <img class="img-fluid" src="<%=bookmark.image.fullsize%>" alt="">
                                                 </div>
                                             <% } %> 
-                                            <div class="d-inline">
+                                            <div class="d-flex justify-content-between">
                                                 <small class="pb-1"><a href="/posts/<%=bookmark._id%>" class="card-link"><%=bookmark.timestamp%></a></small>
                                                 <% if(bookmark.edited){ %>
                                                 <small class="pb-1 text-muted">Edited</small>
                                                 <% } %>
-                                                <form action="/posts/<%=bookmark._id%>/bookmark?_method=DELETE" method="POST" class="d-inline">
-                                                    <button class="btn btn-sm btn-link" type="submit" title="Remove bookmark"><i class="far fa-times-circle text-danger mr-2"></i></button>
-                                                  </form>
+                                                <div class="d-flex justify-content-around">
+                                                    <a href="/posts/<%=bookmark._id%>" class="text-decoration-none mr-2 p-0" title="Comments"><span class="text-muted" style="font-size: 13px;"><%=bookmark.comments.length%></span> <i class="fas fa-comments text-primary"></i></a> 
+
+                                                    <button class="btn btn-sm btn-link p-0" title="Copy link" onclick="navigator.clipboard.writeText(window.location.href.slice(0,28)+'posts/<%=bookmark._id%>')"><i class="fas fa-link text-warning mr-2"></i></button>
+
+                                                    <form action="/posts/<%=post._id%>/bookmark?_method=DELETE" method="POST" class="d-inline">
+                                                        <button class="btn btn-sm btn-link" type="submit" title="Remove bookmark"><i class="fas fa-bookmark text-danger"></i> <i class="far fa-times-circle text-secondary small mr-2"></i></button>
+                                                    </form>  
+                                                </div>
+
                                             </div>
                                         </div>
                                     </div>

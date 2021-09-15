@@ -27,6 +27,9 @@ router.route("/:id/bookmark")
     .post(isLoggedIn, catchAsync(posts.bookmarkPost))
     .delete(isLoggedIn, catchAsync(posts.unbookmarkPost));  
 
+// router.route("/:id/copy")
+//     .post(isLoggedIn, catchAsync(posts.copy))    
+
 router
     // .get("/:id/edit", isLoggedIn, isAuthor, setPostedToday, catchAsync(posts.renderEditForm))
     .post("/:id/edit", isLoggedIn, upload.single("image"), validatePost, setPostedToday, blockDuplicatePost, catchAsync(posts.createPost))
