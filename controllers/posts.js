@@ -27,7 +27,7 @@ module.exports.indexToday= async (req, res) =>{
         for(post of posts) {
             await post.populate("author").execPopulate();
         }
-        res.render("posts/today", {posts, today, within24Hours});
+        res.render("posts/today", {posts, today, within24Hours, title: "Home / todai"});
     } catch(e) {
         req.flash("error", `No ratings yet today!`)
         res.redirect(`/u/${user.username}`)
@@ -72,7 +72,7 @@ module.exports.showPost = async (req,res) => {
         req.flash("error", "Rating not found!")
         return res.redirect("/posts");
     }
-    res.render("posts/show", {user, post, canEdit})
+    res.render("posts/show", {user, post, canEdit, title: `@${user.username}'s day / todai `})
 }
 
 module.exports.bookmarkPost = async(req, res) => {
@@ -118,7 +118,7 @@ module.exports.renderEditForm = async (req,res) => {
         req.flash("error", "Rating not found!")
         return res.redirect("/posts");
     }
-    res.render("posts/edit", {post})
+    res.render("posts/edit", {post, title: "Edit rating / todai"})
 }
 
 module.exports.updatePost = async (req,res) => {

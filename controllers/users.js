@@ -11,7 +11,7 @@ module.exports.renderHomePage = (req, res) => {
         return res.redirect("/posts/today");
     } else {
         const today = new Date().toLocaleString('en-us', {weekday:'long'});
-        res.render("home", {today});
+        res.render("home", {today, title: "todai"});
     }
 }
 
@@ -85,7 +85,7 @@ module.exports.showUserProfile = async(req, res) => {
         path: "post", 
         populate: {path: "author"}
     });
-    res.render("users/show", {user, postCount, commentCount, comments, within24Hours});
+    res.render("users/show", {user, postCount, commentCount, comments, within24Hours, title: `@${user.username} / todai`});
 };
 
 module.exports.showUserSettings = async(req, res) => {
@@ -95,7 +95,7 @@ module.exports.showUserSettings = async(req, res) => {
         req.flash("error", "User not found!")
         return res.redirect("/posts/today");
     }
-    res.render("users/settings", {user, creationDate});
+    res.render("users/settings", {user, creationDate, title: "Settings / todai"});
 };
     
 module.exports.updateUserSettings = async(req, res) => {

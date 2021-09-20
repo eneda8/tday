@@ -13,7 +13,7 @@
           <% if(currentUser.postedToday === false) {%> 
           <a class="nav-link" href="" data-toggle="modal" id="newPostLink" data-target="#newPostModal"><i class="far fa-star"></i> rate today</a>
           <% } else {%>
-          <a href="/posts/<%=currentUser.todaysPost%>" class="nav-link"><i class="far fa-calendar-check"></i> my rating</a>
+          <a href="/posts/<%=currentUser.todaysPost%>" class="nav-link"><i class="far fa-calendar-check"></i> today's rating</a>
           <% } %>
         <% } %> 
       </div>

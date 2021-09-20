@@ -23,7 +23,7 @@
                         </li>
                         <% } else {%>
                         <li class="nav-item">
-                            <a href="/posts/<%=currentUser.todaysPost%>" class="nav-link"><i class="far fa-calendar-check mr-3"></i>My rating</a>
+                            <a href="/posts/<%=currentUser.todaysPost%>" class="nav-link"><i class="far fa-calendar-check mr-3"></i>Today's rating</a>
                         </li>
                         <% } %>
                         <li class="nav-item">
@@ -67,7 +67,7 @@
             </div>
             <% if(posts){ %>
                 <%for (post of posts) { %> 
-                    <div class="card mb-3 mt-1 pt-2 pl-2 border-0">
+                    <div class="card mb-3 mt-1 pt-2 pl-2 pr-2 border-0">
                         <div class="media pr-3">
                             <a href="/u/<%=post.author.username%>"><img style="width:45px; border-radius: 50%" src="<%=post.author.avatar.thumbnail%>" class="pr-2" alt=""></a>
                             <div class="media-body text-wrap">
