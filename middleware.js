@@ -84,7 +84,7 @@ module.exports.blockDuplicatePost = async (req, res, next) => {
     const post = await Post.find({"author": user, "date": today});
     if(post.length){
         req.flash("error", "Sorry, you've already posted once today!")
-        return res.redirect("/posts/today")
+        return res.redirect("/home")
     } else next()
 }
 
@@ -113,7 +113,7 @@ module.exports.isAccountOwner = async(req, res, next) => {
     console.log("req.user._id:", req.user._id)
     if (!user._id == req.user._id) {
         req.flash("error", "You do not have permission to do that!");
-        return res.redirect("/posts/today")
+        return res.redirect("/home")
     }
     next();
 }

@@ -6,19 +6,41 @@ const countries = require("../countries");
 const {cloudinary} = require("../cloudinary");
 const {within24Hours} = require("../utils/getToday");
 
-module.exports.renderHomePage = (req, res) => {
+module.exports.renderLandingPage = (req, res) => {
     if(req.user){
-        return res.redirect("/posts/today");
+        return res.redirect("/home");
     } else {
         const today = new Date().toLocaleString('en-us', {weekday:'long'});
-        res.render("home", {today, title: "todai"});
+        res.render("landing", {today, title: "todai"});
+    }
+}
+
+module.exports.renderHomePage= async (req, res) =>{
+    const user = await User.findById(req.user._id);
+    const today = new Date().toLocaleDateString(
+        'en-US',
+        {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        }
+      )
+    try{
+        const posts = await Post.random(10);
+        for(post of posts) {
+            await post.populate("author").execPopulate();
+        }
+        res.render("users/home", {posts, today, within24Hours, title: "Home / todai"});
+    } catch(e) {
+        req.flash("error", `No ratings yet today!`)
+        res.redirect(`/u/${user.username}`)
     }
 }
 
 module.exports.renderRegisterForm = (req, res) => {
     if (req.isAuthenticated()) {
         req.flash("error", "You are already logged in!");
-        return res.redirect('/posts/today');
+        return res.redirect('/home');
     }
     res.render("users/register", {countries})
 }
@@ -49,14 +71,14 @@ module.exports.register = async (req,res, next) => {
 module.exports.renderLoginForm = (req,res) => {
     if (req.isAuthenticated()) {
         req.flash("error", "You are already logged in!");
-        return res.redirect('/posts/today');
+        return res.redirect('/home');
     }
     res.render("users/login")
 }
 
 module.exports.login = (req,res) => {
     req.flash("success", `Welcome back, ${req.user.username}!`);
-    res.redirect("/posts/today")
+    res.redirect("/home")
 }
 
 module.exports.logout = (req,res) => {
@@ -76,7 +98,7 @@ module.exports.showUserProfile = async(req, res) => {
     }); 
     if(!user){
         req.flash("error", "User not found!")
-        return res.redirect("/posts/today");
+        return res.redirect("/users/home");
     }
     const postCount = await Post.find({"author": user}).countDocuments((count) => count);
     const commentCount = await Comment.find({"author": user}).countDocuments((count) => count)
@@ -93,7 +115,7 @@ module.exports.showUserSettings = async(req, res) => {
     const creationDate = user.createdAt;
     if(!user){
         req.flash("error", "User not found!")
-        return res.redirect("/posts/today");
+        return res.redirect("/users/home");
     }
     res.render("users/settings", {user, creationDate, title: "Settings / todai"});
 };
@@ -109,7 +131,7 @@ module.exports.updateUserSettings = async(req, res) => {
     }
     if(!user){
         req.flash("error", "User not found!")
-        return res.redirect("/posts/today");
+        return res.redirect("/users/home");
     }
     user.save()
     req.flash("success", "Profile updated!");

@@ -97,6 +97,7 @@ app.use("/", userRoutes);
 app.use("/write", journalRoutes)
 app.use("/posts", postRoutes);
 app.use("/posts/:id/comments", commentRoutes);
+// app.use("/data", dataRoutes)
 
 app.get('/favicon.ico', (req, res) => res.status(204).end());
 

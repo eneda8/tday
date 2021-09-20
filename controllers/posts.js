@@ -4,35 +4,13 @@ const {getToday, getTimestamp, within24Hours} = require("../utils/getToday");
 const ObjectID = require('mongodb').ObjectID;
 const {cloudinary} = require("../cloudinary");
 
-module.exports.index = async (req, res) => {
-    const posts = await Post.find({}).sort({"createdAt": -1});
-    for(post of posts) {
-        await post.populate("author").execPopulate();
-    }
-    res.render("posts/index", {posts});
-} 
-
-module.exports.indexToday= async (req, res) =>{
-    const user = await User.findById(req.user._id);
-    const today = new Date().toLocaleDateString(
-        'en-US',
-        {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-        }
-      )
-    try{
-        const posts = await Post.random(10);
-        for(post of posts) {
-            await post.populate("author").execPopulate();
-        }
-        res.render("posts/today", {posts, today, within24Hours, title: "Home / todai"});
-    } catch(e) {
-        req.flash("error", `No ratings yet today!`)
-        res.redirect(`/u/${user.username}`)
-    }
-}
+// module.exports.index = async (req, res) => {
+//     const posts = await Post.find({}).sort({"createdAt": -1});
+//     for(post of posts) {
+//         await post.populate("author").execPopulate();
+//     }
+//     res.render("posts/index", {posts});
+// } 
 
 module.exports.renderNewForm = (req, res) => { 
     res.render("posts/new")

@@ -4,18 +4,18 @@ const passport = require("passport");
 const catchAsync = require("../utils/catchAsync");
 const User = require("../models/user");
 const users = require("../controllers/users");
-const {isLoggedIn, setPostedToday, blockDuplicatePost, checkPostStreak, isAccountOwner} = require("../middleware");
+const posts = require("../controllers/posts");
+const {isLoggedIn, setPostedToday, validatePost, blockDuplicatePost, checkPostStreak, isAccountOwner} = require("../middleware");
 const multer = require("multer");
 const {storage} = require("../cloudinary");
 const upload = multer({storage});
 
 router.route("/")
-    .get(users.renderHomePage)
+    .get(users.renderLandingPage)
     .post(passport.authenticate("local", {failureFlash: true, failureRedirect: "/login", }), users.login)
 
-router.get("/data", (req,res) => {
-    res.render("data");
-})
+router.get("/home", isLoggedIn, setPostedToday, catchAsync(users.renderHomePage))
+    .post(isLoggedIn, upload.single("image"), validatePost, setPostedToday, blockDuplicatePost, catchAsync(posts.createPost));
 
 router.route("/register")
     .get(users.renderRegisterForm)
