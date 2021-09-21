@@ -26,7 +26,8 @@ router.route("/login")
 
 router.get("/logout", users.logout);
 
-router.get("/u/:username", isLoggedIn, setPostedToday, checkPostStreak, 
+router.get("/u/:username", isLoggedIn, setPostedToday, checkPostStreak, catchAsync(users.showUserProfile))
+
 
 router.delete("/u/:username/delete", isLoggedIn, isAccountOwner, catchAsync(users.deleteAccount));
 

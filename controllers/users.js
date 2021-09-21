@@ -28,9 +28,7 @@ module.exports.renderHomePage= async (req, res) =>{
       let todaysPost;
       if(user.postedToday == true && user.todaysPost.length) {
         todaysPost = await Post.findById(user.todaysPost);
-        console.log("todaysPost:", todaysPost);
-        console.log("user.todaysPost:", user.todaysPost);
-      }  else {ltodaysPost = "null"}
+      }  else {todaysPost = "null"}
     try{
         const posts = await Post.random(10);
         for(post of posts) {
