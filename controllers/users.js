@@ -25,14 +25,21 @@ module.exports.renderHomePage= async (req, res) =>{
           day: 'numeric',
         }
       )
+      let todaysPost;
+      if(user.postedToday == true && user.todaysPost.length) {
+        todaysPost = await Post.findById(user.todaysPost);
+        console.log("todaysPost:", todaysPost);
+        console.log("user.todaysPost:", user.todaysPost);
+      }  else {ltodaysPost = "null"}
     try{
         const posts = await Post.random(10);
         for(post of posts) {
             await post.populate("author").execPopulate();
         }
-        res.render("users/home", {posts, today, within24Hours, title: "Home / todai"});
+        res.render("users/home", {posts, today, within24Hours, todaysPost, title: "Home / todai"});
     } catch(e) {
-        req.flash("error", `No ratings yet today!`)
+        console.log(e)
+        req.flash("error", `Oops, something went wrong!`)
         res.redirect(`/u/${user.username}`)
     }
 }

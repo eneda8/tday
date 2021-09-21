@@ -40,46 +40,9 @@
                 <span class="navbar-toggler-icon"></span>
               </button>
               <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                  <% if(currentUser) {  %> 
-                    <a class="nav-link" href="/home">home</a>
-                    <a class="nav-link" href="#">data</a>
-                    <a class="nav-link" href="/write">write</a>
-                    <% if(currentUser.postedToday === false) {%> 
-                    <a class="nav-link" href="" data-toggle="modal" id="newPostLink" data-target="#newPostModal">rate today</a>
-                    <% } else {%>
-                    <a href="/posts/<%=currentUser.todaysPost%>" class="nav-link">my rating</a>
-                    <% } %>
-                  <% } %> 
-                </div>
                 <div class="navbar-nav ml-auto mr-2">
-                <% if(!currentUser) {  %> 
-                  <!-- <form action="/" method="POST" class="form-inline" novalidate>
-                    <div class="">
-                      <label class="d-inline" for="username"></label>
-                      <input type="text" class="form-control" placeholder="username" name="username" aria-label="Username" required>
-                      <label class="d-inline" for="password"></label>
-                      <input type="password" class="form-control" placeholder="password" name="password" aria-label="Password" required>
-                      <button class="btn btn-link p-0" type="submit"><a class="nav-link text-decoration-none">login</a></button>
-                    </div>
-                  </form> -->
                   <button class="btn btn-link p-0"><a class="nav-link text-decoration-none" href="/login">login</a></button>
                   <button class="btn btn-link p-0"><a class="nav-link text-decoration-none" href="/register">sign up</a></button>
-                <% } else { %> 
-                  <form class="form-inline">
-                    <input class="form-control mr-sm-2" type="search" style = "height: 30px" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-sm btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
-                  </form>
-                <li class="nav-item dropdown mr-auto">
-                  <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="/u/<%=currentUser.username%>" role="button" aria-haspopup="true" aria-expanded="false"><img class="p-0" src="<%=currentUser.avatar.thumbnail%>" style= "border-radius: 50%;"alt=""></a>
-                  <div class="dropdown-menu" style="min-width: 5rem">
-                    <a class="dropdown-item p-2" href="/u/<%=currentUser.username%>">profile</a>
-                    <a class="dropdown-item p-2" href="/write">write</a>
-                    <a class="dropdown-item p-2" href="/settings">settings</a>
-                    <a class="dropdown-item p-2" href="/logout">logout</a>
-                  </div>
-                </li>
-                <% }  %>
                 </div>
                 </div>
               </div>

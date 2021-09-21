@@ -15,7 +15,6 @@ router.route("/")
     .post(passport.authenticate("local", {failureFlash: true, failureRedirect: "/login", }), users.login)
 
 router.get("/home", isLoggedIn, setPostedToday, catchAsync(users.renderHomePage))
-    .post(isLoggedIn, upload.single("image"), validatePost, setPostedToday, blockDuplicatePost, catchAsync(posts.createPost));
 
 router.route("/register")
     .get(users.renderRegisterForm)
@@ -27,7 +26,7 @@ router.route("/login")
 
 router.get("/logout", users.logout);
 
-router.get("/u/:username", isLoggedIn, setPostedToday, checkPostStreak, catchAsync(users.showUserProfile));
+router.get("/u/:username", isLoggedIn, setPostedToday, checkPostStreak, 
 
 router.delete("/u/:username/delete", isLoggedIn, isAccountOwner, catchAsync(users.deleteAccount));
 

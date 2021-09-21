@@ -43,7 +43,7 @@ module.exports.renderEditJournal = async(req, res, next) => {
     const user = await User.findById(req.user._id);
     if(!journal){
         req.flash("error", "Journal not found!")
-        return res.redirect("/posts");
+        return res.redirect("/home");
     }
     res.render("journals/edit", {journal});
 }

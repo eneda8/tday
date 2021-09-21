@@ -38,7 +38,7 @@ module.exports.showPost = async (req,res) => {
     const {id} = req.params;
     if (!ObjectID.isValid(id)) {
         req.flash("error", "Rating not found!")
-        return res.redirect("/posts");
+        return res.redirect("/home");
     }
     const post = await Post.findById(id);
     await post.populate("author").populate({
@@ -48,7 +48,7 @@ module.exports.showPost = async (req,res) => {
     const canEdit = within24Hours(post);
     if(!post){
         req.flash("error", "Rating not found!")
-        return res.redirect("/posts");
+        return res.redirect("/home");
     }
     res.render("posts/show", {user, post, canEdit, title: `@${user.username}'s day / todai `})
 }
@@ -94,7 +94,7 @@ module.exports.renderEditForm = async (req,res) => {
     const post = await Post.findById(req.params.id);
     if(!post){
         req.flash("error", "Rating not found!")
-        return res.redirect("/posts");
+        return res.redirect("/home");
     }
     res.render("posts/edit", {post, title: "Edit rating / todai"})
 }

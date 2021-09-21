@@ -61,9 +61,9 @@
             <h5 class="text-left font-weight-bold mt-3"><%=today%></h5>
             <div>
                 <h6 class="text-left">10 random ratings from today <button type="button" class="btn btn-small d-inline" title="refresh for 10 more"><i class="fas fa-sync-alt text-right text-primary"></i></button></h6>
-                <% if(currentUser && (currentUser.postedToday === false)) {  %> 
+                <!-- <% if(currentUser && (currentUser.postedToday === false)) {  %> 
                 <a href="" data-toggle="modal" id="newPostLink" data-target="#newPostModal">Add Rating</a>
-                <% } %> 
+                <% } %>  -->
             </div>
             <% if(posts){ %>
                 <%for (post of posts) { %> 
@@ -107,7 +107,7 @@
                                     <div>
                                         <a href="/posts/<%=post._id%>" class="text-decoration-none mr-2 p-0" title="Comments"><span class="text-muted" style="font-size: 13px;" title="Copy link"><%=post.comments.length%></span> <i class="fas fa-comments text-primary"></i></a>  
 
-                                        <a  class="btn btn-sm btn-link " role="button" onclick="navigator.clipboard.writeText(window.location.href.slice(0,28)+'<%=post._id%>')" ><i class="fas fa-link text-warning mr-2"></i></a>
+                                        <a  class="btn btn-sm btn-link " role="button" onclick="navigator.clipboard.writeText(window.location.href.slice(0,21)+'/posts/<%=post._id%>')" ><i class="fas fa-link text-warning mr-2"></i></a>
 
                                         <% if(currentUser.bookmarks.includes(post._id)) { %>
                                             <form action="/posts/<%=post._id%>/bookmark?_method=DELETE" method="POST" class="d-inline">
@@ -156,7 +156,7 @@
                                         <img src="<%=currentUser.avatar.path%>" alt="" width="120" height="120" class="rounded-circle my-3 img" style="transform: translateY(2.3rem)">
                                     </div>
                                     <div class="text-white pl-2 pb-2">
-                                        <h4 class="my-0"><a href="/u/<%=currentUser.username%>" class="stretched-link text-decoration-none text-white"><%=currentUser.displayName%></a></h4>
+                                        <h4 class="my-0"><a href="/u/<%=currentUser.username%>" class="text-decoration-none text-white"><%=currentUser.displayName%></a></h4>
                                         <p class="my-0"><span style="font-size: 10px"> @</span><%=currentUser.username%></p>
                                         <p class="small"><i class="fas fa-map-marker-alt text-white"></i>  <img title="<%=currentUser.country.name %>" src="<%=currentUser.country.flag%>" width="17px"></p>
                                     </div>
@@ -180,17 +180,59 @@
                             </div>
                         </div>
                 </div>
+                <div class="bg-light shadow-sm rounded my-5 p-3">
+                <% if(currentUser.postedToday === true && currentUser.todaysPost.length) {%> 
+                    <h6 class="font-weight-bold mb-0 pb-0">
+                        <a href="/posts/<%=todaysPost._id%>" class="text-decoration-none">
+                            Today's Rating: <span class="badge badge-light mb-2" style="font-size: 13px"><span class="star star<%=todaysPost.rating%>-result"></span></span>  
+                        </a>
+                    </h6>
+                <% } else { %> 
+                    <div class="card my-2 border-0">
+                        <div class="card-body pb-2">
+                            <form action="/posts" method="POST" novalidate class="validated-form" enctype="multipart/form-data">
+                                <h6 class="font-weight-bold">How was your day?</h6>
+                                <div class="">
+                                    <label class=""for="post[rating]"></label>
+                                    <fieldset class="rating d-block">
+                                    <input type="radio" id="star5-new" name="post[rating]" value=5 /><label class = "" for="star5-new" title="Amazing"></label>
+                                    <input type="radio" id="star4-new" name="post[rating]" value=4 /><label class = "" for="star4-new" title="Very good"></label>
+                                    <input type="radio" id="star3-new" name="post[rating]" value=3 /><label class = "" for="star3-new" title="Average"></label>
+                                    <input type="radio" id="star2-new" name="post[rating]" value=2 /><label class = "" for="star2-new" title="Not good"></label>
+                                    <input type="radio" id="star1-new" name="post[rating]" value=1 /><label class = "" for="star1-new" title="Terrible"></label>
+                                    </fieldset>
+                                    <div class="valid-feedback">Looks good!</div>
+                                </div>  
+                                <div class="">
+                                    <label class="form-label mt-0" for="body">Jot down your thoughts or post an image:</label>
+                                    <textarea class="form-control" rows="5"cols="10" type="text" name="post[body]"></textarea>
+                                    <div class="valid-feedback">Looks good!</div>
+                                </div>    
+                                <div class="custom-file mt-3">
+                                    <input type="file" class="custom-file-input" id="image" name="image" onchange="document.getElementById('preview').src = window.URL.createObjectURL(this.files[0])">
+                                    <label class="custom-file-label" for="image">Choose image...</label>
+                                </div>
+                                <img class="img-fluid my-2" id="preview" width="100px"/> 
+                                <div class="mb-3 clearfix">
+                                    <button class="btn btn-warning float-left">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>                      
+                <% } %>
+                       
+                </div>
             <div class="bg-light shadow-sm rounded my-5 p-3">
                 <div class="card my-2" style="height: 100px;">
                     <div class="card-body">
-                        DONATE TO TODAI
+                        MY DATA
                     </div>
                 </div>
             </div>
             <div class="bg-light shadow-sm rounded p-3">
                 <div class="card my-2" style="height: 150px;">
                     <div class="card-body">
-                        MY DATA
+                        DONATE TO TODAI
                     </div>
                 </div>
             </div>
@@ -210,3 +252,4 @@
 </div>
 
 <%- include('../partials/edit')%>
+<%- include("../partials/new") %>
