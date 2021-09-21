@@ -15,7 +15,7 @@
                           <a class="nav-link" href="#"><i class="far fa-chart-bar mr-3"></i>Data</a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link" href="#"><i class="fas fa-pencil-alt mr-3"></i>Write</a>
+                          <a class="nav-link" href="/write"><i class="fas fa-pencil-alt mr-3"></i>Write</a>
                         </li>
                         <% if(currentUser.postedToday === false) {%> 
                         <li class="nav-item">
@@ -40,7 +40,7 @@
             </div>
             <div class="bg-light shadow-sm rounded p-3 mb-5">
                 <div class="card my-2 h-50 p-3 border-0">
-                    <h6 class="text-center">Today's Global Avg Rating: 3.4</h6>
+                    <h6 class="text-center">Today's Global Avg Rating: <%=average%></h6>
                     <iframe>
                         <section>CHART GOES HERE</section>
                     </iframe>
@@ -174,7 +174,7 @@
                                         <h5 class="font-weight-bold mb-0 d-block"><%=currentUser.postStreak%></h5><small class="text-muted">Streak</small>
                                     </li>
                                     <li class="list-inline-item">
-                                        <h5 class="font-weight-bold mb-0 d-block">4.9</h5><small class="text-muted">Avg. Rating</small>
+                                        <h5 class="font-weight-bold mb-0 d-block"><%=userAverage%></h5><small class="text-muted">Avg. Rating</small>
                                     </li>
                                 </ul>
                             </div>
