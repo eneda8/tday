@@ -88,12 +88,23 @@ const seedDB = async () => {
                 post.image.path = faker.image.image();
             }     
             post.author = user;
+            await post.save();
             user.postedToday = true;
             user.posts.unshift(post);
             user.todaysPost = post._id;
             user.postStreak ++; 
-            await post.save();
+            // update user average
+            let userAverage;
+            await Post.aggregate([
+                {$match: {"author": user._id}},
+                {$group: {_id: null, avgRating: {$avg: "$rating"}}}
+            ]).then(function(res) {
+             userAverage = res[0].avgRating.toFixed(2)
+             });
+            await user.updateOne({$set: {average:  userAverage}});
             await user.save();
+         // ----------------------------
+           
         }
     }
     //make fake comments

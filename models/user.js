@@ -93,6 +93,10 @@ const userSchema = new Schema({
     postStreak: {
         type: Number,
         default: 0
+    },
+    average: {
+        type: Number,
+        default: 0
     }
 }, {timestamps: true}) 
 

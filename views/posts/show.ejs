@@ -29,8 +29,21 @@
                 <p class="my-2"><%=post.body%></p>
               </div>
               <% if(post.image) { %> 
-                <img class="img-fluid d-block" src="<%=post.image.path%>" alt="">
-              <% } %> 
+                <div class="d-block">
+                    <a href="" data-toggle="modal" id ="imagePreviewLink-<%=post._id%>" data-target="#imagePreviewModal-<%=post._id%>">
+                        <img class="img-fluid" src="<%=post.image.fullsize%>" alt="">
+                    </a>
+                </div>
+                <!-- image preview modal -->
+                <div>
+                    <div class="modal fade" id="imagePreviewModal-<%=post._id%>" tabindex="-1" aria-labelledby="imagePreviewModal-<%=post._id%>" aria-hidden="true" >
+                        <div class="modal-dialog modal-dialog-centered">
+                            <img src="<%=post.image.fullsize%>" alt="" class="">
+                        </div>
+                    </div>
+                </div>
+                <!-- ------------------------------ -->
+            <% } %> 
               <div class="d-flex justify-content-between">
                 <div>
                   <small class="pb-1"><a href="/posts/<%=post._id%>" class="card-link"><%=post.timestamp%></a></small>
@@ -41,7 +54,7 @@
                 <div class="justify-content-around">
                   <a href="/posts/<%=post._id%>" class="text-decoration-none mr-2 p-0" title="Comments"><span class="text-muted" style="font-size: 13px;"><%=post.comments.length%></span> <i class="fas fa-comments text-primary"></i></a>
 
-                  <button class="btn btn-sm btn-link d-inline" onclick="navigator.clipboard.writeText(window.location.href)" ><i class="fas fa-link text-warning mr-2"></i></button>
+                  <button class="copy btn btn-sm btn-link d-inline" title="Copy link"><i class="fas fa-link text-warning mr-2" onclick="navigator.clipboard.writeText(window.location.href)"></i></button>
 
                   <% if(currentUser.bookmarks.includes(post._id)) { %>
                     <form action="/posts/<%=post._id%>/bookmark?_method=DELETE" method="POST" class="d-inline">
@@ -102,3 +115,23 @@
 
 <%- include('../partials/edit')%>
 <%- include("../partials/new") %>
+
+<!-- copy link toast -->
+
+<div class="position-fixed bottom-0 right-0 p-3 " style="z-index: 5; right: 0; bottom: 0;">
+  <div id="liveToast" class="toast hide shadow-sm border-success bg-light" role="alert" aria-live="assertive" aria-atomic="true" data-delay="2000">
+    <div class="toast-body">
+      Copied to clipboard
+    </div>
+  </div>
+</div>
+
+<!-- -------------------- -->
+<script>
+  let buttons = document.querySelectorAll(".copy");
+  for(let button of buttons) {
+    button.onclick = function() {
+      $('.toast').toast('show');
+    }
+  }
+</script>    

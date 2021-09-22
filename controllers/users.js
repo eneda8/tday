@@ -4,7 +4,7 @@ const Comment = require("../models/comment");
 const Journal = require("../models/journal");
 const countries = require("../countries");
 const {cloudinary} = require("../cloudinary");
-const {within24Hours} = require("../utils/getToday");
+const {within24Hours, getToday} = require("../utils/getToday");
 
 module.exports.renderLandingPage = (req, res) => {
     if(req.user){
@@ -29,20 +29,12 @@ module.exports.renderHomePage= async (req, res) =>{
               );
         
         let average;
-        let userAverage;
         Post.aggregate([
             {$match: {"date": todayAvg}},
             {$group: {_id: null, avgRating: {$avg: "$rating"}}}
         ]).then(function(res) {
             average = res[0].avgRating.toFixed(2)
         })
-        Post.aggregate([
-            {$match: {"author": user._id}},
-            {$group: {_id: null, avgRating: {$avg: "$rating"}}}
-        ]).then(function(res) {
-            userAverage = res[0].avgRating.toFixed(2)
-        })
-
     try{
 
         //show today's rating, if available
@@ -55,7 +47,7 @@ module.exports.renderHomePage= async (req, res) =>{
         for(post of posts) {
             await post.populate("author").execPopulate();
         }
-        res.render("users/home", {posts, today, within24Hours, todaysPost, average, userAverage, title: "Home / todai"});
+        res.render("users/home", {posts, today, within24Hours, todaysPost, average, title: "Home / todai"});
     } catch(e) {
         console.log(e)
         req.flash("error", `Oops, something went wrong!`)
@@ -118,29 +110,20 @@ module.exports.logout = (req,res) => {
 
 module.exports.showUserProfile = async(req, res) => {
     const user = await User.findOne({username : req.params.username})
-    .populate("journals").populate("posts").populate("comments").populate({
-        path: "bookmarks",
-        populate: {path: "author"}
-    }); 
+        .populate("journals").populate("posts").populate("comments").populate({
+            path: "bookmarks",
+            populate: {path: "author"}
+        }); 
     if(!user){
         req.flash("error", "User not found!")
         return res.redirect("/users/home");
     }
-    let userAverage;
-    Post.aggregate([
-        {$match: {"author": user._id}},
-        {$group: {_id: null, avgRating: {$avg: "$rating"}}}
-    ]).then(function(res) {
-        userAverage = res[0].avgRating.toFixed(2)
-    });
-    const postCount = await Post.find({"author": user}).countDocuments((count) => count);
-    const commentCount = await Comment.find({"author": user}).countDocuments((count) => count)
     const comments = await Comment.find({"author": user}).sort({"createdAt": -1}).populate("author")
-    .populate({
-        path: "post", 
-        populate: {path: "author"}
-    });
-    res.render("users/show", {user, postCount, commentCount, comments, within24Hours, userAverage, title: `@${user.username} / todai`});
+        .populate({
+            path: "post", 
+            populate: {path: "author"}
+        });
+    res.render("users/show", {user, comments, within24Hours, getToday, title: `@${user.username} / todai`});
 };
 
 module.exports.showUserSettings = async(req, res) => {

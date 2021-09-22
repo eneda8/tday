@@ -28,7 +28,17 @@ module.exports.createPost = async (req, res, next) => {
     user.postStreak ++; 
     await post.save();
     user.todaysPost = post._id; 
+    // update user average
+    let userAverage;
+    await Post.aggregate([
+        {$match: {"author": user._id}},
+        {$group: {_id: null, avgRating: {$avg: "$rating"}}}
+    ]).then(function(res) {
+        userAverage = res[0].avgRating.toFixed(2)
+    });
+    await user.updateOne({$set: {average:  userAverage}});
     await user.save();
+    // ----------------------------
     req.flash("success", "New rating submitted!");
     res.redirect(`/posts/${post._id}`)
 }
@@ -100,6 +110,7 @@ module.exports.renderEditForm = async (req,res) => {
 }
 
 module.exports.updatePost = async (req,res) => {
+    const user = await User.findById(req.user._id);
     const {id} = req.params;
     const post = await Post.findByIdAndUpdate(id, {...req.body.post} ) 
     if(req.file) {
@@ -111,6 +122,18 @@ module.exports.updatePost = async (req,res) => {
     } 
     post.edited = true;
     await post.save();
+    
+     // update user average
+    let userAverage;
+    await Post.aggregate([
+        {$match: {"author": user._id}},
+        {$group: {_id: null, avgRating: {$avg: "$rating"}}}
+    ]).then(function(res) {
+        userAverage = res[0].avgRating.toFixed(2)
+    });
+    await user.updateOne({$set: {average:  userAverage}});
+    await user.save();
+    // ----------------------------
     req.flash("success", "Rating updated!");
     res.redirect(`/posts/${post._id}`)
 }
@@ -125,13 +148,24 @@ module.exports.deletePost = async(req, res) => {
         user.postedToday = false;
         user.todaysPost = ""
         user.postStreak --;
-        user.save();
     } else {
         user.posts.pull(id)
-        user.save()
     }
     if(post.image) await cloudinary.uploader.destroy(post.image.filename);
     await post.remove();
+
+    // update user average
+    let userAverage;
+    await Post.aggregate([
+        {$match: {"author": user._id}},
+        {$group: {_id: null, avgRating: {$avg: "$rating"}}}
+    ]).then(function(res) {
+        userAverage = res[0].avgRating.toFixed(2)
+    });
+    await user.updateOne({$set: {average:  userAverage}});
+    await user.save();
+    // ----------------------------
+
     req.flash("success", "Rating deleted");
     res.redirect(`/u/${user.username}`);
 }
