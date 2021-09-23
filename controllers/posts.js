@@ -60,7 +60,7 @@ module.exports.showPost = async (req,res) => {
         req.flash("error", "Rating not found!")
         return res.redirect("/home");
     }
-    res.render("posts/show", {user, post, canEdit, title: `@${user.username}'s day / todai `})
+    res.render("posts/show", {user, post, canEdit, title: `@${post.author.username}'s day / todai `})
 }
 
 module.exports.bookmarkPost = async(req, res) => {
@@ -71,7 +71,8 @@ module.exports.bookmarkPost = async(req, res) => {
         user.bookmarks.unshift(post);
         user.save()
         req.flash("success", "Bookmark added!");
-        res.redirect(`/u/${user.username}#nav-bookmarks`)
+        // res.redirect(`/u/${user.username}#nav-bookmarks`)
+        res.redirect("back")
     } catch (e){
         console.log(e)
         req.flash("error", "Oops something went wrong!");
@@ -82,17 +83,15 @@ module.exports.bookmarkPost = async(req, res) => {
 module.exports.unbookmarkPost = async(req, res) => {
     try{
         const {id} = req.params;
-        const post = await Post.findById(id);
         const user = await User.findById(req.user._id);
-        user.bookmarks.pull(id);
-        user.save()
+        await user.bookmarks.pull(id);
+        await user.save()
         req.flash("success", "Bookmark removed!");
-        res.redirect("back")
     } catch (e){
         console.log(e)
         req.flash("error", "Oops something went wrong!");
-        res.redirect("back")
     }   
+    res.redirect("back")
 }
 
 // module.exports.copy = async(req, res) => {
@@ -142,7 +141,8 @@ module.exports.deletePost = async(req, res) => {
     const {id} = req.params;
     const user = await User.findById(req.user._id).populate("posts");
     const today = getToday();
-    const post = await Post.findById(id).populate("author");
+    const post = await Post.findById(id).populate("author").populate("comments");
+
     if(post.date === today){
         user.posts.shift();
         user.postedToday = false;
@@ -153,7 +153,6 @@ module.exports.deletePost = async(req, res) => {
     }
     if(post.image) await cloudinary.uploader.destroy(post.image.filename);
     await post.remove();
-
     // update user average
     let userAverage;
     await Post.aggregate([

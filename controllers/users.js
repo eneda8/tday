@@ -6,55 +6,7 @@ const countries = require("../countries");
 const {cloudinary} = require("../cloudinary");
 const {within24Hours, getToday} = require("../utils/getToday");
 
-module.exports.renderLandingPage = (req, res) => {
-    if(req.user){
-        return res.redirect("/home");
-    } else {
-        const today = new Date().toLocaleString('en-us', {weekday:'long'});
-        res.render("landing", {today, title: "todai"});
-    }
-}
-
-module.exports.renderHomePage= async (req, res) =>{
-    const user = await User.findById(req.user._id);
-    const today = new Date().toLocaleDateString( 'en-US', {year: 'numeric', month: 'long', day: 'numeric'});
-            //global average rating
-            const todayAvg = new Date().toLocaleDateString(
-                'en-US',
-                {
-                  year: 'numeric',
-                  month: 'short',
-                  day: 'numeric',
-                }
-              );
-        
-        let average;
-        Post.aggregate([
-            {$match: {"date": todayAvg}},
-            {$group: {_id: null, avgRating: {$avg: "$rating"}}}
-        ]).then(function(res) {
-            average = res[0].avgRating.toFixed(2)
-        })
-    try{
-
-        //show today's rating, if available
-        let todaysPost;
-        if(user.postedToday == true && user.todaysPost.length) {
-            todaysPost = await Post.findById(user.todaysPost);
-        }  else {todaysPost = "null"}
-          //show 10 random posts
-        const posts = await Post.random(10);
-        for(post of posts) {
-            await post.populate("author").execPopulate();
-        }
-        res.render("users/home", {posts, today, within24Hours, todaysPost, average, title: "Home / todai"});
-    } catch(e) {
-        console.log(e)
-        req.flash("error", `Oops, something went wrong!`)
-        res.redirect(`/u/${user.username}`)
-    }
-}
-
+// ----------------REGISTER ---------------------------------------
 module.exports.renderRegisterForm = (req, res) => {
     if (req.isAuthenticated()) {
         req.flash("error", "You are already logged in!");
@@ -86,6 +38,7 @@ module.exports.register = async (req,res, next) => {
     }               
 }
 
+// -----------------------------LOGIN---------------------------------
 module.exports.renderLoginForm = (req,res) => {
     if (req.isAuthenticated()) {
         req.flash("error", "You are already logged in!");
@@ -108,6 +61,58 @@ module.exports.logout = (req,res) => {
     res.redirect("/");
 }
 
+//------------------------- LANDING & HOME -------------------------
+module.exports.renderLandingPage = (req, res) => {
+    if(req.user){
+        return res.redirect("/home");
+    } else {
+        const today = new Date().toLocaleString('en-us', {weekday:'long'});
+        res.render("landing", {today, title: "todai"});
+    }
+}
+
+module.exports.renderHomePage= async (req, res) =>{
+    const user = await User.findById(req.user._id).populate("posts");
+    const today = new Date().toLocaleDateString( 'en-US', {year: 'numeric', month: 'long', day: 'numeric'});
+            //global average rating
+            const todayAvg = new Date().toLocaleDateString(
+                'en-US',
+                {
+                  year: 'numeric',
+                  month: 'short',
+                  day: 'numeric',
+                }
+              );
+        
+        let average;
+        Post.aggregate([
+            {$match: {"date": todayAvg}},
+            {$group: {_id: null, avgRating: {$avg: "$rating"}}}
+        ]).then(function(res) {
+            average = res[0].avgRating.toFixed(2)
+        })
+    try{
+
+        //show today's rating, if available
+        let todaysPost;
+        if(user.postedToday == true && user.todaysPost.length) {
+            todaysPost = await Post.findById(user.todaysPost);
+        }  else {todaysPost = "null"}
+          //show 10 random posts
+        const posts = await Post.random(10);
+        for(post of posts) {
+            await post.populate("author").execPopulate();
+        }
+        res.render("users/home", {posts, today, within24Hours, todaysPost, user, average, title: "Home / todai"});
+    } catch(e) {
+        console.log(e)
+        req.flash("error", `Oops, something went wrong!`)
+        res.redirect(`/u/${user.username}`)
+    }
+}
+
+
+// ------------------------USER PROFILE-----------------------------
 module.exports.showUserProfile = async(req, res) => {
     const user = await User.findOne({username : req.params.username})
         .populate("journals").populate("posts").populate("comments").populate({
@@ -122,7 +127,7 @@ module.exports.showUserProfile = async(req, res) => {
         .populate({
             path: "post", 
             populate: {path: "author"}
-        });
+        }).populate({path: "post", populate: {path: "_id"}});
     res.render("users/show", {user, comments, within24Hours, getToday, title: `@${user.username} / todai`});
 };
 
@@ -135,7 +140,8 @@ module.exports.showUserSettings = async(req, res) => {
     }
     res.render("users/settings", {user, creationDate, title: "Settings / todai"});
 };
-    
+
+// ----------------------------USER SETTINGS--------------------------------------
 module.exports.updateUserSettings = async(req, res) => {
     const {displayName, bio, coverColor} = req.body;
     const user = await User.findById(req.user._id);

@@ -55,8 +55,7 @@ const seedDB = async () => {
         if(i % 2 == 0 ) {
             body = faker.lorem.sentence()
         } else {body = faker.lorem.sentences()}
-        const user = await User.findOne().where({ "postedToday" : false }) 
-        // if (user.username === "e") continue;
+        const user = await User.findOne().where({ "postedToday" : false }) .where({"bio": {$ne: "creator of this website" }})
         // const checkPostStreak = async (user) => {
         //     const today = new Date()
         //     let yesterday = new Date(today);

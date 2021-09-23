@@ -1,0 +1,17 @@
+<div class="position-fixed bottom-0 right-0 p-3 " style="z-index: 5; left: 1em; top: 4.5em;">
+    <div id="liveToast" class="toast hide shadow-sm border-success bg-light" role="alert" aria-live="assertive" aria-atomic="true" data-delay="2000">
+      <div class="toast-body">
+        Copied to clipboard
+      </div>
+    </div>
+  </div>
+  
+  <!-- -------------------- -->
+  <script>
+    let buttons = document.querySelectorAll(".copy");
+    for(let button of buttons) {
+      button.onclick = function() {
+        $('.toast').toast('show');
+      }
+    }
+  </script>    

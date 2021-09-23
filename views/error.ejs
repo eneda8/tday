@@ -2,9 +2,9 @@
 
 <div class="row">
     <div class="col-6 offset-3">
-        <div class="alert alert-light shadow-sm" role="alert" style="border-color: #DC3545;">
-            <h4 class="alert-heading" style="color: #DC3545;"><%=err.message%></h4>
-            <p style="color: #DC3545;"><pre><%=err.stack%></pre></p>
+        <div class="shadow-sm rounded border-danger bg-light" role="" >
+            <h4 class="alert-heading text-danger"><%=err.message%></h4>
+            <p class="text-danger"><pre><%=err.stack%></pre></p>
         </div>
     </div>
 </div>
@@ -14,9 +14,7 @@
         width: fit-content;
         height: fit-content;
         padding: 15px;
-        background-color: #fafafa;
         border-left: 6px solid #7f7f84;
-        margin-bottom: 10px;
     }
 </style>
 

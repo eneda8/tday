@@ -24,7 +24,7 @@ module.exports.editComment = async (req,res) =>{
     await Post.findByIdAndUpdate(id)
     await Comment.findByIdAndUpdate(req.params.commentId); 
     req.flash("success", "Successfully updated comment");
-    res.redirect(`/posts/${id}`);
+    res.redirect("back");
 }
 
 module.exports.deleteComment = async (req,res) =>{
@@ -33,5 +33,5 @@ module.exports.deleteComment = async (req,res) =>{
     await User.findByIdAndUpdate(req.user._id, {$pull: {comments: commentId}});
     await Comment.findByIdAndDelete(req.params.commentId); 
     req.flash("success", "Successfully deleted comment");
-    res.redirect(`/posts/${id}`);
+    res.redirect("back");
 }

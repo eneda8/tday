@@ -66,7 +66,8 @@
                                     <div class="media-body text-wrap">
                                         <div class="d-flex justify-content-between">
                                             <p class="card-subtitle mt-1"><strong><a href="/u/<%=user.username%>"><%=user.displayName%></a></strong>  <img class="d-inline" style="width: 17px" src="<%=user.country.flag%>" alt="" title="<%=user.country.name %>"><small class="text-muted mb-0 d-block">@<%=user.username%></small></p>
-                                            <!-- edit & delete dropdown menu-->
+
+                                            <!-- edit & delete dropdown menu------------------>
                                             <% if(currentUser && post.author.equals(currentUser._id)) { %> 
                                                 <div class="btn-group dropleft" title="More" >
                                                   <button class="btn btn-sm text-dark mb-1 pb-1 bg-light rounded-circle" data-toggle="dropdown" style="height: 30px; width: 30px">...</button>
@@ -78,12 +79,12 @@
                                                         <button class="dropdown-item pl-2"><a href="" data-toggle="modal" id="editYesterdayPostLink" data-target="#editYesterdayPostModal" class="text-decoration-none"><i class="fas fa-edit text-warning"></i> Edit</a></button>
                                                         <% } %> 
                                                     <% } %> 
-                                                    <form class="d-inline" action="/posts/<%=post._id%>?_method=DELETE" method="POST">
-                                                      <button class="dropdown-item pl-2 text-primary"><a><i class="fas fa-trash-alt text-danger"></i><span class="text-light">_</span>Delete</a></button>
-                                                    </form>
+                                                      <button class="dropdown-item pl-2 text-primary" data-toggle="modal" data-target="#deleteModal-<%=post._id%>"><a><i class="fas fa-trash-alt text-danger"></i><span class="text-light">_</span>Delete</a></button>
                                                   </div>
                                                 </div>
                                                 <% } %>
+
+                                                <!-- -------------------------------------------------- -->
                                         </div>
                                         <span class="badge badge-light mb-2 mt-2" style="font-size: 13px"><%=post.date%>: <span class="star star<%=post.rating%>-result"></span></span>  
 
@@ -117,15 +118,41 @@
                                                 
                                                     <a href="/posts/<%=post._id%>" class="text-decoration-none mr-2 p-0" title="Comments"><span class="text-muted" style="font-size: 13px;"><%=post.comments.length%></span> <i class="fas fa-comments text-primary"></i></a>
                                                     <button class="copy btn btn-sm btn-link p-0 mr-2" title="Copy link"><i class="fas fa-link text-warning"  onclick="navigator.clipboard.writeText(window.location.href.slice(0,22)+'posts/<%=post._id%>')"></i></button>
-                                                     <form action="/posts/<%=post._id%>/bookmark" method="POST" class="d-inline">
-                                                         <button class="btn btn-sm btn-link p-0" title="Bookmark"><i class="far fa-bookmark text-danger"></i></button>
-                                                     </form>
+                                                    <% if(currentUser.bookmarks.includes(post._id)) { %>
+                                                    <button class="btn btn-sm btn-link" title="Remove bookmark" data-toggle="modal" data-target="#bookmarkDeleteModal-<%=post._id%>"><i class="fas fa-bookmark text-danger"></i> <i class="far fa-times-circle text-secondary small"></i></button>
+                                
+                                                    
+                                                    <div class="modal fade" id="bookmarkDeleteModal-<%=post._id%>" tabindex="-1" aria-labelledby="bookmarkDeleteModalLabel-<%=post._id%>" aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="bookmarkDeleteModalLabel-<%=post._id%>">Remove bookmark?</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
+                                                                <form class="d-inline" action="/posts/<%=post._id%>/bookmark?_method=DELETE" method="POST">
+                                                                    <button type="submit" class="btn btn-danger">Remove</button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                  
+                                                    <%} else { %> 
+                                                    <form action="/posts/<%=post._id%>/bookmark" method="POST" class="d-inline">
+                                                      <button class="btn btn-sm btn-link" title="Bookmark"><i class="far fa-bookmark text-danger mr-2"></i></button>
+                                                    </form>
+                                                    <% } %> 
                                                  
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            
+                                <%- include("../partials/postDelete") %>
                             <hr class="my-2"> 
                             <div class="media mt-1 mb-3 pl-5 ">
                                 
@@ -168,11 +195,38 @@
                                     <small class="pb-1"><%=comment.timestamp%></small>
                                     <small></small>
                                     <% if(currentUser && comment.author.equals(currentUser._id)) { %> 
-                                    <div class="d-inline">
-                                      <form class="d-inline" action="/posts/<%=post._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
-                                      <button class="btn btn-link btn-sm d-inline pb-0" title="Delete comment"><i class="fas fa-trash-alt text-danger"></i></button>
-                                      </form>
+                                    
+                                
+                                      <button class="btn btn-link btn-sm d-inline pb-0" title="Delete comment" data-toggle="modal" data-target="#commentDeleteModal-<%=comment._id%>"><i class="fas fa-trash-alt text-danger"></i></button>
+                                  
+                                    <!-- COMMENT DELETE MODAL - START -->
+                                    <div>
+                                        <div class="modal fade" id="commentDeleteModal-<%=comment._id%>" tabindex="-1" aria-labelledby="commentDeleteModalLabel-<%=comment._id%>" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="commentDeleteModalLabel">Delete comment?</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-footer">
+                                                
+                                                <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
+                                                <% if(comment.post) { %> 
+                                                <form class="d-inline" action="/posts/<%=comment.post._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
+                                                <% } else { %> 
+                                                <form class="d-inline" action="/comments/<%=comment._id%>?_method=DELETE" method="POST">
+                                                <% } %> 
+                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                </form>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        </div>
                                     </div>
+                                    <!-- COMMENT DELETE MODAL - END -->
+
                                   <% } %> 
                                 </div>
                               </div> 
@@ -185,6 +239,7 @@
                         <div class="tab-pane fade" id="nav-data" role="tabpanel" aria-labelledby="nav-data-tab">
                             <h6 class="text-center my-5">Stay tuned!</h6>
                         </div> 
+
                         <!-- bookmarks tab -->
 
                         <div class="tab-pane fade" id="nav-bookmarks" role="tabpanel" aria-labelledby="nav-bookmarks-tab">
@@ -232,9 +287,31 @@
 
                                                     <button class="btn btn-sm btn-link p-0" title="Copy link" onclick="navigator.clipboard.writeText(window.location.href.slice(0,28)+'posts/<%=bookmark._id%>')"><i class="fas fa-link text-warning mr-2"></i></button>
 
-                                                    <form action="/posts/<%=post._id%>/bookmark?_method=DELETE" method="POST" class="d-inline">
-                                                        <button class="btn btn-sm btn-link" type="submit" title="Remove bookmark"><i class="fas fa-bookmark text-danger"></i> <i class="far fa-times-circle text-secondary small mr-2"></i></button>
-                                                    </form>  
+                                                    <button class="btn btn-sm btn-link" title="Remove bookmark" data-toggle="modal" data-target="#bookmarkDeleteModal-<%=bookmark._id%>"><i class="fas fa-bookmark text-danger"></i> <i class="far fa-times-circle text-secondary small"></i></button>
+
+                                                    <div class="modal fade" id="bookmarkDeleteModal-<%=bookmark._id%>" tabindex="-1" aria-labelledby="bookmarkDeleteModalLabel-<%=bookmark._id%>" aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="bookmarkDeleteModalLabel-<%=bookmark._id%>">Remove bookmark?</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
+                                                                <form class="d-inline" action="/posts/<%=bookmark._id%>/bookmark?_method=DELETE" method="POST">
+                                                                    <button type="submit" class="btn btn-danger">Remove</button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                    
+
+
+
+
                                                 </div>
 
                                             </div>
@@ -459,25 +536,6 @@
       </div>
     </div>
 </div>
+             
+<%- include("../partials/toast") %>
 
-<!-- copy link toast -->
-
-<div class="position-fixed bottom-0 right-0 p-3 " style="z-index: 5; right: 0; bottom: 0;">
-    <div id="liveToast" class="toast hide shadow-sm border-success bg-light" role="alert" aria-live="assertive" aria-atomic="true" data-delay="2000">
-      <div class="toast-body">
-        Copied to clipboard
-      </div>
-    </div>
-  </div>
-
-<!-- -------------------- -->
-<script>
-    let buttons = document.querySelectorAll(".copy");
-    for(let button of buttons) {
-      button.onclick = function() {
-        $('.toast').toast('show');
-      }
-    }
-</script>                                     
-
- 

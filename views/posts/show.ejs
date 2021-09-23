@@ -16,9 +16,7 @@
                     <% if(canEdit === true) { %>
                     <button class="dropdown-item pl-2"><a href="" data-toggle="modal" id="editPostLink" data-target="#editPostModal" class="text-decoration-none"><i class="fas fa-edit text-warning"></i> Edit</a></button>
                     <% } %> 
-                    <form class="d-inline" action="/posts/<%=post._id%>?_method=DELETE" method="POST">
-                      <button class="dropdown-item pl-2 text-primary"><a><i class="fas fa-trash-alt text-danger"></i><span class="text-light">_</span>Delete</a></button>
-                    </form>
+                    <button class="dropdown-item pl-2 text-primary " data-toggle="modal" data-target="#deleteModal-<%=post._id%>"><a><i class="fas fa-trash-alt text-danger"></i><span class="text-light">_</span>Delete</a></button>
                   </div>
                 </div>
                 <% } %>
@@ -57,9 +55,29 @@
                   <button class="copy btn btn-sm btn-link d-inline" title="Copy link"><i class="fas fa-link text-warning mr-2" onclick="navigator.clipboard.writeText(window.location.href)"></i></button>
 
                   <% if(currentUser.bookmarks.includes(post._id)) { %>
-                    <form action="/posts/<%=post._id%>/bookmark?_method=DELETE" method="POST" class="d-inline">
-                      <button class="btn btn-sm btn-link" type="submit" title="Remove bookmark"><i class="fas fa-bookmark text-danger"></i> <i class="far fa-times-circle text-secondary small"></i></button>
-                    </form>
+                      <button class="btn btn-sm btn-link" title="Remove bookmark" data-toggle="modal" data-target="#bookmarkDeleteModal-<%=post._id%>"><i class="fas fa-bookmark text-danger"></i> <i class="far fa-times-circle text-secondary small"></i></button>
+
+                    <div>
+                      <div class="modal fade" id="bookmarkDeleteModal-<%=post._id%>" tabindex="-1" aria-labelledby="bookmarkDeleteModalLabel-<%=post._id%>" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="bookmarkDeleteModalLabel-<%=post._id%>">Remove bookmark?</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
+                                <form class="d-inline" action="/posts/<%=post._id%>/bookmark?_method=DELETE" method="POST">
+                                    <button type="submit" class="btn btn-danger">Remove</button>
+                                </form>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
                   <%} else { %> 
                   <form action="/posts/<%=post._id%>/bookmark" method="POST" class="d-inline">
                     <button class="btn btn-sm btn-link" title="Bookmark"><i class="far fa-bookmark text-danger mr-2"></i></button>
@@ -68,6 +86,9 @@
                 </div>
               </div>
                
+              
+
+
               <div class="border-top border-bottom p-1 my-1">
                 <h6 class="mb-0">Comments</h6>
               </div>
@@ -84,6 +105,7 @@
                     </div>
                 </div>
                 <% } %>
+                <!-- ------------------------COMMENTS------------------- -->
                 <div id="commentDiv">
                   <% for (let comment of post.comments) { %>
                     <hr class="my-1">
@@ -98,13 +120,35 @@
                             <small class="pb-1"><%=comment.timestamp%></small>
                             <% if(currentUser && comment.author.equals(currentUser._id)) { %> 
                             <div class="d-inline">
-                              <form class="d-inline" action="/posts/<%=post._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
-                                <button class="btn btn-link btn-sm d-inline pb-0" title="Delete comment"><i class="fas fa-trash-alt text-danger"></i></button>
-                              </form>
+                              <button class="btn btn-link btn-sm d-inline pb-0" title="Delete comment" data-toggle="modal" data-target="#commentDeleteModal-<%=comment._id%>"><i class="fas fa-trash-alt text-danger"></i></button>
                             </div>
                           <% } %> 
                         </div>
-                      </div>                    
+                      </div>  
+                      <div>
+                        <!-- COMMENT DELETE MODAL - START -->
+                        <div>
+                          <div class="modal fade" id="commentDeleteModal-<%=comment._id%>" tabindex="-1" aria-labelledby="commentDeleteModalLabel-<%=comment._id%>" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                              <div class="modal-content">
+                              <div class="modal-header">
+                                  <h5 class="modal-title" id="commentDeleteModalLabel">Delete comment?</h5>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                  </button>
+                              </div>
+                              <div class="modal-footer">
+                                  <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
+                                  <form class="d-inline" action="/posts/<%=post._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
+                                      <button type="submit" class="btn btn-danger">Delete</button>
+                                  </form>
+                              </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- COMMENT DELETE MODAL - END -->
+                      </div>                  
                     <% } %>
                 </div>
             </div>
@@ -113,25 +157,10 @@
   </div>
  </div>   
 
-<%- include('../partials/edit')%>
-<%- include("../partials/new") %>
 
-<!-- copy link toast -->
 
-<div class="position-fixed bottom-0 right-0 p-3 " style="z-index: 5; right: 0; bottom: 0;">
-  <div id="liveToast" class="toast hide shadow-sm border-success bg-light" role="alert" aria-live="assertive" aria-atomic="true" data-delay="2000">
-    <div class="toast-body">
-      Copied to clipboard
-    </div>
-  </div>
-</div>
+ <div><%- include('../partials/edit')%></div>
+ <div><%- include("../partials/new") %></div>
+ <div><%- include("../partials/toast") %></div>
+ <div><%- include("../partials/postDelete") %></div>
 
-<!-- -------------------- -->
-<script>
-  let buttons = document.querySelectorAll(".copy");
-  for(let button of buttons) {
-    button.onclick = function() {
-      $('.toast').toast('show');
-    }
-  }
-</script>    

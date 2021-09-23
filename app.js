@@ -20,6 +20,7 @@ const User = require("./models/user");
 const userRoutes = require("./routes/users");
 const postRoutes = require("./routes/posts");
 const commentRoutes = require("./routes/comments");
+const deletedPostCommentRoutes = require("./routes/deletedPostComments");
 const journalRoutes = require("./routes/journals");
 
 mongoose.connect("mongodb://localhost:27017/todai", {
@@ -97,6 +98,8 @@ app.use("/", userRoutes);
 app.use("/write", journalRoutes)
 app.use("/posts", postRoutes);
 app.use("/posts/:id/comments", commentRoutes);
+app.use("/comments", deletedPostCommentRoutes)
+
 // app.use("/data", dataRoutes)
 
 app.get('/favicon.ico', (req, res) => res.status(204).end());
