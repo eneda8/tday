@@ -1,8 +1,5 @@
 <% layout("layouts/boilerplate")%>
-<script>
-    $("#countryName.val('<%=user.country.name%>')").attr("selected","selected");
 
-</script>
 <div class="row my-3 px-4 mh-100">
     <div class="col-md-8 col-lg-8 mx-auto mh-100">
         <div class=" card shadow rounded px-3 pt-3 mh-100">
@@ -11,23 +8,23 @@
             <div class="row pl-2 pr-4 py-2 mh-100 ">
                 <div class="col-4 pr-0 pt-2border-right">
                   <div class="list-group" id="list-tab" role="tablist">
-                    <a class="list-group-item list-group-item-action active" id="list-account-list" data-toggle="list" href="#list-account" role="tab" aria-controls="home">
+                    <a class="list-group-item list-group-item-action active" id="list-account-list" data-toggle="tab" href="#account-info" role="tab" aria-controls="account"  data-tab-history="true" data-tab-history-changer="push" data-tab-history-update-url="true">
                         <h5><i class="fas fa-user-circle mr-1"></i>  Account Information</h5>
                         <small>Change your account information like username and email address.</small>
                     </a>
-                    <a class="list-group-item list-group-item-action" id="list-password-list" data-toggle="list" href="#list-password" role="tab" aria-controls="profile">
+                    <a class="list-group-item list-group-item-action" id="list-password-list" data-toggle="tab" href="#change-password" role="tab" aria-controls="password" data-tab-history="true" data-tab-history-changer="push" data-tab-history-update-url="true">
                         <h5><i class="fas fa-key small mr-2"></i>  Password</h5>
                         <small>Change your password at any time.</small>
                     </a>
-                    <a class="list-group-item list-group-item-action disabled" id="list-download-list" data-toggle="list" href="#list-download" role="tab" aria-controls="download">
+                    <a class="list-group-item list-group-item-action disabled" id="list-download-list" data-toggle="tab" href="#download-data" role="tab" aria-controls="download" data-tab-history="true" data-tab-history-changer="push" data-tab-history-update-url="true">
                         <h5><i class="fas fa-download small mr-2"></i>Data</h5>
                         <small>Download an archive of your data. (Coming soon!)</small>
                     </a>
-                    <a class="list-group-item list-group-item-action disabled" id="list-resources-list" data-toggle="list" href="#list-resources" role="tab" aria-controls="resources" >
+                    <a class="list-group-item list-group-item-action disabled" id="list-resources-list" data-toggle="tab" href="#resources" role="tab" aria-controls="resources" data-tab-history="true" data-tab-history-changer="push" data-tab-history-update-url="true">
                         <h5><i class="fas fa-info small mr-2"></i>Additional Resources</h5>
                         <small>Privacy information & ways to contact us. (Coming soon!)</small>
                     </a>
-                    <a class="list-group-item list-group-item-action" id="list-delete-list" data-toggle="list" href="#list-delete" role="tab" aria-controls="delete">
+                    <a class="list-group-item list-group-item-action" id="list-delete-list" data-toggle="tab" href="#delete-account" role="tab" aria-controls="delete-account" data-tab-history="true" data-tab-history-changer="push" data-tab-history-update-url="true">
                         <h5><i class="fas fa-user-times small mr-2"></i>Delete Account</h5>
                         <small>Permanently delete your account.</small>
                     </a>
@@ -37,7 +34,7 @@
       
                 <div class="col-8 pl-1 pr-0 pt-2 vh-100 border-top ">
                   <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane fade show active" id="list-account" role="tabpanel" aria-labelledby="list-account-list">
+                    <div class="tab-pane fade show active" id="account-info" role="tabpanel" aria-labelledby="list-account-list">
                         <div class="px-4">
                             <h5 class="mt-1">Change Account Details</h5>
                             <form action="/settings?_method=PUT" method="POST" class="validated-form" novalidate >
@@ -97,7 +94,7 @@
                             </form>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="list-password" role="tabpanel" aria-labelledby="list-password-list">
+                    <div class="tab-pane fade" id="change-password" role="tabpanel" aria-labelledby="list-password-list">
                         <div class="px-4">
                             <h5 class="mt-1">Change Password</h5>
                             <form action="/settings/password?_method=PUT" method="POST" class="validated-form" novalidate >
@@ -129,13 +126,13 @@
                             </form>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="list-download" role="tabpanel" aria-labelledby="list-download-list">
+                    <div class="tab-pane fade" id="download-data" role="tabpanel" aria-labelledby="list-download-list">
 
                     </div>
-                    <div class="tab-pane fade" id="list-resources" role="tabpanel" aria-labelledby="list-resources-list">
+                    <div class="tab-pane fade" id="resources" role="tabpanel" aria-labelledby="list-resources-list">
 
                     </div>
-                    <div class="tab-pane fade" id="list-delete" role="tabpanel" aria-labelledby="list-delete-list">
+                    <div class="tab-pane fade" id="delete-account" role="tabpanel" aria-labelledby="list-delete-list">
                         <div class="px-4">
                             <h5 class="alert-heading mt-1 text-danger">Delete Account</h5>
                             <p>This will permanently, irreversibly remove content from your account and delete it from our database. This includes all of your account information, ratings, comments, bookmarks, journals, and data.</p>
