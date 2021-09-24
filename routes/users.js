@@ -26,13 +26,16 @@ router.route("/login")
 
 router.get("/logout", users.logout);
 
-router.get("/u/:username", isLoggedIn, setPostedToday, checkPostStreak, catchAsync(users.showUserProfile))
+router.route("/u/:username")
+        .get(isLoggedIn, setPostedToday, checkPostStreak, catchAsync(users.showUserProfile))
+        .put(isLoggedIn, upload.single("avatar"), catchAsync(users.updateProfile))
+        .delete(isLoggedIn, isAccountOwner, catchAsync(users.deleteAccount));
 
 
-router.delete("/u/:username/delete", isLoggedIn, isAccountOwner, catchAsync(users.deleteAccount));
+router.get("/settings", isLoggedIn, isAccountOwner, catchAsync(users.showUserSettings));
 
-router.route("/settings")
-    .get(isLoggedIn, setPostedToday, catchAsync(users.showUserSettings))
-    .put(isLoggedIn, setPostedToday, upload.single("avatar"), catchAsync(users.updateUserSettings))
+router.put("/settings/", isLoggedIn, isAccountOwner, catchAsync(users.updateUserInfo));
+
+router.put("/settings/password", isLoggedIn, isAccountOwner, catchAsync(users.changePassword));
 
 module.exports = router;

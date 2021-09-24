@@ -59,7 +59,7 @@
                             <h6 class="text-center my-5">No ratings yet!</h6>
                         <% } else { for (post of user.posts) { %> 
                                 <div class="card mb-3 mt-1 pt-3 pr-2 pl-1 border-0 ">
-                                <div class="media px-2 pt-1 pb-3">
+                                <div class="media px-2 pt-1 pb-0">
                                     <a class="mr-3" href="/u/<%=user.username%>">
                                         <img src="<%=user.avatar.thumbnail%>" alt="" style="width:45px; border-radius: 50%">
                                     </a>
@@ -116,7 +116,7 @@
                                             </div>
                                             <div class="d-flex justify-content-around">
                                                 
-                                                    <a href="/posts/<%=post._id%>" class="text-decoration-none mr-2 p-0" title="Comments"><span class="text-muted" style="font-size: 13px;"><%=post.comments.length%></span> <i class="fas fa-comments text-primary"></i></a>
+                                                    <a href="/posts/<%=post._id%>" class="text-decoration-none mr-2 pt-1 pr-1" title="Comments"><span class="text-muted" style="font-size: 13px;"><%=post.comments.length%></span> <i class="fas fa-comments text-primary"></i></a>
                                                     <button class="copy btn btn-sm btn-link p-0 mr-2" title="Copy link"><i class="fas fa-link text-warning"  onclick="navigator.clipboard.writeText(window.location.href.slice(0,22)+'posts/<%=post._id%>')"></i></button>
                                                     <% if(currentUser.bookmarks.includes(post._id)) { %>
                                                     <button class="btn btn-sm btn-link" title="Remove bookmark" data-toggle="modal" data-target="#bookmarkDeleteModal-<%=post._id%>"><i class="fas fa-bookmark text-danger"></i> <i class="far fa-times-circle text-secondary small"></i></button>
@@ -251,7 +251,7 @@
                                             <img src="<%=bookmark.author.avatar.thumbnail%>" alt="" style="width:45px; border-radius: 50%">
                                         </a>
                                         <div class="media-body text-wrap">
-                                            <div class="d-flex justify-content-between mt-2">
+                                            <div class="d-flex justify-content-between mt-1">
                                                 <p class="card-subtitle mt-1"><strong><a href="/u/<%=bookmark.author.username%>"><%=bookmark.author.displayName%></a></strong>  <img class="d-inline" style="width: 17px" src="<%=bookmark.author.country.flag%>" alt="" title="<%=bookmark.author.country.name %>"><small class="text-muted mb-0 d-block">@<%=bookmark.author.username%></small></p>
                                                 <!-- edit & delete dropdown menu-->
                                                 <% if(currentUser && bookmark.author.equals(currentUser._id)) { %> 
@@ -283,7 +283,7 @@
                                                 <small class="pb-1 text-muted">Edited</small>
                                                 <% } %>
                                                 <div class="d-flex justify-content-around">
-                                                    <a href="/posts/<%=bookmark._id%>" class="text-decoration-none mr-2 p-0" title="Comments"><span class="text-muted" style="font-size: 13px;"><%=bookmark.comments.length%></span> <i class="fas fa-comments text-primary"></i></a> 
+                                                    <a href="/posts/<%=bookmark._id%>" class="text-decoration-none mr-2 pt-1 pr-1" title="Comments"><span class="text-muted" style="font-size: 13px;"><%=bookmark.comments.length%></span> <i class="fas fa-comments text-primary pt-0"></i></a> 
 
                                                     <button class="btn btn-sm btn-link p-0" title="Copy link" onclick="navigator.clipboard.writeText(window.location.href.slice(0,28)+'posts/<%=bookmark._id%>')"><i class="fas fa-link text-warning mr-2"></i></button>
 
@@ -322,10 +322,13 @@
                         </div>
                         <!-- journals tab -->
                         <div class="tab-pane fade" id="nav-journals" role="tabpanel" aria-labelledby="nav-journals-tab">
-                            <!-- <div class="text-center">
-                                <button class="btn btn-outline btn-warning mt-3" type="button"><a href="/write" class="text-dark">Write</a></button>
-                            </div> -->
 
+                            <% if(!user.journals.length) {%> 
+                                <div class="text-center">
+                                    <h6 class="text-center mt-5">No journals yet!</h6>
+                                    <button class="btn btn-outline btn-warning mb-5 mt-3" type="button"><a href="/write" class="text-dark">Write</a></button>
+                                </div>
+                            <% } else { %> 
                             <div class="accordion mx-4 my-3" id="journalsAccordion">
                                 <button class="btn btn-link pl-0" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="">Expand/Collapse All</button>
 
@@ -351,7 +354,7 @@
                                 <% } %> 
                             </div>
                         </div>
-                    <% } %> 
+                    <% } } %> 
                     <!-- AUTHORIZED TABS END -->
                 </div>
             </div>
@@ -370,9 +373,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="/settings?_method=PUT" method="POST" class="validated-form" novalidate enctype="multipart/form-data">
-                    <div>
-                        <form action="/settings?_method=PUT" method="POST" class="validated-form" novalidate enctype="multipart/form-data">
+                        <form action="/u/<%=user.username%>?_method=PUT" method="POST" class="validated-form" novalidate enctype="multipart/form-data">
                             <div class="mb-3">
                                 <label class="form-label" for="displayName">Display name</label>
                                 <input class="form-control" type="text" id="displayName" name="displayName" value="<%=user.displayName%>">
@@ -422,6 +423,7 @@
     <%- include("../partials/new") %>
 </div>
 
+<% if(user.posts.length){ %> 
 <!-- edit today's post  modal -->
 <div>
     <div class="modal fade" id="editTodayPostModal" tabindex="-1" aria-labelledby="editPostModalLabel" aria-hidden="true">
@@ -536,6 +538,7 @@
       </div>
     </div>
 </div>
-             
+
+<% } %> 
 <%- include("../partials/toast") %>
 

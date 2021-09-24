@@ -85,12 +85,14 @@ module.exports.renderHomePage= async (req, res) =>{
               );
         
         let average;
-        Post.aggregate([
-            {$match: {"date": todayAvg}},
-            {$group: {_id: null, avgRating: {$avg: "$rating"}}}
-        ]).then(function(res) {
-            average = res[0].avgRating.toFixed(2)
-        })
+        // Post.aggregate([
+        //     {$match: {"date": todayAvg}},
+        //     {$group: {_id: null, avgRating: {$avg: "$rating"}}}
+        // ]).then(function(res) {
+        //     if(res){
+        //     average = res[0].avgRating.toFixed(2)
+        //     } else average = 3.0
+        // })
     try{
 
         //show today's rating, if available
@@ -121,7 +123,7 @@ module.exports.showUserProfile = async(req, res) => {
         }); 
     if(!user){
         req.flash("error", "User not found!")
-        return res.redirect("/users/home");
+        return res.redirect("/home");
     }
     const comments = await Comment.find({"author": user}).sort({"createdAt": -1}).populate("author")
         .populate({
@@ -131,18 +133,7 @@ module.exports.showUserProfile = async(req, res) => {
     res.render("users/show", {user, comments, within24Hours, getToday, title: `@${user.username} / todai`});
 };
 
-module.exports.showUserSettings = async(req, res) => {
-    const user = await User.findOne({username: req.user.username})
-    const creationDate = user.createdAt;
-    if(!user){
-        req.flash("error", "User not found!")
-        return res.redirect("/users/home");
-    }
-    res.render("users/settings", {user, creationDate, title: "Settings / todai"});
-};
-
-// ----------------------------USER SETTINGS--------------------------------------
-module.exports.updateUserSettings = async(req, res) => {
+module.exports.updateProfile = async(req, res) => {
     const {displayName, bio, coverColor} = req.body;
     const user = await User.findById(req.user._id);
     const oldAvatar = user.avatar;
@@ -153,25 +144,84 @@ module.exports.updateUserSettings = async(req, res) => {
     }
     if(!user){
         req.flash("error", "User not found!")
-        return res.redirect("/users/home");
+        return res.redirect("/home");
     }
     user.save()
     req.flash("success", "Profile updated!");
     res.redirect(`/u/${user.username}`) 
 };
 
+
+// ----------------------------USER SETTINGS--------------------------------------
+module.exports.showUserSettings = async(req, res) => {
+    const user = await User.findById(req.user._id);
+    if(!user){
+        console.log("user not found")
+        req.flash("error", "Oops, something went wrong!")
+        return res.redirect("/home");
+    }
+    res.render("users/settings", {user, countries, title: "Settings / todai"});
+};
+
+module.exports.updateUserInfo = async(req, res) => {
+    try{
+        const user = await User.findById(req.user._id);
+        if(!user) {
+            req.flash("error", "Oops, something went wrong! Please try again.")
+            return res.redirect("back");
+        }
+        const {username, email, country, birthyear, gender} = req.body;
+        console.log(req.body);
+        await user.update({...req.body});
+        user.country.flag = countries.filter(obj => Object.values(obj).includes(user.country.name))[0]["flag"];
+        await user.save();
+        req.flash("success", "Account updated!");
+        res.redirect(`/u/${user.username}`)
+    } catch(e){
+        console.log(e);
+        req.flash("error", "Oops something went wrong!");
+        res.redirect("/settings")
+    }
+
+}
+
+module.exports.changePassword = async(req, res) => {
+    const {oldPassword, newPassword} = req.body;
+    console.log(req.body);
+    const user = await User.findById(req.user._id);
+    try{
+        await user.changePassword(oldPassword, newPassword);
+        user.save();
+        console.log("password updated");
+        req.flash("success", "Password Changed Successfully");
+        res.redirect("back")
+    } catch(err) {
+        console.log(err);
+        req.flash("error", "Password is incorrect. Please try again.")
+        res.redirect("back")
+    }
+}
+
 module.exports.deleteAccount = async(req, res) => {
     const user = await User.findById(req.user._id);
-    user.posts = [];
-    user.comments = [];
-    user.journals = [];
-    user.bookmarks = [];
-    const posts = await Post.remove({"author": req.user._id});
-    const comments = await Comment.remove({"author": req.user._id});
-    const journals = await Journal.remove({"author": req.user._id});
-    await req.logout();
-    const deletedUser = await User.remove({"_id": user._id});
-    console.log("User account deleted")
-    req.flash("success", "User account deleted.");
-    res.redirect("/");
+    const {password} = req.body;
+    try{
+        await user.authenticate(password);
+        user.posts = [];
+        user.comments = [];
+        user.journals = [];
+        user.bookmarks = [];
+        const posts = await Post.remove({"author": req.user._id});
+        const comments = await Comment.remove({"author": req.user._id});
+        const journals = await Journal.remove({"author": req.user._id});
+        await req.logout();
+        const deletedUser = await User.remove({"_id": user._id});
+        console.log("User account deleted")
+        req.flash("success", "User account deleted.");
+        res.redirect("/");
+    } catch (e){
+        console.log(e);
+        req.flash("error", "Password is incorrect.");
+        return res.redirect("back")
+    }
 }
