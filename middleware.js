@@ -101,9 +101,16 @@ module.exports.checkPostStreak = async(req, res, next) => {
         }
     );
     const user = await User.findById(req.user._id);
-    const post = await Post.find({"author": user, "date": yesterday});
-    if(!post) {
-        user.postStreak = 0;
+    const yesterdayPost = await Post.find({"author": user, "date": yesterday});
+    const todayPost = await Post.find({"author": user, "date": getToday()})
+    if(!yesterdayPost.length) {
+        if(todayPost.length){
+            await user.updateOne({$set: {postStreak:  1}});      
+        } else {
+            await user.updateOne({$set: {postStreak:  0}}); 
+        }     
+        user.save()
+        next()
     } else next() 
 }
 

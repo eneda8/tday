@@ -66,7 +66,8 @@
         <div class="col-5  bg-light shadow-sm rounded mx-5">
             <h5 class="text-left font-weight-bold mt-3"><%=today%></h5>
             <div>
-                <h6 class="text-left">10 random ratings from today <button type="button" class="btn btn-small d-inline" title="refresh for 10 more"><i class="fas fa-sync-alt text-right text-primary"></i></button></h6>
+                <h6 class="text-left">10 random ratings from today<a href="/home" class="btn btn-small d-inline" title="refresh for 10 more"><i class="fas fa-sync-alt text-right text-primary"></i></a>
+                </h6>
                 <!-- <% if(user && (user.postedToday === false)) {  %> 
                 <a href="" data-toggle="modal" id="newPostLink" data-target="#newPostModal">Add Rating</a>
                 <% } %>  -->
@@ -177,7 +178,7 @@
             <% } else { %>
                 <h1 class="text-center">No posts yet!</h1>
             <% } %>
-            <button type="button" class="btn btn-small d-inline float-right" title="refresh for 10 more"><i class="fas fa-sync-alt text-right text-primary"></i></button>
+            <a href="/home" class="btn btn-small d-inline float-right" title="refresh for 10 more"><i class="fas fa-sync-alt text-right text-primary"></i></a>
             
         </div>
         <div class="col">
@@ -267,6 +268,8 @@
                 <div class="card my-2" style="height: 150px;">
                     <div class="card-body">
                         DONATE TO TODAI
+                        <a href="https://www.patreon.com/bePatron?u={thepetersens}" data-patreon-widget-type="become-patron-button">Become a Patron!</a><script async src="https://cdn6.patreon.com/becomePatronButton.bundle.js"></script>
+
                     </div>
                 </div>
             </div>

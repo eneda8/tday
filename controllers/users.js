@@ -172,8 +172,10 @@ module.exports.updateUserInfo = async(req, res) => {
         }
         const {username, email, country, birthyear, gender} = req.body;
         console.log(req.body);
+        const newFlag = countries.filter(obj => Object.values(obj).includes(country.name))[0]["flag"];
+        console.log(newFlag);
         await user.update({...req.body});
-        user.country.flag = countries.filter(obj => Object.values(obj).includes(user.country.name))[0]["flag"];
+        user.country.flag = newFlag;
         await user.save();
         req.flash("success", "Account updated!");
         res.redirect(`/u/${user.username}`)

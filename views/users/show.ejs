@@ -483,6 +483,7 @@
 </div>
 
 <!-- edit yesterday's post  modal -->
+<% if(user.posts.length > 1) {%> 
 <div>
     <div class="modal fade" id="editYesterdayPostModal" tabindex="-1" aria-labelledby="editPostModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -538,7 +539,6 @@
       </div>
     </div>
 </div>
-
-<% } %> 
+<% }}%> 
 <%- include("../partials/toast") %>
 
