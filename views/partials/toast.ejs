@@ -1,17 +1,32 @@
-<div class="position-fixed bottom-0 right-0 p-3 " style="z-index: 5; left: 1em; top: 4.5em;">
-    <div id="liveToast" class="toast hide shadow-sm border-success bg-light" role="alert" aria-live="assertive" aria-atomic="true" data-delay="2000">
-      <div class="toast-body">
-        Copied to clipboard
-      </div>
+<div class="position-fixed" style="z-index: 5; left: .1em; top: 4em;">
+  <div id="liveToast" class="copyToast toast hide border-success bg-white shadow-none" role="alert" aria-live="assertive" aria-atomic="true" data-delay="2000">
+    <div class="toast-body small">
+      Copied to clipboard
     </div>
   </div>
-  
-  <!-- -------------------- -->
-  <script>
-    let buttons = document.querySelectorAll(".copy");
-    for(let button of buttons) {
-      button.onclick = function() {
-        $('.toast').toast('show');
-      }
+</div>
+
+<div class="position-fixed" style="z-index: 5; right: 1em; bottom: 1em;">
+  <div id="liveToast" class="donateToast toast hide border-success bg-white shadow-none" role="alert" aria-live="assertive" aria-atomic="true" data-delay="2000">
+    <div class="toast-body small">
+      We <i class="fas fa-heart text-danger"></i> you!
+    </div>
+  </div>
+</div>
+
+
+<script>
+  let donateButtons = document.querySelectorAll(".donate");
+  for(let button of donateButtons) {
+    button.onmouseover = function() {
+      $('.donateToast').toast('show');
     }
-  </script>    
+  }
+  
+  let copyButtons = document.querySelectorAll(".copy");
+  for(let button of copyButtons) {
+    button.onclick = function() {
+      $('.copyToast').toast('show');
+    }
+  }
+</script>    

@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col">
             <h3 class="mb-4">Home</h3>
-            <div class="border-left mb-3">
+            <div class="border-left border-bottom mb-3">
                 <div class="my-2 h-50">
                     <small class="text-muted pl-3">Menu</small>
                     <ul class="nav flex-column">
@@ -240,12 +240,12 @@
                                 </div>  
                                 <div class="">
                                     <label class="form-label mt-0" for="body">Jot down your thoughts or post an image:</label>
-                                    <textarea class="form-control" rows="5"cols="10" type="text" name="post[body]"></textarea>
+                                    <textarea class="form-control border-0 bg-light" rows="5"cols="10" type="text" name="post[body]"></textarea>
                                     <div class="valid-feedback">Looks good!</div>
                                 </div>    
-                                <div class="custom-file mt-3">
-                                    <input type="file" class="custom-file-input" id="image" name="image" onchange="document.getElementById('preview').src = window.URL.createObjectURL(this.files[0])">
-                                    <label class="custom-file-label" for="image">Choose image...</label>
+                                <div class="custom-file mt-3 ">
+                                    <input type="file" class="custom-file-input " id="image" name="image" onchange="document.getElementById('preview').src = window.URL.createObjectURL(this.files[0])">
+                                    <label class="custom-file-label border-sm" for="image">Choose image...</label>
                                 </div>
                                 <img class="img-fluid my-2" id="preview" width="100px"/> 
                                 <div class="mb-3 clearfix">
@@ -258,18 +258,20 @@
                        
                 </div>
             <div class="bg-light shadow-sm rounded my-5 p-3">
-                <div class="card my-2" style="height: 100px;">
-                    <div class="card-body">
+                <div class="card my-2 border-0" style="height: 100px;">
+                    <div class="card-body ">
                         MY DATA
                     </div>
                 </div>
             </div>
             <div class="bg-light shadow-sm rounded p-3">
-                <div class="card my-2" style="height: 150px;">
-                    <div class="card-body">
-                        DONATE TO TODAI
-                        <a href="https://www.patreon.com/bePatron?u={thepetersens}" data-patreon-widget-type="become-patron-button">Become a Patron!</a><script async src="https://cdn6.patreon.com/becomePatronButton.bundle.js"></script>
-
+                <div class="card my-2 border-0">
+                    <div class="card-body ">
+                        <h6 class="font-weight-bold">Donate to todai</h6>
+                        <small class="d-block">We are 100% funded by our users. If you <i class="fas fa-heart text-danger"></i> us, please consider making a donation to cover our operational expenses.</small>
+                        <a href="/donate" class="donate btn btn-sm btn-warning mt-2" role="button">Donate</a>
+                        <small class="d-block mt-2">Or, support us on Patreon!</small>
+                        <a href="" class="donate btn btn-sm btn-danger mt-2 alert-danger border-0" role="button">Become a Patron <i class="fas fa-external-link-alt small"></i></a>
                     </div>
                 </div>
             </div>
@@ -291,3 +293,5 @@
 <%- include('../partials/edit')%>
 <%- include("../partials/new") %>
 <%- include("../partials/toast") %>
+
+

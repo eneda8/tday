@@ -9,6 +9,7 @@ const mongoose = require("mongoose");
 const ejsMate = require("ejs-mate");
 const session = require('express-session');
 const flash = require('connect-flash');
+const stripe = require("stripe")(process.env.STRIPE_SECRET)
 const castAggregation = require('mongoose-cast-aggregation');
 const ExpressError = require("./utils/ExpressError");
 const methodOverride = require("method-override");
@@ -22,6 +23,7 @@ const postRoutes = require("./routes/posts");
 const commentRoutes = require("./routes/comments");
 const deletedPostCommentRoutes = require("./routes/deletedPostComments");
 const journalRoutes = require("./routes/journals");
+const donateRoutes = require("./routes/donate");
 
 mongoose.connect("mongodb://localhost:27017/todai", {
     useNewUrlParser: true,
@@ -100,6 +102,7 @@ app.use("/write", journalRoutes)
 app.use("/posts", postRoutes);
 app.use("/posts/:id/comments", commentRoutes);
 app.use("/comments", deletedPostCommentRoutes)
+app.use("/donate", donateRoutes);
 
 // app.use("/data", dataRoutes)
 
