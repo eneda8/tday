@@ -9,7 +9,6 @@ const mongoose = require("mongoose");
 const ejsMate = require("ejs-mate");
 const session = require('express-session');
 const flash = require('connect-flash');
-const stripe = require("stripe")(process.env.STRIPE_SECRET)
 const castAggregation = require('mongoose-cast-aggregation');
 const ExpressError = require("./utils/ExpressError");
 const methodOverride = require("method-override");

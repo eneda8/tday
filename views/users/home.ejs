@@ -125,7 +125,7 @@
                                         <a  class="copy btn btn-sm btn-link " role="button"  title="Copy link"  ><i class="fas fa-link text-warning mr-2" onclick="navigator.clipboard.writeText(window.location.href.slice(0,21)+'/posts/<%=post._id%>')"></i></a>
 
                                         <% if(user.bookmarks.includes(post._id)) { %>
-                                            <button class="btn btn-sm btn-link" title="Remove bookmark" data-toggle="modal" data-target="#bookmarkDeleteModal-<%=post._id%>"><i class="fas fa-bookmark text-danger"></i> <i class="far fa-times-circle text-secondary small"></i></button>
+                                            <button class="btn btn-sm btn-link" title="Remove bookmark" data-toggle="modal" data-target="#bookmarkDeleteModal-<%=post._id%>"><i class="fas fa-bookmark text-danger"></i></button>
 
                                             <!-- bookmark delete modal -->
                                             <div class="modal fade" id="bookmarkDeleteModal-<%=post._id%>" tabindex="-1" aria-labelledby="bookmarkDeleteModalLabel-<%=post._id%>" aria-hidden="true">
@@ -271,7 +271,7 @@
                         <small class="d-block">We are 100% funded by our users. If you <i class="fas fa-heart text-danger"></i> us, please consider making a donation to cover our operational expenses.</small>
                         <a href="/donate" class="donate btn btn-sm btn-warning mt-2" role="button">Donate</a>
                         <small class="d-block mt-2">Or, support us on Patreon!</small>
-                        <a href="" class="donate btn btn-sm btn-danger mt-2 alert-danger border-0" role="button">Become a Patron <i class="fas fa-external-link-alt small"></i></a>
+                        <a href="" class="donate btn btn-sm btn-danger mt-2 border-0" role="button">Become a Patron <i class="fas fa-external-link-alt small"></i></a>
                     </div>
                 </div>
             </div>

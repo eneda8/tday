@@ -55,7 +55,7 @@
                   <button class="copy btn btn-sm btn-link d-inline" title="Copy link"><i class="fas fa-link text-warning mr-2" onclick="navigator.clipboard.writeText(window.location.href)"></i></button>
 
                   <% if(currentUser.bookmarks.includes(post._id)) { %>
-                      <button class="btn btn-sm btn-link" title="Remove bookmark" data-toggle="modal" data-target="#bookmarkDeleteModal-<%=post._id%>"><i class="fas fa-bookmark text-danger"></i> <i class="far fa-times-circle text-secondary small"></i></button>
+                      <button class="btn btn-sm btn-link" title="Remove bookmark" data-toggle="modal" data-target="#bookmarkDeleteModal-<%=post._id%>"><i class="fas fa-bookmark text-danger"></i></i></button>
 
                     <div>
                       <div class="modal fade" id="bookmarkDeleteModal-<%=post._id%>" tabindex="-1" aria-labelledby="bookmarkDeleteModalLabel-<%=post._id%>" aria-hidden="true">

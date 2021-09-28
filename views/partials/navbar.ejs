@@ -32,8 +32,8 @@
         <button class="btn btn-link p-0"><a class="nav-link text-decoration-none" href="/register">sign up</a></button>
       <% } else { %> 
         <form class="form-inline mr-3">
-          <input class="form-control mr-sm-2" type="search" placeholder="Search todai..." style="height: 30px" aria-label="Search">
-          <button class="btn btn-sm btn-outline-dark my-2 my-sm-0" style="height: 30px" type="submit">Search</button>
+          <input class="form-control mr-sm-2 border-0" type="search" placeholder="Search todai..." style="height: 30px" aria-label="Search">
+          <button class="btn btn-sm btn-dark my-2 my-sm-0" style="height: 30px" type="submit">Search</button>
         </form>
       <li class="nav-item dropdown mr-auto">
         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="/u/<%=currentUser.username%>" role="button" aria-haspopup="true" aria-expanded="false"> <img class="p-0" src="<%=currentUser.avatar.thumbnail%>" style= "width: 30px; border-radius: 50%;"alt=""></a>
@@ -42,9 +42,6 @@
           <a class="dropdown-item p-2" href="/write"><i class="fas fa-pencil-alt text-warning"></i> write</a>
           <a class="dropdown-item p-2" href="/settings"><i class="fas fa-cog text-warning"></i> settings</a>
           <a class="dropdown-item p-2" href="/logout"><i class="fas fa-sign-out-alt text-warning"></i> logout</a>
-          <!-- <form action="/u/<%=currentUser.username%>/delete?_method=DELETE" method="POST" class="d-inline">
-            <button class="btn btn-sm btn-link text-decoration-none text-dark" type="submit" title="Delete"><i class="far fa-times-circle text-danger mr-2"></i>Delete Account</button>
-          </form> -->
         </div>
       </li>
       <% }  %>
