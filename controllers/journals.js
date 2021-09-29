@@ -6,7 +6,7 @@ const {getToday, getTimestamp} = require("../utils/getToday");
 
 module.exports.renderJournal =  async (req, res) => {
     const today = getTimestamp()
-    res.render("journals/write", {today, title: "Write / todai"});
+    res.render("journals/write", {today, title: "Write / todei"});
 }
 
 module.exports.createJournal = async (req, res, next) => {

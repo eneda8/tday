@@ -60,7 +60,7 @@ module.exports.showPost = async (req,res) => {
         req.flash("error", "Rating not found!")
         return res.redirect("/home");
     }
-    res.render("posts/show", {user, post, canEdit, title: `@${post.author.username}'s day / todai `})
+    res.render("posts/show", {user, post, canEdit, title: `@${post.author.username}'s day / todei `})
 }
 
 module.exports.bookmarkPost = async(req, res) => {
@@ -105,7 +105,7 @@ module.exports.renderEditForm = async (req,res) => {
         req.flash("error", "Rating not found!")
         return res.redirect("/home");
     }
-    res.render("posts/edit", {post, title: "Edit rating / todai"})
+    res.render("posts/edit", {post, title: "Edit rating / todei"})
 }
 
 module.exports.updatePost = async (req,res) => {

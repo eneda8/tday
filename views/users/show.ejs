@@ -30,9 +30,11 @@
                         <li class="list-inline-item">
                             <h5 class="font-weight-bold mb-0 d-block"><%=user.postStreak%></h5><small class="text-muted">Streak</small>
                         </li>
+                        <% if(currentUser && user._id.equals(currentUser._id)) { %>
                         <li class="list-inline-item">
                             <h5 class="font-weight-bold mb-0 d-block"><%=user.average%></h5><small class="text-muted">Avg. Rating</small>
                         </li>
+                        <% } %> 
                     </ul>
                 </div>
                 <div class="px-4 py-3">

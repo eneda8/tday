@@ -29,7 +29,7 @@ module.exports.register = async (req,res, next) => {
         const registeredUser = await User.register(user, password);
         req.login(registeredUser, err => {
             if(err) return next(err); 
-            req.flash("success", `Welcome to todai, ${req.user.username}!`);
+            req.flash("success", `Welcome to todei, ${req.user.username}!`);
             res.redirect(`/u/${username}`);
         })
     } catch(err) {
@@ -67,7 +67,7 @@ module.exports.renderLandingPage = (req, res) => {
         return res.redirect("/home");
     } else {
         const today = new Date().toLocaleString('en-us', {weekday:'long'});
-        res.render("landing", {today, title: "todai"});
+        res.render("landing", {today, title: "todei"});
     }
 }
 
@@ -105,7 +105,7 @@ module.exports.renderHomePage= async (req, res) =>{
         for(post of posts) {
             await post.populate("author").execPopulate();
         }
-        res.render("users/home", {posts, today, within24Hours, todaysPost, user, average, title: "Home / todai"});
+        res.render("users/home", {posts, today, within24Hours, todaysPost, user, average, title: "Home / todei"});
     } catch(e) {
         console.log(e)
         req.flash("error", `Oops, something went wrong!`)
@@ -130,7 +130,7 @@ module.exports.showUserProfile = async(req, res) => {
             path: "post", 
             populate: {path: "author"}
         }).populate({path: "post", populate: {path: "_id"}});
-    res.render("users/show", {user, comments, within24Hours, getToday, title: `@${user.username} / todai`});
+    res.render("users/show", {user, comments, within24Hours, getToday, title: `@${user.username} / todei`});
 };
 
 module.exports.updateProfile = async(req, res) => {
@@ -160,7 +160,7 @@ module.exports.showUserSettings = async(req, res) => {
         req.flash("error", "Oops, something went wrong!")
         return res.redirect("/home");
     }
-    res.render("users/settings", {user, countries, title: "Settings / todai"});
+    res.render("users/settings", {user, countries, title: "Settings / todei"});
 };
 
 module.exports.updateUserInfo = async(req, res) => {

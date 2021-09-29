@@ -5,12 +5,12 @@ const {isLoggedIn} = require("../middleware");
 
 
 const renderDonatePage = async (req, res) =>{
-    res.render("donate/show", {title: "Donate/ todai"})
+    res.render("donate/show", {title: "Donate/ todei"})
 }
 
 
 const renderThankYou = async (req, res) => {
-    res.render("donate/confirm", {title: "Thank you!/ todai"})
+    res.render("donate/confirm", {title: "Thank you!/ todei"})
 }
 
 router.get("/", isLoggedIn, catchAsync(renderDonatePage))
