@@ -4,13 +4,20 @@ const {getToday, getTimestamp, within24Hours} = require("../utils/getToday");
 const ObjectID = require('mongodb').ObjectID;
 const {cloudinary} = require("../cloudinary");
 
-// module.exports.index = async (req, res) => {
-//     const posts = await Post.find({}).sort({"createdAt": -1});
-//     for(post of posts) {
-//         await post.populate("author").execPopulate();
-//     }
-//     res.render("posts/index", {posts});
-// } 
+module.exports.index = async (req, res) => {
+    const user = await User.findById(req.user._id).populate("posts");
+    let posts = await Post.paginate({}, {
+        page: req.query.page || 1,
+        limit: 10,
+        sort: {"createdAt": -1}
+    });
+    posts.page = Number(posts.page);
+    // await posts.sort({"createdAt": -1});
+    for(post of posts.docs) {
+        await post.populate("author").execPopulate();
+    };
+    res.render("posts/index", {posts, user, title: "Index/todei"});
+}
 
 module.exports.renderNewForm = (req, res) => { 
     res.render("posts/new")

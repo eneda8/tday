@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 const User = require("./user");
 const {getToday, getTimestamp} = require("../utils/getToday");
 const {cloudinary} = require("../cloudinary");
-
+const mongoosePaginate = require("mongoose-paginate");
 
 
 const ImageSchema = new Schema({
@@ -98,5 +98,7 @@ PostSchema.pre('findByIdAndUpdate', function() {
   update.$inc = update.$inc || {};
   update.$inc.__v = 1;
 });
+
+PostSchema.plugin(mongoosePaginate);
 
 module.exports = mongoose.model("Post", PostSchema)

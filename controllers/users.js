@@ -85,14 +85,14 @@ module.exports.renderHomePage= async (req, res) =>{
               );
         
         let average;
-        // Post.aggregate([
-        //     {$match: {"date": todayAvg}},
-        //     {$group: {_id: null, avgRating: {$avg: "$rating"}}}
-        // ]).then(function(res) {
-        //     if(res){
-        //     average = res[0].avgRating.toFixed(2)
-        //     } else average = 3.0
-        // })
+        Post.aggregate([
+            {$match: {"date": todayAvg}},
+            {$group: {_id: null, avgRating: {$avg: "$rating"}}}
+        ]).then(function(res) {
+            if(res){
+            average = res[0].avgRating.toFixed(2)
+            } else average = 3.0
+        })
     try{
 
         //show today's rating, if available
@@ -102,8 +102,10 @@ module.exports.renderHomePage= async (req, res) =>{
         }  else {todaysPost = "null"}
           //show 10 random posts
         const posts = await Post.random(10);
-        for(post of posts) {
-            await post.populate("author").execPopulate();
+        if(posts.length) {
+            for(post of posts) {
+                await post.populate("author").execPopulate();
+            }
         }
         res.render("users/home", {posts, today, within24Hours, todaysPost, user, average, title: "Home / todei"});
     } catch(e) {
