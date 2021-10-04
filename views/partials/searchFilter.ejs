@@ -1,0 +1,34 @@
+<form action="/posts" method="GET">
+    <fieldset>
+        <legend>Search</legend>
+        <label for="search">Search</label>
+        <input type="text" id="search" placeholder="Search" name="search" value="<%=query.search%>">
+    </fieldset>
+    <!--  <fieldset>
+        <legend>Country</legend>
+    </fieldset> -->
+  
+    <!-- <fieldset class="rating"> 
+        <legend>Rating</legend>
+        <input type="checkbox" id="star5" name="rating[]" value=5 required <%=query.rating && query.rating.includes('5') ? 'checked' : ' '%>/><label class = "" for="star5" title="Amazing"></label>
+        <input type="checkbox" id="star4" name="rating[]" value=4 required <%=query.rating && query.rating.includes('4') ? 'checked' : ' '%>/><label class = "" for="star4" title="Very good"></label>
+        <input type="checkbox" id="star3" name="rating[]" value=3 required <%=query.rating && query.rating.includes('3') ? 'checked' : ' '%>/><label class = "" for="star3" title="Average"></label>
+        <input type="checkbox" id="star2" name="rating[]" value=2 required <%=query.rating && query.rating.includes('2') ? 'checked' : ' '%>/><label class = "" for="star2" title="Not good"></label>
+        <input type="checkbox" id="star1" name="rating[]" value=1 required <%=query.rating && query.rating.includes('1') ? 'checked' : ' '%>/><label class = "" for="star1" title="Terrible"></label>
+    </fieldset> -->
+    <fieldset>
+		<legend>Rating</legend>
+		<input type="checkbox" id="one-star" name="rating[]" value="1" <%= query.rating && query.rating.includes('1') ? 'checked' : '' %>>
+		<label for="one-star">★</label><br>
+		<input type="checkbox" id="two-stars" name="rating[]" value="2" <%= query.rating && query.rating.includes('2') ? 'checked' : '' %>>
+		<label for="two-stars">★★</label><br>
+		<input type="checkbox" id="three-stars" name="rating[]" value="3" <%= query.rating && query.rating.includes('3') ? 'checked' : '' %>>
+		<label for="three-stars">★★★</label><br>
+		<input type="checkbox" id="four-stars" name="rating[]" value="4" <%= query.rating && query.rating.includes('4') ? 'checked' : '' %>>
+		<label for="four-stars">★★★★</label><br>
+		<input type="checkbox" id="five-stars" name="rating[]" value="5" <%= query.rating && query.rating.includes('5') ? 'checked' : '' %>>
+		<label for="five-stars">★★★★★</label>
+	</fieldset>
+
+    <input type="submit">
+</form>

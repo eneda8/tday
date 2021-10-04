@@ -6,17 +6,25 @@ const {cloudinary} = require("../cloudinary");
 
 module.exports.index = async (req, res) => {
     const user = await User.findById(req.user._id).populate("posts");
-    let posts = await Post.paginate({}, {
+    const {dbQuery} = res.locals;
+    delete res.locals.dbQuery;
+    let posts = await Post.paginate(dbQuery, {
         page: req.query.page || 1,
         limit: 10,
         sort: {"createdAt": -1}
     });
     posts.page = Number(posts.page);
-    // await posts.sort({"createdAt": -1});
+    
     for(post of posts.docs) {
         await post.populate("author").execPopulate();
     };
-    res.render("posts/index", {posts, user, title: "Index/todei"});
+
+    if(!posts.docs.length && res.locals.query) {
+        res.locals.error = "No results match that query;"
+    }
+
+
+    res.render("posts/index", {posts, user, within24Hours, title: "Index/todei"});
 }
 
 module.exports.renderNewForm = (req, res) => { 

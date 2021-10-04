@@ -3,13 +3,13 @@ const router = express.Router();
 const posts = require("../controllers/posts");
 const catchAsync = require("../utils/catchAsync");
 const Post = require("../models/post");
-const {isLoggedIn, isAuthor, validatePost, setPostedToday, blockDuplicatePost, checkPostStreak} = require("../middleware");
+const {isLoggedIn, isAuthor, validatePost, setPostedToday, blockDuplicatePost, checkPostStreak, searchAndFilterPosts} = require("../middleware");
 const multer = require("multer");
 const {storage} = require("../cloudinary");
 const upload = multer({storage});
 
 router.route("/")
-    .get(isLoggedIn, setPostedToday, catchAsync(posts.index))
+    .get(isLoggedIn, setPostedToday, catchAsync(searchAndFilterPosts), catchAsync(posts.index))
     .post(isLoggedIn, upload.single("image"), validatePost, setPostedToday,  blockDuplicatePost, checkPostStreak, catchAsync(posts.createPost));
 
 router.get("/new", isLoggedIn, setPostedToday, blockDuplicatePost, checkPostStreak, catchAsync(posts.renderNewForm));

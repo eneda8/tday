@@ -1,26 +1,27 @@
 <nav class="mt-3" aria-label="page navigation">
     <ul class="pagination  justify-content-center">
-        <li class="page-item" id="first-button">
+        <!-- <li class="page-item" id="first-button">
             <a href="/posts?page=1" class="page-link" aria-label="First" >First</a>
-        </li>
+        </li> -->
         <% if(posts.page - 1){ %> 
             <li class="page-item">
-                <a href="/posts?page=<%=posts.page-1%>" class="page-link" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+                <a href="<%=paginateUrl%><%=posts.page-1%>" class="page-link" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
             </li>
         <% } %> 
+        <% if(posts.pages > 1 && posts.docs.length) {%> 
         <% for(let i =posts.page; i<= posts.page + 10; i++) {%>
             <li class="page-item">
-                <a href="/posts?page=<%= i %>" <%= i === posts.page ? 'style=color:#000' : '' %> class="page-link"><%= i %></a>
+                <a href="<%=paginateUrl%><%= i %>" <%= i === posts.page ? 'style=color:#000' : '' %> class="page-link"><%= i %></a>
             </li>
-        <% } %> 
+        <% }} %> 
         <% if((posts.page +1) <= posts.pages){ %> 
             <li class="page-item">
-                <a href="/posts?page=<%=posts.page+1%>" class="page-link" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+                <a href="<%=paginateUrl%><%=posts.page+1%>" class="page-link" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
             </li>
         <% } %> 
-        <li class="page-item" id="last-button">
+        <!-- <li class="page-item" id="last-button">
             <a href="/posts?page=<%=posts.pages%>" class="page-link" aria-label="Last">Last</a>
-        </li>
+        </li> -->
     </ul>
 </nav>
 

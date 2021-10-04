@@ -6,6 +6,10 @@ const User = require("./models/user");
 const Journal = require("./models/journal");
 const {getToday} = require("./utils/getToday");
 
+function escapeRegExp(str) {
+    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); 
+}
+
 module.exports.validatePost = (req, res, next) => {  
     const {error} = postSchema.validate(req.body);
     if(error) {
@@ -122,4 +126,40 @@ module.exports.isAccountOwner = async(req, res, next) => {
         return res.redirect("/home")
     }
     next();
+}
+
+module.exports.searchAndFilterPosts = async(req, res, next) => {
+    const queryKeys = Object.keys(req.query); //extract keys from query string object and store in an array as string values
+    if(queryKeys.length) {
+        const dbQueries = [];
+        let {search, rating} = req.query;
+        if(search) {
+            search = new RegExp(escapeRegExp(search), "gi");
+            dbQueries.push( {$or: [ //match any of these 
+                {body: search},
+            //     {
+            //         $lookup: 
+            //         {
+            //         from: "comment",
+            //         localField: "comments",
+            //         foreignField: "_id",
+            //         as: "comment"
+            //     },
+            //     $match: {
+            //         "body" : search
+            //     }
+            // }
+            ]});
+        }
+        if(rating) {
+            dbQueries.push({rating: {$in: rating}});
+        }
+        res.locals.dbQuery = dbQueries.length ? {$and: dbQueries} : {};
+    }
+    res.locals.query = req.query;
+    queryKeys.splice(queryKeys.indexOf('page'), 1);
+    const delimiter = queryKeys.length ? "&" : "?";
+    res.locals.paginateUrl = req.originalUrl.replace(/(\?|\&)page=\d+/g, '') + `${delimiter}page=`;
+
+	next();
 }
