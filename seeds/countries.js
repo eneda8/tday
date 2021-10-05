@@ -1,5 +1,5 @@
 module.exports = {
-    "Unites States of America": "/images/flags/US.png",
+    "United States of America": "/images/flags/US.png",
     "Andorra": "/images/flags/AD.png",
     "United Arab Emirates": "/images/flags/AE.png",
     "Afghanistan": "/images/flags/AF.png",

@@ -129,37 +129,41 @@ module.exports.isAccountOwner = async(req, res, next) => {
 }
 
 module.exports.searchAndFilterPosts = async(req, res, next) => {
-    const queryKeys = Object.keys(req.query); //extract keys from query string object and store in an array as string values
+    const queryKeys = Object.keys(req.query); 
+
     if(queryKeys.length) {
         const dbQueries = [];
-        let {search, rating} = req.query;
-        if(search) {
-            search = new RegExp(escapeRegExp(search), "gi");
-            dbQueries.push( {$or: [ //match any of these 
-                {body: search},
-            //     {
-            //         $lookup: 
-            //         {
-            //         from: "comment",
-            //         localField: "comments",
-            //         foreignField: "_id",
-            //         as: "comment"
-            //     },
-            //     $match: {
-            //         "body" : search
-            //     }
-            // }
-            ]});
+        let {textSearch, dateSearch, usernameSearch, rating, country} = req.query;
+        if(textSearch) {
+            textSearch = new RegExp(escapeRegExp(textSearch), "gi");
+            dbQueries.push({ $or: [
+				{ body: textSearch },
+				{ authorUsername: textSearch },
+			]});
+        }
+        if(usernameSearch) {
+            usernameSearch = new RegExp(escapeRegExp(usernameSearch), "gi").lastMatch;
+            console.log(usernameSearch)
+            dbQueries.push({authorUsername: usernameSearch});
+        }
+        if(dateSearch) {
+            dateSearch = new RegExp(escapeRegExp(dateSearch), "gi");
+            dbQueries.push({date: dateSearch});
         }
         if(rating) {
             dbQueries.push({rating: {$in: rating}});
         }
+        if(country){
+            dbQueries.push({authorCountry: country})
+        }
         res.locals.dbQuery = dbQueries.length ? {$and: dbQueries} : {};
+        console.log("dbQueries", dbQueries)
     }
     res.locals.query = req.query;
-    queryKeys.splice(queryKeys.indexOf('page'), 1);
-    const delimiter = queryKeys.length ? "&" : "?";
-    res.locals.paginateUrl = req.originalUrl.replace(/(\?|\&)page=\d+/g, '') + `${delimiter}page=`;
 
+    const delimiter = queryKeys.length ? '&' : '?';
+	queryKeys.splice(queryKeys.indexOf('page'), 1);
+
+	res.locals.paginateUrl = req.originalUrl.replace(/(\?|\&)page=\d+/g, '') + `${delimiter}page=`;
 	next();
 }

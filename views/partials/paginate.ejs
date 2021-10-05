@@ -1,8 +1,11 @@
 <nav class="mt-3" aria-label="page navigation">
     <ul class="pagination  justify-content-center">
-        <!-- <li class="page-item" id="first-button">
+
+        <% if(posts.pages > 1){ %> 
+        <li class="page-item" id="first-button">
             <a href="/posts?page=1" class="page-link" aria-label="First" >First</a>
-        </li> -->
+        </li>
+         <% } %> 
         <% if(posts.page - 1){ %> 
             <li class="page-item">
                 <a href="<%=paginateUrl%><%=posts.page-1%>" class="page-link" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
@@ -19,9 +22,11 @@
                 <a href="<%=paginateUrl%><%=posts.page+1%>" class="page-link" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
             </li>
         <% } %> 
-        <!-- <li class="page-item" id="last-button">
+        <% if(posts.pages > 1) {%> 
+        <li class="page-item" id="last-button">
             <a href="/posts?page=<%=posts.pages%>" class="page-link" aria-label="Last">Last</a>
-        </li> -->
+        </li>
+    <% } %> 
     </ul>
 </nav>
 

@@ -3,28 +3,28 @@ const User = require("../models/user");
 const {getToday, getTimestamp, within24Hours} = require("../utils/getToday");
 const ObjectID = require('mongodb').ObjectID;
 const {cloudinary} = require("../cloudinary");
+const countries = require("../countries");
 
 module.exports.index = async (req, res) => {
     const user = await User.findById(req.user._id).populate("posts");
     const {dbQuery} = res.locals;
+    let posts, docsFound;
     delete res.locals.dbQuery;
-    let posts = await Post.paginate(dbQuery, {
-        page: req.query.page || 1,
-        limit: 10,
-        sort: {"createdAt": -1}
-    });
-    posts.page = Number(posts.page);
-    
-    for(post of posts.docs) {
-        await post.populate("author").execPopulate();
-    };
+    if(dbQuery) {
+        posts = await Post.paginate(dbQuery, {
+            page: req.query.page || 1,
+            limit: 10,
+            sort: {"createdAt": -1}
+        })
+        posts.page = Number(posts.page);
+        docsFound = posts.pages > 1 ? posts.pages*10 : posts.docs.length;
 
-    if(!posts.docs.length && res.locals.query) {
-        res.locals.error = "No results match that query;"
+        if(!posts.docs.length && res.locals.query) {
+            res.locals.error = "No results match that query";
+        }
     }
 
-
-    res.render("posts/index", {posts, user, within24Hours, title: "Index/todei"});
+    res.render("posts/index", {posts, user, within24Hours, countries, docsFound, title: "Search / todei"});
 }
 
 module.exports.renderNewForm = (req, res) => { 
@@ -32,12 +32,14 @@ module.exports.renderNewForm = (req, res) => {
 }
 
 module.exports.createPost = async (req, res, next) => {
+    const user = await User.findById(req.user._id);
     const post = new Post(req.body.post);
     post.date = getToday();
     post.timestamp = getTimestamp();
     post.image = req.file;
     post.author = req.user._id;
-    const user = await User.findById(req.user._id);
+    post.authorCountry = user.country.name;
+    post.authorUsername = user.username;
     user.posts.unshift(post);
     user.postedToday = true;
     user.postStreak ++; 

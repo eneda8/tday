@@ -87,6 +87,8 @@ const seedDB = async () => {
                 post.image.path = faker.image.image();
             }     
             post.author = user;
+            post.authorCountry = user.country.name;
+            post.authorUsername = user.username;
             await post.save();
             user.postedToday = true;
             user.posts.unshift(post);

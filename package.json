@@ -11,6 +11,7 @@
     "joi": "^17.4.0",
     "method-override": "^3.0.0",
     "mongoose": "^5.12.2",
+    "mongoose-autopopulate": "^0.16.0",
     "mongoose-cast-aggregation": "^0.1.2",
     "mongoose-field-encryption": "4.0.2",
     "mongoose-paginate": "^5.0.3",

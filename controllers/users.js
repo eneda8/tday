@@ -61,7 +61,7 @@ module.exports.logout = (req,res) => {
     res.redirect("/");
 }
 
-//------------------------- LANDING & HOME -------------------------
+//------------------------- LANDING -------------------------
 module.exports.renderLandingPage = (req, res) => {
     if(req.user){
         return res.redirect("/home");
@@ -70,6 +70,8 @@ module.exports.renderLandingPage = (req, res) => {
         res.render("landing", {today, title: "todei"});
     }
 }
+
+//------------------------- HOME -------------------------
 
 module.exports.renderHomePage= async (req, res) =>{
     const user = await User.findById(req.user._id).populate("posts");
@@ -127,11 +129,7 @@ module.exports.showUserProfile = async(req, res) => {
         req.flash("error", "User not found!")
         return res.redirect("/home");
     }
-    const comments = await Comment.find({"author": user}).sort({"createdAt": -1}).populate("author")
-        .populate({
-            path: "post", 
-            populate: {path: "author"}
-        }).populate({path: "post", populate: {path: "_id"}});
+    const comments = await Comment.find({"author": user}).sort({"createdAt": -1}).populate("post")
     res.render("users/show", {user, comments, within24Hours, getToday, title: `@${user.username} / todei`});
 };
 

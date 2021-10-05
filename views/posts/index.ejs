@@ -1,12 +1,17 @@
 <% layout("layouts/boilerplate")%>
-<div><%- include("../partials/searchFilter") %></div>
+<div>
+    <%- include("../partials/searchFilter") %>
+</div>
 
 <div class="container-fluid mb-3">
     <div class="row py-3 px-4">
-    <div class="col-md-8 col-lg-5 mx-auto bg-light">
-       <%- include("../partials/paginate")%>
-        <h5 class="text-left font-weight-bold mt-3">All Ratings</h5>
-        <% if(posts.docs){ %>
+    <div class="col-md-8 col-lg-5 mx-auto bg-light overflow-auto">
+        
+      
+        <% if( posts && posts.docs){ %>
+        <h5 class="text-left font-weight-bold mt-3 mb-0">Search Results</h5>
+        <span class="small text-muted mt-0"><%=docsFound %> posts found</span>
+            <%- include("../partials/paginate")%>
             <%for (post of posts.docs) { %> 
                 <div class="card mb-3 mt-1 pt-2 pl-2 pr-2 border-0">
                     <div class="media pr-3">
@@ -27,7 +32,7 @@
                                     </div>
                                     <% } %>
                             </div>
-                            <p class="mb-0"><span class="star star<%=post.rating%>-result"></span></p>
+                            <span class="badge badge-light mb-2" style="font-size: 13px"><%=post.date%>: <span class="star star<%=post.rating%>-result"></span></span>  
                             <div class="text-wrap">
                                 <p class="mb-0"><%=post.body%></p>
                             </div>
@@ -108,10 +113,14 @@
                         </div>
                     </div>
                 </div>
+                <hr>
                 <% } %> 
+                <%- include("../partials/paginate")%>
         <% } else { %>
-            <h1 class="text-center">No posts yet!</h1>
+            <p class="text-center">No posts yet!</p>
         <% } %>
         </div>
     </div>
 </div>
+
+<%- include("../partials/new")%>

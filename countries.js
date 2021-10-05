@@ -1,6 +1,6 @@
 const countries = [
     {
-        name: "Unites States of America",
+        name: "United States of America",
         flag: "/images/flags/US.png"
     },
     {

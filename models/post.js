@@ -40,12 +40,16 @@ const PostSchema = new Schema({
     image: ImageSchema,
     author: {
       type: Schema.Types.ObjectId,
-      ref: "User"
+      ref: "User",
+      autopopulate: true
       },
+    authorCountry: String,
+    authorUsername: String,
     comments: [
       {
       type: Schema.Types.ObjectId,
       ref: "Comment",
+      autopopulate: true
       }
     ],
     likes: {
@@ -58,6 +62,8 @@ const PostSchema = new Schema({
   setDefaultsOnInsert: true,
   } 
 ) 
+
+PostSchema.plugin(require("mongoose-autopopulate"));
 
 PostSchema.statics.random = async function(num) {
   let randomDocs = [];

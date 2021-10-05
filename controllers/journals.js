@@ -1,7 +1,7 @@
 const Post = require("../models/post");
 const User = require("../models/user");
 const Journal = require("../models/journal");
-const ObjectID = require('mongodb').ObjectID;
+const ObjectId = require('mongodb').ObjectId;
 const {getToday, getTimestamp} = require("../utils/getToday");
 
 module.exports.renderJournal =  async (req, res) => {
@@ -23,7 +23,7 @@ module.exports.createJournal = async (req, res, next) => {
 module.exports.showJournal = async(req, res, next) => {
     const user = await User.findById(req.user._id);
     const {journalId} = req.params;
-    if (!ObjectID.isValid(journalId)) {
+    if (!ObjectId.isValid(journalId)) {
         req.flash("error", "Journal not found!")
         return res.redirect(`/u/${user.username}#nav-journals`);
     } else {
