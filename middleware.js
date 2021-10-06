@@ -145,7 +145,17 @@ module.exports.searchAndFilterPosts = async(req, res, next) => {
             dbQueries.push({authorUsername: usernameSearch});
         }
         if(dateSearch) {
-            dateSearch = new RegExp(escapeRegExp(dateSearch), "gi");
+            dateSearch = new Date(dateSearch).toLocaleDateString(
+                'en-US',
+                {
+                timeZone: "UTC",
+                  year: 'numeric',
+                  month: 'short',
+                  day: 'numeric',
+                }
+              );
+        dateSearch = new RegExp(escapeRegExp(dateSearch), "gi");
+        console.log(dateSearch)
             dbQueries.push({date: dateSearch});
         }
         if(rating) {

@@ -87,14 +87,20 @@ module.exports.renderHomePage= async (req, res) =>{
               );
         
         let average;
-        Post.aggregate([
-            {$match: {"date": todayAvg}},
-            {$group: {_id: null, avgRating: {$avg: "$rating"}}}
-        ]).then(function(res) {
-            if(res){
-            average = res[0].avgRating.toFixed(2)
-            } else average = 3.0
-        })
+        try{
+            Post.aggregate([
+                {$match: {"date": todayAvg}},
+                {$group: {_id: null, avgRating: {$avg: "$rating"}}}
+            ]).then(function(res) {
+                if(res[0]){
+                average = res[0].avgRating.toFixed(2)
+                } else average = 3.0
+            })
+        } catch(e){
+            console.log("no posts today!")
+            res.locals.error = "No posts yet!"
+        }
+
     try{
 
         //show today's rating, if available

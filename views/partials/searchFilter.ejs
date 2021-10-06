@@ -9,14 +9,12 @@
 
     <fieldset>
         <label for="search">Username</label>
-        <input type="text" id="usernameSearch" placeholder="Search" name="usernameSearch" value="<%=query.usernameSearch%>">
-        <small class="text-muted">Hint: exclude @</small>
+        <input type="text" id="usernameSearch" placeholder="Username (exclude @)" name="usernameSearch" value="<%=query.usernameSearch%>">
     </fieldset>
 
     <fieldset>
         <label for="search">Date</label>
-        <input type="text" id="dateSearch" placeholder="Search" name="dateSearch" value="<%=query.dateSearch%>">
-        <small class="text-muted">Hint: use "Mon D, YYYY" format. (For example: "Oct 3, 2021") </small>
+        <input type="date" id="dateSearch" placeholder="Date" name="dateSearch" value="<%=query.dateSearch%>">
     </fieldset>
 
     <fieldset>

@@ -31,8 +31,9 @@
         <button class="btn btn-link p-0"><a class="nav-link text-decoration-none" href="/login">login</a></button>
         <button class="btn btn-link p-0"><a class="nav-link text-decoration-none" href="/register">sign up</a></button>
       <% } else { %> 
-        <form action="/posts/search" method="GET" class="form-inline mr-3">
-          <input class="form-control mr-sm-2 border-0" type="search" placeholder="Search todei..." style="height: 30px" aria-label="Search"  id="search" name="textSearch">
+        <form action="/posts/search" method="GET" class="form-inline mr-3 validated-form">
+          <input class="form-control mr-sm-2 border-0" type="search" placeholder="Search todei..." style="height: 30px" aria-label="Search"  id="search" name="textSearch" required>
+          <div class="invalid-feedback">Please fill out this field.</div>
           <button class="btn btn-sm btn-dark my-2 my-sm-0" style="height: 30px" type="submit">Search</button>
         </form>
       <li class="nav-item dropdown mr-auto">

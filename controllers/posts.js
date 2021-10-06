@@ -14,11 +14,19 @@ module.exports.search = async (req, res) => {
         posts = await Post.paginate(dbQuery, {
             page: req.query.page || 1,
             limit: 10,
-            sort: {"createdAt": -1}
+            sort: {"createdAt": -1},
+            populate: "author"
         })
         posts.page = Number(posts.page);
         docsFound = posts.pages > 1 ? posts.pages*10 : posts.docs.length;
-
+        for(post of posts.docs) {
+            const doesUserExist = await User.exists({_id: post.author})
+            if(!doesUserExist) {
+                console.log("problem with this post:", post._id)
+                await post.remove()
+                res.redirect("/posts/search")
+            }
+        }
         if(!posts.docs.length && res.locals.query) {
             res.locals.error = "No results match that query. Please try a broader search.";
         }
