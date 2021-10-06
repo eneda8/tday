@@ -5,7 +5,7 @@ const ObjectID = require('mongodb').ObjectID;
 const {cloudinary} = require("../cloudinary");
 const countries = require("../countries");
 
-module.exports.index = async (req, res) => {
+module.exports.search = async (req, res) => {
     const user = await User.findById(req.user._id).populate("posts");
     const {dbQuery} = res.locals;
     let posts, docsFound;
@@ -20,11 +20,11 @@ module.exports.index = async (req, res) => {
         docsFound = posts.pages > 1 ? posts.pages*10 : posts.docs.length;
 
         if(!posts.docs.length && res.locals.query) {
-            res.locals.error = "No results match that query";
+            res.locals.error = "No results match that query. Please try a broader search.";
         }
     }
 
-    res.render("posts/index", {posts, user, within24Hours, countries, docsFound, title: "Search / todei"});
+    res.render("posts/search", {posts, user, within24Hours, countries, docsFound, title: "Search / todei"});
 }
 
 module.exports.renderNewForm = (req, res) => { 

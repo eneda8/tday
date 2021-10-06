@@ -9,8 +9,11 @@ const {storage} = require("../cloudinary");
 const upload = multer({storage});
 
 router.route("/")
-    .get(isLoggedIn, setPostedToday, catchAsync(searchAndFilterPosts), catchAsync(posts.index))
+    // .get(isLoggedIn, setPostedToday, catchAsync(searchAndFilterPosts), catchAsync(posts.index))
     .post(isLoggedIn, upload.single("image"), validatePost, setPostedToday,  blockDuplicatePost, checkPostStreak, catchAsync(posts.createPost));
+
+router.route("/search")
+    .get(isLoggedIn, setPostedToday, catchAsync(searchAndFilterPosts), catchAsync(posts.search))
 
 router.get("/new", isLoggedIn, setPostedToday, blockDuplicatePost, checkPostStreak, catchAsync(posts.renderNewForm));
 

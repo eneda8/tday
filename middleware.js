@@ -130,7 +130,6 @@ module.exports.isAccountOwner = async(req, res, next) => {
 
 module.exports.searchAndFilterPosts = async(req, res, next) => {
     const queryKeys = Object.keys(req.query); 
-
     if(queryKeys.length) {
         const dbQueries = [];
         let {textSearch, dateSearch, usernameSearch, rating, country} = req.query;
@@ -142,8 +141,7 @@ module.exports.searchAndFilterPosts = async(req, res, next) => {
 			]});
         }
         if(usernameSearch) {
-            usernameSearch = new RegExp(escapeRegExp(usernameSearch), "gi").lastMatch;
-            console.log(usernameSearch)
+            usernameSearch = new RegExp(escapeRegExp(usernameSearch), "gi");
             dbQueries.push({authorUsername: usernameSearch});
         }
         if(dateSearch) {

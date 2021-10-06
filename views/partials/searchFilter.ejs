@@ -1,19 +1,21 @@
-<form action="/posts" method="GET">
+
+
+<form action="/posts/search" method="GET">
     <h4 class="mt-4">Search</h4>
     <fieldset>
         <label for="search">Text search</label>
-        <input type="text" id="search" placeholder="Search" name="textSearch" value="<%=query.textSearch%>">
+        <input type="text" id="textSearch" placeholder="Search" name="textSearch" value="<%=query.textSearch%>">
     </fieldset>
 
     <fieldset>
         <label for="search">Username</label>
-        <input type="text" id="search" placeholder="Search" name="usernameSearch" value="<%=query.usernameSearch%>">
+        <input type="text" id="usernameSearch" placeholder="Search" name="usernameSearch" value="<%=query.usernameSearch%>">
         <small class="text-muted">Hint: exclude @</small>
     </fieldset>
 
     <fieldset>
         <label for="search">Date</label>
-        <input type="text" id="search" placeholder="Search" name="dateSearch" value="<%=query.dateSearch%>">
+        <input type="text" id="dateSearch" placeholder="Search" name="dateSearch" value="<%=query.dateSearch%>">
         <small class="text-muted">Hint: use "Mon D, YYYY" format. (For example: "Oct 3, 2021") </small>
     </fieldset>
 
@@ -25,7 +27,7 @@
                 <option value="<%=country["name"]%>" ><%=country["name"]%></option>
             <%}%>        
         </select>
-    </fieldset> -
+    </fieldset> 
 
     <div class="form-check form-check-inline">
 		<legend>Rating</legend>
@@ -40,5 +42,7 @@
 		<input type="checkbox" id="five-stars" name="rating[]" value="5" <%= query.rating && query.rating.includes('5') ? 'checked' : '' %> class="form-check-input">
 		<label for="five-stars" class="star form-check-label">★★★★★</label>
 	</div>
-    <button class="btn btn-sm btn-warning" type="submit">Submit</button>
+    <button class="btn btn-sm btn-warning" type="submit" >Submit</button>
 </form>
+
+

@@ -1,16 +1,18 @@
 <% layout("layouts/boilerplate")%>
+
 <div>
     <%- include("../partials/searchFilter") %>
 </div>
 
 <div class="container-fluid mb-3">
     <div class="row py-3 px-4">
-    <div class="col-md-8 col-lg-5 mx-auto bg-light overflow-auto">
-        
-      
+    <div class="col-md-8 col-lg-5 mx-auto bg-light overflow-auto" id="searchResults">
         <% if( posts && posts.docs){ %>
-        <h5 class="text-left font-weight-bold mt-3 mb-0">Search Results</h5>
-        <span class="small text-muted mt-0"><%=docsFound %> posts found</span>
+            <div class="d-flex justify-content-between">
+                <h5 class="text-left font-weight-bold mt-3 mb-0">Search Results</h5>
+                <a href="#" class="small pt-3" onclick="myHilitor.remove(); this.classList.add('d-none')">Clear highlighting</a>
+            </div>
+        <span class="small text-muted mt-0"><%=docsFound %> posts found </span> 
             <%- include("../partials/paginate")%>
             <%for (post of posts.docs) { %> 
                 <div class="card mb-3 mt-1 pt-2 pl-2 pr-2 border-0">
@@ -34,7 +36,7 @@
                             </div>
                             <span class="badge badge-light mb-2" style="font-size: 13px"><%=post.date%>: <span class="star star<%=post.rating%>-result"></span></span>  
                             <div class="text-wrap">
-                                <p class="mb-0"><%=post.body%></p>
+                                <p class="mb-0 postBody"><%=post.body%></p>
                             </div>
                             <% if(post.image) { %> 
                                 <a href="" data-toggle="modal" id ="imagePreviewLink-<%=post._id%>" data-target="#imagePreviewModal-<%=post._id%>">
