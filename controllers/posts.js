@@ -24,14 +24,13 @@ module.exports.search = async (req, res) => {
             if(!doesUserExist) {
                 console.log("problem with this post:", post._id)
                 await post.remove()
-                res.redirect("/posts/search")
+                res.redirect("/")
             }
         }
         if(!posts.docs.length && res.locals.query) {
             res.locals.error = "No results match that query. Please try a broader search.";
         }
     }
-
     res.render("posts/search", {posts, user, within24Hours, countries, docsFound, title: "Search / todei"});
 }
 

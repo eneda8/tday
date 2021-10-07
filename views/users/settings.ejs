@@ -5,10 +5,10 @@
         <div class="card shadow rounded px-3 pt-3 ">
             <a href="/home"><h6><i class="fas fa-arrow-left"></i> Back to Home</h6></a>
             <h4 class="px-2 pt-2 mb-0 pb-0">Settings</h4>
-            <p class="px-2 mb-2 text-muted">User: <%=user.displayName%> |  Account created: <%=user.createdAt%></p>
+            <p class="px-2 mb-2 text-muted">User: <%=user.displayName%> | @<%=user.username%> |  <br>Account created: <%=user.createdAt%></p>
             <div class="row pl-2 pr-4 pt-2  pb-5">
-                <div class="col-4 pr-0 pt-2border-right">
-                  <div class="list-group" id="list-tab" role="tablist">
+                <div class="col-4 pr-0 border-right">
+                  <div class="list-group border-top" id="list-tab" role="tablist">
                     <a class="list-group-item list-group-item-action active" id="list-account-list" data-toggle="tab" href="#account-info" role="tab" aria-controls="account"  data-tab-history="true" data-tab-history-changer="push" data-tab-history-update-url="true">
                         <h5><i class="fas fa-user-circle mr-1"></i>  Account Information</h5>
                         <small>Change your account information like username and email address.</small>
@@ -46,7 +46,7 @@
                                         <div class="valid-feedback">Looks good!</div>
                                         <div class="invalid-feedback">Please enter a username.</div>
                                         <small id="" class="text-muted">
-                                            <i class="fas fa-exclamation text-danger"></i> Changing your username will end this session and require you to log back in with your new username.
+                                            <i class="fas fa-exclamation text-danger small"></i> Changing your username will end this session and require you to log back in with your new username.
                                         </small>
                                     </div>
                                 </div>

@@ -87,22 +87,15 @@ module.exports.renderHomePage= async (req, res) =>{
               );
         
         let average;
-        try{
-            Post.aggregate([
-                {$match: {"date": todayAvg}},
-                {$group: {_id: null, avgRating: {$avg: "$rating"}}}
-            ]).then(function(res) {
-                if(res[0]){
-                average = res[0].avgRating.toFixed(2)
-                } else average = 3.0
-            })
-        } catch(e){
-            console.log("no posts today!")
-            res.locals.error = "No posts yet!"
-        }
-
+        Post.aggregate([
+            {$match: {"date": todayAvg}},
+            {$group: {_id: null, avgRating: {$avg: "$rating"}}}
+        ]).then(function(res) {
+            if(res[0]){
+            average = res[0].avgRating.toFixed(2)
+            } else average = 0
+        })
     try{
-
         //show today's rating, if available
         let todaysPost;
         if(user.postedToday == true && user.todaysPost.length) {
@@ -110,9 +103,9 @@ module.exports.renderHomePage= async (req, res) =>{
         }  else {todaysPost = "null"}
           //show 10 random posts
         const posts = await Post.random(10);
-        if(posts.length) {
-            for(post of posts) {
-                await post.populate("author").execPopulate();
+        for(post of posts) {
+            if(!post === null){
+            post.populate("author").execPopulate();
             }
         }
         res.render("users/home", {posts, today, within24Hours, todaysPost, user, average, title: "Home / todei"});
@@ -177,9 +170,7 @@ module.exports.updateUserInfo = async(req, res) => {
             return res.redirect("back");
         }
         const {username, email, country, birthyear, gender} = req.body;
-        console.log(req.body);
         const newFlag = countries.filter(obj => Object.values(obj).includes(country.name))[0]["flag"];
-        console.log(newFlag);
         await user.update({...req.body});
         user.country.flag = newFlag;
         await user.save();
@@ -195,7 +186,6 @@ module.exports.updateUserInfo = async(req, res) => {
 
 module.exports.changePassword = async(req, res) => {
     const {oldPassword, newPassword} = req.body;
-    console.log(req.body);
     const user = await User.findById(req.user._id);
     try{
         await user.changePassword(oldPassword, newPassword);

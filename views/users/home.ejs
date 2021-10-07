@@ -66,13 +66,13 @@
         <div class="col-5  bg-light shadow-sm rounded mx-5">
             <h5 class="text-left font-weight-bold mt-3"><%=today%></h5>
             <div>
+            </div>
+            <% if(!posts.includes(null)){ %>
                 <h6 class="text-left">10 random ratings from today<a href="/home" class="btn btn-small d-inline" title="refresh for 10 more"><i class="fas fa-sync-alt text-right text-primary"></i></a>
                 </h6>
-                <!-- <% if(user && (user.postedToday === false)) {  %> 
-                <a href="" data-toggle="modal" id="newPostLink" data-target="#newPostModal">Add Rating</a>
-                <% } %>  -->
-            </div>
-            <% if(posts){ %>
+                <%- include('../partials/edit')%>
+
+
                 <%for (post of posts) { %> 
                     <div class="card mb-3 mt-1 pt-2 pl-2 pr-2 border-0">
                         <div class="media pr-3">
@@ -162,12 +162,12 @@
                             <a class="mr-1" href="/u/<%=user.username%>">
                             <img src="<%=user.avatar.thumbnail%>" alt="" class="border" style="width:40px; border-radius: 50%">
                             </a>
-                            <div class="media-body">
+                            <div class="media-body mb-1">
                                 <form action="/posts/<%=post._id %>/comments" class="validated-form mr-2" method="POST" novalidate>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" name="comment[body]" id="body" cols="15" rows="1" placeholder="Write a comment..." required>
+                                        <input type="text" class="form-control bg-light border-0" name="comment[body]" id="body" cols="15" rows="1" placeholder="Write a comment..." required>
                                         <div class="input-group-append" id="">
-                                        <button class="btn btn-outline-warning" type="submit">Post</button>
+                                            <button class="btn btn-warning" type="submit">Post</button>
                                         </div>
                                     </div>
                                 </form>
@@ -175,10 +175,18 @@
                         </div>
                     </div>
                     <% } %> 
+                    <a href="/home" class="btn btn-small d-inline float-right" title="refresh for 10 more"><i class="fas fa-sync-alt text-right text-primary"></i></a>
             <% } else { %>
-                <h1 class="text-center">No posts yet!</h1>
+                <div class="card border-0">
+                    <h5 class="text-center m-5">No posts yet today :( </h5>
+                    <a class=" text-center mb-5" href="" data-toggle="modal" id="newPostLink" data-target="#newPostModal">Be the first to submit a rating!</a>
+                </div>
+
+                <!-- <div class="card mb-3 mt-1 pt-2 pl-2 pr-2 border-0" style="height:450px;"></div>
+                <div class="card mb-3 mt-1 pt-2 pl-2 pr-2 border-0" style="height:450px;"></div>
+                <div class="card mb-3 mt-1 pt-2 pl-2 pr-2 border-0" style="height:450px;"></div> -->
             <% } %>
-            <a href="/home" class="btn btn-small d-inline float-right" title="refresh for 10 more"><i class="fas fa-sync-alt text-right text-primary"></i></a>
+
             
         </div>
         <div class="col">
@@ -290,8 +298,6 @@
     </div> 
 </div>
 
-<%- include('../partials/edit')%>
 <%- include("../partials/new") %>
 <%- include("../partials/toast") %>
-
 

@@ -154,8 +154,7 @@ module.exports.searchAndFilterPosts = async(req, res, next) => {
                   day: 'numeric',
                 }
               );
-        dateSearch = new RegExp(escapeRegExp(dateSearch), "gi");
-        console.log(dateSearch)
+            dateSearch = new RegExp(escapeRegExp(dateSearch), "gi");
             dbQueries.push({date: dateSearch});
         }
         if(rating) {
@@ -165,7 +164,6 @@ module.exports.searchAndFilterPosts = async(req, res, next) => {
             dbQueries.push({authorCountry: country})
         }
         res.locals.dbQuery = dbQueries.length ? {$and: dbQueries} : {};
-        console.log("dbQueries", dbQueries)
     }
     res.locals.query = req.query;
 

@@ -1,46 +1,53 @@
-
-
-<form action="/posts/search" method="GET">
-    <h4 class="mt-4">Search</h4>
-    <fieldset>
-        <label for="search">Text search</label>
-        <input type="text" id="textSearch" placeholder="Search" name="textSearch" value="<%=query.textSearch%>">
-    </fieldset>
-
-    <fieldset>
-        <label for="search">Username</label>
-        <input type="text" id="usernameSearch" placeholder="Username (exclude @)" name="usernameSearch" value="<%=query.usernameSearch%>">
-    </fieldset>
-
-    <fieldset>
-        <label for="search">Date</label>
-        <input type="date" id="dateSearch" placeholder="Date" name="dateSearch" value="<%=query.dateSearch%>">
-    </fieldset>
-
-    <fieldset>
-        <label class="form-label mb-0" for="country">Country</label>
-        <select class="custom-select" id="countryName" name="country" >
-            <option value="">─Please select an option─</option> 
+<form action="/posts/search" method="GET" id="searchFilterForm" class="pb-4">
+    <div class="input-group mb-3">
+        <div class="input-group-prepend border-right">
+          <span class="input-group-text" id="search-addon"><i class="fas fa-search text-dark"></i></span>
+        </div>
+        <input type="text" class="form-control border-0" placeholder="Search" aria-label="Search" aria-describedby="basic-addon1" id="textSearch" name="textSearch" value="<%=query.textSearch%>" required >
+      </div>
+      <h5 class="">Filter</h5>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend border-right">
+          <span class="input-group-text " id="username-addon"><i class="fas fa-at text-dark"></i></span>
+        </div>
+        <input type="text" class="form-control border-0" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" id="usernameSearch" name="usernameSearch" value="<%=query.usernameSearch%>">
+    </div>
+    <div class="input-group mb-3 text-muted">
+        <div class="input-group-prepend border-right">
+            <label class="input-group-text text-muted" for="dateSearch"><i class="far fa-calendar-alt text-dark"></i></label>
+        </div>
+        <input type="date" class="form-control border-0" id="dateSearch" placeholder="Date" name="dateSearch" value="<%=query.dateSearch%>">
+     </div>
+    <div class="input-group mb-3 border-0">
+        <div class="input-group-prepend border-right">
+          <label class="input-group-text" for="countryName"><i class="fas fa-globe text-dark"></i></label>
+        </div>
+        <select class="custom-select border-0 text-muted" id="countryName" name="country" >
+            <option value="" class="text-muted">Country</option> 
             <%  for (let country of countries) {%>
                 <option value="<%=country["name"]%>" ><%=country["name"]%></option>
             <%}%>        
         </select>
-    </fieldset> 
-
-    <div class="form-check form-check-inline">
-		<legend>Rating</legend>
-		<input type="checkbox" id="one-star" name="rating[]" value="1" <%= query.rating && query.rating.includes('1') ? 'checked' : '' %> class="form-check-input">
-		<label for="one-star" class="star form-check-label">★</label><br>
-		<input type="checkbox" id="two-stars" name="rating[]" value="2" <%= query.rating && query.rating.includes('2') ? 'checked' : '' %> class="form-check-input">
-		<label for="two-stars" class="star form-check-label">★★</label><br>
-		<input type="checkbox" id="three-stars" name="rating[]" value="3" <%= query.rating && query.rating.includes('3') ? 'checked' : '' %> class="form-check-input">
-		<label for="three-stars" class="star form-check-label">★★★</label><br>
-		<input type="checkbox" id="four-stars" name="rating[]" value="4" <%= query.rating && query.rating.includes('4') ? 'checked' : '' %> class="form-check-input">
-		<label for="four-stars" class="star form-check-label">★★★★</label><br>
-		<input type="checkbox" id="five-stars" name="rating[]" value="5" <%= query.rating && query.rating.includes('5') ? 'checked' : '' %> class="form-check-input">
-		<label for="five-stars" class="star form-check-label">★★★★★</label>
-	</div>
-    <button class="btn btn-sm btn-warning" type="submit" >Submit</button>
+    </div>
+    <div class="input-group mb-3 bg-white">
+        <div class="input-group-prepend border-right">
+          <label class="input-group-text " id="rating-addon"><i class="far fa-star text-dark"></i></label>
+        </div>
+        <div>
+            <p class="pl-2 pt-2 ml-1 pb-0 mb-0 text-muted" style="font-size: 16px;">Rating</p>
+            <div class="form-check ml-3 pt-1">
+                <input type="checkbox" id="one-star" name="rating[]" value="1" <%= query.rating && query.rating.includes('1') ? 'checked' : '' %> class="form-check-input">
+                <label for="one-star" class="star form-check-label">★</label><br>
+                <input type="checkbox" id="two-stars" name="rating[]" value="2" <%= query.rating && query.rating.includes('2') ? 'checked' : '' %> class="form-check-input">
+                <label for="two-stars" class="star form-check-label">★★</label><br>
+                <input type="checkbox" id="three-stars" name="rating[]" value="3" <%= query.rating && query.rating.includes('3') ? 'checked' : '' %> class="form-check-input">
+                <label for="three-stars" class="star form-check-label">★★★</label><br>
+                <input type="checkbox" id="four-stars" name="rating[]" value="4" <%= query.rating && query.rating.includes('4') ? 'checked' : '' %> class="form-check-input">
+                <label for="four-stars" class="star form-check-label">★★★★</label><br>
+                <input type="checkbox" id="five-stars" name="rating[]" value="5" <%= query.rating && query.rating.includes('5') ? 'checked' : '' %> class="form-check-input">
+                <label for="five-stars" class="star form-check-label">★★★★★</label>
+            </div>
+        </div>
+    </div>
+    <button class="btn btn-sm btn-warning float-right mb-5" type="submit" id="submit" >Submit</button>
 </form>
-
-
