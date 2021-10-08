@@ -5,7 +5,7 @@
         <div class="card shadow rounded px-3 pt-3 ">
             <a href="/home"><h6><i class="fas fa-arrow-left"></i> Back to Home</h6></a>
             <h4 class="px-2 pt-2 mb-0 pb-0">Settings</h4>
-            <p class="px-2 mb-2 text-muted">User: <%=user.displayName%> | @<%=user.username%> |  <br>Account created: <%=user.createdAt%></p>
+            <p class="px-2 mb-2 text-muted">User: <%=user.displayName%> | @<%=user.username%>  <br>Account created: <%=user.createdAt%></p>
             <div class="row pl-2 pr-4 pt-2  pb-5">
                 <div class="col-4 pr-0 border-right">
                   <div class="list-group border-top" id="list-tab" role="tablist">
@@ -61,7 +61,7 @@
                                 <div class="form-row mt-3">
                                     <div class=" col-md-6">
                                         <label class="form-label mb-0" for="birthyear">Birth year </label>
-                                        <input class="form-control" type="number" id="birthyear" name="birthyear" min="1920" max="2001" placeholder="" value="<%=user.birthyear%>">
+                                        <input class="form-control" type="number" id="birthyear" name="birthyear" min="1920" max="2001" placeholder="" value="<%=user.birthyear%>" disabled >
                                         <div class="valid-feedback">Looks good!</div>
                                         <div class="invalid-feedback">Please enter a valid year.</div>
                                     </div>
@@ -69,8 +69,8 @@
                                 <div class="form-row mt-3">
                                     <div class="col-md-6">
                                         <label class="form-label mb-0" for="gender">Gender</label>
-                                        <select class="custom-select" id="gender" name="gender" >
-                                            <option selected value="<%=user.gender%>">─Please select an option─</option>
+                                        <select class="custom-select" id="gender" name="gender" disabled>
+                                            <option selected value="<%=user.gender%>"><%=user.gender%></option>
                                             <option value="male">male</option>   
                                             <option value="female">female</option>          
                                         </select>
