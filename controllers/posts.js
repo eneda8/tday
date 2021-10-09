@@ -19,7 +19,7 @@ module.exports.search = async (req, res) => {
         })
         posts.page = Number(posts.page);
         docsFound = posts.pages > 1 ? posts.pages*10 : posts.docs.length;
-        for(post of posts.docs) {
+        for(let post of posts.docs) {
             const doesUserExist = await User.exists({_id: post.author})
             if(!doesUserExist) {
                 console.log("problem with this post:", post._id)

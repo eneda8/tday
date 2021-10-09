@@ -3,7 +3,7 @@
 
         <% if(posts.pages > 1){ %> 
         <li class="page-item" id="first-button">
-            <a href="/posts?page=1" class="page-link" aria-label="First" >First</a>
+            <a href="<%=paginateUrl%>1" class="page-link" aria-label="First" >First</a>
         </li>
          <% } %> 
         <% if(posts.page - 1){ %> 
@@ -12,11 +12,12 @@
             </li>
         <% } %> 
         <% if(posts.pages > 1 && posts.docs.length) {%> 
-        <% for(let i =posts.page; i<= posts.page + 10; i++) {%>
+        <% let pagesShown = posts.pages <= 15 ? posts.pages : posts.page + 10 %> 
+        <% for(let i =posts.page; i<= pagesShown; i++) {%>
             <li class="page-item">
                 <a href="<%=paginateUrl%><%= i %>" <%= i === posts.page ? 'style=color:#000' : '' %> class="page-link"><%= i %></a>
             </li>
-        <% }} %> 
+        <%  }} %> 
         <% if((posts.page +1) <= posts.pages){ %> 
             <li class="page-item">
                 <a href="<%=paginateUrl%><%=posts.page+1%>" class="page-link" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
@@ -24,7 +25,7 @@
         <% } %> 
         <% if(posts.pages > 1) {%> 
         <li class="page-item" id="last-button">
-            <a href="/posts?page=<%=posts.pages%>" class="page-link" aria-label="Last">Last</a>
+            <a href="<%=paginateUrl%><%=posts.pages%>" class="page-link" aria-label="Last">Last</a>
         </li>
     <% } %> 
     </ul>
