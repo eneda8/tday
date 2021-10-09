@@ -5,7 +5,7 @@ const catchAsync = require("../utils/catchAsync");
 const User = require("../models/user");
 const users = require("../controllers/users");
 const posts = require("../controllers/posts");
-const {isLoggedIn, setPostedToday, validatePost, blockDuplicatePost, checkPostStreak, isAccountOwner} = require("../middleware");
+const {isLoggedIn, setPostedToday, validatePost, blockDuplicatePost, checkPostStreak, isAccountOwner, filterPosts} = require("../middleware");
 const multer = require("multer");
 const {storage} = require("../cloudinary");
 const upload = multer({storage});
@@ -14,7 +14,7 @@ router.route("/")
     .get(users.renderLandingPage)
     .post(passport.authenticate("local", {failureFlash: true, failureRedirect: "/login", }), users.login)
 
-router.get("/home", isLoggedIn, setPostedToday, checkPostStreak, catchAsync(users.renderHomePage))
+router.get("/home", isLoggedIn, setPostedToday, checkPostStreak, catchAsync(filterPosts), catchAsync(users.renderHomePage))
 
 router.route("/register")
     .get(users.renderRegisterForm)
@@ -28,7 +28,10 @@ router.get("/logout", users.logout);
 
 router.route("/u/:username")
         .get(isLoggedIn, setPostedToday, checkPostStreak, catchAsync(users.showUserProfile))
-        .put(isLoggedIn, upload.single("avatar"), catchAsync(users.updateProfile))
+        .put(isLoggedIn, upload.fields([
+            { name: 'avatar', maxCount: 1 },
+            { name: 'coverPhoto', maxCount: 1 }
+          ]), catchAsync(users.updateProfile))
         .delete(isLoggedIn, isAccountOwner, catchAsync(users.deleteAccount));
 
 

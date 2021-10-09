@@ -15,7 +15,12 @@ const AvatarSchema = new Schema({
         required: true
     }
   });
-  
+
+  const  coverSchema = new Schema({
+    path: String,
+    filename: String
+  });
+
   AvatarSchema.virtual("thumbnail").get(function() {
     return this.path.replace("/upload", "/upload/w_40,h_40,c_thumb,c_fill,r_max")
   })
@@ -59,6 +64,7 @@ const userSchema = new Schema({
         type: String,
         default: "#343a40"
     },
+    coverPhoto: coverSchema,
     posts: [ 
         {
         type: Schema.Types.ObjectId,

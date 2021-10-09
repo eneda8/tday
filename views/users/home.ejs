@@ -68,12 +68,72 @@
             <div>
             </div>
             <% if(!posts.includes(null)){ %>
-                <h6 class="text-left">10 random ratings from today<a href="/home" class="btn btn-small d-inline" title="refresh for 10 more"><i class="fas fa-sync-alt text-right text-primary"></i></a>
+                <h6 class="text-left mb-0">10 random ratings from today <i class="fas fa-random text-right text-primary" title="refresh for 10 more" onclick="location.reload()"></i>
                 </h6>
-                <%- include('../partials/edit')%>
-
-
+                <% if(query.rating || query.country) { %> 
+                <small class="text-muted">Showing 
+                    <% if(query.rating) { %> 
+                        [<%=query.rating%>] star
+                    <% } %> ratings
+                        <% if(query.country) {%> 
+                         from <%=query.country%>
+                         <% } %> 
+                        </small>
+                <% } %> 
+                <div class="accordion p-1" id="filtersAccordion">
+                    <div class="card border-0 bg-white">
+                        <div class="card-header p-1 bg-white" id="showFilters">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#filters" aria-expanded="true" aria-controls="collapseOne">
+                                  Toggle Filters
+                                </button>
+                              </h2>
+                        </div>
+                        <div id="filters" class="collapse px-3 pt-3" aria-labelledby="showFilters" data-parent="#filtersAccordion">
+                        
+                            <form action="/home" method="GET" class="mb-3">
+                                <div class="input-group mb-3 ">
+                                    <div class="input-group-prepend border-right">
+                                      <label class="input-group-text" for="countryName"><i class="fas fa-globe text-dark"></i></label>
+                                    </div>
+                                    <select class="custom-select text-muted" id="countryName" name="country" >
+                                        <option value="" class="text-muted">Country</option> 
+                                        <%  for (let country of countries) {%>
+                                            <option value="<%=country["name"]%>" ><%=country["name"]%></option>
+                                        <%}%>        
+                                    </select>
+                                </div>
+                                <div class="input-group mb-3 bg-white border rounded">
+                                    <div class="input-group-prepend border-right">
+                                      <label class="input-group-text " id="rating-addon"><i class="far fa-star text-dark"></i></label>
+                                    </div>
+                                    <div>
+                                        <p class="pl-2 pt-2 ml-1 pb-0 mb-0 text-muted" style="font-size: 16px;">Rating</p>
+                                        <div class="form-check form-check-inline ml-3 pt-1">
+                                            <label for="one-star" class="star form-check-label small">★</label><br>
+                                            <input type="checkbox" id="one-star" name="rating[]" value="1" <%= query.rating && query.rating.includes('1') ? 'checked' : '' %> class="form-check-input">
+                                            <label for="two-stars" class="star form-check-label small">★★</label><br>
+                                            <input type="checkbox" id="two-stars" name="rating[]" value="2" <%= query.rating && query.rating.includes('2') ? 'checked' : '' %> class="form-check-input">
+                                            <label for="three-stars" class="star form-check-label small">★★★</label><br>
+                                            <input type="checkbox" id="three-stars" name="rating[]" value="3" <%= query.rating && query.rating.includes('3') ? 'checked' : '' %> class="form-check-input">
+                                            <label for="four-stars" class="star form-check-label small">★★★★</label><br>
+                                            <input type="checkbox" id="four-stars" name="rating[]" value="4" <%= query.rating && query.rating.includes('4') ? 'checked' : '' %> class="form-check-input">
+                                            <label for="five-stars" class="star form-check-label small">★★★★★</label>
+                                            <input type="checkbox" id="five-stars" name="rating[]" value="5" <%= query.rating && query.rating.includes('5') ? 'checked' : '' %> class="form-check-input">
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-sm btn-warning mb-2" type="submit" id="submit" >Filter</button>
+                            </form>
+                    </div>
+                    </div>
+                </div>
+                
+                <% if(!posts.length) {%> 
+                   <p class="ml-2 mt-2">It looks like there are very few, if any, ratings that match those filters. Refresh the page or try <a href="/posts/search">searching</a> instead. Hint: enter an empty space in the text search bar to retrieve all ratings that match the given filters.</p>  
+                <% } %> 
                 <%for (post of posts) { %> 
+                    <%- include('../partials/edit')%>
                     <div class="card mb-3 mt-1 pt-2 pl-2 pr-2 border-0">
                         <div class="media pr-3">
                             <a href="/u/<%=post.author.username%>"><img style="width:45px; border-radius: 50%" src="<%=post.author.avatar.thumbnail%>" class="pr-2" alt=""></a>
@@ -175,16 +235,14 @@
                         </div>
                     </div>
                     <% } %> 
-                    <a href="/home" class="btn btn-small d-inline float-right" title="refresh for 10 more"><i class="fas fa-sync-alt text-right text-primary"></i></a>
+                    <% if(posts.length) { %> 
+                    <i class="fas fa-random text-right text-primary" title="refresh for 10 more" onclick="location.reload()"></i>
+                    <% } %> 
             <% } else { %>
                 <div class="card border-0">
                     <h5 class="text-center m-5">No ratings yet today :( </h5>
                     <a class=" text-center mb-5" href="" data-toggle="modal" id="newPostLink" data-target="#newPostModal">Be the first to submit a rating!</a>
                 </div>
-
-                <!-- <div class="card mb-3 mt-1 pt-2 pl-2 pr-2 border-0" style="height:450px;"></div>
-                <div class="card mb-3 mt-1 pt-2 pl-2 pr-2 border-0" style="height:450px;"></div>
-                <div class="card mb-3 mt-1 pt-2 pl-2 pr-2 border-0" style="height:450px;"></div> -->
             <% } %>
 
             

@@ -5,6 +5,9 @@ const Journal = require("../models/journal");
 const countries = require("../countries");
 const {cloudinary} = require("../cloudinary");
 const {within24Hours, getToday} = require("../utils/getToday");
+const Post = require("../models/post");
+
+
 
 // ----------------REGISTER ---------------------------------------
 module.exports.renderRegisterForm = (req, res) => {
@@ -102,13 +105,28 @@ module.exports.renderHomePage= async (req, res) =>{
             todaysPost = await Post.findById(user.todaysPost);
         }  else {todaysPost = "null"}
           //show 10 random posts
-        const posts = await Post.random(10);
-        for(post of posts) {
+          const random = async function (num){
+            const randomDocs = [];
+            const {dbQuery} = res.locals; 
+            for(let i =0; i < num; i++) {
+                const count = await Post.countDocuments().where({date: getToday()});
+                const rand = Math.floor(Math.random() * count);
+                const filter = dbQuery ? dbQuery : {date: getToday()}
+                const randomDoc = await Post.findOne(filter).skip(rand);
+                // console.log(randomDoc);
+                if(randomDoc){
+                    randomDocs.push(randomDoc);
+                }
+            }
+            return randomDocs;
+        }
+        const posts = await random(10);
+        for(let post of posts) {
             if(!post === null){
             post.populate("author").execPopulate();
             }
         }
-        res.render("users/home", {posts, today, within24Hours, todaysPost, user, average, title: "Home / todei"});
+        res.render("users/home", {posts, today, within24Hours, todaysPost, user, average, countries, title: "Home / todei"});
     } catch(e) {
         console.log(e)
         req.flash("error", `Oops, something went wrong!`)
@@ -135,11 +153,19 @@ module.exports.showUserProfile = async(req, res) => {
 module.exports.updateProfile = async(req, res) => {
     const {displayName, bio, coverColor} = req.body;
     const user = await User.findById(req.user._id);
-    const oldAvatar = user.avatar;
     await user.update({...req.body});
-    if(req.file){
-        user.avatar = req.file;
-        await cloudinary.uploader.destroy(oldAvatar.filename)
+    const oldAvatar = user.avatar;
+    const oldCoverPhoto = user.coverPhoto || ""
+    if(req.files){
+        if(req.files.avatar){
+        user.avatar = req.files.avatar[0];
+        cloudinary.uploader.destroy(oldAvatar.filename);
+        } if(req.files.coverPhoto){
+            user.coverPhoto = req.files.coverPhoto[0];
+            if(oldCoverPhoto.length){
+                cloudinary.uploader.destroy(oldCoverPhoto.filename)
+            }  
+        }
     }
     if(!user){
         req.flash("error", "User not found!")

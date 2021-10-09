@@ -2,14 +2,18 @@
     <div class="row py-3 px-4">
         <div class="col-md-8 col-lg-5 mx-auto">
             <div class="bg-white shadow rounded overflow-hidden">
-                <div class="px-4 pt-0 pb-4 cover" style="background-color: <%=user.coverColor%>">
+                <% if(user.coverPhoto) { %> 
+                <div class="px-4 pt-0 pb-4 cover" style="background-image: url('<%=user.coverPhoto.path%>')">
+                <% } else {%> 
+                <div class="px-4 pt-0 pb-4 cover" style="background-color: <%=user.coverColor%>;">
+                <% } %> 
                     <div class="media align-items-end" style="transform: translateY(6rem)">
                         <div class="mr-3">
                             <a href="" data-toggle="modal" id ="avatarPreviewLink" data-target="#avatarPreviewModal">
                                 <img src="<%=user.avatar.path%>" alt="" width="200" height="200" class="rounded-circle my-3 img-fluid img-thumbnail">
                             </a>
                             <% if(currentUser && user._id.equals(currentUser._id)) { %>
-                            <a href="" data-toggle="modal" id="editProfileLink" data-target="#editProfileModal" class="btn btn-outline-dark btn-sm btn-block">Edit profile <i class="fas fa-user-edit"></i></a>
+                            <a href="" data-toggle="modal" id="editProfileLink" data-target="#editProfileModal" class="btn btn-warning btn-sm btn-block">Edit profile <i class="fas fa-user-edit"></i></a>
                             <% } %> 
                         </div>
                         <div class="mb-5 text-white">
@@ -38,9 +42,9 @@
                     </ul>
                 </div>
                 <div class="px-4 py-3">
-                    <h5 class="my-1">About</h5>
-                    <div class="p-4 rounded shadow-sm bg-light">
-                        <p class="text-muted mb-0"><%=user.bio%></p>
+                    <h6 class="my-1 font-weight-bold">About</h6>
+                    <div class="py-3 pl-2 rounded shadow-sm bg-light">
+                        <p class="text-dark mb-0"><%=user.bio%></p>
                     </div>
                 </div>
                 <nav>
@@ -365,48 +369,50 @@
 
 <!-- Edit profile modal -->
 <div>
-    <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModal" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editProfileLableModal">Edit Profile</h5>
+    <div class="modal fade " id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModal" aria-hidden="true">
+        <div class="modal-dialog ">
+            <div class="modal-content bg-light p-3">
+                <div class="modal-header pb-0">
+                    <h5 class="modal-title font-weight-bold" id="editProfileLableModal">Edit Profile</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body pb-0">
                         <form action="/u/<%=user.username%>?_method=PUT" method="POST" class="validated-form" novalidate enctype="multipart/form-data">
                             <div class="mb-3">
-                                <label class="form-label" for="displayName">Display name</label>
-                                <input class="form-control" type="text" id="displayName" name="displayName" value="<%=user.displayName%>">
+                                <label class="form-label mb-0" for="displayName">Display name</label>
+                                <input class="form-control border-0" type="text" id="displayName" name="displayName" value="<%=user.displayName%>">
                                 <div class="valid-feedback">
                                     Looks good!
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label" for="bio">Bio</label>
-                                <textarea class="form-control" id="bio" name="bio"><%=user.bio%></textarea>
+                                <label class="form-label mb-0" for="bio">Bio</label>
+                                <textarea class="form-control border-0" id="bio" name="bio"><%=user.bio%></textarea>
                                 <div class="valid-feedback">
                                     Looks good!
                                 </div>
                             </div>
-                            <p>Profile photo:</p>
-                            <div class="custom-file mb-3">
-                                <input type="file" class="custom-file-input" id="avatar" name="avatar" onchange="document.getElementById('preview').src = window.URL.createObjectURL(this.files[0])">
-                                <label class="custom-file-label" for="avatar">Choose an image...</label>
-                            </div>
-                            <img class="img-fluid my-2" id="preview" width="100px"/> 
                             <div class="mb-3">
-                                <label for="coverColor">Profile cover color:</label>
+                                <label for="coverColor" class="mb-0">Profile cover color:</label>
                                 <input type="color" name="coverColor" id="coverColor" value="<%=user.coverColor%>">
                             </div>
+                            <p class="mb-0">Avatar</p>
                             <div class="custom-file mb-3">
-                                <input type="file" class="custom-file-input" id="coverPhoto" name="coverPhoto">
-                                <label class="custom-file-label" for="coverPhoto">Choose an image...</label>
+                                <input type="file" class="custom-file-input border-0" id="avatar" name="avatar" onchange="document.getElementById('preview1').src = window.URL.createObjectURL(this.files[0])">
+                                <label class="custom-file-label border-0" for="avatar">Choose an image...</label>
                             </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-primary">Save</button>
+                            <img class="img-fluid" id="preview1" width="100px"/> 
+                            <p class="mb-0">Cover photo</p>
+                            <div class="custom-file mb-3">
+                                <input type="file" class="custom-file-input border" id="coverPhoto" name="coverPhoto">
+                                <label class="custom-file-label border-0" for="coverPhoto">Choose an image...</label>
+                            </div>
+                        <hr class="px-0">
+                        <div class="clearfix">
+                            <button type="submit" class="btn btn-warning float-left mr-3">Save</button>
+                            <button type="button" class="btn btn-dark float-left" data-dismiss="modal">Cancel</button>
                         </div>
                     </form>
                 </div>
@@ -478,9 +484,10 @@
                         <input class="form-check-input" type="checkbox" name="deleteImage[]" value="<%=user.posts[0].image.filename%>">
                     </div>           
                     <% }  %>  
-                    <hr class="my-3">
-                    <button type="button" class="btn btn-secondary mt-5" data-dismiss="modal">Cancel</button>
+                    <hr class="my-1">
                     <button type="submit" class="btn btn-warning mt-5">Update</button>
+                    <button type="button" class="btn btn-dark mt-5" data-dismiss="modal">Cancel</button>
+                    
                 </form>
             </div>
         </div>
@@ -537,8 +544,8 @@
                     </div>           
                     <% }  %>  
                     <hr class="my-3">
-                    <button type="button" class="btn btn-secondary mt-5" data-dismiss="modal">Cancel</button>
                     <button type="submit" class="btn btn-warning mt-5">Update</button>
+                    <button type="button" class="btn btn-dark mt-5" data-dismiss="modal">Cancel</button>
                 </form>
             </div>
         </div>
