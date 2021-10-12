@@ -5,9 +5,6 @@ const Journal = require("../models/journal");
 const countries = require("../countries");
 const {cloudinary} = require("../cloudinary");
 const {within24Hours, getToday} = require("../utils/getToday");
-const Post = require("../models/post");
-
-
 
 // ----------------REGISTER ---------------------------------------
 module.exports.renderRegisterForm = (req, res) => {
@@ -15,7 +12,7 @@ module.exports.renderRegisterForm = (req, res) => {
         req.flash("error", "You are already logged in!");
         return res.redirect('/home');
     }
-    res.render("users/register", {countries})
+    res.render("users/register", {countries, title: "Register / todei"})
 }
 
 module.exports.register = async (req,res, next) => {
@@ -47,7 +44,7 @@ module.exports.renderLoginForm = (req,res) => {
         req.flash("error", "You are already logged in!");
         return res.redirect('/home');
     }
-    res.render("users/login")
+    res.render("users/login", {title:"Login / todei"})
 }
 
 module.exports.login = (req,res) => {

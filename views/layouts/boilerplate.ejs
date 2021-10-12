@@ -12,23 +12,48 @@
     <link rel="manifest" href="/favicon_io/site.webmanifest">
     <link rel="stylesheet" type="text/css" href="/stylesheets/stars/stars.css"/>
     <link rel="stylesheet" type="text/css" href="/stylesheets/styles.css"/>
+    <% if((title === 'todei') || (title === "Login / todei") || (title === "Register / todei") ) {%> 
     <link rel="stylesheet" type="text/css" href="/stylesheets/landing.css"/>
+    <% } %> 
+    <% if((title === "Write / todei") || (title === "Journal / todei") || (title === "Edit Journal / todei") ) {%> 
+      <link rel="stylesheet" type="text/css" href="/stylesheets/write.css"/>
+      <% }%> 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Courgette&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.min.js"></script>
+    <% if(title === "Login / todei"){%> 
+      <style>
+        .paper::before {
+            height: 100vh;
+        }
+    </style>
+    <% } %> 
+    <% if(title === "Register / todei"){%> 
+      <style>
+            .paper {
+                height: 120vh
+            }
+            .paper::before {
+                height: 125vh;
+            }
+    </style>
+    <% } %> 
 </head>
 <body class="d-flex flex-column">
       <%- include("../partials/navbar") %>
     <div class="ml-4">
       <%- include('../partials/flash')%>
     </div>  
-    <main class="container-fluid">
+    
+    <%if((title === 'todei') || (title === "Login / todei") || (title === "Register / todei")) { %>
+    <main class="container-fluid paper mb-0 pb-0">
+    <%} else {%>
+    <main class="container-fluid" >
+    <% } %> 
       <%-body -%> 
     </main>
-    <%- include("../partials/footer") %>
-
 
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>

@@ -1,0 +1,32 @@
+<div class="" style="height: 200px;">
+    <div class="bg-light shadow-sm rounded overflow-hidden" >
+        <div class="px-4 pt-0 pb-4 cover" style="background-color: <%=user.coverColor%>; height: 130px">
+            <div class="media align-items-end">
+                <div class="mr-3">
+                    <img src="<%=user.avatar.path%>" alt="" width="120" height="120" class="rounded-circle my-3 img" style="transform: translateY(2.3rem)">
+                </div>
+                <div class="text-white pl-2 pb-2">
+                    <h4 class="my-0"><a href="/u/<%=user.username%>" class="text-decoration-none text-white"><%=user.displayName%></a></h4>
+                    <p class="my-0"><span style="font-size: 10px"> @</span><%=user.username%></p>
+                    <p class="small"><i class="fas fa-map-marker-alt text-white"></i>  <img title="<%=user.country.name %>" src="<%=user.country.flag%>" width="17px"></p>
+                </div>
+            </div>
+        </div>
+        <div class="bg-light text-dark py-3 pr-3 pl-0 d-flex justify-content-end text-center">
+                <ul class="list-inline mb-0">
+                    <li class="list-inline-item">
+                        <h5 class="font-weight-bold mb-0 d-block"><%=user.posts.length%></h5><small class="text-muted">Ratings</small>
+                    </li>
+                    <li class="list-inline-item">
+                        <h5 class="font-weight-bold mb-0 d-block"><%=user.comments.length%></h5><small class="text-muted">Comments</small>
+                    </li>
+                    <li class="list-inline-item">
+                        <h5 class="font-weight-bold mb-0 d-block"><%=user.postStreak%></h5><small class="text-muted">Streak</small>
+                    </li>
+                    <li class="list-inline-item">
+                        <h5 class="font-weight-bold mb-0 d-block"><%=user.average%></h5><small class="text-muted">Avg. Rating</small>
+                    </li>
+                </ul>
+        </div>
+    </div>
+</div>

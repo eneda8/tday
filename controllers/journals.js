@@ -33,7 +33,7 @@ module.exports.showJournal = async(req, res, next) => {
             req.flash("error", "Journal not found!")
             return res.redirect(`/u/${user.username}#nav-journals`);
         }
-        res.render("journals/show", {journal, user});
+        res.render("journals/show", {journal, user, title: "Journal / todei"});
     }
 }
 
@@ -45,7 +45,7 @@ module.exports.renderEditJournal = async(req, res, next) => {
         req.flash("error", "Journal not found!")
         return res.redirect("/home");
     }
-    res.render("journals/edit", {journal});
+    res.render("journals/edit", {journal, title: "Edit Journal / todei"});
 }
 
 module.exports.updateJournal = async (req,res) => {

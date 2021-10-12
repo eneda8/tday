@@ -1,0 +1,62 @@
+<% if(query.rating || query.country) { %> 
+    <small class="text-muted">Showing 
+        <% if(query.rating) { %> 
+            [<%=query.rating%>] star
+        <% } %> ratings
+            <% if(query.country) {%> 
+             from <%=query.country%>
+             <% } %> 
+            </small>
+    <% } %> 
+    <div class="accordion p-1" id="filtersAccordion">
+        <div class="card border-0 bg-white">
+            <div class="card-header p-0 bg-white" id="showFilters">
+                <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#filters" aria-expanded="true" aria-controls="collapseOne">
+                      Show Filters
+                    </button>
+                  </h2>
+            </div>
+            <div id="filters" class="collapse px-3 pt-3" aria-labelledby="showFilters" data-parent="#filtersAccordion">
+            
+                <form action="/home" method="GET" class="mb-3">
+                    <div class="input-group mb-3 ">
+                        <div class="input-group-prepend border-right">
+                          <label class="input-group-text" for="countryName"><i class="fas fa-globe text-dark"></i></label>
+                        </div>
+                        <select class="custom-select text-muted" id="countryName" name="country" >
+                            <option value="" class="text-muted">Country</option> 
+                            <%  for (let country of countries) {%>
+                                <option value="<%=country["name"]%>" ><%=country["name"]%></option>
+                            <%}%>        
+                        </select>
+                    </div>
+                    <div class="input-group mb-3 bg-white border rounded">
+                        <div class="input-group-prepend border-right">
+                          <label class="input-group-text " id="rating-addon"><i class="far fa-star text-dark"></i></label>
+                        </div>
+                        <div>
+                            <p class="pl-2 pt-2 ml-1 pb-0 mb-0 text-muted" style="font-size: 16px;">Rating</p>
+                            <div class="form-check form-check-inline ml-3 pt-1">
+                                <label for="one-star" class="star form-check-label small">★</label><br>
+                                <input type="checkbox" id="one-star" name="rating[]" value="1" <%= query.rating && query.rating.includes('1') ? 'checked' : '' %> class="form-check-input">
+                                <label for="two-stars" class="star form-check-label small">★★</label><br>
+                                <input type="checkbox" id="two-stars" name="rating[]" value="2" <%= query.rating && query.rating.includes('2') ? 'checked' : '' %> class="form-check-input">
+                                <label for="three-stars" class="star form-check-label small">★★★</label><br>
+                                <input type="checkbox" id="three-stars" name="rating[]" value="3" <%= query.rating && query.rating.includes('3') ? 'checked' : '' %> class="form-check-input">
+                                <label for="four-stars" class="star form-check-label small">★★★★</label><br>
+                                <input type="checkbox" id="four-stars" name="rating[]" value="4" <%= query.rating && query.rating.includes('4') ? 'checked' : '' %> class="form-check-input">
+                                <label for="five-stars" class="star form-check-label small">★★★★★</label>
+                                <input type="checkbox" id="five-stars" name="rating[]" value="5" <%= query.rating && query.rating.includes('5') ? 'checked' : '' %> class="form-check-input">
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-sm btn-warning mb-2" type="submit" id="submit" >Filter</button>
+                </form>
+        </div>
+        </div>
+    </div>
+    
+    <% if((!posts.length) && (query.rating || query.country)) {%> 
+       <p class="ml-2 mt-2">It looks like there are very few, if any, ratings that match those filters. Refresh the page or try <a href="/posts/search">searching</a> instead. Hint: enter an empty space in the text search bar to retrieve all ratings that match the given filters.</p>  
+    <% } %> 

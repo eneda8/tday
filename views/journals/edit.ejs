@@ -1,40 +1,11 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Edit Journal / todei</title> 
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="/stylesheets/write.css"/>
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-        <link rel="manifest" href="/site.webmanifest">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Courgette&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+<% layout("layouts/boilerplate")%>
 
-        <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.min.js"></script>
-    </head>
-    <body spellcheck="false"> 
-      <%- include("../partials/navbar") %>
-      <%- include("../partials/new") %>
-          <main>
-              <h6 class="text-muted text-center text-monospace">Edit Journal</h6>
-              <div class="paper text-wrap ">
-              <form action="/write/<%=journal._id%>?_method=PUT" class="" method="POST" novalidate>
-                <textarea id="journalBody" autofocus="autofocus" class="text-monospace text-wrap px-0 py-1 ml-0" rows="50" cols="100" name="journal[body]"><%=journal.body%></textarea>                     
-                <button class="btn btn-sm btn-outline btn-warning" type="submit">Submit</button>
-                <button type="button" class="btn btn-sm btn-link text-danger my-3" onclick="window.history.back();">Cancel</button>               
-            </form>
-        </div>
+<h6 class="text-muted text-center text-monospace">Edit Journal</h6>
+<div class="paper text-wrap ">
+    <form action="/write/<%=journal._id%>?_method=PUT" class="" method="POST" novalidate>
+    <textarea id="journalBody" autofocus="autofocus" class="text-monospace text-wrap px-0 py-1 ml-0" rows="50" cols="100" name="journal[body]"><%=journal.body%></textarea>                     
+    <button class="btn btn-sm btn-outline btn-warning" type="submit">Submit</button>
+    <button type="button" class="btn btn-sm btn-link text-danger my-3" onclick="window.history.back();">Cancel</button>               
+    </form>
+</div>
 
-        <!-- confirmation modal -->
-          </main>
-        <%- include("../partials/footer") %>
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
-        <script src='/javascripts/validateForms.js'></script>
-        <script src='/javascripts/alerts.js'></script>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">   
-    </body>
-</html>

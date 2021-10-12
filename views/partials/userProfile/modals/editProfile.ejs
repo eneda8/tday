@@ -1,0 +1,52 @@
+<div>
+    <div class="modal fade " id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModal" aria-hidden="true">
+        <div class="modal-dialog ">
+            <div class="modal-content bg-light p-3">
+                <div class="modal-header pb-0">
+                    <h5 class="modal-title font-weight-bold" id="editProfileLableModal">Edit Profile</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body pb-0">
+                        <form action="/u/<%=user.username%>?_method=PUT" method="POST" class="validated-form" novalidate enctype="multipart/form-data">
+                            <div class="mb-3">
+                                <label class="form-label mb-0" for="displayName">Display name</label>
+                                <input class="form-control border-0" type="text" id="displayName" name="displayName" value="<%=user.displayName%>">
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label mb-0" for="bio">Bio</label>
+                                <textarea class="form-control border-0" id="bio" name="bio"><%=user.bio%></textarea>
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="coverColor" class="mb-0">Profile cover color:</label>
+                                <input type="color" name="coverColor" id="coverColor" value="<%=user.coverColor%>">
+                            </div>
+                            <p class="mb-0">Avatar</p>
+                            <div class="custom-file mb-3">
+                                <input type="file" class="custom-file-input border-0" id="avatar" name="avatar" onchange="document.getElementById('preview1').src = window.URL.createObjectURL(this.files[0])">
+                                <label class="custom-file-label border-0" for="avatar">Choose an image...</label>
+                            </div>
+                            <img class="img-fluid" id="preview1" width="100px"/> 
+                            <p class="mb-0">Cover photo</p>
+                            <div class="custom-file mb-3">
+                                <input type="file" class="custom-file-input border" id="coverPhoto" name="coverPhoto">
+                                <label class="custom-file-label border-0" for="coverPhoto">Choose an image...</label>
+                            </div>
+                        <hr class="px-0">
+                        <div class="clearfix">
+                            <button type="submit" class="btn btn-warning float-left mr-3">Save</button>
+                            <button type="button" class="btn btn-dark float-left" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

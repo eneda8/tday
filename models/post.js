@@ -77,6 +77,12 @@ PostSchema.statics.random = async function(num) {
   return randomDocs;
 };
 
+// PostSchema.statics.bookmark = async function(){
+//     const user = await User.findById(req.user._id);
+//     user.bookmarks.unshift(this);
+//     user.save()
+// }
+
 // PostSchema.post("findOneAndDelete", async function (doc) {
 //   if(doc){
 //     await Comment.deleteMany({
