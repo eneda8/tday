@@ -6,7 +6,7 @@
     <div id="commentDiv" class="bg-white p-3 mb-3">
       <h6 class="mb-0 pb-2 border-bottom">Comments</h6>
       <% for (let comment of post.comments) { %>
-          <div class="media mb-1 pl-4 pt-1 shadow-sm">
+          <div class="media mb-1 pl-4 py-2 shadow-sm">
             <a class="mr-3" href="/u/<%=comment.author.username%>">
               <img src="<%=comment.author.avatar.thumbnail%>" alt="" style="width:40px; border-radius: 50%">
             </a>
@@ -43,7 +43,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>    
                 <% } %> 
             </div>
           </div>  

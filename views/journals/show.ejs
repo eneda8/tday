@@ -1,7 +1,7 @@
 <% layout("layouts/boilerplate")%>
 <h6 class="text-muted text-center text-monospace"><%=journal.date%></h6>
-<div class="paper text-wrap ">
-      <textarea id="journalBody" autofocus="autofocus" class="text-monospace text-wrap px-0 py-1 ml-0" rows="50" cols="100" name="journal[body]" disabled><%=journal.body%></textarea>                     
+<div class="paper">
+        <p  id="journalBody" autofocus="autofocus" class="text-monospace px-0 py-1 ml-0" rows="50" cols="100" name="journal[body]"  style="white-space: pre-wrap;"><%=journal.body%></p>
       <button class="btn btn-sm btn-link my-3" type="button"><a class="" href="/write/<%=journal._id%>/edit">Edit</a></button>  
       <button type="button" class="btn btn-sm btn-link text-danger my-3" data-toggle="modal" data-target="#deleteModal">
         Delete

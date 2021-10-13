@@ -1,11 +1,10 @@
 <% layout("layouts/boilerplate")%>
-
 <h6 class="text-muted text-center text-monospace">Edit Journal</h6>
 <div class="paper text-wrap ">
     <form action="/write/<%=journal._id%>?_method=PUT" class="" method="POST" novalidate>
-    <textarea id="journalBody" autofocus="autofocus" class="text-monospace text-wrap px-0 py-1 ml-0" rows="50" cols="100" name="journal[body]"><%=journal.body%></textarea>                     
+    <textarea id="journalBody" autofocus="autofocus" class="text-monospace text-wrap px-0 py-1 ml-0" rows="50" cols="100" name="journal[body]" style="white-space: pre-line;"><%=journal.body%></textarea>                     
     <button class="btn btn-sm btn-outline btn-warning" type="submit">Submit</button>
-    <button type="button" class="btn btn-sm btn-link text-danger my-3" onclick="window.history.back();">Cancel</button>               
+    <button type="button" class="btn btn-sm btn-link text-danger my-3" data-toggle="modal" data-target="#deleteModal" >Cancel</button>               
     </form>
 </div>
-
+<%- include("../partials/confirmDeleteModals/journal")%>

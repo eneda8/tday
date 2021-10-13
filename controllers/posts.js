@@ -6,35 +6,6 @@ const ObjectID = require('mongodb').ObjectID;
 const {cloudinary} = require("../cloudinary");
 const countries = require("../countries");
 
-module.exports.search = async (req, res) => {
-    const user = await User.findById(req.user._id).populate("posts");
-    const {dbQuery} = res.locals;
-    let posts, docsFound;
-    delete res.locals.dbQuery;
-    if(dbQuery) {
-        posts = await Post.paginate(dbQuery, {
-            page: req.query.page || 1,
-            limit: 10,
-            sort: {"createdAt": -1},
-            populate: "author"
-        })
-        posts.page = Number(posts.page);
-        docsFound = posts.pages > 1 ? posts.pages*10 : posts.docs.length;
-        for(let post of posts.docs) {
-            const doesUserExist = await User.exists({_id: post.author})
-            if(!doesUserExist) {
-                console.log("problem with this post:", post._id)
-                await post.remove()
-                res.redirect("/")
-            }
-        }
-        if(!posts.docs.length && res.locals.query) {
-            res.locals.error = "No results match that query. Please try a broader search.";
-        }
-    }
-    res.render("posts/search", {posts, user, within24Hours, countries, docsFound, title: "Search / todei"});
-}
-
 module.exports.renderNewForm = (req, res) => { 
     res.render("posts/new")
 }
@@ -118,11 +89,6 @@ module.exports.unbookmarkPost = async(req, res) => {
     res.redirect("back")
 }
 
-// module.exports.copy = async(req, res) => {
-//     req.flash("success", "Link copied!");
-//     res.redirect("back");
-// }
-
 module.exports.renderEditForm = async (req,res) => {
     const post = await Post.findById(req.params.id);
     if(!post){
@@ -191,4 +157,33 @@ module.exports.deletePost = async(req, res) => {
 
     req.flash("success", "Rating deleted");
     res.redirect(`/u/${user.username}`);
+}
+
+module.exports.search = async (req, res) => {
+    const user = await User.findById(req.user._id).populate("posts");
+    const {dbQuery} = res.locals;
+    let posts, docsFound;
+    delete res.locals.dbQuery;
+    if(dbQuery) {
+        posts = await Post.paginate(dbQuery, {
+            page: req.query.page || 1,
+            limit: 10,
+            sort: {"createdAt": -1},
+            populate: "author"
+        })
+        posts.page = Number(posts.page);
+        docsFound = posts.pages > 1 ? posts.pages*10 : posts.docs.length;
+        for(let post of posts.docs) {
+            const doesUserExist = await User.exists({_id: post.author})
+            if(!doesUserExist) {
+                console.log("problem with this post:", post._id)
+                await post.remove()
+                res.redirect("/")
+            }
+        }
+        if(!posts.docs.length && res.locals.query) {
+            res.locals.error = "No results match that query. Please try a broader search.";
+        }
+    }
+    res.render("posts/search", {posts, user, within24Hours, countries, docsFound, title: "Search / todei"});
 }

@@ -6,8 +6,9 @@ const {getTimestamp} = require("../utils/getToday");
 module.exports.createComment = async (req, res) => {
     const post = await Post.findById(req.params.id);
     const user = await User.findById(req.user._id);
+    console.log("user on comment:", user)
     const comment = new Comment(req.body.comment);
-    comment.author = req.user._id;
+    comment.author = user;
     comment.post = post;
     comment.timestamp = getTimestamp();
     post.comments.push(comment);

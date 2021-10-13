@@ -11,7 +11,7 @@
                         <div class="dropdown-menu dropdown-menu-lg-right">
                             <% if(within24Hours(post) === true) { %>
                                 <!-- modal buttons specific to user profile page-->
-                                <% if(title.includes("@")) { %> 
+                                <% if(title.includes("@") && !title.includes("day")) { %> 
                                     <% if(post.date == getToday()) {  %>
                                         <button class="dropdown-item pl-2"><a href="" data-toggle="modal" id="editTodayPostLink" data-target="#editTodayPostModal" class="text-decoration-none"><i class="fas fa-edit text-warning"></i> Edit</a></button>
                                         <% } else {%> 
@@ -33,7 +33,7 @@
             <span class="badge badge-light mb-2" style="font-size: 13px"><%=post.date%>: <span class="star star<%=post.rating%>-result"></span></span>  
             <%}%>
             <div class="text-wrap">
-                <p class="mb-0"><%=post.body%></p>
+                <p class="mb-0" style="white-space: pre-line;"><%=post.body%></p>
             </div>
             <% if(post.image) { %> 
                 <a href="" data-toggle="modal" id ="imagePreviewLink-<%=post._id%>" data-target="#imagePreviewModal-<%=post._id%>">

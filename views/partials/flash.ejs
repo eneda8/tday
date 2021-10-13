@@ -1,6 +1,6 @@
 <% if(success && success.length) {%>
     <div class="alert alert-light alert-dismissible fade show rounded border-success shadow-sm  bg-white position-fixed bottom-0 right-0 p-2 text-center " role="alert">
-        <div class="mr-5">
+        <div class="">
             <%= success %>
         </div>
     </div>
@@ -8,7 +8,7 @@
     
     <% if(error && error.length) {%>
     <div class="alert alert-light alert-dismissible fade show rounded border-danger shadow-sm my-0 bg-white position-fixed bottom-0 right-0 p-2 text-center" role="alert">
-        <div class="mr-5"><%= error %></div>
+        <div class=""><%= error %></div>
     </div>
     <% } %>
 
@@ -20,7 +20,6 @@
         left: 50%;
         margin-left: -100px;
         width: fit-content;
-        padding: 15px;
         border-left: 6px solid #7f7f84;
     }
 </style>

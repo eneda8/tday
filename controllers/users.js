@@ -29,7 +29,7 @@ module.exports.register = async (req,res, next) => {
         const registeredUser = await User.register(user, password);
         req.login(registeredUser, err => {
             if(err) return next(err); 
-            req.flash("success", `Welcome to todei, ${req.user.username}!`);
+            req.flash("success", `Welcome to todei, ${req.user.displayName}!`);
             res.redirect(`/u/${username}`);
         })
     } catch(err) {
@@ -48,8 +48,10 @@ module.exports.renderLoginForm = (req,res) => {
 }
 
 module.exports.login = (req,res) => {
-    req.flash("success", `Welcome back, ${req.user.username}!`);
-    res.redirect("/home")
+    delete req.session.returnTo;
+    const redirectUrl = req.session.returnTo || "/home";
+    req.flash("success", `Welcome back, ${req.user.displayName}!`);
+    res.redirect(redirectUrl);
 }
 
 module.exports.logout = (req,res) => {

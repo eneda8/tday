@@ -56,30 +56,7 @@ const seedDB = async () => {
             body = faker.lorem.sentence()
         } else {body = faker.lorem.sentences()}
         const user = await User.findOne().where({ "postedToday" : false }) .where({"bio": {$ne: "creator of this website" }})
-        // const checkPostStreak = async (user) => {
-        //     const today = new Date()
-        //     let yesterday = new Date(today);
-        //     yesterday.setDate(today.getDate() -1)
-        //     yesterday = yesterday.toLocaleDateString(
-        //         'en-US',
-        //         {
-        //         year: 'numeric',
-        //         month: 'short',
-        //         day: 'numeric',
-        //         }
-        //     );
-        //     const post = await Post.find({"author": user, "date": yesterday});
-        //     if(!post) {
-        //         user.postStreak = 0;
-        //     }  
-        // }
         if(user){
-    //         // try{
-    //         //     await checkPostStreak(user);
-    //         //     console.log("checked post streak")
-    //         // } catch(e){
-    //         //     console.log("this isn't working", e)
-    //         // }
 
             const post = new Post({rating, body});
             if(i % 2 == 0) {
@@ -114,11 +91,11 @@ const seedDB = async () => {
     //     const timestamp = new Date().toLocaleString("en-US");
     //     const comment = new Comment({body, timestamp});
     //     const randUser = await User.aggregate([{ $sample: { size: 1 } }]);
-    //     const randPost = await Post.aggregate([{$match: {"date": "Sep 12, 2021"}}, { $sample: { size: 1 } }]);
+    //     const randPost = await Post.aggregate([{$match: {"date": "Oct 13, 2021"}}, { $sample: { size: 1 } }]);
     //     const user = await User.findById(randUser[0]._id);
     //     const post = await Post.findById(randPost[0]._id);
-    //     comment.author = user._id;
-    //     comment.post = post._id;
+    //     comment.author = user;
+    //     comment.post = post;
     //     await post.comments.push(comment);
     //     await user.comments.unshift(comment);
     //     await comment.save();
