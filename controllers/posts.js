@@ -1,5 +1,6 @@
 const Post = require("../models/post");
 const User = require("../models/user");
+const Comment = require("../models/comment");
 const {getToday, getTimestamp, within24Hours} = require("../utils/getToday");
 const ObjectID = require('mongodb').ObjectID;
 const {cloudinary} = require("../cloudinary");
@@ -75,16 +76,15 @@ module.exports.showPost = async (req,res) => {
         return res.redirect("/home");
     }
     const post = await Post.findById(id);
-    await post.populate("author").populate({
+    await post.populate({
         path: "comments",
         populate:{path: "author"}
     }).execPopulate();
-    const canEdit = within24Hours(post);
     if(!post){
         req.flash("error", "Rating not found!")
         return res.redirect("/home");
     }
-    res.render("posts/show", {user, post, canEdit, title: `@${post.author.username}'s day / todei `})
+    res.render("posts/show", {user, post, within24Hours, getToday, title: `@${post.author.username}'s day / todei `})
 }
 
 module.exports.bookmarkPost = async(req, res) => {

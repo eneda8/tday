@@ -10,14 +10,14 @@
         <% let index= 0; %> 
         <% for (let journal of user.journals) { %> 
         <% index++ %> 
-        <div class="card">
-            <div class="card-header" id="heading-<%=index%>">
-                <h6 class="mb-0">
-                    <a class="text-dark text-monospace text-decoration-underline" href="/write/<%=journal._id%>"><%=journal.date%></a>
+        <div class="card shadow-sm border-0 mb-1">
+            <div class="card-header bg-light" id="heading-<%=index%>">
+                <div class="d-flex justify-content-between">
+                    <a class="text-monospace" href="/write/<%=journal._id%>" title="Link to journal"><%=journal.date%></a>
                     <button class="btn btn-link text-warning ml-1 p-0" type="button" data-toggle="collapse" data-target="#journal-<%=index%>" aria-expanded="false" aria-controls="journal-<%=index%>"><i class="fas fa-caret-down"></i></button>
-                </h6>
+                </div>
             </div>
-            <div id="journal-<%=index%>" class="collapse multi-collapse" aria-labelledby="heading-<%=index%>"  >
+            <div id="journal-<%=index%>" class="collapse multi-collapse paper" aria-labelledby="heading-<%=index%>"  >
                 <div class="card-body">
                     <% if(journal.edited = true) { %> 
                     <small><%journal.editedTime%></small>

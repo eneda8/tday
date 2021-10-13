@@ -11,15 +11,12 @@
         This field cannot be empty!
       </div>  
     </div>
+    <button type="button" class="btn btn-sm btn-link text-danger" data-toggle="modal" data-target="#deleteModal" >Discard</button>
     <button class="btn btn-sm btn-link my-3" type="submit">Submit</button>  
-    <!-- <button type="button" class="btn btn-sm btn-link text-danger my-3" onclick="window.history.back();">Cancel</button>      -->
-    <button type="button" class="btn btn-sm btn-link text-danger my-3" data-toggle="modal" data-target="#deleteModal">
-      Cancel
-    </button>          
   </form>
 </div>
-          
-<%- include("../partials/confirmDeleteModals/journal") %>
+
+<%- include("../partials/confirmDeleteModals/journal")%>
 
 
 

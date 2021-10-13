@@ -1,23 +1,23 @@
 <div class="tab-pane fade" id="nav-bookmarks" role="tabpanel" aria-labelledby="nav-bookmarks-tab">
     <% if(!user.bookmarks.length) { %>
         <h6 class="text-center my-5">No bookmarks yet!</h6>
-    <% } else { for (bookmark of user.bookmarks) { %> 
+    <% } else { for (post of user.bookmarks) { %> 
             <div class="media mb-0 mt-2 mx-4 pl-2 pt-1">
-                <a class="mr-3" href="/u/<%=bookmark.author.username%>">
-                    <img src="<%=bookmark.author.avatar.thumbnail%>" alt="" style="width:45px; border-radius: 50%">
+                <a class="mr-3" href="/u/<%=post.author.username%>">
+                    <img src="<%=post.author.avatar.thumbnail%>" alt="" style="width:45px; border-radius: 50%">
                 </a>
                 <div class="media-body text-wrap">
                     <div class="d-flex justify-content-between mt-1">
-                        <p class="card-subtitle mt-1"><strong><a href="/u/<%=bookmark.author.username%>"><%=bookmark.author.displayName%></a></strong>  <img class="d-inline" style="width: 17px" src="<%=bookmark.author.country.flag%>" alt="" title="<%=bookmark.author.country.name %>"><small class="text-muted mb-0 d-block">@<%=bookmark.author.username%></small></p>
+                        <p class="card-subtitle mt-1"><strong><a href="/u/<%=post.author.username%>"><%=post.author.displayName%></a></strong>  <img class="d-inline" style="width: 17px" src="<%=post.author.country.flag%>" alt="" title="<%=post.author.country.name %>"><small class="text-muted mb-0 d-block">@<%=post.author.username%></small></p>
                         <!-- edit & delete dropdown menu-->
-                        <% if(currentUser && bookmark.author.equals(currentUser._id)) { %> 
+                        <% if(currentUser && post.author.equals(currentUser._id)) { %> 
                             <div class="btn-group dropleft" title="More" >
                               <button class="btn btn-sm text-dark mb-1 pb-1 bg-light rounded-circle" data-toggle="dropdown" style="height: 30px; width: 30px">...</button>
                               <div class="dropdown-menu">
-                                <% if(within24Hours(bookmark) === true) { %>
+                                <% if(within24Hours(post) === true) { %>
                                 <button class="dropdown-item pl-2"><a href="" data-toggle="modal" id="editPostLink" data-target="#editPostModal" class="text-decoration-none"><i class="fas fa-edit text-warning"></i> Edit</a></button>
                                 <% } %> 
-                                <form class="d-inline" action="/posts/<%=bookmark._id%>?_method=DELETE" method="POST">
+                                <form class="d-inline" action="/posts/<%=post._id%>?_method=DELETE" method="POST">
                                   <button class="dropdown-item pl-2 text-primary pb-0"><a><i class="fas fa-trash-alt text-danger"></i><span class="text-light">_</span>Delete</a></button>
                                 </form>
                               </div>
@@ -26,43 +26,25 @@
                     </div>
                     <span class="badge badge-light mb-2 mt-2" style="font-size: 13px"><%=post.date%>: <span class="star star<%=post.rating%>-result"></span></span>  
                     <div class="text-wrap">
-                        <p class="my-0"><%=bookmark.body%></p>
+                        <p class="my-0"><%=post.body%></p>
                     </div>
-                    <% if(bookmark.image) { %> 
+                    <% if(post.image) { %> 
                         <div class="d-block">
-                            <img class="img-fluid" src="<%=bookmark.image.fullsize%>" alt="">
+                            <img class="img-fluid" src="<%=post.image.fullsize%>" alt="">
                         </div>
                     <% } %> 
                     <div class="d-flex justify-content-between">
-                        <small class="pb-1"><a href="/posts/<%=bookmark._id%>" class="card-link"><%=bookmark.timestamp%></a></small>
-                        <% if(bookmark.edited){ %>
+                        <small class="pb-1"><a href="/posts/<%=post._id%>" class="card-link"><%=post.timestamp%></a></small>
+                        <% if(post.edited){ %>
                         <small class="pb-1 text-muted">Edited</small>
                         <% } %>
                         <div class="d-flex justify-content-around">
-                            <a href="/posts/<%=bookmark._id%>" class="text-decoration-none mr-2 pt-1 pr-1" title="Comments"><span class="text-muted" style="font-size: 13px;"><%=bookmark.comments.length%></span> <i class="fas fa-comments text-primary pt-0"></i></a> 
+                            <a href="/posts/<%=post._id%>" class="text-decoration-none mr-2 pt-1 pr-1" title="Comments"><span class="text-muted" style="font-size: 13px;"><%=post.comments.length%></span> <i class="fas fa-comments text-primary pt-0"></i></a> 
+                            <button class="btn btn-sm btn-link p-0" title="Copy link" onclick="navigator.clipboard.writeText(window.location.href.slice(0,28)+'posts/<%=post._id%>')"><i class="fas fa-link text-warning mr-2"></i></button>
+                            <button class="btn btn-sm btn-link" title="Remove bookmark" data-toggle="modal" data-target="#bookmarkDeleteModal-<%=post._id%>"><i class="fas fa-bookmark text-danger"></i></i></button>
+                            
+                            <%-include("../../confirmDeleteModals/bookmark")%>
 
-                            <button class="btn btn-sm btn-link p-0" title="Copy link" onclick="navigator.clipboard.writeText(window.location.href.slice(0,28)+'posts/<%=bookmark._id%>')"><i class="fas fa-link text-warning mr-2"></i></button>
-
-                            <button class="btn btn-sm btn-link" title="Remove bookmark" data-toggle="modal" data-target="#bookmarkDeleteModal-<%=bookmark._id%>"><i class="fas fa-bookmark text-danger"></i></i></button>
-
-                            <div class="modal fade" id="bookmarkDeleteModal-<%=bookmark._id%>" tabindex="-1" aria-labelledby="bookmarkDeleteModalLabel-<%=bookmark._id%>" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="bookmarkDeleteModalLabel-<%=bookmark._id%>">Remove bookmark?</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
-                                        <form class="d-inline" action="/posts/<%=bookmark._id%>/bookmark?_method=DELETE" method="POST">
-                                            <button type="submit" class="btn btn-danger">Remove</button>
-                                        </form>
-                                    </div>
-                                </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>

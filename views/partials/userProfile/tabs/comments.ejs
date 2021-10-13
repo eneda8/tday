@@ -1,8 +1,7 @@
 <div class="tab-pane fade mb-3 pt-2" id="nav-comments" role="tabpanel" aria-labelledby="nav-comments-tab">
     <% if(!comments.length) { %>
     <h6 class="text-center my-5">No comments yet!</h6>
-    <% } else {%> 
-    <% for (let comment of comments) { %>
+    <% } else { for (let comment of comments) {%> 
     <div class="media mb-0 mt-2 mx-4 pl-2 pt-1">
         <a class="mr-3" href="/u/<%=user.username%>">
             <img src="<%=user.avatar.thumbnail%>" alt="" style="width:45px; border-radius: 50%">
@@ -19,35 +18,36 @@
             <small class="pb-1"><%=comment.timestamp%></small>
             <% if(currentUser && comment.author.equals(currentUser._id)) { %> 
             <button class="btn btn-link btn-sm d-inline pb-0" title="Delete comment" data-toggle="modal" data-target="#commentDeleteModal-<%=comment._id%>"><i class="fas fa-trash-alt text-danger"></i></button>
-            <!-- COMMENT DELETE MODAL - START -->
-            <div>
-                <div class="modal fade" id="commentDeleteModal-<%=comment._id%>" tabindex="-1" aria-labelledby="commentDeleteModalLabel-<%=comment._id%>" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="commentDeleteModalLabel">Delete comment?</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
-                                <% if(comment.post) { %> 
-                                <form class="d-inline" action="/posts/<%=comment.post._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
-                                <% } else { %> 
-                                <form class="d-inline" action="/comments/<%=comment._id%>?_method=DELETE" method="POST">
-                                <% } %> 
-                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- COMMENT DELETE MODAL - END -->
             <% } %> 
         </div>
     </div> 
-    <hr class="my-1 mx-4">                   
+    <hr class="my-1 mx-4">  
+    <div class="modal fade" id="commentDeleteModal-<%=comment._id%>" tabindex="-1" aria-labelledby="commentDeleteModalLabel-<%=comment._id%>" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content">
+                <div class="d-flex justify-content-end pr-2 pb-0 mb-0">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-header border-0 pb-1 pt-0">
+                    <h6 class="modal-title font-weight-bold d-block" id="commentDeleteModalLabel">Delete comment?</h6>
+                </div>
+                <div class="modal-body py-1">
+                    <p class="mb-0">Are you sure? This can't be undone.</p>
+                  </div>
+                <div class="modal-footer pt-1 border-0">
+                    <button type="button" class="btn btn-warning btn-sm" data-dismiss="modal">Cancel</button>
+                    <% if(comment.post) { %> 
+                    <form class="d-inline" action="/posts/<%=comment.post._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
+                    <% } else { %> 
+                    <form class="d-inline" action="/comments/<%=comment._id%>?_method=DELETE" method="POST">
+                    <% } %> 
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>    
     <% }} %>
 </div>

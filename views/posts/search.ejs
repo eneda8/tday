@@ -16,7 +16,7 @@
                 <span class="small text-muted mt-0"><%=docsFound %> ratings found </span> 
                 <%- include("../partials/search/paginate")%>
                 <%for (post of posts.docs) { %> 
-                <%- include("../partials/posts/posts")%>
+                <%- include("../partials/posts")%>
                 <% } %> 
                 <%- include("../partials/search/paginate")%>
             <% } else { %>

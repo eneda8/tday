@@ -1,4 +1,4 @@
-<div class="card mb-3 mt-1 pt-2 pl-2 pr-2 border-0">
+<div class="card my-3 pt-2 pl-2 pr-2 border-0 shadow-sm">
     <div class="media pr-3">
         <a href="/u/<%=post.author.username%>"><img style="width:45px; border-radius: 50%" src="<%=post.author.avatar.thumbnail%>" class="pr-2" alt=""></a>
         <div class="media-body text-wrap">
@@ -27,7 +27,7 @@
                     <% } %>
 
             </div>
-            <% if(title === "Home / todei") {%> 
+            <% if((title === "Home / todei") || (title === `${user.username}'s day / todei`)) {%> 
             <p class="mb-0"><span class="star star<%=post.rating%>-result"></span></p>
             <% } else { %> 
             <span class="badge badge-light mb-2" style="font-size: 13px"><%=post.date%>: <span class="star star<%=post.rating%>-result"></span></span>  
@@ -54,13 +54,19 @@
                     <a  class="copy btn btn-sm btn-link " role="button"  title="Copy link"  ><i class="fas fa-link text-warning mr-2" onclick="navigator.clipboard.writeText(window.location.href.slice(0,21)+'/posts/<%=post._id%>')"></i></a>
 
                     <% if(currentUser.bookmarks.includes(post._id)) { %>
-                        <button class="btn btn-sm btn-link" title="Remove bookmark" data-toggle="modal" data-target="#bookmarkDeleteModal-<%=post._id%>"><i class="fas fa-bookmark text-danger"></i></button>
+                        <% if(title === `@${currentUser.username} / todei`) { %> 
+                            <a href="/u/<%=currentUser.username%>#nav-bookmarks">
+                            <i class="fas fa-bookmark text-danger small"></i>
+                            </a>
+                        <% } else {%> 
+                        <button id="bookmarked" class="btn btn-sm btn-link" title="Remove bookmark" data-toggle="modal" data-target="#bookmarkDeleteModal-<%=post._id%>"><i class="fas fa-bookmark text-danger"></i></button>
                         <%- include("../partials/confirmDeleteModals/bookmark") %>
-                      <%} else { %> 
-                      <form action="/posts/<%=post._id%>/bookmark" method="POST" class="d-inline">
+                        <% } %> 
+                    <%} else { %> 
+                    <form action="/posts/<%=post._id%>/bookmark" method="POST" class="d-inline">
                         <button class="btn btn-sm btn-link" title="Bookmark"><i class="far fa-bookmark text-danger mr-2"></i></button>
-                      </form>
-                      <% } %> 
+                    </form>
+                    <% } %> 
                 </div>
             </div>
         </div>
@@ -68,8 +74,8 @@
     <%- include("../partials/confirmDeleteModals/post") %>
     <hr class="my-1">
     <div class="media mt-1 mb-1 pl-2">
-        <a class="mr-1" href="/u/<%=user.username%>">
-        <img src="<%=user.avatar.thumbnail%>" alt="" class="border" style="width:40px; border-radius: 50%">
+        <a class="mr-1" href="/u/<%=currentUser.username%>">
+        <img src="<%=currentUser.avatar.thumbnail%>" alt="" class="border" style="width:40px; border-radius: 50%">
         </a>
         <div class="media-body mb-1">
             <form action="/posts/<%=post._id %>/comments" class="validated-form mr-2" method="POST" novalidate>
@@ -83,3 +89,5 @@
         </div>
     </div>
 </div>
+
+<%- include("../partials/toasts/copyToast") %>

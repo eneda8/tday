@@ -1,21 +1,28 @@
-<div>
-    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-sm modal-dialog-centered">
         <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="deleteModalLabel">Discard journal?</h5>
+          <div class="d-flex justify-content-end pr-2 pb-0 mb-0">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
+                <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body">
-            This can't be undone and you'll lose your draft.
+          <div class="modal-header border-0 pb-1 pt-0">
+            <% let msg = title ==="Write / todei" ? "Discard" : "Delete" %> 
+            <h6 class="modal-title font-weight-bold" id="deleteModalLabel"><%=msg%> journal?</h6>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-warning" data-dismiss="modal">Keep Writing</button>
-            <button type="button" class="btn btn-danger" onclick="window.history.back();">Delete</button>
+          <div class="modal-body py-1">
+            <p>This can't be undone.</p>
+          </div>
+          <div class="modal-footer pt-1 border-0">
+            <button type="button" class="btn btn-sm btn-warning" data-dismiss="modal">Keep Writing</button>
+            <% if(!title === "Write / todei") { %> 
+            <form class="d-inline" action="/write/<%=journal._id%>?_method=DELETE" method="POST">
+                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+            </form>
+            <% } else { %> 
+              <button type="button" class="btn btn-sm btn-danger" onclick="window.history.back();">Discard</button>
+            <% } %> 
           </div>
         </div>
       </div>
     </div>
-  </div>

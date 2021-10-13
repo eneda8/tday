@@ -176,10 +176,8 @@ module.exports.searchAndFilterPosts = async(req, res, next) => {
 
 module.exports.filterPosts = async(req, res, next) => {
     const today = getToday();
-    console.log(today)
     const queryKeys = Object.keys(req.query); 
     const dbQueries = [{date: today}];
-    console.log(dbQueries)
     if(queryKeys.length) {
         let {rating, country} = req.query;
         if(rating) {
@@ -189,7 +187,6 @@ module.exports.filterPosts = async(req, res, next) => {
             dbQueries.push({authorCountry: country})
         }
         res.locals.dbQuery = dbQueries.length ? {$and: dbQueries} : {};
-        console.log(res.locals.dbQuery)
     }
     res.locals.query = req.query;
 	next();

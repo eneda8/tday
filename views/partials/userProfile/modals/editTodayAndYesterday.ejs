@@ -3,26 +3,25 @@
     <div>
         <div class="modal fade" id="editTodayPostModal" tabindex="-1" aria-labelledby="editPostModalLabel" aria-hidden="true">
             <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h6 class="modal-title" id="editPostModalLabel">Edit Today's Rating</h6>
+              <div class="modal-content bg-light p-3">
+                <div class="modal-header pb-0">
+                  <h6 class="modal-title font-weight-bold" id="editPostModalLabel">Edit Today's Rating</h6>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body pb-0">
                     <form action="/posts/<%=user.posts[0]._id%>?_method=PUT" method="POST" novalidate class="mb-3 validated-form" enctype="multipart/form-data">
                         <div>
                             <p class="">Current rating: <span class="star star<%=user.posts[0].rating%>-result"></span></p>
-                            <p>New rating:</p>
-                            <div>
-                                <label class="form-label mb-3"for="rating"></label>
+                            <p class="mb-0">New rating:</p>
+                            <div class="">
                                 <fieldset class="rating" required>
-                                    <input type="radio" id="star5-edit-today" name="post[rating]" value="5" required><label class = "" for="star5-edit-today" title="Amazing"></label>
-                                    <input type="radio" id="star4-edit-today" name="post[rating]" value="4" required><label class = "" for="star4-edit-today" title="Very good"></label>
-                                    <input type="radio" id="star3-edit-today" name="post[rating]" value="3" required><label class = "" for="star3-edit-today" title="Average"></label>
-                                    <input type="radio" id="star2-edit-today" name="post[rating]" value="2" required><label class = "" for="star2-edit-today" title="Not good"></label>
-                                    <input type="radio" id="star1-edit-today" name="post[rating]" value="1" required><label class = "" for="star1-edit-today" title="Terrible"></label>
+                                    <input type="radio" id="star5-edit-today" name="post[rating]" value="5" required><label class = "mb-0" for="star5-edit-today" title="Amazing"></label>
+                                    <input type="radio" id="star4-edit-today" name="post[rating]" value="4" required><label class = "mb-0" for="star4-edit-today" title="Very good"></label>
+                                    <input type="radio" id="star3-edit-today" name="post[rating]" value="3" required><label class = "mb-0" for="star3-edit-today" title="Average"></label>
+                                    <input type="radio" id="star2-edit-today" name="post[rating]" value="2" required><label class = "mb-0" for="star2-edit-today" title="Not good"></label>
+                                    <input type="radio" id="star1-edit-today" name="post[rating]" value="1" required><label class = "mb-0" for="star1-edit-today" title="Terrible"></label>
                                 </fieldset>
                                 <div class="valid-feedback">Looks good!</div>
                                 <div class="invalid-feedback">This field is required.</div>
@@ -31,26 +30,26 @@
                         </div>
                         <div class="mb-3 mt-0">
                             <label class="form-label mt-0" for="body">Jot down your thoughts or post an image:</label>
-                            <textarea class="form-control" rows="5"cols="10" type="text" name="post[body]"><%=user.posts[0].body%></textarea>
+                            <textarea class="form-control border-0" rows="5"cols="10" type="text" name="post[body]"><%=user.posts[0].body%></textarea>
                             <div class="valid-feedback">Looks good!</div>
                         </div>
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" id="image" name="image" onchange="document.getElementById('preview-<%=user.posts[0]._id%>').src = window.URL.createObjectURL(this.files[0])">
-                            <label class="custom-file-label" for="image">Choose image...</label>
+                            <label class="custom-file-label border-0" for="image">Choose image...</label>
                             <div class="valid-feedback">Looks good!</div>
                             <img class="img my-3" id="preview-<%=user.posts[0]._id%>" height="100px" src=""> 
                         </div>
                         <% if(user.posts[0].image) { %> 
                         <div >
                             <label class="d-block" for="deleteImage">Delete Image?</label>
-                            <img class="img img-fluid" src="<%=user.posts[0].image.thumbnail%>" alt="">
+                            <img class="img img-fluid my-0" src="<%=user.posts[0].image.thumbnail%>" alt="">
                             <input class="form-check-input" type="checkbox" name="deleteImage[]" value="<%=user.posts[0].image.filename%>">
                         </div>           
                         <% }  %>  
-                        <hr class="my-1">
-                        <button type="submit" class="btn btn-warning mt-5">Update</button>
-                        <button type="button" class="btn btn-dark mt-5" data-dismiss="modal">Cancel</button>
-                        
+                        <div class="modal-footer pr-0">
+                            <button type="button" class="btn btn-dark" data-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-warning">Update</button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -63,26 +62,25 @@
     <div>
         <div class="modal fade" id="editYesterdayPostModal" tabindex="-1" aria-labelledby="editPostModalLabel" aria-hidden="true">
             <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h6 class="modal-title" id="editPostModalLabel">Edit Yesterday's Rating</h6>
+              <div class="modal-content bg-light p-3">
+                <div class="modal-header pb-0">
+                  <h6 class="modal-title font-weight-bold" id="editPostModalLabel">Edit Yesterday's Rating</h6>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body pb-0">
                     <form action="/posts/<%=user.posts[1]._id%>?_method=PUT" method="POST" novalidate class="mb-3 validated-form" enctype="multipart/form-data">
                         <div>
                             <p class="">Current rating: <span class="star star<%=user.posts[1].rating%>-result"></span></p>
-                            <p>New rating:</p>
+                            <p class="mb-0">New rating:</p>
                             <div>
-                                <label class="form-label mb-3" for="rating"></label>
                                 <fieldset class="rating" required>
-                                    <input type="radio" id="star5-edit-yesterday" name="post[rating]" value="5" required><label class = "" for="star5-edit-yesterday" title="Amazing"></label>
-                                    <input type="radio" id="star4-edit-yesterday" name="post[rating]" value="4" required><label class = "" for="star4-edit-yesterday" title="Very good"></label>
-                                    <input type="radio" id="star3-edit-yesterday" name="post[rating]" value="3" required><label class = "" for="star3-edit-yesterday" title="Average"></label>
-                                    <input type="radio" id="star2-edit-yesterday" name="post[rating]" value="2" required><label class = "" for="star2-edit-yesterday" title="Not good"></label>
-                                    <input type="radio" id="star1-edit-yesterday" name="post[rating]" value="1" required><label class = "" for="star1-edit-yesterday" title="Terrible"></label>
+                                    <input type="radio" id="star5-edit-yesterday" name="post[rating]" value="5" required><label class = "mb-0" for="star5-edit-yesterday" title="Amazing"></label>
+                                    <input type="radio" id="star4-edit-yesterday" name="post[rating]" value="4" required><label class = "mb-0" for="star4-edit-yesterday" title="Very good"></label>
+                                    <input type="radio" id="star3-edit-yesterday" name="post[rating]" value="3" required><label class = "mb-0" for="star3-edit-yesterday" title="Average"></label>
+                                    <input type="radio" id="star2-edit-yesterday" name="post[rating]" value="2" required><label class = "mb-0" for="star2-edit-yesterday" title="Not good"></label>
+                                    <input type="radio" id="star1-edit-yesterday" name="post[rating]" value="1" required><label class = "mb-0" for="star1-edit-yesterday" title="Terrible"></label>
                                 </fieldset>
                                 <div class="valid-feedback">Looks good!</div>
                                 <div class="invalid-feedback">This field is required.</div>
@@ -90,25 +88,26 @@
                         </div>
                         <div class="mb-3 mt-0">
                             <label class="form-label mt-0" for="body">Jot down your thoughts or post an image:</label>
-                            <textarea class="form-control" rows="5"cols="10" type="text" name="post[body]"><%=user.posts[1].body%></textarea>
+                            <textarea class="form-control border-0" rows="5"cols="10" type="text" name="post[body]"><%=user.posts[1].body%></textarea>
                             <div class="valid-feedback">Looks good!</div>
                         </div>
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" id="image" name="image" onchange="document.getElementById('preview-<%=user.posts[1]._id%>').src = window.URL.createObjectURL(this.files[0])">
-                            <label class="custom-file-label" for="image">Choose image...</label>
+                            <label class="custom-file-label border-0" for="image">Choose image...</label>
                             <div class="valid-feedback">Looks good!</div>
                             <img class="img my-3" id="preview-<%=user.posts[1]._id%>" height="100px" src=""> 
                         </div>
                         <% if(user.posts[1].image) { %> 
                         <div >
                             <label class="d-block" for="deleteImage">Delete Image?</label>
-                            <img class="img img-fluid" src="<%=user.posts[1].image.thumbnail%>" alt="" >
+                            <img class="img img-fluid my-0" src="<%=user.posts[1].image.thumbnail%>" alt="" >
                             <input class="form-check-input" type="checkbox" name="deleteImage[]" value="<%=user.posts[1].image.filename%>">
                         </div>           
                         <% }  %>  
-                        <hr class="my-3">
-                        <button type="submit" class="btn btn-warning mt-5">Update</button>
-                        <button type="button" class="btn btn-dark mt-5" data-dismiss="modal">Cancel</button>
+                        <div class="modal-footer pr-0">
+                            <button type="button" class="btn btn-dark" data-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-warning">Update</button>
+                        </div>
                     </form>
                 </div>
             </div>
