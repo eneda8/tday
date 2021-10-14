@@ -19,6 +19,7 @@ module.exports.createPost = async (req, res, next) => {
     post.author = req.user._id;
     post.authorCountry = user.country.name;
     post.authorUsername = user.username;
+    post.authorDisplayName = user.displayName;
     user.posts.unshift(post);
     user.postedToday = true;
     user.postStreak ++; 
@@ -165,6 +166,7 @@ module.exports.search = async (req, res) => {
     let posts, docsFound;
     delete res.locals.dbQuery;
     if(dbQuery) {
+        console.log(dbQuery)
         posts = await Post.paginate(dbQuery, {
             page: req.query.page || 1,
             limit: 10,

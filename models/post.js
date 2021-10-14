@@ -45,6 +45,7 @@ const PostSchema = new Schema({
       },
     authorCountry: String,
     authorUsername: String,
+    authorDisplayName: String,
     comments: [
       {
       type: Schema.Types.ObjectId,

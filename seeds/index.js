@@ -66,6 +66,7 @@ const seedDB = async () => {
             post.author = user;
             post.authorCountry = user.country.name;
             post.authorUsername = user.username;
+            post.authorDisplayName = user.displayName;
             await post.save();
             user.postedToday = true;
             user.posts.unshift(post);

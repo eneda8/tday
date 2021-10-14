@@ -132,36 +132,37 @@ module.exports.searchAndFilterPosts = async(req, res, next) => {
     const queryKeys = Object.keys(req.query); 
     if(queryKeys.length) {
         const dbQueries = [];
-        let {textSearch, dateSearch, usernameSearch, rating, country} = req.query;
-        if(textSearch) {
-            textSearch = new RegExp(escapeRegExp(textSearch), "gi");
+        let {text, date, username, rating, country, image} = req.query;
+        text = new RegExp(escapeRegExp(text), "gi");
+        if(text && username) {
             dbQueries.push({ $or: [
-				{ body: textSearch },
-				{ authorUsername: textSearch },
+				{ body: text }
 			]});
+        } else if (text){
+            dbQueries.push({ $or: [
+				{ body: text },
+                {authorUsername: text},
+                {authorDisplayName: text}
+			]})
         }
-        if(usernameSearch) {
-            usernameSearch = new RegExp(escapeRegExp(usernameSearch), "gi");
-            dbQueries.push({authorUsername: usernameSearch});
+        if(username) {
+            username = new RegExp(escapeRegExp(username), "gi");
+            dbQueries.push({$or: [{authorUsername: username}, {authorDisplayName: username}]});
         }
-        if(dateSearch) {
-            dateSearch = new Date(dateSearch).toLocaleDateString(
-                'en-US',
-                {
-                timeZone: "UTC",
-                  year: 'numeric',
-                  month: 'short',
-                  day: 'numeric',
-                }
-              );
-            dateSearch = new RegExp(escapeRegExp(dateSearch), "gi");
-            dbQueries.push({date: dateSearch});
+        if(date) {
+            date = new Date(date).toLocaleDateString( 'en-US',
+            {timeZone: "UTC", year: 'numeric', month: 'short', day: 'numeric'});
+            date = new RegExp(escapeRegExp(date), "gi");
+            dbQueries.push({date: date});
         }
         if(rating) {
             dbQueries.push({rating: {$in: rating}});
         }
         if(country){
             dbQueries.push({authorCountry: country})
+        }
+        if(image){
+            dbQueries.push({image: {$exists: true}})
         }
         res.locals.dbQuery = dbQueries.length ? {$and: dbQueries} : {};
     }
@@ -179,12 +180,15 @@ module.exports.filterPosts = async(req, res, next) => {
     const queryKeys = Object.keys(req.query); 
     const dbQueries = [{date: today}];
     if(queryKeys.length) {
-        let {rating, country} = req.query;
+        let {rating, country, image} = req.query;
         if(rating) {
             dbQueries.push({rating: {$in: rating}});
         }
         if(country){
             dbQueries.push({authorCountry: country})
+        }
+        if(image){
+            dbQueries.push({image: {$exists: true}})
         }
         res.locals.dbQuery = dbQueries.length ? {$and: dbQueries} : {};
     }
