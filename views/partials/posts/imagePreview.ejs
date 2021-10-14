@@ -1,7 +1,11 @@
-<div>
-    <div class="modal fade" id="imagePreviewModal-<%=post._id%>" tabindex="-1" aria-labelledby="imagePreviewModal-<%=post._id%>" aria-hidden="true" >
-        <div class="modal-dialog modal-dialog-centered">
-            <img src="<%=post.image.fullsize%>" alt="" class="">
+<div class="modal bg-transparent " id="imagePreviewModal-<%=post._id%>" tabindex="-1" aria-labelledby="imagePreviewModal-<%=post._id%>" aria-hidden="true" >
+        <div class="modal-dialog modal-xl modal-dialog-centered d-flex flex-column">
+                <div class="modal-header border-0 d-block align-self-end">
+                    <button type="button" class="close mb-0" data-dismiss="modal" aria-label="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            <img class="img-fluid" src="<%=post.image.fullsize%>" alt="">
         </div>
-    </div>
 </div>
+

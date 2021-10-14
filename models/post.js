@@ -16,8 +16,8 @@ ImageSchema.virtual("thumbnail").get(function() {
 });
 
 ImageSchema.virtual("fullsize").get(function() {
-  return this.path.replace("/upload", "/upload/w_350")
-});
+  return this.path.replace("/upload", "/upload/c_fill_pad,g_auto,w_800,h_800")
+})
 
 
 const PostSchema = new Schema({

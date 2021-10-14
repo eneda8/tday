@@ -3,10 +3,10 @@
         <div class="px-4 pt-0 pb-4 cover" style="background-color: <%=user.coverColor%>; height: 130px">
             <div class="media align-items-end">
                 <div class="mr-3">
-                    <img src="<%=user.avatar.path%>" alt="" width="120" height="120" class="rounded-circle my-3 img" style="transform: translateY(2.3rem)">
+                    <img src="<%=user.avatar.path%>" alt="" width="120" height="120" class="rounded-circle my-3 img-fluid img-thumbnail" style="transform: translateY(2.3rem)">
                 </div>
                 <div class="text-white pl-2 pb-2">
-                    <h4 class="my-0"><a href="/u/<%=user.username%>" class="text-decoration-none text-white"><%=user.displayName%></a></h4>
+                    <h4 class="my-0"><a href="/u/<%=user.username%>" class="text-decoration-none text-white stretched-link"><%=user.displayName%></a></h4>
                     <p class="my-0"><span style="font-size: 10px"> @</span><%=user.username%></p>
                     <p class="small"><i class="fas fa-map-marker-alt text-white"></i>  <img title="<%=user.country.name %>" src="<%=user.country.flag%>" width="17px"></p>
                 </div>

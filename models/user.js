@@ -5,13 +5,13 @@ const passportLocalMongoose = require("passport-local-mongoose");
 const AvatarSchema = new Schema({
     path: {
         type: String,
-        default: "https://res.cloudinary.com/dw3o86f8j/image/upload/v1620091559/todai/avatars/defaultAvatar_afhnfz.png",
+        default: "https://res.cloudinary.com/dw3o86f8j/image/upload/v1634179812/todai/avatars/defaultAvatar_dhpfbw.png",
         required: true
         
     },
     filename: {
         type: String,
-        default: "todai/avatars/defaultAvatar_afhnfz",
+        default: "todai/avatars/defaultAvatar_dhpfbw",
         required: true
     }
   });
@@ -26,7 +26,7 @@ const AvatarSchema = new Schema({
   })
 
   AvatarSchema.virtual("profile").get(function() {
-    return this.path.replace("/upload", "/upload/w_150,h_150,c_fill")
+    return this.path.replace("/upload", "/upload/w_500,h_500,c_fill")
   })
 
 

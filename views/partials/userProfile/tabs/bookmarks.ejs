@@ -4,7 +4,7 @@
     <% } else { for (post of user.bookmarks) { %> 
             <div class="media mb-0 mt-2 mx-4 pl-2 pt-1">
                 <a class="mr-3" href="/u/<%=post.author.username%>">
-                    <img src="<%=post.author.avatar.thumbnail%>" alt="" style="width:45px; border-radius: 50%">
+                    <img class="img-fluid rounded-circle" src="<%=post.author.avatar.path%>" alt="" style="width:45px; ">
                 </a>
                 <div class="media-body text-wrap">
                     <div class="d-flex justify-content-between mt-1">
