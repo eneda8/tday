@@ -78,7 +78,7 @@
     -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.07);
     box-shadow: 0 1px 2px rgba(0,0,0,0.07);
     width: 100%;
-    height: 875px;
+    height: 100%;
 }
 
 .paper::before {
@@ -90,7 +90,7 @@
     bottom: 0;
     border: 1px solid;
     border-color: transparent #efe4e4;
-    height: 100vh;
+    height: 207%;
 }
 
 

@@ -2,7 +2,7 @@
 <div class="row py-3 px-4">
     <div class="col-md-8 col-lg-5 mx-auto">
         <form action="/posts" method="POST" novalidate class="mb-3 validated-form" enctype="multipart/form-data">
-            <h6 class="">How was your day?</h6>
+            <h6 class="">How's your <%=new Date().toLocaleString('en-us', {weekday:'long'})%>?</h6>
             <div class="">
                 <label class=""for="post[rating]"></label>
                 <fieldset class="rating d-block">

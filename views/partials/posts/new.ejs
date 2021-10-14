@@ -10,7 +10,7 @@
         <div class="modal-body">
           <form action="/posts" method="POST" novalidate class="mb-3 validated-form" enctype="multipart/form-data">
             <div>
-                <h6 class="">How was your day?</h6>
+                <h6 class="">How's your <%=new Date().toLocaleString('en-us', {weekday:'long'})%>?</h6>
 
                 <label class="form-label mb-3"for="post[rating]"></label>
                 <fieldset class="rating">
