@@ -6,26 +6,29 @@
                 <p class="card-subtitle mb-1 d-inline"><strong><a href="/u/<%=post.author.username%>"><%=post.author.displayName%></a></strong>  <img class="d-inline" style="width: 17px" src="<%=post.author.country.flag%>" title="<%=post.author.country.name%>" alt=""><small class="text-muted mb-1 d-block">@<%=post.author.username%></small></p>
                 
                 <% if(currentUser && post.author.equals(user._id)) { %> 
-                    <div class="btn-group" title="More" >
-                        <button class="btn btn-sm text-dark mb-1 pb-1 bg-light rounded-circle" data-toggle="dropdown" style="height: 30px; width: 30px">...</button>
-                        <div class="dropdown-menu dropdown-menu-lg-right">
-                            <% if(within24Hours(post) === true) { %>
-                                <!-- modal buttons specific to user profile page-->
-                                <% if(title.includes("@") && !title.includes("day")) { %> 
-                                    <% if(post.date == getToday()) {  %>
-                                        <button class="dropdown-item pl-2"><a href="" data-toggle="modal" id="editTodayPostLink" data-target="#editTodayPostModal" class="text-decoration-none"><i class="fas fa-edit text-warning"></i> Edit</a></button>
-                                        <% } else {%> 
-                                        <button class="dropdown-item pl-2"><a href="" data-toggle="modal" id="editYesterdayPostLink" data-target="#editYesterdayPostModal" class="text-decoration-none"><i class="fas fa-edit text-warning"></i> Edit</a></button>
-                                        <% } %> 
-                                 <%} else {%>  
-                                    <!-- general edit modal button -->
-                                <button class="dropdown-item pl-2"><a href="" data-toggle="modal" id="editPostLink" data-target="#editPostModal" class="text-decoration-none"><i class="fas fa-edit text-warning"></i> Edit</a></button>
-                            <% } }%> 
-                            <button class="dropdown-item pl-2 text-primary " data-toggle="modal" data-target="#deleteModal-<%=post._id%>"><a><i class="fas fa-trash-alt text-danger"></i><span class="text-light">_</span>Delete</a></button>
+                    <div class="btn-group dropleft" >
+                        <button class="btn btn-sm text-dark mb-1 pb-1 bg-light rounded-circle" data-toggle="dropdown" style="height: 30px; width: 30px" title="More" >...</button>
+                        <div class="dropdown-menu" >
+                        <% if(within24Hours(post) === true) { %>
+                            <!-- modal buttons specific to user profile page-->
+                            <% if(title.includes("@") && !title.includes("day")) { %> 
+                                <% if(post.date == getToday()) {  %>
+                            <a href="" data-toggle="modal" id="editTodayPostLink" data-target="#editTodayPostModal" class="dropdown-item pl-2  text-primary"><i class="fas fa-edit text-warning"></i> Edit</a>
+                                <% } else {%> 
+                            <a href="" data-toggle="modal" id="editYesterdayPostLink" data-target="#editYesterdayPostModal" class="dropdown-item pl-2 text-primary"><i class="fas fa-edit text-warning"></i> Edit</a>
+                                <% } %> 
+                            <%} else {%>  
+                        <!-- general edit modal button -->
+                            <a href="" data-toggle="modal" id="editPostLink" data-target="#editPostModal" class=" dropdown-item pl-2 text-primary"><i class="fas fa-edit text-warning"></i> Edit</a>
+                            <% } %>
+                            <% } else {%> 
+                            <a class=" pl-2 disabled text-decoration-none text-muted" data-toggle="tooltip" data-placement="bottom" title="This rating was posted over 24 hours ago and can no longer be edited.
+                            " disabled><i class="fas fa-edit" ></i> Edit</a>   
+                            <% } %> 
+                            <a href="" class="dropdown-item pl-2 text-primary" data-toggle="modal" data-target="#deleteModal-<%=post._id%>"><i class="fas fa-trash-alt text-danger mr-2" ></i>Delete</a>
                         </div>
                     </div>
                     <% } %>
-
             </div>
             <% if((title === "Home / todei") || (title === `${user.username}'s day / todei`)) {%> 
             <p class="mb-0"><span class="star star<%=post.rating%>-result"></span></p>

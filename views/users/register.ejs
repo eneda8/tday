@@ -1,17 +1,22 @@
 <% layout("layouts/boilerplate")%>
-<div class="container d-flex justify-content-center align-items-center mt-4">
+<div class="container mt-4">
     <div class="row">
-        <div class="col-md-6 offset-md-3 col-xl-6 offset-xl-4">
+        <div class="col-md-6 offset-md-2 col-xl-6 offset-xl-3">
             <div class="card border-0 shadow-lg mb-3">
                 <div class="card-body">
-                    <div class="jumbotron jumbotron-fluid py-3">
+                    <div class="jumbotron jumbotron-fluid pt-3 pb-2 mb-2">
                         <div class="container">
                             <p class="lead text-center">Join the world's first collective online journal</p>
                             <p class="text-warning text-center">──────<span>★</span>──────</p>
-                            <h1 class="display-4 text-center  logo">todei</h1>
+                            <h1 class="display-4 text-center text-warning font-weight-bold logo">todei</h1>
                         </div>
                     </div>
-                    <form action="/register" method="POST" class="validated-form" novalidate enctype="multipart/form-data">
+                    <form action="/register" method="POST" class="validated-form " novalidate enctype="multipart/form-data">
+                        <p class="my-0 font-weight-bold">Account Information</p>
+                        <small id="" class="text-muted mt-0">
+                            todei encourages anonymity. - Please don't use your real name (and no selfies!)
+                        </small>
+                        <hr class="my-1">
                         <div class="form-row mt-3">
                             <div class="col-md-6">
                                 <label class="form-label mb-0" for="username">Username</label>
@@ -22,9 +27,6 @@
                             <div class="col-md-6">
                                 <label class="form-label mb-0" for="displayName">Display Name</label>
                                 <input class="form-control" type="text" id="displayName" name="displayName" required>
-                                <small id="passwordHelpInline" class="text-muted">
-                                    <i class="fas fa-info-circle text-info"></i> Please don't use your real full name.
-                                </small>
                                 <div class="valid-feedback">Looks good!</div>
                                 <div class="invalid-feedback">Please enter a display name.</div>
                             </div>
@@ -37,21 +39,28 @@
                                 <div class="invalid-feedback">Please enter a valid email.</div>
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label mb-0" for="password">Password</label>
-                                <input class="form-control" type="password" id="password" name="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$" required>
-                                <small id="" class="text-muted">
-                                    <i class="fas fa-info-circle text-info"></i> 8-20 characters. Must contain at least one number, one uppercase letter, and one special character.
-                                </small>
+                                <label class="form-label mb-0" for="password">Password  <i class="fas fa-info-circle text-primary" data-toggle="tooltip" data-placement="bottom" title="Must be 8-20 characters. Must contain at least one number, one uppercase letter, and one special character."></i></label>
+                                <input class="form-control" type="password" id="password" name="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$" required >
                                 <div class="valid-feedback">Looks good!</div>
                                 <div class="invalid-feedback">Please enter a valid password.</div>
                             </div>
                         </div>
+                        <div class="mt-3">
+                            <p class="mb-0">Avatar</p>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="avatar" name="avatar" onchange="document.getElementById('preview').src = window.URL.createObjectURL(this.files[0])">
+                            <label class="custom-file-label" for="avatar">Choose an image...</label>
+                        </div>
+                        <img class="img-fluid my-2" id="preview" width="100px"/> 
+                        </div>
+                        <p class="my-0 font-weight-bold">Demographic Information <i class="fas fa-info-circle text-primary" data-toggle="tooltip" data-placement="bottom" title="We collect this information for data aggregation purposes only (e.g. our daily average rating charts). Your birth year and gender are always private and cannot be changed after you sign up.  "></i></p>
+                        <hr class="my-1 py-0">
                         <div class="form-row mt-3">
                             <div class=" col-md-6">
                                 <label class="form-label mb-0" for="birthyear">Birth year </label>
                                 <input class="form-control" type="number" id="birthyear" name="birthyear" min="1920" max="2001" placeholder="" required>
                                 <div class="valid-feedback">Looks good!</div>
-                                <div class="invalid-feedback">You must be between the ages of 10 and 120 years old to sign up.</div>
+                                <div class="invalid-feedback">Please enter a valid birth year. You must be between the ages of 10 and 120 years old to sign up.</div>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label mb-0" for="gender">Gender</label>
@@ -63,11 +72,8 @@
                                 <div class="valid-feedback">Looks good!</div>
                                 <div class="invalid-feedback">Please select a valid option.</div>
                             </div>
-                            <small id="" class="form-text text-muted pl-1">
-                                <i class="fas fa-info-circle text-info"></i> This information is for data aggregation purposes only. Your choice is private and can be changed at any time. 
-                            </small>
                         </div>
-                        <div class="mt-3">
+                        <div class="mt-3 mb-3">
                             <label class="form-label mb-0" for="country[name]">Country</label>
                             <select class="custom-select" id="countryName" name="country[name]" required>
                                 <option value="">─Please select an option─</option> 
@@ -78,17 +84,6 @@
                             <div class="valid-feedback">Looks good!</div>
                             <div class="invalid-feedback">Please select a valid option</div>
                         </div>
-                        <div class="mt-3">
-                            <p class="mb-0">Avatar</p>
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="avatar" name="avatar" onchange="document.getElementById('preview').src = window.URL.createObjectURL(this.files[0])">
-                            <label class="custom-file-label" for="avatar">Choose an image...</label>
-                            <small id="" class="text-muted">
-                                <i class="fas fa-info-circle text-info"></i> No selfies - we encourage anonymity :)
-                            </small>
-                        </div>
-                        <img class="img-fluid my-2" id="preview" width="100px"/> 
-                        </div>
                         <button class="btn btn-warning btn-block">Sign Up</button>
                         <p class="text-center mt-3 mb-0">Already registered? <a href="/login">Login</a></p>
                     </form>
@@ -98,3 +93,6 @@
     </div>
 </div>
   
+<script>
+
+</script>

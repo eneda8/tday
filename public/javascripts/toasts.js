@@ -11,3 +11,7 @@ let donateButtons = document.querySelectorAll(".donate");
         $('.donateToast').toast('show');
       }
 }
+
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})

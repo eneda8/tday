@@ -1,13 +1,13 @@
 <% layout("layouts/boilerplate")%>
-<div class="container-fluid mb-4">
-    <h4 class="font-weight-bold mb-0 mt-4 ml-5">Search</h4>
-    <div class="row px-4 mx-auto">
-        <div class="col-md-3 col-lg-3">
-            <div class="bg-light p-4">
+<div class="container-fluid mb-4" style="padding-left: 100px; padding-right: 100px;">
+    <h4 class="font-weight-bold mb-2 mt-4 ml-2">Search</h4>
+    <div class="row">
+        <div class="col">
+            <div class="bg-light shadow p-4">
                 <%- include("../partials/search/searchFilter") %>
             </div>  
         </div>
-        <div class="col-md-6 col-lg-6 bg-light overflow-auto" id="searchResults">
+        <div class="col-5 bg-light shadow overflow-auto mx-4" id="searchResults">
             <% if( posts && posts.docs){ %>
                 <div class="d-flex justify-content-between">
                     <h5 class="text-left mt-3 mb-0">Results</h5>
@@ -25,11 +25,12 @@
                 <p class="text-left mt-4">Submit the search form to find ratings.</p>
             <% } %>
         </div>
-        <div class="col-md-3 col-lg-3">
+        <div class="col">
             <%- include("../partials/sidebars/right/userPreview")%>
-            <%- include("../partials/sidebars/right/myData")%>
-            <%- include("../partials/sidebars/right/donateLinks")%>
-            <%- include("../partials/sidebars/right/footer")%>
+            <div class="mt-5">
+                <%- include("../partials/sidebars/right/donateLinks")%>
+                <%- include("../partials/sidebars/right/footer")%>
+            </div>
          </div>
     </div>
 </div>

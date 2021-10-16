@@ -3,15 +3,15 @@
         <div class="">
             <div class="jumbotron jumbotron-fluid ml-5 pl-4 pt-4 pb-5 mr-3 mb-0 shadow" >
                 <div class="container-fluid p-4">
-                   
                     <h1 class="display-4">Welcome to <strong style="font-family: 'Courgette" class="text-warning">todei<sup style="font-size: 12px">&copy</sup></strong></h1>
                     <div class="d-flex">
                     <p class="lead mb-0">The world's first collective online journal</p><i class="fas fa-feather text-primary d-inline ml-2"></i>
                     </div>
                     <hr class="my-4">
-                    <p class="mark mb-2" style="width: fit-content;">See what today is like for everyone!</p>
-                    <p class="mb-2">A quick, non-addictive tool to help you self-reflect and connect to the whole globe.</p>
-                    <a class="btn btn-warning btn-lg" href="/register" role="button">Sign up</a>
+                    <p class="mb-3">A quick tool to help you self-reflect and connect to the whole globe.</p>
+                    <p class="mark mb-5" style="width: fit-content;">See what today is like for everyone!</p>
+                    <a class="btn btn-warning btn-lg mr-2" href="/register" role="button">Sign up</a>
+                    <a class="btn btn-primary btn-lg" href="/register" role="button">Learn more</a>
                 </div>
 
             </div>
@@ -19,10 +19,10 @@
          <div class="first px-5 bg-white shadow-lg " style="position:fixed;">
             <div class="row mt-4">
                 <div class="col content">
-                     <h1 class="logo">How's y<span class='text-warning'>(our)</span> <%=weekday %>?</h1>
+                     <h1 class="logo">How's y<span class='text-warning'>(our)</span> <%=today %>?</h1>
                </div>
             </div>
-            <div class="pl-5 row">
+            <div class="pl-5 row d-flex justify-content-end">
                 <div class=" wrapper ml-5 pl-5">
                     <input name="ratingRadio" type="radio" id="st1" value="1" />
                     <label for="st1"></label>
@@ -39,48 +39,39 @@
             
             <div class="row">
                 <div class="col mb-3">
-                    <textarea disabled style="resize: none" class="blinking-cursor d-block border mx-auto rounded border-dark shadow" cols="20" row="70">|</textarea>
+                    <textarea disabled style="resize: none" class="blinking-cursor d-block border mx-auto rounded border-dark shadow" cols="22" row="70">|</textarea>
                 </div>
             </div>
             <div class="row justify-content-end mb-4">
-                <!-- <button type="button" class="btn btn-outline btn-warning d-block my-3  shadow"><a href="/register" class="text-dark">Sign Up</a></button> -->
                 <button class="btn btn-warning mr-3 shadow" type="submit">Post</button>
             </div>
         </div>
-        <!-- <div class="second"> 
-            <div class="row justify-content-center mb-5 mt-3">
-                <div class=" text-center bg-light p-3">
-                    <h4 class="">Welcome to <strong style="font-family: 'Courgette" class="text-warning">todei<sup style="font-size: 12px">&copy</sup></strong></h4>
-                    <h6 class="">the world's first collective online journal</h6>
-                </div>
-            </div> 
-        </div> -->
         </div>
-        <div class=" container pr-5 mt-1 py-5 mx-5" style="width:50%">
+        <div class=" container pr-5 mt-4 mx-5" style="width:50%">
             <div class="row d-flex flex-wrap align-self-start pr-5 mr-5 pt-0 mt-0">
                 <div class="col features align-self-start mr-5 pt-0 mt-0" >
-                    <div class="row-col text-center mx-5">
+                    <div class="row-col text-center mr-5 mb-4 mt-0">
                         <div class="icon-round align-items-center"><i class="far fa-calendar-alt text-warning"></i></div>
                         <h5 class="font-weight-bold text-dark">Quick self-reflection</h5>
                         <p class="px-5">todei allows you to practice self-reflection in a quick, easy way. Rate your day on a scale of 1-5 and jot down a few thoughts. Over time, with daily self-reflection, you'll gain a clearer picture of your weeks, months and years.</p>
                     </div>
-                    <div class="row-col text-center mr-5">
+                    <div class="row-col text-center mr-5 mb-4">
                         <div class="icon-round" style="height: 80px"><i class=""><i class="fas fa-globe text-warning"></i></i></div>
                         <h5 class="font-weight-bold text-dark">A wider perspective</h5>
-                        <p class="px-5">Your home page shows you 10 randomized anonymous todei entries from all around the world. Filter by country and/or star rating for a wider perspective into today. </p>
+                        <p class="px-5">See what today's like for everyone. Your home page shows you 10 randomized anonymous todei entries from all around the world. You can also filter by country and/or star rating. </p>
                     </div>
-                    <div class="row-col text-center px-5 mr-5">
+                    <div class="row-col text-center px-5 mr-5 mb-4">
                         <div class="icon-round"><i class="fas fa-chart-line text-warning"></i></div>
                         <h5 class="font-weight-bold  text-dark">Data-driven</h5>
-                        <p class="px-5">We believe in healthy social comparison that is honest and data-driven. Track your own ratings over time (always private) and view national or global average ratings in real-time, with the option to filter data by date, country, age, and gender.</p>
+                        <p class="px-5">We believe in healthy social comparison that is honest and data-driven. Track your own ratings over time (always private) and view national or global average ratings in real-time, with the option to filter charts by date, country, age, and gender.</p>
                     </div>
-                    <div class="row-col  text-center px-5 mr-5">
+                    <div class="row-col  text-center px-5 mr-5 mb-0 pb-0">
                         <div class="icon-round "><i class="far fa-bell-slash text-warning"></i></div>
                         <h5 class="font-weight-bold text-dark">No addiction</h5>
                         <p class="px-5">todei is a minimal social network: no followers. no notifications. no likes. no endless timeline. (AKA no addiction.) You can only post one rating per day and we encourage anonymity across all interactions to protect the integrity of the ratings. todei is designed to help us connect to ourselves and to each other, without the toxicity.</p>
                     </div>
                 </div>
-                <div class="col doodles ">
+                <div class="col doodles">
                     <div class="row-col d-flex justify-content-end">
                         <img src="/images/doodles/7607.jpg" alt="" height="500px" width="600" class="shadow-lg">
                     </div>
@@ -90,16 +81,15 @@
                 </div>
             </div>
         </div>
-        <div class="d-flex justify-content-end mb-3">
-            <footer class="mr-4 pr-3 pb-0 mb-0">
+        <div class="d-flex justify-content-end my-5 pt-3">
+            <footer class="mr-4 pr-4 pb-0 mb-0">
                 <small class="text-muted text-right d-block">© 2021 todei</small>
                 <small class="text-muted text-right d-block">made with <i class="fas fa-heart text-danger"></i> by <a href="https://github.com/eneda8">eneda</a></small>
-                <a class="d-inline text-muted font-weight-light" href="#" style="font-size: 11px">About</a> |
-                <a class="d-inline text-muted font-weight-light" href="#" style="font-size: 11px">Privacy Policy</a> |
-                <a class="d-inline text-muted font-weight-light" href="#" style="font-size: 11px">Terms of Service</a> |
-                <a class="d-inline text-muted font-weight-light" href="#" style="font-size: 11px">Help</a> |
-                <a class="d-inline text-muted font-weight-light " href="#" style="font-size: 11px">Contact</a>
-               
+                <a class="d-inline  font-weight-light" href="#" style="font-size: 11px">About</a> |
+                <a class="d-inline  font-weight-light" href="#" style="font-size: 11px">Privacy Policy</a> |
+                <a class="d-inline  font-weight-light" href="#" style="font-size: 11px">Terms of Service</a> |
+                <a class="d-inline  font-weight-light" href="#" style="font-size: 11px">Help</a> |
+                <a class="d-inline  font-weight-light " href="#" style="font-size: 11px">Contact</a>
                 </footer>
         </div>
 
@@ -109,7 +99,7 @@
     .first {
         position: absolute;
         z-index: 5;
-        top: 13%;
+        top: 12%;
         right: 5%;
         border: 2px dashed black
     }
@@ -117,6 +107,6 @@
         position: absolute;
         z-index: 3;
         top: 60%;
-        right: 2%;
+        right: 2.5%;
     }
 </style>

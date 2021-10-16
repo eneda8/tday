@@ -11,23 +11,19 @@
                   </button>
                 </div>
                 <div class="modal-body pb-0">
-                    <form action="/posts/<%=user.posts[0]._id%>?_method=PUT" method="POST" novalidate class="mb-3 validated-form" enctype="multipart/form-data">
-                        <div>
+                    <form action="/posts/<%=user.posts[0]._id%>?_method=PUT" method="POST" novalidate class=" validated-form" enctype="multipart/form-data">
                             <p class="">Current rating: <span class="star star<%=user.posts[0].rating%>-result"></span></p>
                             <p class="mb-0">New rating:</p>
-                            <div class="">
-                                <fieldset class="rating" required>
-                                    <input type="radio" id="star5-edit-today" name="post[rating]" value="5" required><label class = "mb-0" for="star5-edit-today" title="Amazing"></label>
-                                    <input type="radio" id="star4-edit-today" name="post[rating]" value="4" required><label class = "mb-0" for="star4-edit-today" title="Very good"></label>
-                                    <input type="radio" id="star3-edit-today" name="post[rating]" value="3" required><label class = "mb-0" for="star3-edit-today" title="Average"></label>
-                                    <input type="radio" id="star2-edit-today" name="post[rating]" value="2" required><label class = "mb-0" for="star2-edit-today" title="Not good"></label>
-                                    <input type="radio" id="star1-edit-today" name="post[rating]" value="1" required><label class = "mb-0" for="star1-edit-today" title="Terrible"></label>
-                                </fieldset>
-                                <div class="valid-feedback">Looks good!</div>
-                                <div class="invalid-feedback">This field is required.</div>
-                            </div>
-        
-                        </div>
+                            
+                            <fieldset class="rating" required>
+                                <input type="radio" id="star5-edit-today" name="post[rating]" value="5" required><label class = "mb-0" for="star5-edit-today" title="Amazing"></label>
+                                <input type="radio" id="star4-edit-today" name="post[rating]" value="4" required><label class = "mb-0" for="star4-edit-today" title="Very good"></label>
+                                <input type="radio" id="star3-edit-today" name="post[rating]" value="3" required><label class = "mb-0" for="star3-edit-today" title="Average"></label>
+                                <input type="radio" id="star2-edit-today" name="post[rating]" value="2" required><label class = "mb-0" for="star2-edit-today" title="Not good"></label>
+                                <input type="radio" id="star1-edit-today" name="post[rating]" value="1" required><label class = "mb-0" for="star1-edit-today" title="Terrible"></label>
+                            </fieldset>
+                            <div class="valid-feedback">Looks good!</div>
+                            <div class="invalid-feedback">This field is required.</div>
                         <div class="mb-3 mt-0">
                             <label class="form-label mt-0" for="body">Jot down your thoughts or post an image:</label>
                             <textarea class="form-control border-0" rows="5"cols="10" type="text" name="post[body]"><%=user.posts[0].body%></textarea>
@@ -37,7 +33,7 @@
                             <input type="file" class="custom-file-input" id="image" name="image" onchange="document.getElementById('preview-<%=user.posts[0]._id%>').src = window.URL.createObjectURL(this.files[0])">
                             <label class="custom-file-label border-0" for="image">Choose image...</label>
                             <div class="valid-feedback">Looks good!</div>
-                            <img class="img my-3" id="preview-<%=user.posts[0]._id%>" height="100px" src=""> 
+                            <img class="img-fluid my-3" id="preview-<%=user.posts[0]._id%>" height="100px" src=""> 
                         </div>
                         <% if(user.posts[0].image) { %> 
                         <div >

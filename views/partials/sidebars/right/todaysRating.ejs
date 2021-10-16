@@ -1,4 +1,4 @@
-<div class="bg-light shadow-sm rounded my-5 p-3">
+<div class="bg-light shadow rounded my-5 p-3">
     <% if(user.postedToday === true && user.todaysPost.length) {%> 
         <h6 class="font-weight-bold mb-0 pb-0">
             <a href="/posts/<%=todaysPost._id%>" class="text-decoration-none">
@@ -6,7 +6,7 @@
             </a>
         </h6>
     <% } else { %> 
-        <div class="card my-2 border-0 shadow-sm">
+        <div class="card my-2 border-0">
             <div class="card-body pb-2">
                 <form action="/posts" method="POST" novalidate class="validated-form" enctype="multipart/form-data">
                     <h6 class="font-weight-bold">How's your <%=new Date().toLocaleString('en-us', {weekday:'long'})%>?</h6>
@@ -32,7 +32,7 @@
                     </div>
                     <img class="img-fluid my-2" id="preview" width="100px"/> 
                     <div class="mb-3 clearfix">
-                        <button class="btn btn-warning float-left">Submit</button>
+                        <button class="btn btn-warning float-right">Submit</button>
                     </div>
                 </form>
             </div>
