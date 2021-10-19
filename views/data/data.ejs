@@ -1,1 +1,14 @@
 <% layout("layouts/boilerplate")%>
+<!-- <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width= "800" height="700" src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=cfcfe579-3318-4f7b-8d37-1de846292726&theme=light&
+filter={'post.authorCountry'}"></iframe> -->
+
+<!-- <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="640" height="480" src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=cfcfe579-3318-4f7b-8d37-1de846292726&
+filter={'user.country.name'}"></iframe> -->
+
+<!-- <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="640" height="480" src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=0ae29aff-b511-4cdf-a83a-1f7fdea5e4af&theme=light&filter={'country.name':'<%=escapedCountry%>'}"></iframe>
+ -->
+
+ 
+    <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" height=400px width=680px src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=6527e02a-301c-48a9-8843-450dae8113d4&theme=light&filter={'user.username':'<%=currentUser.username%>'}"></iframe>
+
+    <p><%=currentUser._id%></p>

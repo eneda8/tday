@@ -4,11 +4,11 @@ const Post = require("../models/post");
 const Comment = require("../models/comment");
 const faker = require('faker');
 const countries = require("./countries");
-
 require("dotenv").config();
 
+const dbUrl = process.env.DB_URL;
 
-mongoose.connect("mongodb://localhost:27017/todai", {
+mongoose.connect(dbUrl, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true
@@ -25,31 +25,36 @@ db.once("open", () => {
 
 const seedDB = async () => {
     // register new users with faker
-    // for(let i =0; i < 100; i++) {
-    //     const email = faker.internet.email();
-    //     const username = faker.internet.userName();
+    // for(let i =0; i < 524; i++) {
+    //     const {username, name, email, avatar, dob} = faker.helpers.contextualCard();
     //     const password = faker.internet.password();
-    //     const birthday = faker.date.past();
+    //     const birthday = dob;
+    //     const birthyear = dob.getFullYear();
+    //     const displayName = name;
     //     const gender = ["female", "male"][Math.round(Math.random())];
+    //     const user = new User({email, username, displayName, password, birthday, birthyear, gender});
     //     const country = faker.address.country();
-    //     const user = new User({email, username, password, birthday, gender});
-    //     // user.country.name = country;
+    //     user.country.name = country;
     //     user.country.flag = countries[country];
     //     // //american seed data-----------
-    //     user.country.name = "United States of America";
-    //     user.country.flag = "/images/flags/US.png";
+    //     // user.country.name = "United States of America";
+    //     // user.country.flag = "/images/flags/US.png";
     //     // // -------------
-    //     user.avatar = {}; 
-    //     user.avatar.path = faker.internet.avatar();
-    //     user.displayName = faker.name.findName();
+    //     user.avatar = {};
+    //     user.avatar.path = avatar;
     //     user.bio = "This is a fake account used to generate data for demonstration purposes."
     //     user.coverColor = faker.internet.color();
     //     user.postedToday = false;
+    //     try{
     //     const registeredUser = await User.register(user, password);
+    //     }catch(e){
+    //         console.log(e)
+    //         next()
+    //     }
     // }
 
     // /make fake posts
-    for(let i = 0; i<1200; i++){
+    for(let i = 0; i<2000; i++){
         const rating = Math.floor(Math.random() * 5) + 1;
         let body;
         if(i % 2 == 0 ) {
@@ -57,7 +62,6 @@ const seedDB = async () => {
         } else {body = faker.lorem.sentences()}
         const user = await User.findOne().where({ "postedToday" : false }) .where({"bio": {$ne: "creator of this website" }})
         if(user){
-
             const post = new Post({rating, body});
             if(i % 2 == 0) {
                 post.image = {}
@@ -66,6 +70,8 @@ const seedDB = async () => {
             post.author = user;
             post.authorCountry = user.country.name;
             post.authorUsername = user.username;
+            post.authorGender = user.gender;
+            // post.authorBirthyear = user.birthyear
             post.authorDisplayName = user.displayName;
             await post.save();
             user.postedToday = true;
@@ -86,6 +92,19 @@ const seedDB = async () => {
            
         }
     }
+
+    //fix user data
+
+    // for(let i = 0; i <=1200; i++){
+    //     const user = await User.findOne().where({"bio": {$ne: "creator of this website" }})
+    //     const {dob} = faker.helpers.contextualCard()
+    //     const birthyear = dob.getFullYear();
+    //     user.birthday = dob;
+    //     user.birthyear = birthyear;
+    //     await user.updateOne({$set: {birthday:  dob}});
+    //     await user.updateOne({$set: {birthyear:  birthyear}});
+    //     await user.save();
+    // }
     //make fake comments
     // for(let i = 0; i<2500; i++){
     //     const body = faker.lorem.sentence();

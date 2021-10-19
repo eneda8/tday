@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@mongodb-js/charts-embed-dom": "^2.1.0",
     "cloudinary": "^1.25.1",
     "connect-flash": "^0.1.1",
     "debug": "^2.6.9",

@@ -1,11 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const passport = require("passport");
 const catchAsync = require("../utils/catchAsync");
-const User = require("../models/user");
-const users = require("../controllers/users");
-const posts = require("../controllers/posts");
+const data = require("../controllers/data");
 const {isLoggedIn, setPostedToday, blockDuplicatePost, checkPostStreak, isAccountOwner} = require("../middleware");
 
-router.route("/data")
+router.route("/")
         .get( isLoggedIn, setPostedToday, catchAsync(data.renderData));
+
+module.exports = router;

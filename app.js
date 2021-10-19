@@ -1,6 +1,4 @@
-if(process.env.NODE_ENV !== "production") {
-    require("dotenv").config();
-}
+require("dotenv").config();
 
 const express = require("express");
 const path = require("path");
@@ -22,8 +20,11 @@ const commentRoutes = require("./routes/comments");
 const deletedPostCommentRoutes = require("./routes/deletedPostComments");
 const journalRoutes = require("./routes/journals");
 const donateRoutes = require("./routes/donate");
+const dataRoutes = require("./routes/data");
 
-mongoose.connect("mongodb://localhost:27017/todai", {
+const dbUrl = process.env.DB_URL;
+
+mongoose.connect(dbUrl, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
@@ -101,8 +102,7 @@ app.use("/posts", postRoutes);
 app.use("/posts/:id/comments", commentRoutes);
 app.use("/comments", deletedPostCommentRoutes)
 app.use("/donate", donateRoutes);
-
-// app.use("/data", dataRoutes)
+app.use("/data", dataRoutes);
 
 app.get('/favicon.ico', (req, res) => res.status(204).end());
 
