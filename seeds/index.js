@@ -54,7 +54,7 @@ const seedDB = async () => {
     // }
 
     // /make fake posts
-    for(let i = 0; i<2000; i++){
+    for(let i = 0; i<1000; i++){
         const rating = Math.floor(Math.random() * 5) + 1;
         let body;
         if(i % 2 == 0 ) {
@@ -89,39 +89,35 @@ const seedDB = async () => {
             await user.updateOne({$set: {average:  userAverage}});
             await user.save();
          // ----------------------------
-           
         }
     }
 
     //fix user data
 
-    // for(let i = 0; i <=1200; i++){
-    //     const user = await User.findOne().where({"bio": {$ne: "creator of this website" }})
-    //     const {dob} = faker.helpers.contextualCard()
-    //     const birthyear = dob.getFullYear();
-    //     user.birthday = dob;
-    //     user.birthyear = birthyear;
-    //     await user.updateOne({$set: {birthday:  dob}});
-    //     await user.updateOne({$set: {birthyear:  birthyear}});
+    // const users = await User.find().where({"bio": {$ne: "creator of this website" }});
+    // for(let user of users){
+    //     await user.updateOne({$set: {"user.avatar.path":  faker.image.image()}});
     //     await user.save();
     // }
+    
     //make fake comments
-    // for(let i = 0; i<2500; i++){
-    //     const body = faker.lorem.sentence();
-    //     const timestamp = new Date().toLocaleString("en-US");
-    //     const comment = new Comment({body, timestamp});
-    //     const randUser = await User.aggregate([{ $sample: { size: 1 } }]);
-    //     const randPost = await Post.aggregate([{$match: {"date": "Oct 13, 2021"}}, { $sample: { size: 1 } }]);
-    //     const user = await User.findById(randUser[0]._id);
-    //     const post = await Post.findById(randPost[0]._id);
-    //     comment.author = user;
-    //     comment.post = post;
-    //     await post.comments.push(comment);
-    //     await user.comments.unshift(comment);
-    //     await comment.save();
-    //     await user.save();
-    //     await post.save();
-    // }
+    for(let i = 0; i<2500; i++){
+        const body = faker.lorem.sentence();
+        const timestamp = new Date().toLocaleString("en-US");
+        const comment = new Comment({body, timestamp});
+        const randUser = await User.aggregate([{ $sample: { size: 1 } }]);
+        const randPost = await Post.aggregate([{ $sample: { size: 1 } }]);
+        const user = await User.findById(randUser[0]._id);
+        const post = await Post.findById(randPost[0]._id);
+        console.log(post._id);
+        comment.author = user;
+        comment.post = post;
+        await post.comments.push(comment);
+        await user.comments.unshift(comment);
+        await comment.save();
+        await user.save();
+        await post.save();
+    }
 
 }
 

@@ -1,6 +1,6 @@
 <div class="card my-3 pt-2 pl-2 pr-2 border-0 shadow-sm">
     <div class="media pr-3">
-        <a href="/u/<%=post.author.username%>"><img class="img-fluid rounded-circle mr-2" style="width:45px;" src="<%=post.author.avatar.path%>" class="pr-2" alt=""></a>
+        <a href="/u/<%=post.author.username%>"><img class="img-fluid rounded-circle mr-2" style="width:45px;" src="<%=post.author.avatar.profile%>" class="pr-2" alt=""></a>
         <div class="media-body text-wrap">
             <div class="d-flex justify-content-between mt-2">
                 <p class="card-subtitle mb-1 d-inline"><strong><a href="/u/<%=post.author.username%>"><%=post.author.displayName%></a></strong>  <img class="d-inline" style="width: 17px" src="<%=post.author.country.flag%>" title="<%=post.author.country.name%>" alt=""><small class="text-muted mb-1 d-block">@<%=post.author.username%></small></p>
@@ -80,7 +80,7 @@
     <hr class="my-1">
     <div class="media mt-1 mb-1 pl-2">
         <a class="mr-1" href="/u/<%=currentUser.username%>">
-        <img src="<%=currentUser.avatar.path%>" alt="" class="img-fluid rounded-circle" style="width:40px;">
+        <img src="<%=currentUser.avatar.profile%>" alt="" class="img-fluid rounded-circle" style="width:35px;">
         </a>
         <div class="media-body mb-1">
             <form action="/posts/<%=post._id %>/comments" class="validated-form mr-2" method="POST" novalidate>

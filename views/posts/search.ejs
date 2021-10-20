@@ -14,6 +14,16 @@
                     <a href="#" class="small pt-3" onclick="myHilitor.remove(); this.classList.add('d-none')">Clear highlighting</a>
                 </div>
                 <span class="small text-muted mt-0"><%=docsFound %> ratings found </span> 
+                <% if(query.rating || query.country) { %> 
+                    <small class="text-muted d-block">Showing 
+                        <% if(query.rating) { %> 
+                            [<%=query.rating%>] star
+                        <% } %> ratings
+                            <% if(query.country) {%> 
+                             from <%=query.country%>
+                             <% } %> 
+                            </small>
+                    <% } %> 
                 <%- include("../partials/search/paginate")%>
                 <%for (post of posts.docs) { %> 
                 <%- include("../partials/posts")%>
@@ -33,5 +43,5 @@
             </div>
          </div>
     </div>
-</div>
+</div>  
 

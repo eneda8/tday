@@ -1,18 +1,18 @@
 <div class="" style="height: 200px;">
-    <div class="bg-light shadow rounded overflow-hidden card border-0" >
+    <div class="bg-light shadow-sm rounded overflow-hidden" >
         <% if(user.coverPhoto) { %> 
-        <div class="px-4 pt-0 pb-4 cover" style="background-image: url('<%=user.coverPhoto.path%>'); height: 130px">
-        <% } else {%> 
-        <div class="px-4 pt-0 pb-4 cover" style="background-color: <%=user.coverColor%>; height: 130px">
-        <% } %> 
+            <div class="px-4 pt-0 pb-4 cover" style="background-image: url('<%=user.coverPhoto.profile%>'); background-size:cover; background-repeat: no-repeat; height: 150px;">
+            <% } else {%> 
+            <div class="px-4 pt-0 pb-4 cover" style="background-color: <%=user.coverColor%>; height: 130px">
+            <% } %> 
             <div class="media align-items-end">
                 <div class="mr-3">
-                    <img src="<%=user.avatar.path%>" alt="" width="120" height="120" class="rounded-circle my-3 img-fluid img-thumbnail" style="transform: translateY(2.3rem)">
+                    <img src="<%=user.avatar.profile%>" alt="" width="150" height="150" class="rounded-circle my-3 img-fluid img-thumbnail" style="transform: translateY(2.3rem)">
                 </div>
-                <div class="text-black pb-3 ml-2">
-                    <h5 class="mb-1 px-2 font-weight-bold" style="background-color: rgba(255,255,255, .6);"><a href="/u/<%=user.username%>" class="text-decoration-none text-dark stretched-link"><%=user.displayName%></a></h5>
-                    <p class="my-1 px-2 font-weight-bold" style="background-color: rgba(255,255,255, .6);"> @<%=user.username%></p>
-                    <p class="small px-2 py-1 mt-1 font-weight-bold" style="background-color: rgba(255,255,255, .6);"><i class="fas fa-map-marker-alt text-primary mr-1"></i>  <img class="mr-1" title="<%=user.country.name %>" src="<%=user.country.flag%>" width="17px"><%=user.country.name %></p>
+                <div class="text-white pl-2" style="transform: translateY(-1.5rem)">
+                    <h3 class="my-0 py-0"><a href="/u/<%=user.username%>" class="text-decoration-none text-white stretched-link"><%=user.displayName%></a></h3>
+                    <p class="my-0 py-0"><span style="font-size: 10px"> @</span><%=user.username%></p>
+                    <p class="small"><i class="fas fa-map-marker-alt text-white mr-1"></i>  <img class="mr-1" title="<%=user.country.name %>" src="<%=user.country.flag%>" width="17px"><%=user.country.name %></p>
                 </div>
             </div>
         </div>

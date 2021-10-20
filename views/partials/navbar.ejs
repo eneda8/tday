@@ -34,7 +34,7 @@
         <div class="input-group">
           <div class="form-outline pt-2">
             <form action="/posts/search" method="GET" class="form-inline mr-3 validated-form">
-              <input class="form-control border-0" type="search" placeholder="Search todei..." style="height: 30px" aria-label="Search"  id="search" name="textSearch" required>
+              <input class="form-control border-0" type="search" placeholder="Search todei..." style="height: 30px" aria-label="Search"  id="search" name="text" required>
               <div class="input-group-append">
                 <button class="btn btn-sm btn-dark my-2 my-sm-0" style="height: 30px" type="submit"><i class="fas fa-search small"></i></button>
               </div>
@@ -43,7 +43,7 @@
         </div>
         
       <li class="nav-item dropdown mr-auto">
-        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="/u/<%=currentUser.username%>" role="button" aria-haspopup="true" aria-expanded="false"> <img class="img-fluid img-thumbnail rounded-circle p-0" src="<%=currentUser.avatar.path%>" style= "width: 30px;"alt=""></a>
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="/u/<%=currentUser.username%>" role="button" aria-haspopup="true" aria-expanded="false"> <img class="img-fluid img-thumbnail rounded-circle p-0" src="<%=currentUser.avatar.profile%>" style= "width: 30px;"alt=""></a>
         <div class="dropdown-menu" style="min-width: 5rem">
           <a class="dropdown-item p-2" href="/u/<%=currentUser.username%>"><i class="fas fa-user text-warning"></i> profile</a>
           <a class="dropdown-item p-2" href="/write"><i class="fas fa-pencil-alt text-warning"></i> write</a>

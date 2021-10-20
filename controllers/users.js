@@ -77,26 +77,8 @@ module.exports.renderLandingPage = (req, res) => {
 
 module.exports.renderHomePage= async (req, res) =>{
     const user = await User.findById(req.user._id).populate("posts");
-    const today = new Date().toLocaleDateString( 'en-US', {year: 'numeric', month: 'long', day: 'numeric'});
-            //global average rating
-            const todayAvg = new Date().toLocaleDateString(
-                'en-US',
-                {
-                  year: 'numeric',
-                  month: 'short',
-                  day: 'numeric',
-                }
-              );
-        
-        let average;
-        Post.aggregate([
-            {$match: {"date": todayAvg}},
-            {$group: {_id: null, avgRating: {$avg: "$rating"}}}
-        ]).then(function(res) {
-            if(res[0]){
-            average = res[0].avgRating.toFixed(2)
-            } else average = 0
-        })
+    const longToday = new Date().toLocaleDateString( 'en-US', {year: 'numeric', month: 'long', day: 'numeric'});
+    const today = getToday();
     try{
         //show today's rating, if available
         let todaysPost;
@@ -125,7 +107,7 @@ module.exports.renderHomePage= async (req, res) =>{
             post.populate("author").execPopulate();
             }
         }
-        res.render("users/home", {posts, today, within24Hours, todaysPost, user, average, countries, title: "Home / todei"});
+        res.render("users/home", {posts, longToday, today, within24Hours, todaysPost, user, countries, title: "Home / todei"});
     } catch(e) {
         console.log(e)
         req.flash("error", `Oops, something went wrong!`)

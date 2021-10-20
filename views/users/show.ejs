@@ -3,25 +3,23 @@
         <div class="col-md-8 col-lg-5 mx-auto">
             <div class="bg-white shadow rounded overflow-hidden">
                 <% if(user.coverPhoto) { %> 
-                <div class="px-4 pt-0 cover" style="background-image: url('<%=user.coverPhoto.path%>'); height: 350px;">
+                <div class="px-4 pt-0 pb-4" style="background-image: url('<%=user.coverPhoto.profile%>'); background-size:cover; background-repeat: no-repeat;">
                 <% } else {%> 
-                <div class="px-4 pt-0 pb-4 cover" style="background-color: <%=user.coverColor%>;">
+                <div class="px-4 pt-0 pb-4" style="background-color: <%=user.coverColor%>;background-size:cover; background-repeat: no-repeat;">
                 <% } %> 
-                    <div class="media align-items-end" style="transform: translateY(10rem)">
+                    <div class="media align-items-end" style="transform: translateY(6em)">
                         <div class="mr-3">
                             <a href="" data-toggle="modal" id ="avatarPreviewLink" data-target="#avatarPreviewModal">
-                                <img src="<%=user.avatar.path%>" alt="" width="200" height="200" class="rounded-circle my-3 img-fluid img-thumbnail">
+                                <img src="<%=user.avatar.profile%>" alt="" width="200" height="200" style="border-radius: 50%;" class="rounded-circle my-3 img-fluid img-thumbnail">
                             </a>
                             <% if(currentUser && user._id.equals(currentUser._id)) { %>
                             <a href="" data-toggle="modal" id="editProfileLink" data-target="#editProfileModal" class="btn btn-warning btn-sm btn-block">Edit profile <i class="fas fa-user-edit"></i></a>
                             <% } %> 
                         </div>
-                    </div>
-                    <div class="d-flex justify-content-end mt-0" style="transform: translateY(-5rem)">
-                        <div class="ml-3 text-black">
-                            <h4 class="my-1 p-2 font-weight-bold"  style="background-color: rgba(255,255,255, .6);"><%=user.displayName%></h4>
-                            <h6 class="p-2 font-weight-bold"  style="background-color: rgba(255,255,255, .6);">@<%=user.username%></h6>
-                            <p class="small mb-5 p-2 font-weight-bold"  style="background-color: rgba(255,255,255, .6);"><i class="fas fa-map-marker-alt text-primary mr-1"></i>  <img class="mr-2" title="<%=user.country.name %>" src="<%=user.country.flag%>"><%=user.country.name %></p>
+                        <div class="mb-5 pb-0">
+                            <h3 class="my-0" ><%=user.displayName%></h3>
+                            <h6 class="my-0">@<%=user.username%></h6>
+                            <p class="small mb-5 text-white"><i class="fas fa-map-marker-alt text-white mr-1"></i>  <img class="mr-1" title="<%=user.country.name %>" src="<%=user.country.flag%>"><%=user.country.name %></p>
                         </div>
                     </div>
                 </div>
@@ -54,7 +52,6 @@
                       <a class="nav-link active" id="nav-posts-tab" data-toggle="tab" href="#nav-ratings" role="tab" aria-controls="nav-ratings" aria-selected="true" data-toggle="tab" data-tab-history="true" data-tab-history-changer="push" data-tab-history-update-url="true">Ratings</a>
                       <a class="nav-link" id="nav-comments-tab" data-toggle="tab" href="#nav-comments" role="tab" aria-controls="nav-comments" aria-selected="false" data-toggle="tab" data-tab-history="true" data-tab-history-changer="push" data-tab-history-update-url="true">Comments</a>
                       <% if(currentUser && user._id.equals(currentUser._id)) { %>
-                      <a class="nav-link" id="nav-data-tab" data-toggle="tab" href="#nav-data" role="tab" aria-controls="nav-data" aria-selected="false" data-tab-history="true" data-tab-history-changer="push" data-tab-history-update-url="true">Data</a>
                       <a class="nav-link" id="nav-bookmarks-tab" data-toggle="tab" href="#nav-bookmarks" role="tab" aria-controls="nav-bookmarks" aria-selected="false" data-tab-history="true" data-tab-history-changer="push" data-tab-history-update-url="true">Bookmarks</a>
                       <a class="nav-link" id="nav-journals-tab" data-toggle="tab" href="#nav-journals" role="tab" aria-controls="nav-journals" aria-selected="false" data-tab-history="true" data-tab-history-changer="push" data-tab-history-update-url="true">Journals</a>
                       <% } %> 
@@ -65,16 +62,13 @@
                     <%- include("../partials/userProfile/tabs/comments") %>
                     <!-- AUTHORIZED TABS -->
                     <% if(currentUser && user._id.equals(currentUser._id)) { %> 
-                    <%- include("../partials/userProfile/tabs/data") %>
                     <%- include("../partials/userProfile/tabs/bookmarks")%>
                     <%- include("../partials/userProfile/tabs/journals")%>
                     <%} %> 
                 </div>
             </div>
         </div>
-</div>
-
+    </div>
 <%- include("../partials/userProfile/modals/editProfile") %>
 <%- include("../partials/userProfile/modals/avatarPreview") %>
 <%- include("../partials/userProfile/modals/editTodayAndYesterday") %>
-

@@ -21,12 +21,16 @@ const AvatarSchema = new Schema({
     filename: String
   });
 
+  coverSchema.virtual("profile").get(function(){
+      return this.path.replace("/upload/w_400,h_400,c_fill")
+  })
+
   AvatarSchema.virtual("thumbnail").get(function() {
     return this.path.replace("/upload", "/upload/w_40,h_40,c_thumb,c_fill,r_max")
   })
 
   AvatarSchema.virtual("profile").get(function() {
-    return this.path.replace("/upload", "/upload/w_500,h_500,c_fill")
+    return this.path.replace("/upload", "/upload/w_400,h_400,c_fill")
   })
 
 
