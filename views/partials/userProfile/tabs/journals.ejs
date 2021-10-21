@@ -5,16 +5,21 @@
         <button class="btn btn-outline btn-warning mb-5 mt-3" type="button"><a href="/write" class="text-dark">Write</a></button>
     </div>
     <% } else { %> 
-    <div class="accordion mx-4 mt-1 mb-3" id="journalsAccordion">
-        <button class="btn btn-link pl-0" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="">Expand/Collapse All</button>
+    <div class="accordion mx-4 mt-2 mb-3" id="journalsAccordion">
+        <div class="d-flex justify-content-between my-1 px-2">
+            <a href="/write" class="btn btn-warning btn-sm pb-0 mb-1">Add Journal</a>
+            <button class="btn btn-link pl-0 text-decoration-none text-warning" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="" title="Expand/Collapse All"><i class="fas fa-angle-double-down"></i></button>
+           
+        </div>
+
         <% let index= 0; %> 
         <% for (let journal of user.journals) { %> 
         <% index++ %> 
-        <div class="card shadow-sm border-0 mb-1">
-            <div class="card-header bg-light" id="heading-<%=index%>">
+        <div class="card shadow-sm border-0 mb-2">
+            <div class="card-header bg-light pb-0" id="heading-<%=index%>">
                 <div class="d-flex justify-content-between">
-                    <a class="text-monospace" href="/write/<%=journal._id%>" title="Link to journal"><%=journal.date%></a>
-                    <button class="btn btn-link text-warning ml-1 p-0" type="button" data-toggle="collapse" data-target="#journal-<%=index%>" aria-expanded="false" aria-controls="journal-<%=index%>"><i class="fas fa-caret-down"></i></button>
+                    <a class="" href="/write/<%=journal._id%>" title="<%=journal.date%>"><%= journal.title ? journal.title : journal.date%></a>
+                    <button class="btn btn-link text-warning ml-1 p-0" type="button" data-toggle="collapse" data-target="#journal-<%=index%>" aria-expanded="false" aria-controls="journal-<%=index%>" title="Expand/Collapse"><i class="fas fa-angle-down"></i></button>
                 </div>
             </div>
             <div id="journal-<%=index%>" class="collapse multi-collapse paper" aria-labelledby="heading-<%=index%>"  >

@@ -1,6 +1,7 @@
 <% layout("layouts/boilerplate")%>
+<div class="container-fluid">
 
-<div class="row mt-5 px-4 ">
+<div class="row mt-5 px-4 " style="padding-bottom: 10vh; overflow-y: hidden;">
     <div class="col-md-8 col-lg-8 mx-auto ">
         <div class="card border-0 shadow rounded px-3 pt-3 ">
             <a href="/home"><h6><i class="fas fa-arrow-left"></i> Back to Home</h6></a>
@@ -146,9 +147,7 @@
                                         <div class="invalid-feedback">Please enter a valid password.</div>
                                     </div>
                                 </div>
-
                                 <button class="btn btn-danger mt-3" type="button" data-toggle="modal" data-target="#deleteAccountModal">Delete Account</button>
-
                                 <div class="modal fade" id="deleteAccountModal" tabindex="-1" aria-labelledby="deleteAccountModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
@@ -175,3 +174,5 @@
  </div>
 
 
+
+</div>

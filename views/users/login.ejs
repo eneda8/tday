@@ -1,11 +1,11 @@
 <% layout("layouts/boilerplate")%>
-<div class="container d-flex justify-content-center align-items-center mt-4">
-    <div class="row mb-0 mt-5">
-        <div class="col-md-6 offset-md-3 col-xl-4 offset-xl-4 mb-0 mt-5">
-            <div class="card border-0 shadow-lg mb-0">
+<div class="container mt-4 " style="padding-bottom: 20vh; padding-top: 10vh; overflow-y: hidden;">
+    <div class="row">
+        <div class="col-md-6 offset-md-3 col-xl-4 offset-xl-4 ">
+            <div class="card border-0 shadow-lg mb-3">
                 <div class="card-body">
                     <img src="/images/login.jpg" class="card-img-top" alt="">
-                    <h5 class="card-title mt-4 mb-4 text-center">Login to todei</h5>
+                    <h5 class="card-title mt-4 mb-4 text-center">Login to <span class="logo font-weight-bold text-warning">todei</span></h5>
                     <form action="/login" method="POST" class="validated-form" novalidate>
                         <div class="mb-4">
                             <label class="sr-only" for="username">Username</label>
@@ -30,8 +30,3 @@
     </div> 
 </div> 
 
-<style>
-    body{
-        overflow-y: hidden;
-    }
-</style>

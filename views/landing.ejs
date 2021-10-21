@@ -1,22 +1,22 @@
 <% layout("layouts/boilerplate")%>
     <div class="container-fluid mt-5 mb-0">
         <div class="">
-            <div class="jumbotron jumbotron-fluid ml-5 pl-4 pt-4 pb-5 mr-3 mb-0 shadow" >
+            <div class="jumbotron jumbotron-fluid ml-5 pl-4 pt-4 pb-5 mr-3 mb-0 shadow-sm" >
                 <div class="container-fluid p-4">
                     <h1 class="display-4">Welcome to <strong style="font-family: 'Courgette" class="text-warning">todei<sup style="font-size: 12px">&copy</sup></strong></h1>
                     <div class="d-flex">
                     <p class="lead mb-0">The world's first collective online journal</p><i class="fas fa-feather text-primary d-inline ml-2"></i>
                     </div>
                     <hr class="my-4">
-                    <p class="mb-3">A quick tool to help you self-reflect, track progress, and connect to the whole globe.</p>
-                    <p class="mark mb-5" style="width: fit-content;">See what today is like for everyone!</p>
+                    <p class="mb-3">A quick tool to self-reflect, track progress, and connect to the whole globe.</p>
+                    <!-- <p class="mark mb-5" style="width: fit-content;">See what today is like for everyone!</p> -->
                     <a class="btn btn-warning btn-lg mr-2" href="/register" role="button">Sign up</a>
                     <a class="btn btn-primary btn-lg" href="/register" role="button">Learn more</a>
                 </div>
 
             </div>
         </div>
-         <div class="first px-5 bg-white shadow-lg " style="position:fixed;">
+         <div class="first px-5 bg-white shadow-lg " >
             <div class="row mt-4">
                 <div class="col content">
                      <h1 class="logo">How's y<span class='text-warning'>(our)</span> <%=today %>?</h1>
@@ -71,17 +71,17 @@
                         <p class="px-5">todei is a minimal social network: no followers. no notifications. no likes. no endless timeline. (AKA no addiction.) You can only post one rating per day and we encourage anonymity across all interactions to protect the integrity of the ratings. todei is designed to help us connect to ourselves and to each other, without the toxicity.</p>
                     </div>
                 </div>
-                <div class="col doodles">
+                <div class="col doodles mb-5">
                     <div class="row-col d-flex justify-content-end">
-                        <img src="/images/doodles/7607.jpg" alt="" height="500px" width="600" class="shadow-lg">
+                        <img src="/images/doodles/7607.jpg" alt="" height="500px" width="600" class="shadow">
                     </div>
                     <div class="row-col d-flex justify-content-end">
-                        <img src="/images/doodles/7607.jpg" alt="" height="500px" width="600" class="shadow-lg">
+                        <img src="/images/doodles/7607.jpg" alt="" height="500px" width="600" class="shadow">
                     </div>
                 </div>
             </div>
         </div>
-        <div class="d-flex justify-content-end my-5 pt-3">
+        <div class="d-flex justify-content-end my-5 pt-3 mr-3">
             <footer class="mr-4 pr-4 pb-0 mb-0">
                 <small class="text-muted text-right d-block">© 2021 todei</small>
                 <small class="text-muted text-right d-block">made with <i class="fas fa-heart text-danger"></i> by <a href="https://github.com/eneda8">eneda</a></small>
@@ -92,21 +92,21 @@
                 <a class="d-inline  font-weight-light " href="#" style="font-size: 11px">Contact</a>
                 </footer>
         </div>
-
     </div>
+    
 
 <style>
     .first {
-        position: absolute;
+        position: fixed;
         z-index: 5;
-        top: 12%;
-        right: 5%;
+        top: 13%;
+        right: 4%;
         border: 2px dashed black
     }
     .doodles{
         position: absolute;
         z-index: 3;
-        top: 60%;
+        top: 26%;
         right: 2.5%;
     }
 </style>

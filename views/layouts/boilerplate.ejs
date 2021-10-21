@@ -12,49 +12,28 @@
     <link rel="manifest" href="/favicon_io/site.webmanifest">
     <link rel="stylesheet" type="text/css" href="/stylesheets/stars/stars.css"/>
     <link rel="stylesheet" type="text/css" href="/stylesheets/styles.css"/>
-    <% if((title === 'todei') || (title === "Login / todei") || (title === "Register / todei") ) {%> 
     <link rel="stylesheet" type="text/css" href="/stylesheets/landing.css"/>
-    <% } %> 
     <% if((title === "Write / todei") || (title === "Journal / todei") || (title === "Edit Journal / todei") ) {%> 
-      <link rel="stylesheet" type="text/css" href="/stylesheets/write.css"/>
-      <% }%> 
+    <link rel="stylesheet" type="text/css" href="/stylesheets/write.css"/>
+    <% } else {%> 
+    <link rel="stylesheet" type="text/css" href="/stylesheets/paper.css"/>
+    <% } %> 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Courgette&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.min.js"></script>
-    <% if(title === "Login / todei"){%> 
-      <style>
-        .paper {
-          height: 100vh;
-        }
-        .paper::before {
-            height: 110vh;
-        }
-    </style>
-    <% } %> 
-    <% if(title === "Register / todei"){%> 
-      <style>
-            .paper {
-                height: 120vh
-            }
-            .paper::before {
-                height: 125vh;
-            }
-    </style>
-    <% } %> 
 </head>
-<body class="d-flex flex-column">
+<body class="d-flex flex-column h-100">
       <%- include("../partials/navbar") %>
     <div class="">
       <%- include('../partials/flash')%>
     </div>  
-    
-    <%if((title === 'todei') || (title === "Login / todei") || (title === "Register / todei")) { %>
-    <main class="container-fluid paper mb-0 pb-0">
-    <%} else {%>
-    <main class="container-fluid" >
-    <% } %> 
+    <% if(title.includes("Write") || title.includes("Journal")) { %> 
+    <main class="container-fluid px-0" >
+      <% } else { %> 
+    <main class="container-fluid px-0 paper" >
+      <% } %> 
       <%-body -%> 
     </main>
 
@@ -65,10 +44,6 @@
     <script src='/javascripts/validateForms.js'></script>
     <script src='/javascripts/alerts.js'></script>
     <script src='/javascripts/toasts.js'></script>
-    <!-- <% if(title.includes("Data")) {%> 
-    <script src="https://unpkg.com/@mongodb-js/charts-embed-dom"></script>
-    <script src='/javascripts/charts.js'></script>
-    <% } %>  -->
     <% if(title === "Search / todei") {%> 
     <script src="/javascripts/Hilitor.js"></script>
     <% } %> 

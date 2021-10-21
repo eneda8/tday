@@ -1,43 +1,85 @@
 <% layout("layouts/boilerplate")%>
 
-<div class="container-fluid mb-4 mt-5" style="padding-left: 100px; padding-right: 100px;">
-    <div class="row">
-        <div class="col">
-            <h3 class="mb-4">Home</h3>
-            <%- include("../partials/sidebars/left/menu") %>
-            <%- include("../partials/sidebars/left/globalChart") %>
-            <%- include("../partials/sidebars/left/GCP") %>
-        </div>
-        <div class="col-5  bg-light shadow rounded mx-5">
-            <h5 class="text-left font-weight-bold mt-3"><%=today%></h5>
-            <div>
+<div class="paper px-0 mx-0">
+    <div class="container-fluid mb-4 mt-5" style="padding-left: 100px; padding-right: 100px;">
+        <h3 class="mb-2">Home</h3>
+        <div class="row">
+            <div class="col">
+                <%- include("../partials/sidebars/left/menu") %>
+                <%- include("../partials/sidebars/left/globalChart") %>
+                <%- include("../partials/sidebars/left/GCP") %>
             </div>
-            <% if(!posts.includes(null)){ %>
-                <h6 class="text-left mb-0">10 random ratings from today <i class="fas fa-random text-right text-primary" title="refresh for 10 more" onclick="location.reload()"></i>
-                </h6>
-                <%- include('../partials/homeFilters')%>
-                <%for (post of posts) { %> 
-                    <%- include('../partials/posts/edit')%>
-                    <%- include('../partials/posts')%>
-                    <% } %> 
-                    <% if(posts.length) { %> 
-                    <i class="fas fa-random text-right text-primary" title="refresh for 10 more" onclick="location.reload()"></i>
-                    <% } else {%> 
-                    <div class="card border-0">
-                        <h5 class="text-center m-5">No ratings yet today :( </h5>
-                        <a class=" text-center mb-5" href="" data-toggle="modal" id="newPostLink" data-target="#newPostModal">Be the first to submit a rating!</a>
-                    </div>
-                    <% } %> 
-            <% } %>
-        </div>
-        <div class="col">
-            <%- include("../partials/sidebars/right/userPreview") %>
-            <%- include("../partials/sidebars/right/todaysRating") %>
-            <%- include("../partials/sidebars/right/myData") %>
-            <%- include("../partials/sidebars/right/donateLinks") %>
-            <%- include("../partials/sidebars/right/footer") %>
-        </div>
-    </div> 
+            <div class="col-5  bg-light shadow rounded mx-5">
+                <h5 class="text-left font-weight-bold mt-3"><%=longToday%></h5>
+                <div>
+                </div>
+                <% if(!posts.includes(null)){ %>
+                    <h6 class="text-left mb-0">10 random ratings from today <i class="fas fa-random text-right text-primary" title="Refresh for 10 more" onclick="location.reload()"></i>
+                    </h6>
+                    <%- include('../partials/homeFilters')%>
+                    <%for (post of posts) { %> 
+                        <%- include('../partials/posts/edit')%>
+                        <%- include('../partials/posts')%>
+                        <% } %> 
+                        <% if(posts.length) { %> 
+                        <i class="fas fa-random text-right text-primary" title="refresh for 10 more" onclick="location.reload()"></i>
+                        <% } else {%> 
+                        <div class="card border-0">
+                            <h5 class="text-center m-5">No ratings yet today :( </h5>
+                            <a class=" text-center mb-5" href="" data-toggle="modal" id="newPostLink" data-target="#newPostModal">Be the first to submit a rating!</a>
+                        </div>
+                        <% } %> 
+                <% } %>
+            </div>
+            <div class="col">
+                <%- include("../partials/sidebars/right/userPreview") %>
+                <%- include("../partials/sidebars/right/todaysRating") %>
+                <%- include("../partials/sidebars/right/myData") %>
+                <%- include("../partials/sidebars/right/donateLinks") %>
+                <%- include("../partials/sidebars/right/footer") %>
+            </div>
+        </div> 
+    </div>
 </div>
+
 <%- include("../partials/posts/new") %>
 
+<!-- <style>
+   .paper{
+    color: #444;
+    /* line-height: 20px; */
+    border: 1px solid #d2d2d2;
+    background: #fff;
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(#d9eaf3), color-stop(4%, #fff)) 0 4px;
+    background: -webkit-linear-gradient(top, #d9eaf3 0%, #fff 8%) 0 4px;
+    background: -moz-linear-gradient(top, #d9eaf3 0%, #fff 8%) 0 4px;
+    background: -ms-linear-gradient(top, #d9eaf3 0%, #fff 8%) 0 4px;
+    background: -o-linear-gradient(top, #d9eaf3 0%, #fff 8%) 0 4px;
+    background: linear-gradient(top, #d9eaf3 0%, #fff 8%) 0 4px;
+    -webkit-background-size: 100% 20px;
+    -moz-background-size: 100% 20px;
+    -ms-background-size: 100% 20px;
+    -o-background-size: 100% 20px;
+    background-size: 100% 20px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.07);
+    -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.07);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.07);
+    width: 100%;
+    height: 100%;
+}
+
+.paper::before {
+    content: '';
+    position: absolute;
+    width: 4px;
+    top: 0;
+    left: 50px;
+    bottom: 0;
+    border: 1px solid;
+    border-color: transparent #efe4e4;
+    height: 170%;
+}
+</style> -->

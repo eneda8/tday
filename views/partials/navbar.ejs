@@ -42,11 +42,10 @@
           </div>
         </div>
         
-      <li class="nav-item dropdown mr-auto">
+      <li class="nav-item dropdown mr-3">
         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="/u/<%=currentUser.username%>" role="button" aria-haspopup="true" aria-expanded="false"> <img class="img-fluid img-thumbnail rounded-circle p-0" src="<%=currentUser.avatar.profile%>" style= "width: 30px;"alt=""></a>
         <div class="dropdown-menu" style="min-width: 5rem">
           <a class="dropdown-item p-2" href="/u/<%=currentUser.username%>"><i class="fas fa-user text-warning"></i> profile</a>
-          <a class="dropdown-item p-2" href="/write"><i class="fas fa-pencil-alt text-warning"></i> write</a>
           <a class="dropdown-item p-2" href="/settings"><i class="fas fa-cog text-warning"></i> settings</a>
           <a class="dropdown-item p-2" href="/logout"><i class="fas fa-sign-out-alt text-warning"></i> logout</a>
         </div>
