@@ -1,9 +1,12 @@
 <% layout("layouts/boilerplate")%>
+<% if(journal.title) {%> 
+  <h6 class="text-muted text-center text-monospace font-weight-bold"><%=journal.title%></h6>
+  <% } %> 
 <h6 class="text-muted text-center text-monospace"><%=journal.date%></h6>
-<div class="paper">
-        <p  id="journalBody" autofocus="autofocus" class="text-monospace px-0 py-1 ml-0" rows="50" cols="100" name="journal[body]"  style="white-space: pre-wrap;"><%=journal.body%></p>
-      <button class="btn btn-sm btn-link my-3" type="button"><a class="" href="/write/<%=journal._id%>/edit">Edit</a></button>  
-      <button type="button" class="btn btn-sm btn-link text-danger my-3" data-toggle="modal" data-target="#deleteModal">
+<div class="paper text-wrap" spellcheck="false">
+        <textarea  id="journalBody" autofocus="autofocus" class="text-monospace text-wrap pr-1 py-1 ml-0 border-0" rows="50" cols="100" name="journal[body]"  style="white-space: pre-line;"><%=journal.body%></textarea>
+      <a class="btn btn-sm btn-primary my-3" href="/write/<%=journal._id%>/edit" role="button">Edit</a>
+      <button type="button" class="btn btn-sm btn-danger my-3" data-toggle="modal" data-target="#deleteModal">
         Delete
       </button>      
   </div>

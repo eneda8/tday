@@ -52,6 +52,7 @@ module.exports.updateJournal = async (req,res) => {
     const {journalId} = req.params;
     const journal = await Journal.findById(journalId);
     journal.body = req.body.journal.body;
+    journal.title = req.body.journal.title;
     journal.edited = true;
     await journal.save();
     journal.editedTime = new Date(journal.updatedAt).toLocaleString("en-US");

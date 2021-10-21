@@ -5,9 +5,8 @@ const User = require("./user");
 // const {getToday, getTimestamp} = require("../utils/getToday");
 
 const JournalSchema = new Schema({
-    date: {
-      type: String,
-    },
+    date: String,
+    title: String,
     body: {
       type: String,
       required: true
