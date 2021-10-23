@@ -54,43 +54,43 @@ const seedDB = async () => {
     // }
 
     // /make fake posts
-    for(let i = 0; i<1000; i++){
-        const rating = Math.floor(Math.random() * 5) + 1;
-        let body;
-        if(i % 2 == 0 ) {
-            body = faker.lorem.sentence()
-        } else {body = faker.lorem.sentences()}
-        const user = await User.findOne().where({ "postedToday" : false }) .where({"bio": {$ne: "creator of this website" }})
-        if(user){
-            const post = new Post({rating, body});
-            if(i % 2 == 0) {
-                post.image = {}
-                post.image.path = faker.image.image();
-            }     
-            post.author = user;
-            post.authorCountry = user.country.name;
-            post.authorUsername = user.username;
-            post.authorGender = user.gender;
-            // post.authorBirthyear = user.birthyear
-            post.authorDisplayName = user.displayName;
-            await post.save();
-            user.postedToday = true;
-            user.posts.unshift(post);
-            user.todaysPost = post._id;
-            user.postStreak ++; 
-            // update user average
-            let userAverage;
-            await Post.aggregate([
-                {$match: {"author": user._id}},
-                {$group: {_id: null, avgRating: {$avg: "$rating"}}}
-            ]).then(function(res) {
-             userAverage = res[0].avgRating.toFixed(2)
-             });
-            await user.updateOne({$set: {average:  userAverage}});
-            await user.save();
-         // ----------------------------
-        }
-    }
+    // for(let i = 0; i<1000; i++){
+    //     const rating = Math.floor(Math.random() * 5) + 1;
+    //     let body;
+    //     if(i % 2 == 0 ) {
+    //         body = faker.lorem.sentence()
+    //     } else {body = faker.lorem.sentences()}
+    //     const user = await User.findOne().where({ "postedToday" : false }) .where({"bio": {$ne: "creator of this website" }})
+    //     if(user){
+    //         const post = new Post({rating, body});
+    //         if(i % 2 == 0) {
+    //             post.image = {}
+    //             post.image.path = faker.image.image();
+    //         }     
+    //         post.author = user;
+    //         post.authorCountry = user.country.name;
+    //         post.authorUsername = user.username;
+    //         post.authorGender = user.gender;
+    //         // post.authorBirthyear = user.birthyear
+    //         post.authorDisplayName = user.displayName;
+    //         await post.save();
+    //         user.postedToday = true;
+    //         user.posts.unshift(post);
+    //         user.todaysPost = post._id;
+    //         user.postStreak ++; 
+    //         // update user average
+    //         let userAverage;
+    //         await Post.aggregate([
+    //             {$match: {"author": user._id}},
+    //             {$group: {_id: null, avgRating: {$avg: "$rating"}}}
+    //         ]).then(function(res) {
+    //          userAverage = res[0].avgRating.toFixed(2)
+    //          });
+    //         await user.updateOne({$set: {average:  userAverage}});
+    //         await user.save();
+    //      // ----------------------------
+    //     }
+    // }
 
     //fix user data
 
@@ -99,25 +99,40 @@ const seedDB = async () => {
     //     await user.updateOne({$set: {"user.avatar.path":  faker.image.image()}});
     //     await user.save();
     // }
+
+    // fix posts
+    // const posts = await Post.find({}).populate("author");
+    // for(let post of posts){
+    //     if(!post.authorUsername) {
+    //         try{
+    //             await post.updateOne({$set: {"authorUsername": post.author.username}})
+    //             await post.save()
+    //         } catch(e) {
+    //             if(!post.author){
+    //                 post.remove();
+    //             }
+    //         }
+    //     }
+    // }
     
     //make fake comments
-    for(let i = 0; i<2500; i++){
-        const body = faker.lorem.sentence();
-        const timestamp = new Date().toLocaleString("en-US");
-        const comment = new Comment({body, timestamp});
-        const randUser = await User.aggregate([{ $sample: { size: 1 } }]);
-        const randPost = await Post.aggregate([{ $sample: { size: 1 } }]);
-        const user = await User.findById(randUser[0]._id);
-        const post = await Post.findById(randPost[0]._id);
-        console.log(post._id);
-        comment.author = user;
-        comment.post = post;
-        await post.comments.push(comment);
-        await user.comments.unshift(comment);
-        await comment.save();
-        await user.save();
-        await post.save();
-    }
+    // for(let i = 0; i<2500; i++){
+    //     const body = faker.lorem.sentence();
+    //     const timestamp = new Date().toLocaleString("en-US");
+    //     const comment = new Comment({body, timestamp});
+    //     const randUser = await User.aggregate([{ $sample: { size: 1 } }]);
+    //     const randPost = await Post.aggregate([{ $sample: { size: 1 } }]);
+    //     const user = await User.findById(randUser[0]._id);
+    //     const post = await Post.findById(randPost[0]._id);
+    //     console.log(post._id);
+    //     comment.author = user;
+    //     comment.post = post;
+    //     await post.comments.push(comment);
+    //     await user.comments.unshift(comment);
+    //     await comment.save();
+    //     await user.save();
+    //     await post.save();
+    // }
 
 }
 

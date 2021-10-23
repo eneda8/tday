@@ -20,6 +20,6 @@ module.exports.renderAllData = async (req, res) => {
 
 module.exports.renderMyData = async (req, res) => {
     const user = await User.findById(req.user.id)
-    const escapedCountry = escape(user.country.name);
-    res.render("data/me", {countries, user, escapedCountry, today, longToday, title:"Data - Me / todei"})
+    const today = getToday();
+    res.render("data/me", {countries, user, today, title:"Data - Me / todei"})
 }
