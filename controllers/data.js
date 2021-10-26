@@ -9,17 +9,17 @@ module.exports.renderTodayData = async (req, res) => {
     const escapedCountry = escape(user.country.name);
     const today = getToday();
     const longToday = new Date().toLocaleDateString( 'en-US', {year: 'numeric', month: 'long', day: 'numeric'});
-    res.render("data/today", {countries, user, escapedCountry, today, longToday, title:"Data - Today / todei"})
+    res.render("data/today", {countries, user, escapedCountry, today, longToday, title:"Data - Today / t'day"})
 }
 
 module.exports.renderAllData = async (req, res) => {
     const user = await User.findById(req.user.id)
     const escapedCountry = escape(user.country.name);
-    res.render("data/all", {countries, user, escapedCountry, title:"Data - All / todei"})
+    res.render("data/all", {countries, user, escapedCountry, title:"Data - All / t'day"})
 }
 
 module.exports.renderMyData = async (req, res) => {
     const user = await User.findById(req.user.id)
     const today = getToday();
-    res.render("data/me", {countries, user, today, title:"Data - Me / todei"})
+    res.render("data/me", {countries, user, today, title:"Data - Me / t'day"})
 }

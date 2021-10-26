@@ -20,6 +20,7 @@ module.exports.createPost = async (req, res, next) => {
     post.authorCountry = user.country.name;
     post.authorUsername = user.username;
     post.authorDisplayName = user.displayName;
+    post.authorAgeGroup = user.ageGroup;
     user.posts.unshift(post);
     user.postedToday = true;
     user.postStreak ++; 
@@ -56,7 +57,7 @@ module.exports.showPost = async (req,res) => {
         req.flash("error", "Rating not found!")
         return res.redirect("/home");
     }
-    res.render("posts/show", {user, post, within24Hours, getToday, title: `@${post.author.username}'s day / todei `})
+    res.render("posts/show", {user, post, within24Hours, getToday, title: `@${post.author.username}'s day / t'day `})
 }
 
 module.exports.bookmarkPost = async(req, res) => {
@@ -96,7 +97,7 @@ module.exports.renderEditForm = async (req,res) => {
         req.flash("error", "Rating not found!")
         return res.redirect("/home");
     }
-    res.render("posts/edit", {post, title: "Edit rating / todei"})
+    res.render("posts/edit", {post, title: "Edit rating / t'day"})
 }
 
 module.exports.updatePost = async (req,res) => {
@@ -163,6 +164,7 @@ module.exports.deletePost = async(req, res) => {
 module.exports.search = async (req, res) => {
     const user = await User.findById(req.user._id).populate("posts");
     const {dbQuery} = res.locals;
+    console.log(dbQuery)
     let posts, docsFound;
     delete res.locals.dbQuery;
     if(dbQuery) {
@@ -186,5 +188,5 @@ module.exports.search = async (req, res) => {
             res.locals.error = "No results match that query. Please try a broader search.";
         }
     }
-    res.render("posts/search", {posts, user, within24Hours, countries, docsFound, title: "Search / todei"});
+    res.render("posts/search", {posts, user, within24Hours, countries, docsFound, title: "Search / t'day"});
 }

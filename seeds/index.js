@@ -25,14 +25,27 @@ db.once("open", () => {
 
 const seedDB = async () => {
     // register new users with faker
-    // for(let i =0; i < 524; i++) {
+    // for(let i =0; i < 27; i++) {
     //     const {username, name, email, avatar, dob} = faker.helpers.contextualCard();
     //     const password = faker.internet.password();
-    //     const birthday = dob;
-    //     const birthyear = dob.getFullYear();
+    //     // const birthyear = dob.getFullYear();
+    //     // if(birthyear >= 1901 && birthyear <=1927){
+    //     //     user.ageGroup = "Greatest Generation"
+    //     // }else if(birthyear >=1928 && birthyear <= 1945){
+    //     //     user.ageGroup = "Silent Generation"
+    //     // } else if(birthyear >=  1946 && birthyear <= 1964){
+    //     //     user.ageGroup = "Baby Boomers"
+    //     // } else if (birthyear >= 1965  && birthyear <=1980 ){
+    //     //     user.ageGroup = "Gen X"
+    //     // } else if (birthyear >= 1981 && birthyear <= 1996) {
+    //     //     user.ageGroup = "Millennials"
+    //     // } else if (birthyear >= 1997 && birthyear <= 2012){
+    //     //     user.ageGroup = "Gen Z"
+    //     // } 
+    //     const ageGroup = "Gen Z"
     //     const displayName = name;
     //     const gender = ["female", "male"][Math.round(Math.random())];
-    //     const user = new User({email, username, displayName, password, birthday, birthyear, gender});
+    //     const user = new User({email, username, displayName, password, ageGroup, gender});
     //     const country = faker.address.country();
     //     user.country.name = country;
     //     user.country.flag = countries[country];
@@ -49,7 +62,6 @@ const seedDB = async () => {
     //     const registeredUser = await User.register(user, password);
     //     }catch(e){
     //         console.log(e)
-    //         next()
     //     }
     // }
 
@@ -68,10 +80,11 @@ const seedDB = async () => {
     //             post.image.path = faker.image.image();
     //         }     
     //         post.author = user;
+    //         post.authorID = user._id;
     //         post.authorCountry = user.country.name;
     //         post.authorUsername = user.username;
     //         post.authorGender = user.gender;
-    //         // post.authorBirthyear = user.birthyear
+    //         post.authorAgeGroup= user.ageGroup;
     //         post.authorDisplayName = user.displayName;
     //         await post.save();
     //         user.postedToday = true;
@@ -94,26 +107,45 @@ const seedDB = async () => {
 
     //fix user data
 
-    // const users = await User.find().where({"bio": {$ne: "creator of this website" }});
+    // const users = await User.find({});
     // for(let user of users){
+        // UPDATE AVATARS
     //     await user.updateOne({$set: {"user.avatar.path":  faker.image.image()}});
+    //     await user.save();
+    // --------------------------------------------
+    //     if(user.birthyear >= 1901 && user.birthyear <=1927){
+    //         user.ageGroup = "Greatest Generation"
+    //     }else if(user.birthyear >=1928 && user.birthyear <= 1945){
+    //         user.ageGroup = "Silent Generation"
+    //     } else if(user.birthyear >=  1946 && user.birthyear <= 1964){
+    //         user.ageGroup = "Baby Boomers"
+    //     } else if (user.birthyear >= 1965  && user.birthyear <=1980 ){
+    //         user.ageGroup = "Gen X"
+    //     } else if (user.birthyear >= 1981 && user.birthyear <= 1996) {
+    //         user.ageGroup = "Millennials"
+    //     } else if (user.birthyear >= 1997 && user.birthyear <= 2012){
+    //         user.ageGroup = "Gen Z"
+    //     } 
     //     await user.save();
     // }
 
+
+
     // fix posts
-    // const posts = await Post.find({}).populate("author");
-    // for(let post of posts){
-    //     if(!post.authorUsername) {
-    //         try{
-    //             await post.updateOne({$set: {"authorUsername": post.author.username}})
-    //             await post.save()
-    //         } catch(e) {
-    //             if(!post.author){
-    //                 post.remove();
-    //             }
-    //         }
-    //     }
-    // }
+    const posts = await Post.find({}).populate("author");
+    for(let post of posts){
+        try{
+            post.authorAgeGroup = post.author.ageGroup;
+            await post.save();
+        } catch(e) {
+            console.log(e)
+            if(!post.author){
+                post.remove();
+                console.log("post deleted")
+            }
+        }
+    }
+    
     
     //make fake comments
     // for(let i = 0; i<2500; i++){
@@ -121,7 +153,7 @@ const seedDB = async () => {
     //     const timestamp = new Date().toLocaleString("en-US");
     //     const comment = new Comment({body, timestamp});
     //     const randUser = await User.aggregate([{ $sample: { size: 1 } }]);
-    //     const randPost = await Post.aggregate([{ $sample: { size: 1 } }]);
+    //     const randPost = await Post.aggregate([{$match: {"date": "Oct 23, 2021"}}, { $sample: { size: 1 } }]);        
     //     const user = await User.findById(randUser[0]._id);
     //     const post = await Post.findById(randPost[0]._id);
     //     console.log(post._id);

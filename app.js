@@ -115,7 +115,7 @@ app.all("*", (req, res, next) => {
 app.use((err, req, res, next) => {
     const {statusCode = 500} = err;
     if(!err.message) err.message = "Oh no, something went wrong!"
-    res.status(statusCode).render("error", {err, title: "Error / todei"});
+    res.status(statusCode).render("error", {err, title: "Error / t'day"});
 })
 
 app.listen(3000, () => {

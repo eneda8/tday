@@ -7,14 +7,13 @@
                     <div class="jumbotron jumbotron-fluid pt-3 pb-2 mb-2">
                         <div class="container">
                             <p class="lead text-center">Join the world's first collective online journal</p>
-                            <p class="text-warning text-center my-0">──────<span>★</span>──────</p>
-                            <h1 class="display-4 text-center text-warning font-weight-bold logo">todei</h1>
+                            <h1 class="display-4 text-center text-warning font-weight-bold logo">t'day</h1>
                         </div>
                     </div>
                     <form action="/register" method="POST" class="validated-form " novalidate enctype="multipart/form-data">
                         <p class="my-0 font-weight-bold">Account Information</p>
                         <small id="" class="text-muted mt-0">
-                            todei encourages anonymity. - Please don't use your real name (and no selfies!)
+                            t'day encourages anonymity. - Please don't use your real name (and no selfies!)
                         </small>
                         <hr class="my-1">
                         <div class="form-row mt-3">
@@ -57,10 +56,18 @@
                         <hr class="my-1 py-0">
                         <div class="form-row mt-3">
                             <div class=" col-md-6">
-                                <label class="form-label mb-0" for="birthyear">Birth year </label>
-                                <input class="form-control" type="number" id="birthyear" name="birthyear" min="1920" max="2001" placeholder="" required>
+                                <label class="form-label mb-0" for="ageGroup">Age Group</label>
+                                <select name="ageGroup" id="ageGroup" class="custom-select">
+                                    <option selected value="">─Please select an option─</option>
+                                    <option value="Greatest Generation">Greatest Generation (1901-1927)</option>
+                                    <option value="Silent Generation">Silent Generation (1928-1945)</option>
+                                    <option value="Baby Boomers">Baby Boomers (1946-1964)</option>
+                                    <option value="Gen X">Gen X (1965-1980)</option>
+                                    <option value="Millennials">Millennials (1981-1996)</option>
+                                    <option value="Gen Z">Gen Z (1997-2012)</option>
+                                </select>
                                 <div class="valid-feedback">Looks good!</div>
-                                <div class="invalid-feedback">Please enter a valid birth year. You must be between the ages of 10 and 120 years old to sign up.</div>
+                                <div class="invalid-feedback">Please select a valid option.</div>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label mb-0" for="gender">Gender</label>

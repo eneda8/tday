@@ -61,10 +61,8 @@
                                 </div>
                                 <div class="form-row mt-3">
                                     <div class=" col-md-6">
-                                        <label class="form-label mb-0" for="birthyear">Birth year </label>
-                                        <input class="form-control" type="number" id="birthyear" name="birthyear" min="1920" max="2001" placeholder="" value="<%=user.birthyear%>" disabled >
-                                        <div class="valid-feedback">Looks good!</div>
-                                        <div class="invalid-feedback">Please enter a valid year.</div>
+                                        <label class="form-label mb-0" for="ageGroup">Age Group</label>
+                                        <input class="form-control"  id="ageGroup" name="ageGroup" placeholder="" value="<%=user.ageGroup%>" disabled >
                                     </div>
                                 </div> 
                                 <div class="form-row mt-3">
@@ -75,17 +73,15 @@
                                             <option value="male">male</option>   
                                             <option value="female">female</option>          
                                         </select>
-                                        <div class="valid-feedback">Looks good!</div>
-                                        <div class="invalid-feedback">Please select a valid option.</div>
                                     </div>
                                 </div>
                                 <div class="form-row mt-3">
                                     <div class="col-md-6">
                                         <label class="form-label mb-0" for="country[name]">Country</label>
                                         <select class="custom-select" id="countryName" name="country[name]" >
-                                            <option selected value="<%=user.country.name%>">─Please select an option─</option> 
+                                            <option >─Please select an option─</option> 
                                             <%  for (let country of countries) { %>
-                                            <option value="<%=country["name"]%>"><%=country["name"]%></option>
+                                            <option value="<%=country["name"]%>" <%= country["name"] === user.country.name ? 'selected' : '' %>><%=country["name"]%></option>
                                             <%}%>        
                                         </select>
                                         <div class="valid-feedback">Looks good!</div>

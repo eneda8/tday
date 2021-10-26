@@ -12,13 +12,13 @@ module.exports.renderRegisterForm = (req, res) => {
         req.flash("error", "You are already logged in!");
         return res.redirect('/home');
     }
-    res.render("users/register", {countries, title: "Register / todei"})
+    res.render("users/register", {countries, title: "Register / t'day"})
 }
 
 module.exports.register = async (req,res, next) => {
     try{
-        const {username, displayName, email, password, birthyear, gender, country, avatar} = req.body;
-        const user = new User({username, displayName, email, birthyear, gender, country, avatar});
+        const {username, displayName, email, password, ageGroup, gender, country, avatar} = req.body;
+        const user = new User({username, displayName, email, ageGroup, gender, country, avatar});
         if(req.file){
         user.avatar = req.file;
         } else {
@@ -29,7 +29,7 @@ module.exports.register = async (req,res, next) => {
         const registeredUser = await User.register(user, password);
         req.login(registeredUser, err => {
             if(err) return next(err); 
-            req.flash("success", `Welcome to todei, ${req.user.displayName}!`);
+            req.flash("success", `Welcome to t'day, ${req.user.displayName}!`);
             res.redirect(`/u/${username}`);
         })
     } catch(err) {
@@ -44,7 +44,7 @@ module.exports.renderLoginForm = (req,res) => {
         req.flash("error", "You are already logged in!");
         return res.redirect('/home');
     }
-    res.render("users/login", {title:"Login / todei"})
+    res.render("users/login", {title:"Login / t'day"})
 }
 
 module.exports.login = (req,res) => {
@@ -69,7 +69,7 @@ module.exports.renderLandingPage = (req, res) => {
         return res.redirect("/home");
     } else {
         let today =new Date().toLocaleString('en-us', {weekday:'long'});
-        res.render("landing", {today, title: "todei"});
+        res.render("landing", {today, title: "t'day"});
     }
 }
 
@@ -90,7 +90,7 @@ module.exports.renderHomePage= async (req, res) =>{
             const randomDocs = [];
             const {dbQuery} = res.locals; 
             for(let i =0; i < num; i++) {
-                const count = await Post.countDocuments().where({date: getToday()});
+                const count = await Post.countDocuments().where({date: getToday()}).where({body:{$exists: true}});
                 const rand = Math.floor(Math.random() * count);
                 const filter = dbQuery ? dbQuery : {date: getToday()}
                 const randomDoc = await Post.findOne(filter).skip(rand);
@@ -107,7 +107,7 @@ module.exports.renderHomePage= async (req, res) =>{
             post.populate("author").execPopulate();
             }
         }
-        res.render("users/home", {posts, longToday, today, within24Hours, todaysPost, user, countries, title: "Home / todei"});
+        res.render("users/home", {posts, longToday, today, within24Hours, todaysPost, user, countries, title: "Home / t'day"});
     } catch(e) {
         console.log(e)
         req.flash("error", `Oops, something went wrong!`)
@@ -128,12 +128,12 @@ module.exports.showUserProfile = async(req, res) => {
         return res.redirect("/home");
     }
     const comments = await Comment.find({"author": user}).sort({"createdAt": -1}).populate("post")
-    res.render("users/show", {user, comments, within24Hours, getToday, title: `@${user.username} / todei`});
+    res.render("users/show", {user, comments, within24Hours, getToday, title: `@${user.username} / t'day`});
 };
 
 module.exports.updateProfile = async(req, res) => {
     const {displayName, bio, coverColor} = req.body;
-    const user = await User.findById(req.user._id);
+    const user = await User.findById(req.user._id).populate("posts");
     await user.update({...req.body});
     const oldAvatar = user.avatar;
     const oldCoverPhoto = user.coverPhoto || ""
@@ -148,11 +148,15 @@ module.exports.updateProfile = async(req, res) => {
             }  
         }
     }
+    for(let post of user.posts){
+        post.authorDisplayName = displayName;
+        post.save()
+    }
     if(!user){
         req.flash("error", "User not found!")
         return res.redirect("/home");
     }
-    user.save()
+    await user.save()
     req.flash("success", "Profile updated!");
     res.redirect(`/u/${user.username}`) 
 };
@@ -166,20 +170,27 @@ module.exports.showUserSettings = async(req, res) => {
         req.flash("error", "Oops, something went wrong!")
         return res.redirect("/home");
     }
-    res.render("users/settings", {user, countries, title: "Settings / todei"});
+    res.render("users/settings", {user, countries, title: "Settings / t'day"});
 };
 
 module.exports.updateUserInfo = async(req, res) => {
     try{
-        const user = await User.findById(req.user._id);
+        const user = await User.findById(req.user._id).populate("posts");
         if(!user) {
             req.flash("error", "Oops, something went wrong! Please try again.")
             return res.redirect("back");
         }
-        const {username, email, country, birthyear, gender} = req.body;
+        const {username, email, country} = req.body;
+        console.log(country)
         const newFlag = countries.filter(obj => Object.values(obj).includes(country.name))[0]["flag"];
+        console.log(newFlag)
         await user.update({...req.body});
         user.country.flag = newFlag;
+        for(let post of user.posts){
+            post.authorUsername = username;
+            post.authorCountry = country.name;
+            post.save()
+        }
         await user.save();
         req.flash("success", "Account updated!");
         res.redirect(`/u/${user.username}`)
@@ -188,7 +199,6 @@ module.exports.updateUserInfo = async(req, res) => {
         req.flash("error", "Oops something went wrong!");
         res.redirect("/settings")
     }
-
 }
 
 module.exports.changePassword = async(req, res) => {

@@ -5,13 +5,13 @@ const passportLocalMongoose = require("passport-local-mongoose");
 const AvatarSchema = new Schema({
     path: {
         type: String,
-        default: "https://res.cloudinary.com/dw3o86f8j/image/upload/v1634179812/todai/avatars/defaultAvatar_dhpfbw.png",
+        default: "https://res.cloudinary.com/dw3o86f8j/image/upload/v1634179812/t'day/avatars/defaultAvatar_dhpfbw.png",
         required: true
         
     },
     filename: {
         type: String,
-        default: "todai/avatars/defaultAvatar_dhpfbw",
+        default: "t'day/avatars/defaultAvatar_dhpfbw",
         required: true
     }
   });
@@ -40,12 +40,8 @@ const userSchema = new Schema({
         required: true,
         unique: true
     },
-    birthday: {
-        type: Date,
-        required: false,
-    },
-    birthyear: {
-        type: Number, 
+    ageGroup: {
+        type: String,
     },
     gender:{
         type: String,

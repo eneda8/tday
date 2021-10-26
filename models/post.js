@@ -46,6 +46,9 @@ const PostSchema = new Schema({
     authorCountry: String,
     authorUsername: String,
     authorDisplayName: String,
+    authorGender: String,
+    authorAgeGroup: String,
+    authorID: String,
     comments: [
       {
       type: Schema.Types.ObjectId,
@@ -64,25 +67,21 @@ const PostSchema = new Schema({
   } 
 ) 
 
+
 PostSchema.plugin(require("mongoose-autopopulate"));
 
-PostSchema.statics.random = async function(num) {
-  let randomDocs = [];
-  const today = getToday();
-  for(let i =0; i<num; i++){
-    const count = await this.countDocuments().where({ 'date': today });
-    const rand = Math.floor(Math.random() * count);
-    const randomDoc = await this.findOne({date: today}).skip(rand);
-    randomDocs.push(randomDoc);
-  }
-  return randomDocs;
-};
+// PostSchema.statics.random = async function(num) {
+//   let randomDocs = [];
+//   const today = getToday();
+//   for(let i =0; i<num; i++){
+//     const count = await this.countDocuments().where({ 'date': today });
+//     const rand = Math.floor(Math.random() * count);
+//     const randomDoc = await this.findOne({date: today}).skip(rand);
+//     randomDocs.push(randomDoc);
+//   }
+//   return randomDocs;
+// };
 
-// PostSchema.statics.bookmark = async function(){
-//     const user = await User.findById(req.user._id);
-//     user.bookmarks.unshift(this);
-//     user.save()
-// }
 
 // PostSchema.post("findOneAndDelete", async function (doc) {
 //   if(doc){
@@ -93,6 +92,18 @@ PostSchema.statics.random = async function(num) {
 //     })
 //   }
 // })
+
+PostSchema.virtual("desc").get(function(){
+  let desc;
+  switch(this.rating){
+    case 1: desc = "Terrible"; break;
+    case 2: desc = "Not good"; break;
+    case 3: desc = "Average"; break;
+    case 4: desc = "Very good"; break;
+    case 5: desc = "Amazing"; break;
+  }
+  return desc;
+})
 
 PostSchema.pre('findByIdAndUpdate', function() {
   const update = this.getUpdate();

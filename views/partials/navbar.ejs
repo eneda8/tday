@@ -1,6 +1,6 @@
 <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-warning " style="top: 0;">
   <div class="container-fluid">
-    <a class="navbar-brand font-weight-bold logo" href="/">todei</a>
+    <a class="navbar-brand font-weight-bold logo" href="/">t'day</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -34,7 +34,7 @@
         <div class="input-group">
           <div class="form-outline pt-2">
             <form action="/posts/search" method="GET" class="form-inline mr-3 validated-form">
-              <input class="form-control border-0" type="search" placeholder="Search todei..." style="height: 30px" aria-label="Search"  id="search" name="text" required>
+              <input class="form-control border-0" type="search" placeholder="Search t'day..." style="height: 30px" aria-label="Search"  id="search" name="text" required>
               <div class="input-group-append">
                 <button class="btn btn-sm btn-dark my-2 my-sm-0" style="height: 30px" type="submit"><i class="fas fa-search small"></i></button>
               </div>
@@ -46,6 +46,7 @@
         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="/u/<%=currentUser.username%>" role="button" aria-haspopup="true" aria-expanded="false"> <img class="img-fluid img-thumbnail rounded-circle p-0" src="<%=currentUser.avatar.profile%>" style= "width: 30px;"alt=""></a>
         <div class="dropdown-menu" style="min-width: 5rem">
           <a class="dropdown-item p-2" href="/u/<%=currentUser.username%>"><i class="fas fa-user text-warning"></i> profile</a>
+          <a class="dropdown-item p-2" href="/data/me"><i class="fas fa-cog text-warning"></i> my data</a>
           <a class="dropdown-item p-2" href="/settings"><i class="fas fa-cog text-warning"></i> settings</a>
           <a class="dropdown-item p-2" href="/logout"><i class="fas fa-sign-out-alt text-warning"></i> logout</a>
         </div>

@@ -6,7 +6,7 @@ const {getToday, getTimestamp} = require("../utils/getToday");
 
 module.exports.renderJournal =  async (req, res) => {
     const today = getTimestamp()
-    res.render("journals/write", {today, title: "Write / todei"});
+    res.render("journals/write", {today, title: "Write / t'day"});
 }
 
 module.exports.createJournal = async (req, res, next) => {
@@ -33,7 +33,7 @@ module.exports.showJournal = async(req, res, next) => {
             req.flash("error", "Journal not found!")
             return res.redirect(`/u/${user.username}#nav-journals`);
         }
-        res.render("journals/show", {journal, user, title: "Journal / todei"});
+        res.render("journals/show", {journal, user, title: "Journal / t'day"});
     }
 }
 
@@ -45,7 +45,7 @@ module.exports.renderEditJournal = async(req, res, next) => {
         req.flash("error", "Journal not found!")
         return res.redirect("/home");
     }
-    res.render("journals/edit", {journal, title: "Edit Journal / todei"});
+    res.render("journals/edit", {journal, title: "Edit Journal / t'day"});
 }
 
 module.exports.updateJournal = async (req,res) => {
