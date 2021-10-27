@@ -4,7 +4,6 @@
         <div class="media-body text-wrap">
             <div class="d-flex justify-content-between mt-2">
                 <p class="card-subtitle mb-1 d-inline"><strong><a href="/u/<%=post.author.username%>"><%=post.author.displayName%></a></strong>  <img class="d-inline" style="width: 17px" src="<%=post.author.country.flag%>" title="<%=post.author.country.name%>" alt=""><small class="text-muted mb-1 d-block">@<%=post.author.username%></small></p>
-                
                 <% if(currentUser && post.author.equals(user._id)) { %> 
                     <div class="btn-group dropleft" >
                         <button class="btn btn-sm text-dark mb-1 pb-1 bg-light rounded-circle" data-toggle="dropdown" style="height: 30px; width: 30px" title="More" >...</button>
@@ -31,9 +30,9 @@
                     <% } %>
             </div>
             <% if((title === "Home / t'day") || (title === `${user.username}'s day / t'day`)) {%> 
-            <p class="mb-0" title="<%=post.rating%> - <%=post.desc%>"><span class="badge badge-secondary mr-2 "><%=post.rating%></span><span class="star star<%=post.rating%>-result p-0 m-0"></span></p>
+            <p class="mb-0" title="<%=post.rating%> - <%=post.desc%>"><span class="star star<%=post.rating%>-result p-0 m-0"></span></p>
             <% } else { %> 
-            <span class="badge badge-light mb-2" style="font-size: 13px"><%=post.date%>: <span class="star star<%=post.rating%>-result"></span></span>  
+            <span class="badge badge-light mb-2" style="font-size: 13px" title="<%=post.rating%> - <%=post.desc%>"><%=post.date%>: <span class="star star<%=post.rating%>-result"></span></span>  
             <%}%>
             <div class="text-wrap">
                 <p class="mb-0" style="white-space: pre-line;"><%=post.body%></p>

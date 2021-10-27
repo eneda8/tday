@@ -1,26 +1,26 @@
 <form action="/posts/search" method="GET" id="searchFilterForm" class="pb-4">
     <div class="input-group mb-3">
         <div class="input-group-prepend border-right">
-          <span class="input-group-text" id="search-addon"><i class="fas fa-search text-dark"></i></span>
+          <span class="input-group-text border-0" id="search-addon"><i class="fas fa-search text-primary"></i></span>
         </div>
-        <input type="text" class="form-control border-0" placeholder="Search" aria-label="Search" aria-describedby="basic-addon1" id="textSearch" name="text" value="<%=query.text%>" required >
+        <input type="text" class="form-control border-0" placeholder="Search" aria-label="Search" aria-describedby="basic-addon1" id="text" name="text" value="<%=query.text%>" required >
       </div>
       <h5 class="">Filter</h5>
     <div class="input-group mb-3">
         <div class="input-group-prepend border-right">
-          <span class="input-group-text " id="username-addon"><i class="fas fa-at text-dark"></i></span>
+          <span class="input-group-text border-0 " id="username-addon"><i class="fas fa-at text-primary"></i></span>
         </div>
         <input type="text" class="form-control border-0" placeholder="Username or Display Name" aria-label="Username/Display Name" aria-describedby="basic-addon1" id="username" name="username" value="<%=query.username%>">
     </div>
     <div class="input-group mb-3 text-muted">
         <div class="input-group-prepend border-right">
-            <label class="input-group-text text-muted" for="date"><i class="far fa-calendar-alt text-dark"></i></label>
+            <label class="input-group-text text-muted border-0" for="date"><i class="far fa-calendar-alt text-primary"></i></label>
         </div>
         <input type="date" class="form-control border-0" id="date" placeholder="Date" name="date" value="<%=query.date%>">
      </div>
     <div class="input-group mb-3 border-0">
         <div class="input-group-prepend border-right">
-          <label class="input-group-text" for="countryName"><i class="fas fa-globe text-dark"></i></label>
+          <label class="input-group-text border-0" for="countryName"><i class="fas fa-globe text-primary"></i></label>
         </div>
         <select class="custom-select border-0 text-muted" id="countryName" name="country" >
             <option value="" class="text-muted">Country</option> 
@@ -31,7 +31,7 @@
     </div>
     <div class="input-group mb-3 bg-white">
         <div class="input-group-prepend">
-          <label class="input-group-text " id="rating-addon"><i class="far fa-star text-dark"></i></label>
+          <label class="input-group-text border-0 " id="rating-addon"><i class="far fa-star text-primary"></i></label>
         </div>
         <div>
             <p class="pl-2 pt-2 ml-1 pb-0 mb-0 text-muted" style="font-size: 16px;">Rating</p>
@@ -50,12 +50,13 @@
         </div>
     </div>
     <div class="input-group mb-3 bg-white">
-      <div class="input-group-prepend">
-        <div class="input-group-text pl-3 pr-3">
-          <input type="checkbox" aria-label="Has image?" name="image" <%=query.image ? 'checked' : ''%>>
-        </div>
+      <div class="input-group-prepend ">
+        <label class="input-group-text border-0 py-2 pr-3"><i class="fas fa-file-image text-primary"></i></label>
       </div>
-      <p class="pl-2 pt-2 ml-1 pb-0 mb-0 text-muted" style="font-size: 16px;">Has image?</p>
+      <div class="form-check form-check-inline">
+        <label for="image" class="form-check-label text-muted ml-3 mr-1 ">Has image?</label>
+        <input class="form-check-input" type="checkbox" aria-label="Has image?" name="image" <%=query.image ? 'checked' : ''%>>
+      </div>
     </div>
     <button class="btn btn-sm btn-warning float-right mb-5" type="submit" id="submit" >Submit</button>
 </form>

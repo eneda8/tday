@@ -195,3 +195,32 @@ module.exports.filterPosts = async(req, res, next) => {
     res.locals.query = req.query;
 	next();
 }
+
+module.exports.filterData = async(req, res, next) => {
+    const queryKeys = Object.keys(req.query); 
+    if(queryKeys.length) {
+        const dbQueries = {};
+        let {country, ageGroup, date, gender} = req.query;
+        if(date) {
+            date = new Date(date).toLocaleDateString( 'en-US',
+            {timeZone: "UTC", year: 'numeric', month: 'short', day: 'numeric'});
+            // date = new RegExp(escapeRegExp(date), "gi");
+            dbQueries[date] = date;
+        }
+        if(country){
+            dbQueries['authorCountry'] = country; 
+        }
+        if(gender){
+            dbQueries['authorGender'] = gender;
+        }
+        if(ageGroup){
+            dbQueries['authorAgeGroup'] = ageGroup;
+        }
+        res.locals.dbQuery = dbQueries
+    }
+    res.locals.query = req.query;
+    // const delimiter = queryKeys.length ? '&' : '?';
+	// queryKeys.splice(queryKeys.indexOf('page'), 1);
+	// res.locals.paginateUrl = req.originalUrl.replace(/(\?|\&)page=\d+/g, '') + `${delimiter}page=`;
+	next();
+}

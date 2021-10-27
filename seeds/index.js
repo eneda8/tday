@@ -66,44 +66,44 @@ const seedDB = async () => {
     // }
 
     // /make fake posts
-    // for(let i = 0; i<1000; i++){
-    //     const rating = Math.floor(Math.random() * 5) + 1;
-    //     let body;
-    //     if(i % 2 == 0 ) {
-    //         body = faker.lorem.sentence()
-    //     } else {body = faker.lorem.sentences()}
-    //     const user = await User.findOne().where({ "postedToday" : false }) .where({"bio": {$ne: "creator of this website" }})
-    //     if(user){
-    //         const post = new Post({rating, body});
-    //         if(i % 2 == 0) {
-    //             post.image = {}
-    //             post.image.path = faker.image.image();
-    //         }     
-    //         post.author = user;
-    //         post.authorID = user._id;
-    //         post.authorCountry = user.country.name;
-    //         post.authorUsername = user.username;
-    //         post.authorGender = user.gender;
-    //         post.authorAgeGroup= user.ageGroup;
-    //         post.authorDisplayName = user.displayName;
-    //         await post.save();
-    //         user.postedToday = true;
-    //         user.posts.unshift(post);
-    //         user.todaysPost = post._id;
-    //         user.postStreak ++; 
-    //         // update user average
-    //         let userAverage;
-    //         await Post.aggregate([
-    //             {$match: {"author": user._id}},
-    //             {$group: {_id: null, avgRating: {$avg: "$rating"}}}
-    //         ]).then(function(res) {
-    //          userAverage = res[0].avgRating.toFixed(2)
-    //          });
-    //         await user.updateOne({$set: {average:  userAverage}});
-    //         await user.save();
-    //      // ----------------------------
-    //     }
-    // }
+    for(let i = 0; i<1000; i++){
+        const rating = Math.floor(Math.random() * 5) + 1;
+        let body;
+        if(i % 2 == 0 ) {
+            body = faker.lorem.sentence()
+        } else {body = faker.lorem.sentences()}
+        const user = await User.findOne().where({ "postedToday" : false }) .where({"bio": {$ne: "creator of this website" }})
+        if(user){
+            const post = new Post({rating, body});
+            if(i % 2 == 0) {
+                post.image = {}
+                post.image.path = faker.image.image();
+            }     
+            post.author = user;
+            post.authorID = user._id;
+            post.authorCountry = user.country.name;
+            post.authorUsername = user.username;
+            post.authorGender = user.gender;
+            post.authorAgeGroup= user.ageGroup;
+            post.authorDisplayName = user.displayName;
+            await post.save();
+            user.postedToday = true;
+            user.posts.unshift(post);
+            user.todaysPost = post._id;
+            user.postStreak ++; 
+            // update user average
+            let userAverage;
+            await Post.aggregate([
+                {$match: {"author": user._id}},
+                {$group: {_id: null, avgRating: {$avg: "$rating"}}}
+            ]).then(function(res) {
+             userAverage = res[0].avgRating.toFixed(2)
+             });
+            await user.updateOne({$set: {average:  userAverage}});
+            await user.save();
+         // ----------------------------
+        }
+    }
 
     //fix user data
 
@@ -132,19 +132,19 @@ const seedDB = async () => {
 
 
     // fix posts
-    const posts = await Post.find({}).populate("author");
-    for(let post of posts){
-        try{
-            post.authorAgeGroup = post.author.ageGroup;
-            await post.save();
-        } catch(e) {
-            console.log(e)
-            if(!post.author){
-                post.remove();
-                console.log("post deleted")
-            }
-        }
-    }
+    // const posts = await Post.find({}).populate("author");
+    // for(let post of posts){
+    //     try{
+    //         post.authorAgeGroup = post.author.ageGroup;
+    //         await post.save();
+    //     } catch(e) {
+    //         console.log(e)
+    //         if(!post.author){
+    //             post.remove();
+    //             console.log("post deleted")
+    //         }
+    //     }
+    // }
     
     
     //make fake comments

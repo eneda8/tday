@@ -15,7 +15,9 @@ module.exports.renderTodayData = async (req, res) => {
 module.exports.renderAllData = async (req, res) => {
     const user = await User.findById(req.user.id)
     const escapedCountry = escape(user.country.name);
-    res.render("data/all", {countries, user, escapedCountry, title:"Data - All / t'day"})
+    const {dbQuery} = res.locals;
+    delete res.locals.dbQuery
+    res.render("data/all", {countries, user, escapedCountry, dbQuery, title:"Data - All / t'day"})
 }
 
 module.exports.renderMyData = async (req, res) => {
