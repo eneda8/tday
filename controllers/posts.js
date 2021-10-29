@@ -21,6 +21,7 @@ module.exports.createPost = async (req, res, next) => {
     post.authorUsername = user.username;
     post.authorDisplayName = user.displayName;
     post.authorAgeGroup = user.ageGroup;
+    post.authorID = user._id;
     user.posts.unshift(post);
     user.postedToday = true;
     user.postStreak ++; 
@@ -164,7 +165,6 @@ module.exports.deletePost = async(req, res) => {
 module.exports.search = async (req, res) => {
     const user = await User.findById(req.user._id).populate("posts");
     const {dbQuery} = res.locals;
-    console.log(dbQuery)
     let posts, docsFound;
     delete res.locals.dbQuery;
     if(dbQuery) {

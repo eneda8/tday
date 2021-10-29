@@ -29,7 +29,7 @@ const JournalSchema = new Schema({
 
 
 
-JournalSchema.plugin(mongooseFieldEncryption, { fields: ["body"], secret: `${process.env.JOURNAL_SECRET}` });
+JournalSchema.plugin(mongooseFieldEncryption, { fields: ["body", "title"], secret: `${process.env.JOURNAL_SECRET}` });
 
 
 module.exports = mongoose.model("Journal", JournalSchema)

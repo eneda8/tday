@@ -5,10 +5,10 @@ const data = require("../controllers/data");
 const {isLoggedIn, setPostedToday, blockDuplicatePost, checkPostStreak, isAccountOwner, filterData} = require("../middleware");
 
 router.route("/")
-        .get( isLoggedIn, setPostedToday, catchAsync(data.renderTodayData));
+        .get( isLoggedIn, setPostedToday, filterData, catchAsync(data.renderTodayData));
 
 router.route("/all")
-        .get( isLoggedIn, setPostedToday,filterData, catchAsync(data.renderAllData));
+        .get( isLoggedIn, setPostedToday, filterData, catchAsync(data.renderAllData));
         
 router.route("/me")
         .get( isLoggedIn, setPostedToday, catchAsync(data.renderMyData));     

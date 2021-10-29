@@ -198,14 +198,16 @@ module.exports.filterPosts = async(req, res, next) => {
 
 module.exports.filterData = async(req, res, next) => {
     const queryKeys = Object.keys(req.query); 
+    const dbQueries = {};
+    if(req.originalUrl = "/data"){
+        dbQueries['date'] = getToday();
+    } 
     if(queryKeys.length) {
-        const dbQueries = {};
         let {country, ageGroup, date, gender} = req.query;
         if(date) {
             date = new Date(date).toLocaleDateString( 'en-US',
             {timeZone: "UTC", year: 'numeric', month: 'short', day: 'numeric'});
-            // date = new RegExp(escapeRegExp(date), "gi");
-            dbQueries[date] = date;
+            dbQueries['date'] = date;
         }
         if(country){
             dbQueries['authorCountry'] = country; 
@@ -216,11 +218,8 @@ module.exports.filterData = async(req, res, next) => {
         if(ageGroup){
             dbQueries['authorAgeGroup'] = ageGroup;
         }
-        res.locals.dbQuery = dbQueries
     }
+    res.locals.dbQuery = dbQueries
     res.locals.query = req.query;
-    // const delimiter = queryKeys.length ? '&' : '?';
-	// queryKeys.splice(queryKeys.indexOf('page'), 1);
-	// res.locals.paginateUrl = req.originalUrl.replace(/(\?|\&)page=\d+/g, '') + `${delimiter}page=`;
 	next();
 }

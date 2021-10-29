@@ -66,7 +66,7 @@ const seedDB = async () => {
     // }
 
     // /make fake posts
-    for(let i = 0; i<1000; i++){
+    for(let i = 0; i<2000; i++){
         const rating = Math.floor(Math.random() * 5) + 1;
         let body;
         if(i % 2 == 0 ) {
