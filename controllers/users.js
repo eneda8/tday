@@ -73,6 +73,10 @@ module.exports.renderLandingPage = (req, res) => {
     }
 }
 
+module.exports.renderAbout = (req, res) => {
+    res.render("about", {title: "About / t'day"})
+}
+
 //------------------------- HOME -------------------------
 
 module.exports.renderHomePage= async (req, res) =>{
@@ -90,7 +94,8 @@ module.exports.renderHomePage= async (req, res) =>{
             const randomDocs = [];
             const {dbQuery} = res.locals; 
             for(let i =0; i < num; i++) {
-                const count = await Post.countDocuments().where({date: getToday()}).where({body:{$exists: true}});
+                // const count = await Post.countDocuments().where({date: getToday()}).where({body:{$exists: true}});
+                const count = await Post.countDocuments().where({date: getToday()}).where({$or: [{body:{$exists: true}}, {image:{$exists: true}}]});
                 const rand = Math.floor(Math.random() * count);
                 const filter = dbQuery ? dbQuery : {date: getToday()}
                 const randomDoc = await Post.findOne(filter).skip(rand);

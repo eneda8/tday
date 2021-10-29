@@ -4,7 +4,7 @@
     <% } else { for (let comment of comments) {%> 
     <div class="media mb-0 mt-2 mx-4 pl-2 pt-1">
         <a class="mr-3" href="/u/<%=user.username%>">
-            <img class="img-fluid rounded-circle" src="<%=user.avatar.path%>" alt="" style="width:45px;">
+            <img class="img-fluid rounded-circle" src="<%=user.avatar.profile%>" alt="" style="width:45px;">
         </a>
         <div class="media-body">
             <p class="card-subtitle mt-1"><strong><a href="/u/<%=user.username%>"><%=user.displayName%></a></strong>  <img class="d-inline" style="width: 17px" src="<%=user.country.flag%>" alt="" title="<%=user.country.name %>"><small class="text-muted mb-0 d-block">@<%=user.username%></small></p>

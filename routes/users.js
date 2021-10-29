@@ -14,6 +14,9 @@ router.route("/")
     .get(users.renderLandingPage)
     .post(passport.authenticate("local", {failureFlash: true, failureRedirect: "/login", }), users.login)
 
+ router.route("/about")
+    .get(users.renderAbout)   
+    
 router.get("/home", isLoggedIn, setPostedToday, checkPostStreak, catchAsync(filterPosts), catchAsync(users.renderHomePage))
 
 router.route("/register")
