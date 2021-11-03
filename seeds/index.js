@@ -66,7 +66,7 @@ const seedDB = async () => {
     // }
 
     // /make fake posts
-    for(let i = 0; i<2000; i++){
+    for(let i = 0; i<1000; i++){
         const rating = Math.floor(Math.random() * 5) + 1;
         let body;
         if(i % 2 == 0 ) {
@@ -148,12 +148,12 @@ const seedDB = async () => {
     
     
     //make fake comments
-    // for(let i = 0; i<2500; i++){
+    // for(let i = 0; i<4000; i++){
     //     const body = faker.lorem.sentence();
     //     const timestamp = new Date().toLocaleString("en-US");
     //     const comment = new Comment({body, timestamp});
     //     const randUser = await User.aggregate([{ $sample: { size: 1 } }]);
-    //     const randPost = await Post.aggregate([{$match: {"date": "Oct 23, 2021"}}, { $sample: { size: 1 } }]);        
+    //     const randPost = await Post.aggregate([{$match: {"date": "Oct 29, 2021"}}, { $sample: { size: 1 } }]);        
     //     const user = await User.findById(randUser[0]._id);
     //     const post = await Post.findById(randPost[0]._id);
     //     console.log(post._id);

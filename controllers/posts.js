@@ -18,6 +18,7 @@ module.exports.createPost = async (req, res, next) => {
     post.image = req.file;
     post.author = req.user._id;
     post.authorCountry = user.country.name;
+    post.authorGender = user.gender;
     post.authorUsername = user.username;
     post.authorDisplayName = user.displayName;
     post.authorAgeGroup = user.ageGroup;

@@ -196,10 +196,10 @@ module.exports.filterPosts = async(req, res, next) => {
 	next();
 }
 
-module.exports.filterData = async(req, res, next) => {
+module.exports.filterCharts = async(req, res, next) => {
     const queryKeys = Object.keys(req.query); 
     const dbQueries = {};
-    if(req.originalUrl = "/data"){
+    if(req.originalUrl = "/charts"){
         dbQueries['date'] = getToday();
     } 
     if(queryKeys.length) {

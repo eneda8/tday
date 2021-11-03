@@ -138,5 +138,5 @@ function Hilitor(id, tag)
 }
 
 let myHilitor = new Hilitor("searchResults"); // id of the element to parse
-let highlightedWords = document.getElementById("textSearch");
+let highlightedWords = document.getElementById("text");
 myHilitor.apply(highlightedWords.value);

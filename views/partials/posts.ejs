@@ -1,11 +1,11 @@
 <div class="card my-3 pt-2 pl-2 pr-2 border-0 shadow-sm">
     <div class="media pr-3">
-        <a href="/u/<%=post.author.username%>"><img class="img-fluid rounded-circle mr-2" style="width:45px;" src="<%=post.author.avatar.profile%>" class="pr-2" alt="" title="<%=post.author.bio%>"></a>
+        <a href="/u/<%=post.author.username%>" style="z-index: 2;"><img class="img-fluid rounded-circle mr-2" style="width:45px;" src="<%=post.author.avatar.profile%>" class="pr-2" alt="" title="<%=post.author.bio%>"></a>
         <div class="media-body text-wrap">
             <div class="d-flex justify-content-between mt-2">
-                <p class="card-subtitle mb-1 d-inline"><strong><a href="/u/<%=post.author.username%>"><%=post.author.displayName%></a></strong>  <img class="d-inline" style="width: 17px" src="<%=post.author.country.flag%>" title="<%=post.author.country.name%>" alt=""><small class="text-muted mb-1 d-block">@<%=post.author.username%></small></p>
+                <p class="card-subtitle mb-1 d-inline" style="z-index: 2;"><strong><a href="/u/<%=post.author.username%>"><%=post.author.displayName%></a></strong>  <img class="d-inline" style="width: 17px;" src="<%=post.author.country.flag%>" title="<%=post.author.country.name%>" alt=""><small class="text-muted mb-1 d-block">@<%=post.author.username%></small></p>
                 <% if(currentUser && post.author.equals(user._id)) { %> 
-                    <div class="btn-group dropleft" >
+                    <div class="btn-group dropleft" style="z-index: 2;">
                         <button class="btn btn-sm text-dark mb-1 pb-1 bg-light rounded-circle" data-toggle="dropdown" style="height: 30px; width: 30px" title="More" >...</button>
                         <div class="dropdown-menu" >
                         <% if(within24Hours(post) === true) { %>
@@ -30,16 +30,16 @@
                     <% } %>
             </div>
             <% if((title === "Home / t'day") || (title === `${user.username}'s day / t'day`)) {%> 
-            <p class="mb-0" title="<%=post.rating%> - <%=post.desc%>"><span class="star star<%=post.rating%>-result p-0 m-0"></span></p>
+            <p class="mb-0" title="<%=post.rating%> - <%=post.desc%>" style="z-index: 3;"><span class="star star<%=post.rating%>-result p-0 m-0" style="z-index: 3;"></span></p>
             <% } else { %> 
-            <span class="badge badge-light mb-2" style="font-size: 13px" title="<%=post.rating%> - <%=post.desc%>"><%=post.date%>: <span class="star star<%=post.rating%>-result"></span></span>  
+            <span class="badge badge-light mb-2" style="font-size: 13px; z-index: 3;" title="<%=post.rating%> - <%=post.desc%>"><%=post.date%>: <span class="star star<%=post.rating%>-result" style="z-index: 2;"></span></span>  
             <%}%>
             <div class="text-wrap">
                 <p class="mb-0" style="white-space: pre-line;"><%=post.body%></p>
             </div>
             <% if(post.image) { %> 
-                <div class="d-flex justify-content-center">
-                    <a href="" data-toggle="modal" id ="imagePreviewLink-<%=post._id%>" data-target="#imagePreviewModal-<%=post._id%>">
+                <div class="d-flex justify-content-center" style="z-index: 2;">
+                    <a href="" data-toggle="modal" id ="imagePreviewLink-<%=post._id%>" data-target="#imagePreviewModal-<%=post._id%>" style="z-index: 2;">
                         <img class="img-fluid" src="<%=post.image.path%>" alt="">
                     </a>
                 </div>

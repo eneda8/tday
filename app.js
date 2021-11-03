@@ -20,7 +20,7 @@ const commentRoutes = require("./routes/comments");
 const deletedPostCommentRoutes = require("./routes/deletedPostComments");
 const journalRoutes = require("./routes/journals");
 const donateRoutes = require("./routes/donate");
-const dataRoutes = require("./routes/data");
+const chartRoutes = require("./routes/charts");
 
 const dbUrl = process.env.DB_URL;
 
@@ -102,7 +102,7 @@ app.use("/posts", postRoutes);
 app.use("/posts/:id/comments", commentRoutes);
 app.use("/comments", deletedPostCommentRoutes)
 app.use("/donate", donateRoutes);
-app.use("/data", dataRoutes);
+app.use("/charts", chartRoutes);
 
 app.get('/favicon.ico', (req, res) => res.status(204).end());
 
