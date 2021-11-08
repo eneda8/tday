@@ -1,23 +1,15 @@
 const express = require("express");
 const router = express.Router();
-const passport = require("passport");
 const catchAsync = require("../utils/catchAsync");
-const User = require("../models/user");
+const passport = require("passport");
 const users = require("../controllers/users");
-const posts = require("../controllers/posts");
-const {isLoggedIn, setPostedToday, validatePost, blockDuplicatePost, checkPostStreak, isAccountOwner, filterPosts} = require("../middleware");
+const {isLoggedIn, setPostedToday, checkPostStreak, isAccountOwner, filterPosts} = require("../middleware");
 const multer = require("multer");
 const {storage} = require("../cloudinary");
 const upload = multer({storage});
+// const User = require("../models/user");
+// const countries = require("../countries");
 
-router.route("/")
-    .get(users.renderLandingPage)
-    .post(passport.authenticate("local", {failureFlash: true, failureRedirect: "/login", }), users.login)
-
- router.route("/about")
-    .get(users.renderAbout)   
-    
-router.get("/home", isLoggedIn, setPostedToday, checkPostStreak, catchAsync(filterPosts), catchAsync(users.renderHomePage))
 
 router.route("/register")
     .get(users.renderRegisterForm)
@@ -28,6 +20,16 @@ router.route("/login")
     .post(passport.authenticate("local", {failureFlash: true, failureRedirect: "/login", }), users.login)
 
 router.get("/logout", users.logout);
+
+router.route("/forgot-password")
+    .get(users.getForgotPw)
+    .put(catchAsync(users.putForgotPw));
+
+router.route("/reset/:token")
+    .get(catchAsync(users.getReset))
+    .put(catchAsync(users.putReset));
+
+router.get("/home", isLoggedIn, setPostedToday, checkPostStreak, catchAsync(filterPosts), catchAsync(users.renderHomePage))
 
 router.route("/u/:username")
         .get(isLoggedIn, setPostedToday, checkPostStreak, catchAsync(users.showUserProfile))

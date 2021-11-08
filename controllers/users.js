@@ -5,8 +5,13 @@ const Journal = require("../models/journal");
 const countries = require("../countries");
 const {cloudinary} = require("../cloudinary");
 const {within24Hours, getToday} = require("../utils/getToday");
+const util = require('util');
+const crypto = require("crypto");
+const sgMail = require("@sendgrid/mail")
 
-// ----------------REGISTER ---------------------------------------
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+// ---------------REGISTER ---------------------------------------
 module.exports.renderRegisterForm = (req, res) => {
     if (req.isAuthenticated()) {
         req.flash("error", "You are already logged in!");
@@ -54,6 +59,75 @@ module.exports.login = (req,res) => {
     res.redirect(redirectUrl);
 }
 
+// -----------------------FORGOT PASSWORD------------------
+
+module.exports.getForgotPw = (req, res) => {
+    res.render("users/forgot", {title: "Forgot Password / t'day"})
+}
+
+module.exports.putForgotPw = async (req, res) => {
+    const token = await crypto.randomBytes(20).toString("hex");
+    const {email} = req.body;
+    const user = await User.findOne({email});
+    if(!user){
+        req.flash("error", "No account with that email.")
+        return res.redirect("/forgot-password")
+    }
+    user.resetPasswordToken = token;
+    user.resetPasswordExpires = Date.now() + 3600000; 
+    await user.save();
+    const msg = {
+    to: email,
+    from: `t'day Admin <no-reply@tday.co>`,
+    subject: `t'day - Reset Password Link`,
+    text: `Hi ${user.displayName}, Forgot your password? We received a request to reset the password for your account. To reset your password, click this link: http://${req.headers.host}/reset/${token}. Or, copy and paste the URL into your browser: http://${req.headers.host}/reset/${token}. If you didn't request a password reset, you can ignore this email - your password will not be changed. Love, the t'day team `,
+    html: `Hi ${user.displayName}, <br> <br> Forgot your password? We received a request to reset the password for your account. <br> <br> To reset your password, click this link: <a href="http://${req.headers.host}/reset/${token}">Reset Password</a> <br> Or, copy and paste the URL into your browser: http://${req.headers.host}/reset/${token} <br> <br> If you didn't request a password reset, you can ignore this email. Your password will not be changed. <br> <br> <strong>-the t'day team</strong>`,
+    }
+    await sgMail.send(msg)
+    req.flash("success", `An email has been sent to ${email} with further instructions.`);
+    res.redirect("/forgot-password");
+}
+
+module.exports.getReset= async (req, res) => {
+    const {token} = req.params;
+    const user = await User.findOne({resetPasswordToken: token, resetPasswordExpires: {$gt: Date.now()}});
+    if(!user){
+        req.flash("error", "Password reset token is invalid or has expired.")
+        return res.redirect("/forgot-password")
+    }
+    res.render("users/reset", {token, title: `Reset Password / t'day`})
+}
+
+module.exports.putReset = async (req, res) => {
+    const {token} = req.params;
+    const user = await User.findOne({resetPasswordToken: token, resetPasswordExpires: {$gt: Date.now()}});
+    if(!user){
+        req.flash("error", "Password reset token is invalid or has expired.")
+        return res.redirect("/forgot-password")
+    }
+    if(req.body.password === req.body.confirm){
+        await user.setPassword(req.body.password);
+        user.resetPasswordToken = null;
+        user.resetPasswordExpires = null;
+        await user.save();
+        const login = util.promisify(req.login.bind(req));
+        await login(user);
+    } else {
+        req.flash("error", "Passwords do not match.");
+        return res.redirect(`/reset/${token}`)
+    }
+    const msg = {
+        to: user.email,
+        from: `t'day Admin <support@tday.co>`,
+        subject: `t'day - Your password was changed`,
+        text: `Hi ${user.displayName}, We're sending you this email to confirm that your password has been changed. If you did not make this change, please reply and notify us at once.  -the t'day team`,
+        html: `Hi ${user.displayName}, <br> <br> We're sending you this email to confirm that your password has been changed. If you did not make this change, please reply and notify us at once. <br> <br> <strong>-the t'day team</strong>`,
+    }
+    await sgMail.send(msg);
+    req.flash("success", "Password successfully updated!");
+    res.redirect("/home");
+}
+// -------------------------------LOGOUT-----------------------------
 module.exports.logout = (req,res) => {
     const today = new Date();
     const hour = today.getHours()
@@ -63,19 +137,7 @@ module.exports.logout = (req,res) => {
     res.redirect("/");
 }
 
-//------------------------- LANDING -------------------------
-module.exports.renderLandingPage = (req, res) => {
-    if(req.user){
-        return res.redirect("/home");
-    } else {
-        let today =new Date().toLocaleString('en-us', {weekday:'long'});
-        res.render("landing", {today, title: "t'day"});
-    }
-}
 
-module.exports.renderAbout = (req, res) => {
-    res.render("about", {title: "About / t'day"})
-}
 
 //------------------------- HOME -------------------------
 
