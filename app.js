@@ -14,6 +14,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user");
 
+const indexRoutes = require("./routes/index");
 const userRoutes = require("./routes/users");
 const postRoutes = require("./routes/posts");
 const commentRoutes = require("./routes/comments");
@@ -96,8 +97,9 @@ app.use((req, res, next) => {
     next();
 })
 
+app.use("/", indexRoutes);
 app.use("/", userRoutes);
-app.use("/write", journalRoutes)
+app.use("/write", journalRoutes);
 app.use("/posts", postRoutes);
 app.use("/posts/:id/comments", commentRoutes);
 app.use("/comments", deletedPostCommentRoutes)
