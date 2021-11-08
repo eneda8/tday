@@ -42,6 +42,7 @@ const userSchema = new Schema({
     },
     ageGroup: {
         type: String,
+        required: true
     },
     gender:{
         type: String,
@@ -103,7 +104,9 @@ const userSchema = new Schema({
     average: {
         type: Number,
         default: 0
-    }
+    },
+    resetPasswordToken: String,
+    resetPasswordExpires: Date
 }, {timestamps: true}) 
 
 userSchema.plugin(passportLocalMongoose);
