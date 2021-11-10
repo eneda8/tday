@@ -1,16 +1,35 @@
 <% layout("layouts/boilerplate")%>
 
-<h1>Reset Password</h1>
-<form action="/reset/<%=token%>?_method=PUT" method="POST">
-    <div>
-        <label for="password">New Password</label>
-        <input type="password" name="password" id="password" placeholder="New password" autofocus>
-    </div>
-    <div>
-        <label for="confirm">Confirm Password</label>
-        <input type="password" name="confirm" id="confirm" placeholder="Confirm password">
-    </div>
-    <div>
-        <input type="submit" value="Update Password">
-    </div>
-</form>
+<div class="container mt-4 " style="padding-bottom: 40vh; padding-top: 20vh; overflow-y: hidden;">
+    <div class="row">
+        <div class="col-md-6 offset-md-3 col-xl-5 offset-xl-3 ">
+            <div class="card border-0 shadow mb-3 bg-light">
+                <div class="card-body">
+                    <h5 class="card-title mt-3 mb-2 text-center">Password Reset</h5>
+                    <small class="d-block mb-3">Your password must be 8-20 characters and contain: at least one number, one uppercase letter, and one special character.</small>
+                    <form action="/reset/<%=token%>?_method=PUT" method="POST" class="validated-form" novalidate>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text border-0" for="password"><i class="fas fa-key text-primary" ></i>
+                                </label>
+                            </div>
+                            <input class="form-control border-0" type="password" id="password" name="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$" placeholder="New password" required >
+                            <div class="valid-feedback">Looks good!</div>
+                            <div class="invalid-feedback">Please enter a valid password.</div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text border-0" for="confirm"><i class="fas fa-key text-primary"></i>
+                                </label>
+                            </div>
+                            <input class="form-control border-0" type="password" id="confirm" name="confirm" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$" placeholder="Confirm password" required >
+                            <div class="valid-feedback">Looks good!</div>
+                            <div class="invalid-feedback">Please enter a valid password.</div>
+                        </div>
+                        <button class="btn btn-warning btn-block">Reset</button>
+                    </form>
+                </div> 
+            </div> 
+        </div> 
+    </div> 
+</div> 

@@ -3,7 +3,7 @@ const router = express.Router();
 const catchAsync = require("../utils/catchAsync");
 const passport = require("passport");
 const users = require("../controllers/users");
-const {isLoggedIn, setPostedToday, checkPostStreak, isAccountOwner, filterPosts} = require("../middleware");
+const {isLoggedIn, isVerified, setPostedToday, checkPostStreak, isAccountOwner, filterPosts} = require("../middleware");
 const multer = require("multer");
 const {storage} = require("../cloudinary");
 const upload = multer({storage});
@@ -15,6 +15,13 @@ router.route("/register")
     .get(users.renderRegisterForm)
     .post(upload.single("avatar"), catchAsync(users.register));
 
+router.route("/verify")
+    .get(isLoggedIn, users.renderVerify)
+    .put(isLoggedIn, users.putVerify);
+
+router.route("/verify/:token")
+    .get(users.putVerified)
+
 router.route("/login")
     .get(users.renderLoginForm)
     .post(passport.authenticate("local", {failureFlash: true, failureRedirect: "/login", }), users.login)
@@ -22,28 +29,28 @@ router.route("/login")
 router.get("/logout", users.logout);
 
 router.route("/forgot-password")
-    .get(users.getForgotPw)
-    .put(catchAsync(users.putForgotPw));
+    .get(isVerified, users.getForgotPw)
+    .put(isVerified, catchAsync(users.putForgotPw));
 
 router.route("/reset/:token")
     .get(catchAsync(users.getReset))
     .put(catchAsync(users.putReset));
 
-router.get("/home", isLoggedIn, setPostedToday, checkPostStreak, catchAsync(filterPosts), catchAsync(users.renderHomePage))
+router.get("/home", isLoggedIn, isVerified, setPostedToday, checkPostStreak, catchAsync(filterPosts), catchAsync(users.renderHomePage))
 
 router.route("/u/:username")
-        .get(isLoggedIn, setPostedToday, checkPostStreak, catchAsync(users.showUserProfile))
-        .put(isLoggedIn, upload.fields([
+        .get(isLoggedIn, isVerified, setPostedToday, checkPostStreak, catchAsync(users.showUserProfile))
+        .put(isLoggedIn, isVerified, upload.fields([
             { name: 'avatar', maxCount: 1 },
             { name: 'coverPhoto', maxCount: 1 }
           ]), catchAsync(users.updateProfile))
-        .delete(isLoggedIn, isAccountOwner, catchAsync(users.deleteAccount));
+        .delete(isLoggedIn, isVerified, isAccountOwner, catchAsync(users.deleteAccount));
 
 
-router.get("/settings", isLoggedIn, isAccountOwner, catchAsync(users.showUserSettings));
+router.route("/settings")
+    .get(isLoggedIn, isVerified, isAccountOwner, catchAsync(users.showUserSettings))
+    .put(isLoggedIn, isVerified, isAccountOwner, catchAsync(users.updateUserInfo));
 
-router.put("/settings/", isLoggedIn, isAccountOwner, catchAsync(users.updateUserInfo));
-
-router.put("/settings/password", isLoggedIn, isAccountOwner, catchAsync(users.changePassword));
+router.put("/settings/password", isVerified, isLoggedIn, isAccountOwner, catchAsync(users.changePassword));
 
 module.exports = router;

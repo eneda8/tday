@@ -43,18 +43,18 @@
                                 <div class="form-row mt-3">
                                     <div class="col-md-6">
                                         <label class="form-label mb-0" for="username">Username</label>
-                                        <input class="form-control" type="text" id="username" name="username" placeholder ="@" value="<%=user.username%>">
+                                        <input class="form-control" type="text" id="username" name="username"  placeholder="<%=user.username%>">
                                         <div class="valid-feedback">Looks good!</div>
                                         <div class="invalid-feedback">Please enter a username.</div>
                                         <small id="" class="text-muted">
-                                            <i class="fas fa-exclamation text-danger small"></i> Changing your username will end this session and require you to log back in with your new username.
+                                            Changing your username will end this session and require you to log back in with your new username.
                                         </small>
                                     </div>
                                 </div>
                                 <div class="form-row mt-3">
                                     <div class="col-md-6">
                                         <label class="form-label mb-0" for="email">Email</label>
-                                        <input class="form-control" type="email" id="email" name="email"  value="<%=user.email%>">
+                                        <input class="form-control" type="email" id="email" name="email"  placeholder="<%=user.email%>">
                                         <div class="valid-feedback">Looks good!</div>
                                         <div class="invalid-feedback">Please enter a valid email.</div>
                                     </div>
@@ -62,16 +62,16 @@
                                 <div class="form-row mt-3">
                                     <div class=" col-md-6">
                                         <label class="form-label mb-0" for="ageGroup">Age Group</label>
-                                        <input class="form-control"  id="ageGroup" name="ageGroup" placeholder="" value="<%=user.ageGroup%>" disabled >
+                                        <select class="custom-select" id="ageGroup" name="ageGroup" disabled>
+                                            <option selected value="<%=user.ageGroup%>"><%=user.ageGroup%></option>         
+                                        </select>
                                     </div>
                                 </div> 
                                 <div class="form-row mt-3">
                                     <div class="col-md-6">
                                         <label class="form-label mb-0" for="gender">Gender</label>
                                         <select class="custom-select" id="gender" name="gender" disabled>
-                                            <option selected value="<%=user.gender%>"><%=user.gender%></option>
-                                            <option value="male">male</option>   
-                                            <option value="female">female</option>          
+                                            <option selected value="<%=user.gender%>"><%=user.gender%></option>   
                                         </select>
                                     </div>
                                 </div>

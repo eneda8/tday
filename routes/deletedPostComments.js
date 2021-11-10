@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router({mergeParams:true});
-const {validateComment, isLoggedIn, isCommentAuthor} = require("../middleware")
+const {validateComment, isLoggedIn, isVerified, isCommentAuthor} = require("../middleware")
 const Post = require("../models/post");
 const Comment = require("../models/comment");
 const User = require("../models/user");
@@ -15,6 +15,6 @@ const deleteComment = async (req,res) =>{
     res.redirect("back");
 }
 
-router.delete("/:commentId", isLoggedIn, isCommentAuthor, catchAsync(deleteComment));
+router.delete("/:commentId", isLoggedIn, isVerified, isCommentAuthor, catchAsync(deleteComment));
 
 module.exports = router;

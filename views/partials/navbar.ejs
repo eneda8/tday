@@ -10,11 +10,13 @@
           <a class="nav-link" href="/home"><i class="fas fa-home"></i> home</a>
           <a class="nav-link" href="/charts"><i class="far fa-chart-bar"></i> charts</a>
           <a class="nav-link" href="/write"><i class="fas fa-pencil-alt"></i> write</a>
+          <% if(currentUser.isVerified) {%> 
           <% if(currentUser.postedToday === false) {%> 
-          <a class="nav-link" href="" data-toggle="modal" id="newPostLink" data-target="#newPostModal"><i class="far fa-star"></i> rate today</a>
+          <a class="nav-link" href="" data-toggle="modal" id="newPostLink" data-target="#newPostModal" ><i class="far fa-star"></i> rate today</a>
           <% } else {%>
           <a href="/posts/<%=currentUser.todaysPost%>" class="nav-link"><i class="far fa-calendar-check"></i> today's rating</a>
           <% } %>
+          <% } %> 
         <% } %> 
       </div>
       <div class="navbar-nav ml-auto mr-2">

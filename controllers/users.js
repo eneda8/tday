@@ -34,15 +34,70 @@ module.exports.register = async (req,res, next) => {
         const registeredUser = await User.register(user, password);
         req.login(registeredUser, err => {
             if(err) return next(err); 
-            req.flash("success", `Welcome to t'day, ${req.user.displayName}!`);
-            res.redirect(`/u/${username}`);
+            res.redirect("/verify");
         })
+        const token =  crypto.randomBytes(20).toString("hex");
+        user.verifyEmailToken = token;
+        user.verifyTokenExpires = Date.now() + 3600000;
+        await user.save()
+        const msg = {
+            to: email,
+            from: `t'day <no-reply@tday.co>`,
+            subject: `t'day - Please verify your email`,
+            text: `Welcome to t'day. To complete your account setup, please click here: http://${req.headers.host}/verify/${token}. Or, copy and paste the URL into your browser: http://${req.headers.host}/verify/${token}. - the t'day team `,
+            html: `<strong>Welcome to t'day!</strong> <br> <br> To complete your account setup, please click here: <a href="http://${req.headers.host}/verify/${token}">Verify Email</a> <br> <br> Or, copy and paste the URL into your browser: http://${req.headers.host}/verify/${token}. <br> <br><strong>- the t'day team</strong>`,
+        }
+        await sgMail.send(msg)
     } catch(err) {
         req.flash("error", `${err.message}. Please try again!`);
         res.redirect("/register")
     }               
 }
 
+module.exports.renderVerify = (req, res) => {
+     res.render("users/verify", {title: "Verify Email / t'day"})
+}
+
+module.exports.putVerify = async (req, res) => {
+    const {email} = req.body;
+    const user = await User.findOne({email});
+    if((!user) || user.isVerified === true){
+        req.flash("error", "The email you provided is not associated with an account or has already been verified.")
+        return res.redirect("/verify")
+    } else {
+    const token = crypto.randomBytes(20).toString("hex");
+    user.verifyEmailToken = token;
+    user.verifyTokenExpires = Date.now() + 3600000; 
+    await user.save();
+    const msg = {
+        to: email,
+        from: `t'day <no-reply@tday.co>`,
+        subject: `t'day - Verify your email`,
+        text: `Hello! Welcome to t'day. To complete your account setup. Please click this link: http://${req.headers.host}/verify/${token}. Or, copy and paste the URL into your browser: http://${req.headers.host}/verify/${token}. - the t'day team `,
+        html: `<strong>Hello!</strong> <br> <br> Welcome to t'day. To complete your account activation. Please click this link: <a href="http://${req.headers.host}/verify/${token}">Verify Email</a> <br> Or, copy and paste the URL into your browser: http://${req.headers.host}/verify/${token}. <br> <br><strong>- the t'day team</strong>`,
+        }
+    await sgMail.send(msg)
+    res.redirect("/verify");
+    }
+}
+
+module.exports.putVerified = async(req, res) => {
+    const {token} = req.params;
+    const user = await User.findOne({verifyEmailToken: token, verifyTokenExpires: {$gt: Date.now()}})
+    if(!user){
+        req.flash("error", "Email verification token is invalid or has expired.")
+        return res.redirect("/verify")
+    } else {
+    user.verifyEmailToken = null;
+    user.verifyTokenExpires = null;
+    user.isVerified = true;
+    await user.save()
+    const login = util.promisify(req.login.bind(req))
+    await login(user)
+    req.flash("success", `Email address successfully verified. Welcome to t'day, ${user.displayName}!`);
+    res.redirect("/home");
+    }
+}
 // -----------------------------LOGIN---------------------------------
 module.exports.renderLoginForm = (req,res) => {
     if (req.isAuthenticated()) {
@@ -52,12 +107,17 @@ module.exports.renderLoginForm = (req,res) => {
     res.render("users/login", {title:"Login / t'day"})
 }
 
-module.exports.login = (req,res) => {
+module.exports.login =  (req,res) => {
     delete req.session.returnTo;
     const redirectUrl = req.session.returnTo || "/home";
     req.flash("success", `Welcome back, ${req.user.displayName}!`);
-    res.redirect(redirectUrl);
+    if(req.user.isVerified === false){
+        res.redirect("/verify")
+    } else {
+        res.redirect(redirectUrl)
+    }
 }
+
 
 // -----------------------FORGOT PASSWORD------------------
 
@@ -66,7 +126,7 @@ module.exports.getForgotPw = (req, res) => {
 }
 
 module.exports.putForgotPw = async (req, res) => {
-    const token = await crypto.randomBytes(20).toString("hex");
+    const token = crypto.randomBytes(20).toString("hex");
     const {email} = req.body;
     const user = await User.findOne({email});
     if(!user){
@@ -78,10 +138,10 @@ module.exports.putForgotPw = async (req, res) => {
     await user.save();
     const msg = {
     to: email,
-    from: `t'day Admin <no-reply@tday.co>`,
+    from: `t'day <no-reply@tday.co>`,
     subject: `t'day - Reset Password Link`,
-    text: `Hi ${user.displayName}, Forgot your password? We received a request to reset the password for your account. To reset your password, click this link: http://${req.headers.host}/reset/${token}. Or, copy and paste the URL into your browser: http://${req.headers.host}/reset/${token}. If you didn't request a password reset, you can ignore this email - your password will not be changed. Love, the t'day team `,
-    html: `Hi ${user.displayName}, <br> <br> Forgot your password? We received a request to reset the password for your account. <br> <br> To reset your password, click this link: <a href="http://${req.headers.host}/reset/${token}">Reset Password</a> <br> Or, copy and paste the URL into your browser: http://${req.headers.host}/reset/${token} <br> <br> If you didn't request a password reset, you can ignore this email. Your password will not be changed. <br> <br> <strong>-the t'day team</strong>`,
+    text: `Hi ${user.displayName}, Forgot your password? We received a request to reset the password for your account. To reset your password, click this link: http://${req.headers.host}/reset/${token}. Or, copy and paste the URL into your browser: http://${req.headers.host}/reset/${token}. If you didn't request a password reset, you can ignore this email - your password won't be changed. -the t'day team `,
+    html: `Hi ${user.displayName}, <br> <br> Forgot your password? We received a request to reset the password for your account. <br> <br> To reset your password, click this link: <a href="http://${req.headers.host}/reset/${token}">Reset Password</a> <br> Or, copy and paste the URL into your browser: http://${req.headers.host}/reset/${token} <br> <br> If you didn't request a password reset, you can ignore this email. Your password won't be changed. <br> <br> <strong>-the t'day team</strong>`,
     }
     await sgMail.send(msg)
     req.flash("success", `An email has been sent to ${email} with further instructions.`);
@@ -118,7 +178,7 @@ module.exports.putReset = async (req, res) => {
     }
     const msg = {
         to: user.email,
-        from: `t'day Admin <support@tday.co>`,
+        from: `t'day  <support@tday.co>`,
         subject: `t'day - Your password was changed`,
         text: `Hi ${user.displayName}, We're sending you this email to confirm that your password has been changed. If you did not make this change, please reply and notify us at once.  -the t'day team`,
         html: `Hi ${user.displayName}, <br> <br> We're sending you this email to confirm that your password has been changed. If you did not make this change, please reply and notify us at once. <br> <br> <strong>-the t'day team</strong>`,
@@ -136,9 +196,6 @@ module.exports.logout = (req,res) => {
     req.flash("success", `${greeting}`);
     res.redirect("/");
 }
-
-
-
 //------------------------- HOME -------------------------
 
 module.exports.renderHomePage= async (req, res) =>{
@@ -247,16 +304,30 @@ module.exports.updateUserInfo = async(req, res) => {
             req.flash("error", "Oops, something went wrong! Please try again.")
             return res.redirect("back");
         }
+        const oldEmail = user.email;
         const {username, email, country} = req.body;
-        console.log(country)
-        const newFlag = countries.filter(obj => Object.values(obj).includes(country.name))[0]["flag"];
-        console.log(newFlag)
-        await user.update({...req.body});
-        user.country.flag = newFlag;
-        for(let post of user.posts){
-            post.authorUsername = username;
-            post.authorCountry = country.name;
-            post.save()
+        if(username.length && !(username === user.username)){
+            user.username= username;
+            for(let post of user.posts){
+                post.authorUsername = username;
+                post.save()
+            }
+        }
+        if(email.length && !(email === user.email)){
+            user.email = email;
+            const msg = {
+                to: [{email: email}, {email: oldEmail}],
+                from: `t'day  <support@tday.co>`,
+                subject: `t'day - Your email was changed`,
+                text: `Hi ${user.displayName}, We're sending you this email to confirm that the email for your account has been changed from ${oldEmail} to ${email}. If you did not make this change, please reply and notify us at once.  -the t'day team`,
+                html: `Hi ${user.displayName}, <br> <br> We're sending you this email to confirm that the email for your account has been changed from ${oldEmail} to ${email}. If you did not make this change, please reply and notify us at once. <br> <br> <strong>-the t'day team</strong>`,
+            }
+            await sgMail.send(msg);
+        }
+        if(!country.name === user.country.name){
+            user.country.name = country.name;
+            const newFlag = countries.filter(obj => Object.values(obj).includes(country.name))[0]["flag"];
+            user.country.flag = newFlag;
         }
         await user.save();
         req.flash("success", "Account updated!");
@@ -275,7 +346,16 @@ module.exports.changePassword = async(req, res) => {
         await user.changePassword(oldPassword, newPassword);
         user.save();
         console.log("password updated");
-        req.flash("success", "Password Changed Successfully");
+        const msg = {
+            to: user.email,
+            from: `t'day <support@tday.co>`,
+            subject: `t'day - Your password was changed`,
+            text: `Hi ${user.displayName}, We're sending you this email to confirm that your password has been changed. If you did not make this change, please reply and notify us at once.  -the t'day team`,
+            html: `Hi ${user.displayName}, <br> <br> We're sending you this email to confirm that your password has been changed. If you did not make this change, please reply and notify us at once. <br> <br> <strong>-the t'day team</strong>`,
+        }
+        await sgMail.send(msg);
+
+        req.flash("success", "Password successfully updated!");
         res.redirect("back")
     } catch(err) {
         console.log(err);
@@ -293,13 +373,21 @@ module.exports.deleteAccount = async(req, res) => {
         user.comments = [];
         user.journals = [];
         user.bookmarks = [];
-        const posts = await Post.remove({"author": req.user._id});
-        const comments = await Comment.remove({"author": req.user._id});
-        const journals = await Journal.remove({"author": req.user._id});
+        await Post.remove({"author": req.user._id});
+        await Comment.remove({"author": req.user._id});
+        await Journal.remove({"author": req.user._id});
         await req.logout();
-        const deletedUser = await User.remove({"_id": user._id});
+        const msg = {
+            to: user.email,
+            from: `t'day <support@tday.co>`,
+            subject: `t'day - Your account was deleted`,
+            text: `Hi, We're sending you this email to confirm that your account with t'day has been deleted. We hate to see you go and hope you'll be back with us soon!  -the t'day team`,
+            html: `Hi, <br> <br> We're sending you this email to confirm that your account with t'day has been deleted. We hate to see you go and hope you'll be back with us soon! <br> <br> <strong>-the t'day team</strong>`,
+        }
+        await sgMail.send(msg);
+        await User.remove({"_id": user._id});
         console.log("User account deleted")
-        req.flash("success", "User account deleted.");
+        req.flash("success", "Account successfully deleted.");
         res.redirect("/");
     } catch (e){
         console.log(e);

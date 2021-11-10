@@ -38,6 +38,14 @@ module.exports.isLoggedIn = (req, res, next) => {
     next();
 }
 
+module.exports.isVerified = (req, res, next) => {
+    if(!req.user.isVerified){
+        req.flash("error", "Please verify your email to continue.");
+        return res.redirect("/verify");
+    }
+    next();
+}
+
 module.exports.isAuthor = async(req, res, next) => {
     const {id} = req.params;
     const post = await Post.findById(id);
