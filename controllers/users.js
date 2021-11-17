@@ -44,7 +44,7 @@ module.exports.register = async (req,res, next) => {
             to: email,
             from: `t'day <no-reply@tday.co>`,
             subject: `t'day - Please verify your email`,
-            text: `Welcome to t'day. To complete your account setup, please click here: http://${req.headers.host}/verify/${token}. Or, copy and paste the URL into your browser: http://${req.headers.host}/verify/${token}. - the t'day team `,
+            text: `Welcome to t'day! To complete your account setup, please click here: http://${req.headers.host}/verify/${token}. Or, copy and paste the URL into your browser: http://${req.headers.host}/verify/${token}. - the t'day team `,
             html: `<strong>Welcome to t'day!</strong> <br> <br> To complete your account setup, please click here: <a href="http://${req.headers.host}/verify/${token}">Verify Email</a> <br> <br> Or, copy and paste the URL into your browser: http://${req.headers.host}/verify/${token}. <br> <br><strong>- the t'day team</strong>`,
         }
         await sgMail.send(msg)
@@ -73,8 +73,8 @@ module.exports.putVerify = async (req, res) => {
         to: email,
         from: `t'day <no-reply@tday.co>`,
         subject: `t'day - Verify your email`,
-        text: `Hello! Welcome to t'day. To complete your account setup. Please click this link: http://${req.headers.host}/verify/${token}. Or, copy and paste the URL into your browser: http://${req.headers.host}/verify/${token}. - the t'day team `,
-        html: `<strong>Hello!</strong> <br> <br> Welcome to t'day. To complete your account activation. Please click this link: <a href="http://${req.headers.host}/verify/${token}">Verify Email</a> <br> Or, copy and paste the URL into your browser: http://${req.headers.host}/verify/${token}. <br> <br><strong>- the t'day team</strong>`,
+        text: `Hello! Welcome to t'day! To complete your account setup. Please click here: http://${req.headers.host}/verify/${token}. Or, copy and paste the URL into your browser: http://${req.headers.host}/verify/${token}. - the t'day team `,
+        html: `<strong>Hello!</strong> <br> <br> Welcome to t'day! To complete your account setup, please click here: <a href="http://${req.headers.host}/verify/${token}">Verify Email</a> <br> Or, copy and paste the URL into your browser: http://${req.headers.host}/verify/${token}. <br> <br><strong>- the t'day team</strong>`,
         }
     await sgMail.send(msg)
     res.redirect("/verify");
@@ -340,9 +340,13 @@ module.exports.updateUserInfo = async(req, res) => {
 }
 
 module.exports.changePassword = async(req, res) => {
-    const {oldPassword, newPassword} = req.body;
+    const {oldPassword, newPassword, confirmPassword} = req.body;
     const user = await User.findById(req.user._id);
     try{
+        if(!newPassword === confirmPassword){
+            req.flash("error", "Passwords do not match. Please try again.");
+            return res.redirect("/settings#change-password")
+        } else {
         await user.changePassword(oldPassword, newPassword);
         user.save();
         console.log("password updated");
@@ -354,13 +358,13 @@ module.exports.changePassword = async(req, res) => {
             html: `Hi ${user.displayName}, <br> <br> We're sending you this email to confirm that your password has been changed. If you did not make this change, please reply and notify us at once. <br> <br> <strong>-the t'day team</strong>`,
         }
         await sgMail.send(msg);
-
         req.flash("success", "Password successfully updated!");
         res.redirect("back")
+        }
     } catch(err) {
         console.log(err);
-        req.flash("error", "Password is incorrect. Please try again.")
-        res.redirect("back")
+        req.flash("error", "Current password is incorrect. Please try again.")
+        res.redirect("/settings#change-password")
     }
 }
 

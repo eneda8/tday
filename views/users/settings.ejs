@@ -1,9 +1,9 @@
 <% layout("layouts/boilerplate")%>
 <div class="container-fluid">
 
-<div class="row mt-5 px-4 " style="padding-bottom: 10vh; overflow-y: hidden;">
+<div class="row mt-5 px-4 " style="padding-bottom: 15vh; padding-top: 5vh; overflow-y: hidden;">
     <div class="col-md-8 col-lg-8 mx-auto ">
-        <div class="card border-0 shadow rounded px-3 pt-3 ">
+        <div class="card border-0 shadow rounded px-3 pt-3 bg-light">
             <a href="/home"><h6><i class="fas fa-arrow-left"></i> Back to Home</h6></a>
             <h4 class="px-2 pt-2 mb-0 pb-0">Settings</h4>
             <p class="px-2 mb-2 text-muted">User: <%=user.displayName%> | @<%=user.username%>  <br>Account created: <%=user.createdAt%></p>
@@ -41,47 +41,55 @@
                             <h5 class="mt-1">Change Account Details</h5>
                             <form action="/settings?_method=PUT" method="POST" class="validated-form" novalidate >
                                 <div class="form-row mt-3">
-                                    <div class="col-md-6">
-                                        <label class="form-label mb-0" for="username">Username</label>
-                                        <input class="form-control" type="text" id="username" name="username"  placeholder="<%=user.username%>">
-                                        <div class="valid-feedback">Looks good!</div>
-                                        <div class="invalid-feedback">Please enter a username.</div>
-                                        <small id="" class="text-muted">
+                                    <div class="col-md-6 input-group">
+                                        <div class="input-group-prepend ">
+                                            <span class="input-group-text border-0"><i class="fas fa-at text-primary" data-toggle="tooltip" data-placement="bottom" title="Must be 3-16 alphanumeric characters that may contain an underscore."></i></span>
+                                        </div>
+                                        <input class="form-control border-0" type="text" id="username" name="username" placeholder ="Username" pattern="/^[a-z0-9_]{3,16}$/" required>
+                                        <small id="" class="mt-1">
                                             Changing your username will end this session and require you to log back in with your new username.
                                         </small>
+                                        <div class="valid-feedback">Looks good!</div>
+                                        <div class="invalid-feedback">Please enter a valid username.</div>
                                     </div>
                                 </div>
                                 <div class="form-row mt-3">
-                                    <div class="col-md-6">
-                                        <label class="form-label mb-0" for="email">Email</label>
-                                        <input class="form-control" type="email" id="email" name="email"  placeholder="<%=user.email%>">
+                                    <div class="col-md-6 input-group">
+                                        <div class="input-group-prepend">
+                                            <label class="input-group-text border-0" for="email"><i class="fas fa-envelope text-primary"></i></label>
+                                        </div>
+                                        <input class="form-control border-0" type="email" id="email" name="email" placeholder ="Email">
                                         <div class="valid-feedback">Looks good!</div>
                                         <div class="invalid-feedback">Please enter a valid email.</div>
                                     </div>
                                 </div>
                                 <div class="form-row mt-3">
-                                    <div class=" col-md-6">
-                                        <label class="form-label mb-0" for="ageGroup">Age Group</label>
-                                        <select class="custom-select" id="ageGroup" name="ageGroup" disabled>
+                                    <div class="col-md-6 input-group">
+                                        <label class="input-group-text border-0" for="ageGroup"><i class="fas fa-birthday-cake text-primary"></i></label>
+                                        <select name="ageGroup" id="ageGroup" class="custom-select border-0" disabled data-toggle="tooltip" data-placement="bottom" title="This value cannot be changed.
+                                        ">
                                             <option selected value="<%=user.ageGroup%>"><%=user.ageGroup%></option>         
                                         </select>
+                                        <div class="valid-feedback">Looks good!</div>
+                                        <div class="invalid-feedback">Please select a valid option.</div>
                                     </div>
                                 </div> 
                                 <div class="form-row mt-3">
-                                    <div class="col-md-6">
-                                        <label class="form-label mb-0" for="gender">Gender</label>
-                                        <select class="custom-select" id="gender" name="gender" disabled>
+                                    <div class="col-md-6 input-group">
+                                        <label class="input-group-text border-0" for="gender"><i class="fas fa-venus-mars text-primary"></i></label>
+                                        <select class="custom-select border-0" id="gender" name="gender" disabled data-toggle="tooltip" data-placement="bottom" title="This value cannot be changed.
+                                        ">
                                             <option selected value="<%=user.gender%>"><%=user.gender%></option>   
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-row mt-3">
-                                    <div class="col-md-6">
-                                        <label class="form-label mb-0" for="country[name]">Country</label>
-                                        <select class="custom-select" id="countryName" name="country[name]" >
-                                            <option >─Please select an option─</option> 
+                                    <div class="col-md-6 input-group">
+                                        <label class="input-group-text border-0" for="country[name]"><i class="fas fa-globe-americas text-primary"></i></label>
+                                        <select class="custom-select border-0" id="countryName" name="country[name]" required>
+                                            <option value="">Country</option> 
                                             <%  for (let country of countries) { %>
-                                            <option value="<%=country["name"]%>" <%= country["name"] === user.country.name ? 'selected' : '' %>><%=country["name"]%></option>
+                                                <option value="<%=country["name"]%>" <%= country["name"] === user.country.name ? 'selected' : '' %>><%=country["name"]%></option>
                                             <%}%>        
                                         </select>
                                         <div class="valid-feedback">Looks good!</div>
@@ -95,10 +103,11 @@
                     <div class="tab-pane fade" id="change-password" role="tabpanel" aria-labelledby="list-password-list">
                         <div class="px-4">
                             <h5 class="mt-1">Change Password</h5>
+                            <small class="text-muted">Password must be 8-20 characters and contain at least one number, one uppercase letter, and one special character.</small>
                             <form action="/settings/password?_method=PUT" method="POST" class="validated-form" novalidate >
                                 <div class="form-row mt-3">
                                     <div class="col-md-6">
-                                        <label class="form-label mb-0" for="oldPassword">Old Password</label>
+                                        <label class="form-label mb-0" for="oldPassword">Current Password</label>
                                         <input class="form-control" type="password" id="oldPassword" name="oldPassword" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$" required>
                                         <div class="invalid-feedback">Please enter a valid password.</div>
                                     </div>
@@ -111,14 +120,14 @@
                                         <div class="invalid-feedback">Please enter a valid password.</div>
                                     </div>
                                 </div>
-                                <!-- <div class="form-row mt-3">
+                                <div class="form-row mt-3">
                                     <div class="col-md-6">
                                         <label class="form-label mb-0" for="confirmPassword">Confirm New Password</label>
                                         <input class="form-control" type="password" id="confirmPassword" name="confirmPassword" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$" required>
                                         <div class="valid-feedback">Looks good!</div>
                                         <div class="invalid-feedback">Please enter a valid password.</div>
                                     </div>
-                                </div>  -->
+                                </div> 
                                 
                                 <button class="btn btn-warning mt-3" type="submit">Update</button>
                             </form>

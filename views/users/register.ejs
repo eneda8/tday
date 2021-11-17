@@ -21,11 +21,11 @@
                         <div class="form-row mt-3">
                             <div class="col-md-6 input-group">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text border-0"><i class="fas fa-at text-primary"></i></span>
+                                    <span class="input-group-text border-0"><i class="fas fa-at text-primary" data-toggle="tooltip" data-placement="bottom" title="Must be 3-16 alphanumeric characters that may contain an underscore."></i></span>
                                 </div>
-                                <input class="form-control border-0" type="text" id="username" name="username" placeholder ="Username" required>
+                                <input class="form-control border-0" type="text" id="username" name="username" placeholder ="Username" pattern="/^[a-z0-9_]{3,16}$/" required>
                                 <div class="valid-feedback">Looks good!</div>
-                                <div class="invalid-feedback">Please enter a username.</div>
+                                <div class="invalid-feedback">Please enter a valid username.</div>
                             </div>
                             <div class="col-md-6 input-group">
                                 <div class="input-group-prepend">
@@ -34,7 +34,7 @@
                                 <input class="form-control border-0" type="text" id="displayName" name="displayName" placeholder = "Display Name" required>
 
                                 <div class="valid-feedback">Looks good!</div>
-                                <div class="invalid-feedback">Please enter a display name.</div>
+                                <div class="invalid-feedback">Please enter a valid display name.</div>
                             </div>
                         </div>
                         <div class="form-row mt-3">
@@ -58,15 +58,15 @@
                         </div>
                         <div class="mt-3 input-group">
                             <div class="input-group-prepend">
-                                <label class="input-group-text border-0" for="avatar"><i class="fas fa-file-image text-primary"></i></label>
+                                <label class="input-group-text border-0" for="avatar"><i class="fas fa-user text-primary"></i></label>
                             </div>
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" id="avatar" name="avatar" onchange="document.getElementById('preview').src = window.URL.createObjectURL(this.files[0])">
-                                <label class="custom-file-label border-0" for="avatar">Avatar (Profile Photo)</label>
+                                <label class="custom-file-label border-0" for="avatar">Avatar</label>
                             </div>
                         </div>
                         <img class="img-fluid my-2" id="preview" width="100px"> 
-                        <p class="my-0 font-weight-bold">Demographic Information <i class="fas fa-info-circle text-info small" data-toggle="tooltip" data-placement="bottom" title="We collect this information for data aggregation purposes (e.g. our average rating charts). Your country is displayed on your profile. Age group and gender are private."></i></p>
+                        <p class="my-0 font-weight-bold">Demographic Information <i class="fas fa-info-circle text-info small" data-toggle="tooltip" data-placement="bottom" title="We collect this information for data aggregation purposes (e.g. our average rating charts). Your country is public. Age group and gender are private."></i></p>
                         <hr class="my-1 py-0">
                         <div class="form-row mt-3">
                             <div class="col-md-6 input-group">
