@@ -207,9 +207,10 @@ module.exports.filterPosts = async(req, res, next) => {
 module.exports.filterCharts = async(req, res, next) => {
     const queryKeys = Object.keys(req.query); 
     const dbQueries = {};
-    if(req.originalUrl = "/charts"){
-        dbQueries['date'] = getToday();
-    } 
+    const userQueries = {};
+    // if(!req.path === "/all" || "/me") {
+    //     dbQueries['date'] = getToday();
+    // } 
     if(queryKeys.length) {
         let {country, ageGroup, date, gender} = req.query;
         if(date) {
@@ -219,15 +220,19 @@ module.exports.filterCharts = async(req, res, next) => {
         }
         if(country){
             dbQueries['authorCountry'] = country; 
+            userQueries['country.name'] = country;
         }
         if(gender){
             dbQueries['authorGender'] = gender;
+            userQueries['gender'] =gender;
         }
         if(ageGroup){
             dbQueries['authorAgeGroup'] = ageGroup;
+            userQueries['ageGroup'] = ageGroup;
         }
     }
-    res.locals.dbQuery = dbQueries
+    res.locals.dbQuery = dbQueries;
+    res.locals.userQuery = userQueries;
     res.locals.query = req.query;
 	next();
 }

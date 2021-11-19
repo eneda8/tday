@@ -1,8 +1,8 @@
 
 const countries = require("../countries");
 const User = require("../models/user");
+const Post = require("../models/post");
 const {getToday} = require("../utils/getToday");
-
 
 module.exports.renderTodaysCharts = async (req, res) => {
     const user = await User.findById(req.user.id)
@@ -11,15 +11,19 @@ module.exports.renderTodaysCharts = async (req, res) => {
     const longToday = new Date().toLocaleDateString( 'en-US', {year: 'numeric', month: 'long', day: 'numeric'});
     const {dbQuery} = res.locals;
     delete res.locals.dbQuery
-    res.render("charts/today", {countries, user, escapedCountry, today, longToday, dbQuery, title:"Charts - Today / t'day"})
+    dbQuery['date'] = getToday();
+    const count = await Post.countDocuments({"date": getToday()})
+    res.render("charts/today", {countries, user, escapedCountry, today, count, longToday, dbQuery, title:"Charts - Today / t'day"})
 }
 
 module.exports.renderAllCharts = async (req, res) => {
     const user = await User.findById(req.user.id)
     const escapedCountry = escape(user.country.name);
-    const {dbQuery} = res.locals;
+    const {dbQuery, userQuery} = res.locals;
     delete res.locals.dbQuery
-    res.render("charts/all", {countries, user, escapedCountry, dbQuery, title:"Charts - All / t'day"})
+    delete res.locals.userQuery;
+    const count = await User.countDocuments();
+    res.render("charts/all", {countries, user, escapedCountry, getToday, count, dbQuery, userQuery, title:"Charts - All / t'day"})
 }
 
 module.exports.renderMyCharts = async (req, res) => {

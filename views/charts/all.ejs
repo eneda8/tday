@@ -1,25 +1,17 @@
 <% layout("layouts/boilerplate")%>
 <div class="container-fluid ml-3 my-3 px-5 pt-1" style="line-height:20px">
-   <h4 class="text-centered font-weight-bold pt-0 pb-1">All Charts</h4>
-   <div class="mb-0">
-      <a href="/charts" class="small">Today's Charts |</a>
-      <a href="/charts/me" class="small">My Charts</a>
+   <h4 class="text-centered font-weight-bold pt-0 pb-1 ml-3">All Charts <sup><i class="fas fa-asterisk text-muted small" data-placement="right" data-toggle="tooltip" title="The below charts are based on randomly generated data."></i></sup></h4>
+   <div class="mb-0 ml-3">
+      <a href="/charts" class="">Today's Charts |</a>
+      <a href="/charts/me" class="">My Charts |</a>
+      <a href="#" class="" id="showFilters" data-toggle="collapse" data-target="#filters" aria-expanded="true" >Show/Hide Filters</a>
    </div>
-   <p class="text-danger mb-0 small">Disclaimer: The below charts are based on randomly generated ratings.</p>
-   <div class="accordion p-1 mt-2 " id="filtersAccordion" style="width:42%">
-      <div class="card border-0 shadow-sm bg-light">
-          <div class="card-header p-0 bg-light" id="showFilters">
-              <h2 class="mb-0">
-                  <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#filters" aria-expanded="true" aria-controls="collapseOne">
-                    Show Filters
-                  </button>
-                </h2>
-          </div>
-          <div id="filters" class="collapse px-3 pt-3" aria-labelledby="showFilters" data-parent="#filtersAccordion">
-          
+   <div class="accordion p-1 mt-0 " id="filtersAccordion" style="width:70%">
+      <div class="card border-0 bg-transparent">
+          <div id="filters" class="collapse show px-3 pt-3" aria-labelledby="showFilters" data-parent="#filtersAccordion">
               <form action="/charts/all" method="GET" class="mb-3">
                <div class="form-row mb-3">
-                  <div class="col input-group">
+                  <div class="col input-group shadow-sm mr-3 pl-0">
                      <label for="date" class="input-group-text border-0"><i class="far fa-calendar-alt text-primary"></i></label>
                      <input type="date" name="date" id="date" class="form-control border-0">
                   </div>
@@ -27,116 +19,246 @@
                      <div class="input-group-prepend border-right">
                         <label class="input-group-text border-0" for="countryName"><i class="fas fa-globe-americas text-primary"></i></label>
                       </div>
-                      <select class="custom-select text-muted border-0" id="countryName" name="country" >
+                      <select class="custom-select text-muted border-0" id="country" name="country" >
                           <option value="" class="text-muted">Global</option> 
                           <%  for (let country of countries) {%>
                               <option value="<%=country["name"]%>" <%= query.country && query.country.includes(country["name"]) ? 'selected' : '' %> ><%=country["name"]%></option>
                           <%}%>        
                       </select>
                   </div>
-               </div>
-                  <div class="form-row mb-3 ">
-                      <div class="col input-group">
-                        <div class="input-group-prepend">
-                           <label class="input-group-text border-0" for="ageGroup"><i class="fas fa-birthday-cake text-primary"></i></label>
-                         </div>
-                         <select class="custom-select text-muted border-0" id="ageGroup" name="ageGroup" >
-                            <option value="">All Age Groups</option>
-                            <option value="Greatest Generation" <%= query.ageGroup && query.ageGroup == "Greatest Generation" ? 'selected' : '' %>>Greatest Generation (1901-1927)</option>
-                            <option value="Silent Generation" <%= query.ageGroup && query.ageGroup == "Silent Generation" ? 'selected' : '' %>>Silent Generation (1928-1945)</option>
-                            <option value="Baby Boomers" <%= query.ageGroup && query.ageGroup == "Baby Boomers" ? 'selected' : '' %>>Baby Boomers (1946-1964)</option>
-                            <option value="Gen X" <%= query.ageGroup && query.ageGroup == "Gen X" ? 'selected' : '' %>>Gen X (1965-1980)</option>
-                            <option value="Millennials" <%= query.ageGroup && query.ageGroup == "Millennials" ? 'selected' : '' %>>Millennials (1981-1996)</option>
-                            <option value="Gen Z" <%= query.ageGroup && query.ageGroup == "Gen Z" ? 'selected' : '' %>>Gen Z (1997-2012)</option>     
-                         </select>
+                  <div class="col input-group shadow-sm mr-3 pl-0">
+                     <div class="input-group-prepend">
+                        <label class="input-group-text border-0" for="ageGroup"><i class="fas fa-birthday-cake text-primary"></i></label>
                       </div>
-                      <div class="col input-group">
-                        <div class="input-group-prepend">
-                           <label class="input-group-text border-0" for="gender"><i class="fas fa-venus-mars text-primary"></i></label>
-                         </div>
-                         <select class="custom-select text-muted border-0" id="gender" name="gender" >
-                            <option value="">All Genders</option>
-                            <option value="male" <%= query.gender && query.gender == "male" ? 'selected' : '' %>>male</option>
-                            <option value="female" <%= query.gender && query.gender == "female" ? 'selected' : '' %>>female</option>     
-                         </select>
+                      <select class="custom-select text-muted border-0" id="ageGroup" name="ageGroup" >
+                         <option value="">All Age Groups</option>
+                         <option value="Greatest Generation" <%= query.ageGroup && query.ageGroup == "Greatest Generation" ? 'selected' : '' %>>Greatest Generation (1901-1927)</option>
+                         <option value="Silent Generation" <%= query.ageGroup && query.ageGroup == "Silent Generation" ? 'selected' : '' %>>Silent Generation (1928-1945)</option>
+                         <option value="Baby Boomers" <%= query.ageGroup && query.ageGroup == "Baby Boomers" ? 'selected' : '' %>>Baby Boomers (1946-1964)</option>
+                         <option value="Gen X" <%= query.ageGroup && query.ageGroup == "Gen X" ? 'selected' : '' %>>Gen X (1965-1980)</option>
+                         <option value="Millennials" <%= query.ageGroup && query.ageGroup == "Millennials" ? 'selected' : '' %>>Millennials (1981-1996)</option>
+                         <option value="Gen Z" <%= query.ageGroup && query.ageGroup == "Gen Z" ? 'selected' : '' %>>Gen Z (1997-2012)</option>     
+                      </select>
+                   </div>
+                   <div class="col input-group shadow-sm mr-3 pl-0">
+                     <div class="input-group-prepend">
+                        <label class="input-group-text border-0" for="gender"><i class="fas fa-venus-mars text-primary"></i></label>
                       </div>
+                      <select class="custom-select text-muted border-0" id="gender" name="gender" >
+                         <option value="">All Genders</option>
+                         <option value="male" <%= query.gender && query.gender == "male" ? 'selected' : '' %>>male</option>
+                         <option value="female" <%= query.gender && query.gender == "female" ? 'selected' : '' %>>female</option>     
+                      </select>
+                   </div>
+                   <button class="btn btn-sm btn-warning d-inline mr-3 py-1" type="submit" id="submit" >Filter charts</button>
+                   <button class="btn btn-sm btn-primary d-inline py-1" type="button" id="clear-all" onclick="window.location = window.location.href.split('?')[0]">Clear filters</button>
                   </div>
-                  <button class="btn btn-sm btn-warning mb-2" type="submit" id="submit" >Filter charts</button>
               </form>
       </div>
       </div>
   </div>
+
+  <h6 class="d-block ml-3 mt-3 font-weight-bold">Summary <i class="fas fa-info-circle text-muted small" data-toggle="tooltip" data-placement="right" title="Note: the below charts cannot be filtered by date."></i></h6>
   <div class="my-3 d-flex justify-content-around">
      <!-- our day (number) -->
      <div class="col-sm">
-         <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="250" height="250" src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=dda07755-dc27-41e9-a57f-cbc6b8178aff&maxDataAge=60&theme=light&autoRefresh=true&filter=<%=JSON.stringify(dbQuery)%>"></iframe>
+         <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="300" height="250" src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=dda07755-dc27-41e9-a57f-cbc6b8178aff&maxDataAge=60&theme=light&autoRefresh=true&filter={'date':'<%=getToday()%>'<%if(query.gender){%>,'authorGender':'<%=user.gender%>'<%}%><%if(query.country){%>,'authorCountry': '<%=query.country%>'<%}%><%if(query.ageGroup) {%>,'authorAgeGroup': '<%=query.ageGroup%>'<%}%>}"></iframe>
+         <% if(query.country || query.ageGroup || query.gender || query.date ) { %> 
+            <p class="small text-muted mb-0 mt-1"><span class="font-weight-bold">Filters applied:</span>
+            <%=query.date ? dbQuery['date']: "" %>
+            <%= query.gender ? query.gender : "" %>
+            <%= query.ageGroup ?  query.ageGroup  : "" %>
+            <%= query.country ? "from " + query.country : "" %>
+            </p>
+            <% } %> 
      </div>
      <!-- our week (number) -->
      <div class="col-sm">
-         <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="250" height="250" src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=747e6d0c-f114-4a1a-8e3b-5d79e9880d79&maxDataAge=60&theme=light&autoRefresh=true&filter=<%=JSON.stringify(dbQuery)%>"></iframe>
+         <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="300" height="250" src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=747e6d0c-f114-4a1a-8e3b-5d79e9880d79&maxDataAge=86400&theme=light&autoRefresh=true&filter=<%=JSON.stringify(dbQuery, ['authorCountry', 'authorAgeGroup', 'authorGender'])%>"></iframe>
+         <% if(query.country || query.ageGroup || query.gender ) { %> 
+            <p class="small text-muted mb-0 mt-1"><span class="font-weight-bold">Filters applied:</span>
+            <%= query.gender ? query.gender : "" %>
+            <%= query.ageGroup ?  query.ageGroup  : "" %>
+            <%= query.country ? "from " + query.country : "" %>
+            </p>
+            <% } %> 
      </div>
      <!-- our month (number) -->
      <div class="col-sm">
-         <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="250" height="250" src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=6aa59531-621f-488f-83d3-631c94646129&maxDataAge=60&theme=light&autoRefresh=true&filter=<%=JSON.stringify(dbQuery)%>"></iframe>
+         <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="300" height="250" src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=6aa59531-621f-488f-83d3-631c94646129&maxDataAge=86400&theme=light&autoRefresh=true&filter=<%=JSON.stringify(dbQuery, ['authorCountry', 'authorAgeGroup', 'authorGender'])%>"></iframe>
+         <% if(query.country || query.ageGroup || query.gender ) { %> 
+            <p class="small text-muted mb-0 mt-1"><span class="font-weight-bold">Filters applied:</span>
+            <%= query.gender ? query.gender : "" %>
+            <%= query.ageGroup ?  query.ageGroup  : "" %>
+            <%= query.country ? "from " + query.country : "" %>
+            </p>
+            <% } %> 
      </div>
      <!-- our year (number) -->
      <div class="col-sm">
-         <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="250" height="250" src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=91b22579-fc43-4bee-8881-55d5ab2da61b&maxDataAge=60&theme=light&autoRefresh=true&filter=<%=JSON.stringify(dbQuery)%>"></iframe>
+         <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="300" height="250" src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=91b22579-fc43-4bee-8881-55d5ab2da61b&maxDataAge=86400&theme=light&autoRefresh=true&filter=<%=JSON.stringify(dbQuery, ['authorCountry', 'authorAgeGroup', 'authorGender'])%>"></iframe>
+         <% if(query.country || query.ageGroup || query.gender ) { %> 
+            <p class="small text-muted mb-0 mt-1"><span class="font-weight-bold">Filters applied:</span>
+            <%= query.gender ? query.gender : "" %>
+            <%= query.ageGroup ?  query.ageGroup  : "" %>
+            <%= query.country ? "from " + query.country : "" %>
+            </p>
+            <% } %> 
+     </div>
+     <div class="col-sm">
+        <!-- our all time rating average -->
+      <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="300" height="250" src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=7faa43e0-08fa-42d9-bbe8-6072122e3d34&maxDataAge=86400&theme=light&autoRefresh=true&filter=<%=JSON.stringify(dbQuery, ['authorCountry', 'authorAgeGroup', 'authorGender'])%>"></iframe>
+      <% if(query.country || query.ageGroup || query.gender ) { %> 
+         <p class="small text-muted mb-0 mt-1"><span class="font-weight-bold">Filters applied:</span>
+         <%= query.gender ? query.gender : "" %>
+         <%= query.ageGroup ?  query.ageGroup  : "" %>
+         <%= query.country ? "from " + query.country : "" %>
+         </p>
+         <% } %> 
      </div>
 
   </div>
-  <div class="row mb-3">
+  <h6 class="d-block ml-3 mt-4 font-weight-bold">Average Rating Over Time <i class="fas fa-info-circle text-muted small" data-toggle="tooltip" data-placement="right" title="Note: the below charts cannot be filtered by date."></i></h6>
+  <div class="row mb-3 px-3">
      <!-- our week (bar graph) -->
      <div class="col-sm">
-      <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="400" height="350" src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=ef218cef-a54b-4dee-9063-bfdaa383d753&maxDataAge=60&theme=light&autoRefresh=true"></iframe>
+      <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="400" height="350" src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=ef218cef-a54b-4dee-9063-bfdaa383d753&maxDataAge=60&theme=light&autoRefresh=true&filter=<%=JSON.stringify(dbQuery, ['authorCountry', 'authorAgeGroup', 'authorGender'])%>"></iframe>
+      <% if(query.country || query.ageGroup || query.gender ) { %> 
+         <p class="small text-muted mb-0 mt-1"><span class="font-weight-bold">Filters applied:</span>
+         <%= query.gender ? query.gender : "" %>
+         <%= query.ageGroup ?  query.ageGroup  : "" %>
+         <%= query.country ? "from " + query.country : "" %>
+         </p>
+         <% } %> 
      </div>
      <!-- our days of the week (bar graph) -->
      <div class="col-sm">
-      <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="400" height="350" src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=4a62cf03-d728-4fb7-85d2-9d477e0f70ed&maxDataAge=86400&theme=light&autoRefresh=true"></iframe>
+      <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="400" height="350" src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=4a62cf03-d728-4fb7-85d2-9d477e0f70ed&maxDataAge=86400&theme=light&autoRefresh=true&filter=<%=JSON.stringify(dbQuery, ['authorCountry', 'authorAgeGroup', 'authorGender'])%>"></iframe>
+      <% if(query.country || query.ageGroup || query.gender ) { %> 
+         <p class="small text-muted mb-0 mt-1"><span class="font-weight-bold">Filters applied:</span>
+         <%= query.gender ? query.gender : "" %>
+         <%= query.ageGroup ?  query.ageGroup  : "" %>
+         <%= query.country ? "from " + query.country : "" %>
+         </p>
+         <% } %> 
      </div>
      <!-- our month (bar graph) -->
      <div class="col-sm">
-      <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="400" height="350" src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=3a13ea75-b655-48bb-8d78-cfdabeec7daf&maxDataAge=86400&theme=light&autoRefresh=false"></iframe>
+      <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="400" height="350" src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=3a13ea75-b655-48bb-8d78-cfdabeec7daf&maxDataAge=86400&theme=light&autoRefresh=true&filter=<%=JSON.stringify(dbQuery, ['authorCountry', 'authorAgeGroup', 'authorGender'])%>"></iframe>
+      <% if(query.country || query.ageGroup || query.gender ) { %> 
+         <p class="small text-muted mb-0 mt-1"><span class="font-weight-bold">Filters applied:</span>
+         <%= query.gender ? query.gender : "" %>
+         <%= query.ageGroup ?  query.ageGroup  : "" %>
+         <%= query.country ? "from " + query.country : "" %>
+         </p>
+         <% } %> 
      </div>
      <!-- our year (bar graph) -->
      <div class="col-sm">
-      <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="400" height="350" src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=a066bcfa-1834-4606-b88f-aa26c4635eb5&maxDataAge=86400&theme=light&autoRefresh=true"></iframe>
+      <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="400" height="350" src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=a066bcfa-1834-4606-b88f-aa26c4635eb5&maxDataAge=86400&theme=light&autoRefresh=true&filter=<%=JSON.stringify(dbQuery, ['authorCountry', 'authorAgeGroup', 'authorGender'])%>"></iframe>
+      <% if(query.country || query.ageGroup || query.gender ) { %> 
+         <p class="small text-muted mb-0 mt-1"><span class="font-weight-bold">Filters applied:</span>
+         <%= query.gender ? query.gender : "" %>
+         <%= query.ageGroup ?  query.ageGroup  : "" %>
+         <%= query.country ? "from " + query.country : "" %>
+         </p>
+         <% } %> 
      </div>
   </div>
+
+  <h6 class="d-block ml-3 mt-4 font-weight-bold">Average Rating by Country, Region, Age Group, & Gender</h6>
    <!-- average rating by country -->
-   <div class="row mb-3">
-      <iframe class="ml-5" style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="1720" height="500" src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=24c74dab-b794-4f89-b9aa-23a0564a8aaa&maxDataAge=60&autoRefresh=true&theme=light&filter=<%=JSON.stringify(dbQuery)%>"></iframe>
+   <div class="row mb-4 px-3 ml-1">
+      <iframe class="" style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="1755" height="500" src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=24c74dab-b794-4f89-b9aa-23a0564a8aaa&maxDataAge=60&autoRefresh=true&theme=light&filter=<%=JSON.stringify(dbQuery)%>"></iframe>
+      <% if(query.country || query.ageGroup || query.gender || query.date ) { %> 
+         <p class="small text-muted mb-0 mt-1"><span class="font-weight-bold">Filters applied:</span>
+            <%=query.date ? dbQuery['date']: "" %>
+         <%= query.gender ? query.gender : "" %>
+         <%= query.ageGroup ?  query.ageGroup  : "" %>
+         <%= query.country ? "from " + query.country : "" %>
+         </p>
+         <% } %> 
    </div>
-   <div class="row mb-3">
+   <div class="row mb-3 px-3">
       <!-- average rating by region -->
      <div class="col-sm">
-        <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="525" height="394" src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=0ae29aff-b511-4cdf-a83a-1f7fdea5e4af&theme=light&maxDataAge=60&autoRefresh=true&filter=<%=JSON.stringify(dbQuery)%>"></iframe>
+        <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="550" height="394" src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=0ae29aff-b511-4cdf-a83a-1f7fdea5e4af&theme=light&maxDataAge=60&autoRefresh=true&filter=<%=JSON.stringify(dbQuery)%>"></iframe>
+        <% if(query.country || query.ageGroup || query.gender || query.date ) { %> 
+         <p class="small text-muted mb-0 mt-1"><span class="font-weight-bold">Filters applied:</span>
+            <%=query.date ? dbQuery['date']: "" %>
+            <%= query.gender ? query.gender : "" %>
+            <%= query.ageGroup ?  query.ageGroup  : "" %>
+            <%= query.country ? "from " + query.country : "" %>
+         </p>
+         <% } %> 
      </div>
      <!-- average rating by gender -->
      <div class="col-sm">
-        <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="525" height="394" src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=3d402d54-0338-46ff-ae2f-400d23fbed7a&theme=light&maxDataAge=60&autoRefresh=true&filter=<%=JSON.stringify(dbQuery)%>"></iframe>
+        <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="550" height="394" src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=3d402d54-0338-46ff-ae2f-400d23fbed7a&theme=light&maxDataAge=60&autoRefresh=true&filter=<%=JSON.stringify(dbQuery)%>"></iframe>
+        <% if(query.country || query.ageGroup || query.gender || query.date) { %> 
+         <p class="small text-muted mb-0 mt-1"><span class="font-weight-bold">Filters applied:</span>
+            <%=query.date ? dbQuery['date']: "" %>
+            <%= query.gender ? query.gender : "" %>
+            <%= query.ageGroup ?  query.ageGroup  : "" %>
+            <%= query.country ? "from " + query.country : "" %>
+         </p>
+         <% } %> 
      </div>
      <!-- average rating by age group -->
      <div class="col-sm">
-         <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="525" height="394" src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=6cefcd4d-caef-4025-9446-9ddbf2c3a6e9&theme=light&maxDataAge=60&autoRefresh=true&filter=<%=JSON.stringify(dbQuery)%>"></iframe>
+         <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="550" height="394" src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=6cefcd4d-caef-4025-9446-9ddbf2c3a6e9&theme=light&maxDataAge=60&autoRefresh=true&filter=<%=JSON.stringify(dbQuery)%>"></iframe>
+         <% if(query.country || query.ageGroup || query.gender || query.date) { %> 
+         <p class="small text-muted mb-0 mt-1"><span class="font-weight-bold">Filters applied:</span>
+            <%=query.date ? dbQuery['date']: "" %>
+            <%= query.gender ? query.gender : "" %>
+            <%= query.ageGroup ?  query.ageGroup  : "" %>
+            <%= query.country ? "from " + query.country : "" %>
+         </p>
+         <% } %> 
      </div>
    </div>
-   <div class="row mb-3">
-           <!-- total user count (number) -->
-     <div class="col-sm">
-      <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="250" height="250" src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=21376918-2612-4b1c-9dea-577461ed7a96&maxDataAge=60&theme=light&autoRefresh=true"></iframe>
-  </div>
-      <!-- total user count by country -->
-     <div class="col-sm  p-4 m-2">
-        <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="525" height="394" src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=37f61c17-7378-4954-8f82-4c0965d3982b&theme=light&maxDataAge=60&autoRefresh=true"></iframe>
-     </div>
-     <!-- total user count by gender -->
-     <div class="col-sm p-4 m-2">
-         <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="525" height="394" src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=461c817f-117e-4c3f-bac4-7b7a366a41d1&maxDataAge=60&theme=light&autoRefresh=true"></iframe>
-     </div>
-     <!-- total user count by age group -->
-     <div class="col-sm p-4 m-2">
-         <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="525" height="394" src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=d2629454-49e8-443c-9a9a-4a0a29b7e031&maxDataAge=60&theme=light&autoRefresh=true"></iframe>
-     </div>
+
+   <a href="#" class="ml-3"  id="showSample" data-toggle="collapse" data-target="#sampleSize" aria-expanded="true" >Show/Hide Sample Size Charts</a>
+   <div class="accordion border-0" id="#sampleAccordion">
+      <div class="card border-0 bg-transparent">
+         <div id="sampleSize" class="collapse">
+            <h6 class="d-block ml-3 mt-4 font-weight-bold">Total User Count: <%=count%> users</h6>
+            <div class="row mb-3 px-3">
+               <!-- user count by country -->
+               <div class="col-sm">
+                  <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="466" height="394" src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=37f61c17-7378-4954-8f82-4c0965d3982b&maxDataAge=86400&autoRefresh=true&theme=light&filter=<%=JSON.stringify(dbQuery, ['country', 'ageGroup', 'gender'])%>"></iframe>
+                  <% if(query.country || query.ageGroup || query.gender ) { %> 
+                     <p class="small text-muted mb-0 mt-1"><span class="font-weight-bold">Filters applied:</span>
+                        <%= query.gender ? query.gender : "" %>
+                        <%= query.ageGroup ?  query.ageGroup  : "" %>
+                        <%= query.country ? "from " + query.country : "" %>
+                     </p>
+                     <% } %> 
+               </div>
+            <!-- user count by gender -->
+               <div class="col-sm">
+                     <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="466" height="394" src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=461c817f-117e-4c3f-bac4-7b7a366a41d1&maxDataAge=86400&theme=light&autoRefresh=true&filter=<%=JSON.stringify(dbQuery, ['country', 'ageGroup', 'gender'])%>"></iframe>
+                     <% if(query.country || query.ageGroup || query.gender ) { %> 
+                        <p class="small text-muted mb-0 mt-1"><span class="font-weight-bold">Filters applied:</span>
+                           <%= query.gender ? query.gender : "" %>
+                           <%= query.ageGroup ?  query.ageGroup  : "" %>
+                           <%= query.country ? "from " + query.country : "" %>
+                        </p>
+                        <% } %> 
+               </div>
+            <!-- 'user count by age group -->
+               <div class="col-sm">
+                     <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="466" height="394" src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=d2629454-49e8-443c-9a9a-4a0a29b7e031&maxDataAge=86400&theme=light&autoRefresh=true&filter=<%=JSON.stringify(dbQuery, ['country', 'ageGroup', 'gender'])%>"></iframe>
+                  <% if(query.country || query.ageGroup || query.gender ) { %> 
+                     <p class="small text-muted mb-0 mt-1"><span class="font-weight-bold">Filters applied:</span>
+                        <%= query.gender ? query.gender : "" %>
+                        <%= query.ageGroup ?  query.ageGroup  : "" %>
+                        <%= query.country ? "from " + query.country : "" %>
+                     </p>
+                     <% } %> 
+               </div>
+            </div>
+         </div>
+      </div>
    </div>
  </div>

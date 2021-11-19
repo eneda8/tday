@@ -32,9 +32,9 @@
     <div class="row mb-4 ">
         <!-- my week (bar graph) -->
         <div class="col-sm mt-3">
-            <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="400" height="350" src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=3e56620a-ac24-464e-9793-3f5065281e6f&theme=light&maxDataAge=60&autoRefresh=true&filter={'authorID':'<%=user._id%>'}"></iframe>
+            <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="400" height="350" src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=3e56620a-ac24-464e-9793-3f5065281e6f&maxDataAge=3600&autoRefresh=true&theme=light&filter={'authorID':'<%=user._id%>'}"></iframe>
         </div>
-        <!-- averating by day of the week (bar graph) -->
+        <!-- average rating by day of the week (bar graph) -->
         <div class="col-sm mt-3">
             <iframe id="last" style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="400" height="350" src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=bf813e4f-506b-46e3-a5b6-b2f61d8608da&theme=light&maxDataAge=60&autoRefresh=true&filter={'authorID':'<%=user._id%>'}"></iframe>
         </div>
