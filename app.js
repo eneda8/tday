@@ -12,6 +12,9 @@ const ExpressError = require("./utils/ExpressError");
 const methodOverride = require("method-override");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
+const helmet = require("helmet");
+const mongoSanitize = require("express-mongo-sanitize");
+const MongoStore = require("connect-mongo");
 const User = require("./models/user");
 
 const indexRoutes = require("./routes/index");
@@ -50,15 +53,35 @@ app.set("views", path.join(__dirname, "views"));
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
 
 app.use(express.urlencoded({extended: true})); 
-// app.use(bodyParser.json());
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, 'public')))
+app.use(mongoSanitize({
+    replaceWith: '_'
+}));
+
+const secret = process.env.SECRET 
+
+const store = MongoStore.create({
+    mongoUrl: dbUrl,
+    touchAfter: 24 * 60 * 60,
+    crypto: {
+        secret
+    }
+});
+
+store.on("error", function (e) {
+    console.log("SESSION STORE ERROR", e)
+});
+
 
 const sessionConfig = {
-    secret: 'thisshouldbeabettersecret!',
+    store,
+    name: "cookie monster",
+    secret,
     resave: false,
     saveUninitialized: true,
     cookie: {
+        secure: true,
         httpOnly: true,
         expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
         maxAge: 1000 * 60 * 60 * 24 * 7
@@ -66,6 +89,50 @@ const sessionConfig = {
 }
 app.use(session(sessionConfig))
 app.use(flash());
+app.use(helmet());
+
+const scriptSrcUrls = [
+    "https://stackpath.bootstrapcdn.com",
+    "https://kit.fontawesome.com",
+    "https://cdnjs.cloudflare.com",
+    "https://cdn.jsdelivr.net",
+    "https://code.jquery.com",
+];
+const styleSrcUrls = [
+    "https://kit-free.fontawesome.com",
+    "https://stackpath.bootstrapcdn.com",
+    "https://fonts.googleapis.com",
+    "https://use.fontawesome.com",
+    "https://cdn.jsdelivr.net",
+];
+const connectSrcUrls = [
+
+
+];
+const fontSrcUrls = [];
+app.use(
+    helmet.contentSecurityPolicy({
+        directives: {
+            defaultSrc: [],
+            connectSrc: ["'self'", ...connectSrcUrls],
+            scriptSrc: ["'unsafe-inline'", "'self'", ...scriptSrcUrls],
+            styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
+            workerSrc: ["'self'", "blob:"],
+            childSrc: ["blob:"],
+            objectSrc: [],
+            imgSrc: [
+                "'self'",
+                "blob:",
+                "data:",
+                `https://res.cloudinary.com/${process.env.CLOUDINARY_CLOUD_NAME}/`,
+                "https://images.unsplash.com", 
+                "https://i.imgur.com",
+                "http://placeimg.com"
+            ],
+            fontSrc: ["'self'", ...fontSrcUrls],
+        },
+    })
+);
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -80,9 +147,6 @@ passport.deserializeUser(function(id, done) {
         done(err, user);
     });
 });
-
-// passport.serializeUser(User.serializeUser());
-// passport.deserializeUser(User.deserializeUser())
 
 app.use((req, res, next) => {
     if (!['/login', '/register', '/'].includes(req.originalUrl)) {
@@ -110,7 +174,6 @@ app.get('/favicon.ico', (req, res) => res.status(204).end());
 
 app.all("*", (req, res, next) => {
     req.session.returnTo = req.session.previousReturnTo;
-    // console.log('Previous returnTo reset to:', req.session.returnTo )
     next(new ExpressError("Page Not Found", 404))
 })
 
@@ -120,7 +183,8 @@ app.use((err, req, res, next) => {
     res.status(statusCode).render("error", {err, title: "Error / t'day"});
 })
 
-app.listen(3000, () => {
-    console.log("serving on port 3000")
-})
+const port = process.env.PORT || 3000;
 
+app.listen(port, () => {
+  console.log(`Serving on port ${port}`)
+})
