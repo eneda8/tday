@@ -63,27 +63,27 @@ app.use(mongoSanitize({
 
 const secret = process.env.SECRET  || "81aa3b3f55029ad11b7f040b2064f31b7420633b"
 
-const store = MongoStore.create({
-    mongoUrl: dbUrl,
-    touchAfter: 24 * 60 * 60,
-    crypto: {
-        secret
-    }
-});
+// const store = MongoStore.create({
+//     mongoUrl: dbUrl,
+//     touchAfter: 24 * 60 * 60,
+//     crypto: {
+//         secret
+//     }
+// });
 
-store.on("error", function (e) {
-    console.log("SESSION STORE ERROR", e)
-});
+// store.on("error", function (e) {
+//     console.log("SESSION STORE ERROR", e)
+// });
 
 
 const sessionConfig = {
-    store,
+    // store,
     name: "cookie monster",
     secret,
     resave: false,
     saveUninitialized: true,
     cookie: {
-        secure: true,
+        // secure: true,
         httpOnly: true,
         expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
         maxAge: 1000 * 60 * 60 * 24 * 7
@@ -108,10 +108,15 @@ const styleSrcUrls = [
     "https://cdn.jsdelivr.net",
 ];
 const connectSrcUrls = [
-
+    "https://charts.mongodb.com",
+    "https://global-mind.org/"
 
 ];
-const fontSrcUrls = [];
+const fontSrcUrls = [
+    "https://fonts.gstatic.com",
+    "https://use.fontawesome.com",
+];
+
 app.use(
     helmet.contentSecurityPolicy({
         directives: {
@@ -121,6 +126,7 @@ app.use(
             styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
             workerSrc: ["'self'", "blob:"],
             childSrc: ["blob:"],
+            frameSrc: ["blob:", ...connectSrcUrls],
             objectSrc: [],
             imgSrc: [
                 "'self'",
@@ -129,7 +135,8 @@ app.use(
                 `https://res.cloudinary.com/${process.env.CLOUDINARY_CLOUD_NAME}/`,
                 "https://images.unsplash.com", 
                 "https://i.imgur.com",
-                "http://placeimg.com"
+                "http://placeimg.com",
+                "https://cdn.fakercloud.com"
             ],
             fontSrc: ["'self'", ...fontSrcUrls],
         },
