@@ -59,7 +59,7 @@ app.use(mongoSanitize({
     replaceWith: '_'
 }));
 
-const secret = process.env.SECRET 
+const secret = process.env.SECRET  || "81aa3b3f55029ad11b7f040b2064f31b7420633b"
 
 const store = MongoStore.create({
     mongoUrl: dbUrl,

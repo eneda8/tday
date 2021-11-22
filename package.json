@@ -27,11 +27,12 @@
     "serve-favicon": "^2.5.0",
     "stripe": "^8.176.0"
   },
-  "name": "todai",
+  "name": "tday",
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
   },
   "author": "Eneda Xhambazi",
   "license": "ISC",

@@ -21,6 +21,8 @@ const extension = (joi) => ({
     }
 });
 
+const Joi = BaseJoi.extend(extension)
+
 module.exports.postSchema = Joi.object({
     post: Joi.object({
         rating: Joi.number().required().min(1).max(5),
@@ -39,9 +41,9 @@ module.exports.commentSchema = Joi.object({
     }).required()
 })
 
-module.exports.journalSchema = Join.object({
+module.exports.journalSchema = Joi.object({
     journal: Joi.object({
-        body: Joi.string().require().escapeHTML(),
+        body: Joi.string().required().escapeHTML(),
         title: Joi.string().escapeHTML()
     }).required()
 })
