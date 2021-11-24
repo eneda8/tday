@@ -14,8 +14,13 @@
                     <a href="/posts/<%=user.todaysPost%>" class="nav-link"><i class="far fa-calendar-check mr-3"></i>Today's rating</a>
                 </li>
                 <% } %>
-            <li class="nav-item">
-              <a class="nav-link" href="/charts" ><i class="far fa-chart-bar mr-3"></i>Charts</a>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"><i class="far fa-chart-bar mr-3"></i>Charts</a>
+              <div class="dropdown-menu">
+                  <a href="/charts" class="dropdown-item text-primary">Today's Charts</a>
+                  <a href="/charts/all" class="dropdown-item text-primary">All Charts</a>
+                  <a href="/charts/me" class="dropdown-item text-primary">My Charts</a>
+                </div>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/write"><i class="fas fa-pencil-alt mr-3"></i>Write</a>
@@ -32,11 +37,12 @@
             <li class="nav-item">
                 <a class="nav-link" href="/settings"><i class="fas fa-cog mr-3"></i>Settings</a>
             </li>
-            <li class="nav-item">
-                <a href="/donate" class="nav-link"><i class="fas fa-hand-holding-usd text-primary mr-3"></i>Donate</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/logout"><i class="fas fa-sign-out-alt mr-3"></i>Log out</a>
+            <li class="nav-item dropdown">
+                <a href="" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" ><i class="fas fa-ellipsis-h text-primary mr-3"></i>More</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item text-primary" href="/donate" ><i class="fas fa-hand-holding-usd text-primary mr-3"></i>Donate</a>
+                    <a class="dropdown-item text-primary" href="/logout"><i class="fas fa-sign-out-alt text-primary mr-3"></i>Log out</a>
+                </div>
             </li>
           </ul>
     </div>

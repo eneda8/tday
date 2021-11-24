@@ -136,7 +136,8 @@ app.use(
                 "https://images.unsplash.com", 
                 "https://i.imgur.com",
                 "http://placeimg.com",
-                "https://cdn.fakercloud.com"
+                "https://cdn.fakercloud.com",
+                "https://avataaars.io"
             ],
             fontSrc: ["'self'", ...fontSrcUrls],
         },

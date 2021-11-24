@@ -23,6 +23,7 @@
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^6.1.0",
+    "random-avatar-generator": "^2.0.0",
     "sanitize-html": "^2.5.3",
     "serve-favicon": "^2.5.0",
     "stripe": "^8.176.0"

@@ -5,6 +5,8 @@ const Comment = require("../models/comment");
 const faker = require('faker');
 const countries = require("./countries");
 require("dotenv").config();
+const {AvatarGenerator} = require("random-avatar-generator");
+const generator = new AvatarGenerator();
 
 const dbUrl = process.env.DB_URL;
 
@@ -66,68 +68,68 @@ const seedDB = async () => {
     // }
 
     // /make fake posts
-    for(let i = 0; i<1000; i++){
-        const rating = Math.floor(Math.random() * 5) + 1;
-        let body;
-        if(i % 2 == 0 ) {
-            body = faker.lorem.sentence()
-        } else {body = faker.lorem.sentences()}
-        const user = await User.findOne().where({ "postedToday" : false }) .where({"bio": {$ne: "creator of this website" }})
-        if(user){
-            const post = new Post({rating, body});
-            if(i % 2 == 0) {
-                post.image = {}
-                post.image.path = faker.image.image();
-            }     
-            post.author = user;
-            post.authorID = user._id;
-            post.authorCountry = user.country.name;
-            post.authorUsername = user.username;
-            post.authorGender = user.gender;
-            post.authorAgeGroup= user.ageGroup;
-            post.authorDisplayName = user.displayName;
-            await post.save();
-            user.postedToday = true;
-            user.posts.unshift(post);
-            user.todaysPost = post._id;
-            user.postStreak ++; 
-            // update user average
-            let userAverage;
-            await Post.aggregate([
-                {$match: {"author": user._id}},
-                {$group: {_id: null, avgRating: {$avg: "$rating"}}}
-            ]).then(function(res) {
-             userAverage = res[0].avgRating.toFixed(2)
-             });
-            await user.updateOne({$set: {average:  userAverage}});
-            await user.save();
-         // ----------------------------
-        }
-    }
+    // for(let i = 0; i<1000; i++){
+    //     const rating = Math.floor(Math.random() * 5) + 1;
+    //     let body;
+    //     if(i % 2 == 0 ) {
+    //         body = faker.lorem.sentence()
+    //     } else {body = faker.lorem.sentences()}
+    //     const user = await User.findOne().where({ "postedToday" : false }) .where({"bio": {$ne: "creator of this website" }})
+    //     if(user){
+    //         const post = new Post({rating, body});
+    //         if(i % 2 == 0) {
+    //             post.image = {}
+    //             post.image.path = "https://placeimg.com/640/480/any";
+    //         }     
+    //         post.author = user;
+    //         post.authorID = user._id;
+    //         post.authorCountry = user.country.name;
+    //         post.authorUsername = user.username;
+    //         post.authorGender = user.gender;
+    //         post.authorAgeGroup= user.ageGroup;
+    //         post.authorDisplayName = user.displayName;
+    //         await post.save();
+    //         user.postedToday = true;
+    //         user.posts.unshift(post);
+    //         user.todaysPost = post._id;
+    //         user.postStreak ++; 
+    //         // update user average
+    //         let userAverage;
+    //         await Post.aggregate([
+    //             {$match: {"author": user._id}},
+    //             {$group: {_id: null, avgRating: {$avg: "$rating"}}}
+    //         ]).then(function(res) {
+    //          userAverage = res[0].avgRating.toFixed(2)
+    //          });
+    //         await user.updateOne({$set: {average:  userAverage}});
+    //         await user.save();
+    //      // ----------------------------
+    //     }
+    // }
 
     //fix user data
 
-    // const users = await User.find({});
-    // for(let user of users){
+    const users = await User.find({});
+    for(let user of users){
         // UPDATE AVATARS
-    //     await user.updateOne({$set: {"user.avatar.path":  faker.image.image()}});
-    //     await user.save();
-    // --------------------------------------------
-    //     if(user.birthyear >= 1901 && user.birthyear <=1927){
-    //         user.ageGroup = "Greatest Generation"
-    //     }else if(user.birthyear >=1928 && user.birthyear <= 1945){
-    //         user.ageGroup = "Silent Generation"
-    //     } else if(user.birthyear >=  1946 && user.birthyear <= 1964){
-    //         user.ageGroup = "Baby Boomers"
-    //     } else if (user.birthyear >= 1965  && user.birthyear <=1980 ){
-    //         user.ageGroup = "Gen X"
-    //     } else if (user.birthyear >= 1981 && user.birthyear <= 1996) {
-    //         user.ageGroup = "Millennials"
-    //     } else if (user.birthyear >= 1997 && user.birthyear <= 2012){
-    //         user.ageGroup = "Gen Z"
-    //     } 
-    //     await user.save();
-    // }
+        await user.updateOne({$set: {"avatar.path": generator.generateRandomAvatar()}});
+        console.log("user updated:", user.avatar.path)
+        await user.save();
+        // if(user.birthyear >= 1901 && user.birthyear <=1927){
+        //     user.ageGroup = "Greatest Generation"
+        // }else if(user.birthyear >=1928 && user.birthyear <= 1945){
+        //     user.ageGroup = "Silent Generation"
+        // } else if(user.birthyear >=  1946 && user.birthyear <= 1964){
+        //     user.ageGroup = "Baby Boomers"
+        // } else if (user.birthyear >= 1965  && user.birthyear <=1980 ){
+        //     user.ageGroup = "Gen X"
+        // } else if (user.birthyear >= 1981 && user.birthyear <= 1996) {
+        //     user.ageGroup = "Millennials"
+        // } else if (user.birthyear >= 1997 && user.birthyear <= 2012){
+        //     user.ageGroup = "Gen Z"
+        // } 
+        // await user.save();
+    }
 
 
 
@@ -145,8 +147,13 @@ const seedDB = async () => {
     //         }
     //     }
     // }
-    
-    
+    // const posts = await Post.find({"image": {$exists: true}, "authorID": {$ne: "6119678323ac00ab29f09ceb"}})
+    // console.log(posts.length)
+    // for(let post of posts){
+    //     post.image.path = "https://placeimg.com/640/480/any"
+    //     console.log("changed post")
+    //     await post.save()
+    // }
     //make fake comments
     // for(let i = 0; i<4000; i++){
     //     const body = faker.lorem.sentence();

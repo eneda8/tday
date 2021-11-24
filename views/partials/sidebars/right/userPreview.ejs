@@ -8,7 +8,7 @@
                 <div class="mr-3">
                     <img src="<%=user.avatar.profile%>" alt="" width="125" height="125" class="rounded-circle my-3 img-fluid img-thumbnail" style="transform: translateY(2.3rem)">
                 </div>
-                <div class="text-white pl-2 ">
+                <div class="text-white pl-2" style="transform: translateY(-1rem)">
                     <h4 class="my-0 py-0"><a href="/u/<%=user.username%>" class="text-decoration-none text-white stretched-link"><%=user.displayName%></a></h4>
                     <p class="my-0 py-0"><span style="font-size: 10px"> @</span><%=user.username%></p>
                     <p class="small"><i class="fas fa-map-marker-alt text-white mr-1"></i>  <img class="mr-1" title="<%=user.country.name %>" src="<%=user.country.flag%>" width="17px"><%=user.country.name %></p>

@@ -3,7 +3,7 @@ const router = express.Router();
 const catchAsync = require("../utils/catchAsync");
 const passport = require("passport");
 const users = require("../controllers/users");
-const {isLoggedIn, isVerified, setPostedToday, checkPostStreak, isAccountOwner, filterPosts} = require("../middleware");
+const {isLoggedIn, isVerified, alreadyVerified, setPostedToday, checkPostStreak, isAccountOwner, filterPosts} = require("../middleware");
 const multer = require("multer");
 const {storage} = require("../cloudinary");
 const upload = multer({storage});
@@ -16,7 +16,7 @@ router.route("/register")
     .post(upload.single("avatar"), catchAsync(users.register));
 
 router.route("/verify")
-    .get(isLoggedIn, users.renderVerify)
+    .get(isLoggedIn, alreadyVerified, users.renderVerify)
     .put(isLoggedIn, users.putVerify);
 
 router.route("/verify/:token")

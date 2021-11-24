@@ -46,6 +46,15 @@ module.exports.isVerified = (req, res, next) => {
     next();
 }
 
+module.exports.alreadyVerified = (req, res, next) => {
+    if(req.user.isVerified){
+        req.flash("error", "Your account is already verified!");
+        return res.redirect("/home");
+    }
+    next();
+}
+
+
 module.exports.isAuthor = async(req, res, next) => {
     const {id} = req.params;
     const post = await Post.findById(id);
