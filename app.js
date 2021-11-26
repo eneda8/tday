@@ -61,10 +61,14 @@ app.use(mongoSanitize({
     replaceWith: '_'
 }));
 
-app.enable('trust proxy');
-app.use((req, res, next) => {
-    req.secure ? next() : res.redirect('https://www.tday.co' + req.url)
-})
+// app.enable('trust proxy');
+if(process.env.NODE_ENV == "production") {
+    app.use((req, res, next) => {
+        req.secure ? next() : res.redirect('https://' + req.headers.host + req.url);
+    })
+}
+
+
 
 const secret = process.env.SECRET  || "81aa3b3f55029ad11b7f040b2064f31b7420633b"
 
@@ -168,10 +172,10 @@ app.use((req, res, next) => {
         req.session.previousReturnTo = req.session.returnTo; // store the previous url
         req.session.returnTo = req.originalUrl; // assign a new url
     }
-    
     res.locals.currentUser = req.user;
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
+    console.log(req.headers)
     next();
 })
 
