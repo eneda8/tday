@@ -63,12 +63,18 @@ app.use(mongoSanitize({
 
 app.enable('trust proxy');
 if(process.env.NODE_ENV == "production") {
-    app.use((req, res, next) => {
-        req.secure ? next() : res.redirect('https://' + req.headers.host + req.url);
-    })
+    // app.use((req, res, next) => {
+    //     req.secure ? next() : res.redirect('https://' + req.headers.host + req.url);
+    // })
+    app.get('*', function(req, res, next) {
+            if (req.get('x-forwarded-proto') != "https") {
+                res.set('x-forwarded-proto', 'https');
+                res.redirect('https://' + req.get('host') + req.url);
+            } else {
+                next();     
+            }
+        });
 }
-
-
 
 const secret = process.env.SECRET  || "81aa3b3f55029ad11b7f040b2064f31b7420633b"
 
