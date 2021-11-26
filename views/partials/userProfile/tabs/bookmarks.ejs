@@ -42,7 +42,7 @@
                         </div>
                         <div class="d-flex justify-content-around">
                             <a href="/posts/<%=post._id%>" class="text-decoration-none mr-2 pt-1 pr-1" title="Comments"><span class="text-muted" style="font-size: 13px;"><%=post.comments.length%></span> <i class="fas fa-comments text-primary pt-0"></i></a> 
-                            <button class="btn btn-sm btn-link p-0" title="Copy link" onclick="navigator.clipboard.writeText(window.location.href.slice(0,28)+'posts/<%=post._id%>')"><i class="fas fa-link text-warning mr-2"></i></button>
+                            <button class="btn btn-sm btn-link p-0" title="Copy link" onclick="navigator.clipboard.writeText(window.location.origin +'posts/<%=post._id%>')"><i class="fas fa-link text-warning mr-2"></i></button>
                             <button class="btn btn-sm btn-link" title="Remove bookmark" data-toggle="modal" data-target="#bookmarkDeleteModal-<%=post._id%>"><i class="fas fa-bookmark text-danger"></i></i></button>
                             
                             <%-include("../../confirmDeleteModals/bookmark")%>

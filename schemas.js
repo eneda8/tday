@@ -13,9 +13,10 @@ const extension = (joi) => ({
                 const clean = sanitizeHtml(value, {
                     allowedTags: [],
                     allowedAttributes: {},
+                    disallowedTagsMode: "recursiveEscape"
                 });
-                if (clean !== value) return helpers.error('string.escapeHTML', { value })
                 return clean;
+                
             }
         }
     }

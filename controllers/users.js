@@ -43,7 +43,7 @@ module.exports.register = async (req,res, next) => {
         const msg = {
             to: email,
             from: `t'day <no-reply@tday.co>`,
-            subject: `t'day - Please verify your email`,
+            subject: `Please verify your email`,
             text: `Welcome to t'day! To complete your account setup, please click here: http://${req.headers.host}/verify/${token}. Or, copy and paste the URL into your browser: http://${req.headers.host}/verify/${token}. - the t'day team `,
             html: `<strong>Welcome to t'day!</strong> <br> <br> To complete your account setup, please click here: <a href="http://${req.headers.host}/verify/${token}">Verify Email</a> <br> <br> Or, copy and paste the URL into your browser: http://${req.headers.host}/verify/${token}. <br> <br><strong>- the t'day team</strong>`,
         }
@@ -72,7 +72,7 @@ module.exports.putVerify = async (req, res) => {
     const msg = {
         to: email,
         from: `t'day <no-reply@tday.co>`,
-        subject: `t'day - Verify your email`,
+        subject: `Please verify your email`,
         text: `Hello! Welcome to t'day! To complete your account setup. Please click here: http://${req.headers.host}/verify/${token}. Or, copy and paste the URL into your browser: http://${req.headers.host}/verify/${token}. - the t'day team `,
         html: `<strong>Hello!</strong> <br> <br> Welcome to t'day! To complete your account setup, please click here: <a href="http://${req.headers.host}/verify/${token}">Verify Email</a> <br> Or, copy and paste the URL into your browser: http://${req.headers.host}/verify/${token}. <br> <br><strong>- the t'day team</strong>`,
         }
@@ -139,7 +139,7 @@ module.exports.putForgotPw = async (req, res) => {
     const msg = {
     to: email,
     from: `t'day <no-reply@tday.co>`,
-    subject: `t'day - Reset Password Link`,
+    subject: `Reset Password Link`,
     text: `Hi ${user.displayName}, Forgot your password? We received a request to reset the password for your account. To reset your password, click this link: http://${req.headers.host}/reset/${token}. Or, copy and paste the URL into your browser: http://${req.headers.host}/reset/${token}. If you didn't request a password reset, you can ignore this email - your password won't be changed. -the t'day team `,
     html: `Hi ${user.displayName}, <br> <br> Forgot your password? We received a request to reset the password for your account. <br> <br> To reset your password, click this link: <a href="http://${req.headers.host}/reset/${token}">Reset Password</a> <br> Or, copy and paste the URL into your browser: http://${req.headers.host}/reset/${token} <br> <br> If you didn't request a password reset, you can ignore this email. Your password won't be changed. <br> <br> <strong>-the t'day team</strong>`,
     }
@@ -179,7 +179,7 @@ module.exports.putReset = async (req, res) => {
     const msg = {
         to: user.email,
         from: `t'day  <support@tday.co>`,
-        subject: `t'day - Your password was changed`,
+        subject: `Your password was changed`,
         text: `Hi ${user.displayName}, We're sending you this email to confirm that your password has been changed. If you did not make this change, please reply and notify us at once.  -the t'day team`,
         html: `Hi ${user.displayName}, <br> <br> We're sending you this email to confirm that your password has been changed. If you did not make this change, please reply and notify us at once. <br> <br> <strong>-the t'day team</strong>`,
     }
@@ -209,23 +209,26 @@ module.exports.renderHomePage= async (req, res) =>{
             todaysPost = await Post.findById(user.todaysPost);
         }  else {todaysPost = "null"}
           //show 10 random posts
-          const random = async function (num){
-            const randomDocs = [];
-            const {dbQuery} = res.locals; 
-            for(let i =0; i < num; i++) {
-                // const count = await Post.countDocuments().where({date: getToday()}).where({body:{$exists: true}});
-                const count = await Post.countDocuments().where({date: getToday()}).where({$or: [{body:{$exists: true}}, {image:{$exists: true}}]});
-                const rand = Math.floor(Math.random() * count);
-                const filter = dbQuery ? dbQuery : {date: getToday()}
-                const randomDoc = await Post.findOne(filter).skip(rand);
-                // console.log(randomDoc);
-                if(randomDoc){
-                    randomDocs.push(randomDoc);
+        let count = await Post.countDocuments().where({date: getToday()}).where({$or: [{body:{$exists: true}}, {image:{$exists: true}}]});
+        let posts;
+        if (count <= 10){
+            posts = await Post.find({date: getToday()}).where({$or: [{body:{$exists: true}}, {image:{$exists: true}}]});
+        } else {
+            const random = async function (num){
+                const randomDocs = [];
+                const {dbQuery} = res.locals; 
+                for(let i =0; i < num; i++) {
+                    const rand = Math.floor(Math.random() * count);
+                    const filter = dbQuery ? dbQuery : {date: getToday()}
+                    const randomDoc = await Post.findOne(filter).skip(rand);
+                    if(randomDoc){
+                        randomDocs.push(randomDoc);
+                    }
                 }
+                return randomDocs;
             }
-            return randomDocs;
+            posts = await random(10);
         }
-        const posts = await random(10);
         for(let post of posts) {
             if(!post === null){
             post.populate("author").execPopulate();
@@ -238,7 +241,6 @@ module.exports.renderHomePage= async (req, res) =>{
         res.redirect(`/u/${user.username}`)
     }
 }
-
 
 // ------------------------USER PROFILE-----------------------------
 module.exports.showUserProfile = async(req, res) => {
@@ -312,19 +314,27 @@ module.exports.updateUserInfo = async(req, res) => {
                 post.authorUsername = username;
                 post.save()
             }
+            const msg = {
+                to: [{email: email}, {email: oldEmail}],
+                from: `t'day  <support@tday.co>`,
+                subject: `Your username was changed`,
+                text: `Hi ${user.displayName}, We're sending you this email to confirm that the username for your account has been changed to ${username}. You have been signed out and will need to use your new username to log back in: https://www.tday.com/login If you did not make this change, please reply and notify us at once. -the t'day team`,
+                html: `Hi ${user.displayName}, <br> <br> We're sending you this email to confirm that the username for your account has been changed to <strong>${username}</strong>. You have been signed and will need to use your new username to log back in : <a href="https://www.tday.com/login">Login</a> <br> <br> If you did not make this change, please reply and notify us at once. <br> <br> <strong>-the t'day team</strong>`,
+            }
+            await sgMail.send(msg);
         }
         if(email.length && !(email === user.email)){
             user.email = email;
             const msg = {
                 to: [{email: email}, {email: oldEmail}],
                 from: `t'day  <support@tday.co>`,
-                subject: `t'day - Your email was changed`,
+                subject: `Your email was changed`,
                 text: `Hi ${user.displayName}, We're sending you this email to confirm that the email for your account has been changed from ${oldEmail} to ${email}. If you did not make this change, please reply and notify us at once.  -the t'day team`,
                 html: `Hi ${user.displayName}, <br> <br> We're sending you this email to confirm that the email for your account has been changed from ${oldEmail} to ${email}. If you did not make this change, please reply and notify us at once. <br> <br> <strong>-the t'day team</strong>`,
             }
             await sgMail.send(msg);
         }
-        if(!country.name === user.country.name){
+        if(!(country.name === user.country.name)){
             user.country.name = country.name;
             const newFlag = countries.filter(obj => Object.values(obj).includes(country.name))[0]["flag"];
             user.country.flag = newFlag;
@@ -353,7 +363,7 @@ module.exports.changePassword = async(req, res) => {
         const msg = {
             to: user.email,
             from: `t'day <support@tday.co>`,
-            subject: `t'day - Your password was changed`,
+            subject: `Your password was changed`,
             text: `Hi ${user.displayName}, We're sending you this email to confirm that your password has been changed. If you did not make this change, please reply and notify us at once.  -the t'day team`,
             html: `Hi ${user.displayName}, <br> <br> We're sending you this email to confirm that your password has been changed. If you did not make this change, please reply and notify us at once. <br> <br> <strong>-the t'day team</strong>`,
         }
@@ -384,7 +394,7 @@ module.exports.deleteAccount = async(req, res) => {
         const msg = {
             to: user.email,
             from: `t'day <support@tday.co>`,
-            subject: `t'day - Your account was deleted`,
+            subject: `Your account was deleted`,
             text: `Hi, We're sending you this email to confirm that your account with t'day has been deleted. We hate to see you go and hope you'll be back with us soon!  -the t'day team`,
             html: `Hi, <br> <br> We're sending you this email to confirm that your account with t'day has been deleted. We hate to see you go and hope you'll be back with us soon! <br> <br> <strong>-the t'day team</strong>`,
         }
