@@ -61,7 +61,7 @@ app.use(mongoSanitize({
     replaceWith: '_'
 }));
 
-// app.enable('trust proxy');
+app.enable('trust proxy');
 if(process.env.NODE_ENV == "production") {
     app.use((req, res, next) => {
         req.secure ? next() : res.redirect('https://' + req.headers.host + req.url);
