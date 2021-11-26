@@ -25,8 +25,12 @@
                         <i class="fas fa-random text-right text-primary" title="refresh for 10 more" onclick="location.reload()"></i>
                         <% } else {%> 
                         <div class="card border-0">
-                            <h5 class="text-center m-5">No ratings yet today :( </h5>
-                            <a class=" text-center mb-5" href="" data-toggle="modal" id="newPostLink" data-target="#newPostModal">Be the first to submit a rating!</a>
+                            <div class="text-center py-5">                            
+                                <h5 class="font-weight-bold">No ratings found</h5>
+                                <p class="text-primary"><i class="fas fa-random text-right text-primary mr-1" title="refresh for 10 more" onclick="location.reload()"></i>Refresh</p>
+                                <a class="mb-5" href="" data-toggle="modal" id="newPostLink" data-target="#newPostModal"><i class="far fa-star text-primary mr-1"></i>Submit a rating</a>
+                        </div>
+
                         </div>
                         <% } %> 
                 <% } %>

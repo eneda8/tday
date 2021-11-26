@@ -60,11 +60,12 @@
                         </div>
                       </div>
                     <button class="btn btn-sm btn-warning mb-2" type="submit" id="submit" >Filter</button>
+                    <button class="btn btn-sm btn-primary mb-2" type="button" onclick="window.location = window.location.href.split('?')[0]">Clear filters</button>
                 </form>
         </div>
         </div>
     </div>
     
     <% if((!posts.length) && (query.rating || query.country)) {%> 
-       <p class="ml-2 mt-2">It looks like there are very few, if any, ratings that match those filters. Refresh the page or try <a href="/posts/search">searching</a> instead. Hint: enter an empty space in the text search bar to retrieve all ratings that match the given filters.</p>  
+       <p class="ml-2 mt-2">It looks like there are very few, if any, ratings that match those filters. Refresh the page or try <a href="/posts/search">searching</a> instead. Hint: enter an empty space in the text search bar to retrieve all ratings that match the applied filters.</p>  
     <% } %> 
