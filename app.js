@@ -63,21 +63,21 @@ app.use(mongoSanitize({
 
 const secret = process.env.SECRET  || "81aa3b3f55029ad11b7f040b2064f31b7420633b"
 
-// const store = MongoStore.create({
-//     mongoUrl: dbUrl,
-//     touchAfter: 24 * 60 * 60,
-//     crypto: {
-//         secret
-//     }
-// });
+const store = MongoStore.create({
+    mongoUrl: dbUrl,
+    touchAfter: 24 * 60 * 60,
+    crypto: {
+        secret
+    }
+});
 
-// store.on("error", function (e) {
-//     console.log("SESSION STORE ERROR", e)
-// });
+store.on("error", function (e) {
+    console.log("SESSION STORE ERROR", e)
+});
 
 
 const sessionConfig = {
-    // store,
+    store,
     name: "cookie monster",
     secret,
     resave: false,
@@ -191,6 +191,11 @@ app.use((err, req, res, next) => {
     const {statusCode = 500} = err;
     if(!err.message) err.message = "Oh no, something went wrong!"
     res.status(statusCode).render("error", {err, title: "Error / t'day"});
+})
+
+app.enable('trust proxy');
+app.use((req, res, next) => {
+    req.secure ? next() : res.redirect('https://' + req.headers.host + req.url)
 })
 
 const port = process.env.PORT || 3000;
