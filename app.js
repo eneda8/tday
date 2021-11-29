@@ -50,7 +50,11 @@ mongoose.plugin(castAggregation);
 const app = express();
 
 if(process.env.NODE_ENV == "production") {
-   app.use(redirectSSL)
+   app.use(redirectSSL);
+   app.use((req, res, next) => {
+        res.redirect(`https://www.tday.co/${req.url}`)
+        next()
+})
 }
 
 app.engine("ejs", ejsMate);
@@ -90,11 +94,12 @@ const sessionConfig = {
     saveUninitialized: true,
     cookie: {
         secure: true,
-        httpOnly: true,
+        httpOnly: false,
         expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
         maxAge: 1000 * 60 * 60 * 24 * 7
     }
 }
+
 app.use(session(sessionConfig))
 app.use(flash());
 app.use(helmet());
