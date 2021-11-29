@@ -48,20 +48,16 @@ mongoose.plugin(castAggregation);
 
 const app = express();
 
-app.enable('trust proxy');
-if(process.env.NODE_ENV == "production") {
-    // app.use((req, res, next) => {
-    //     req.secure ? next() : res.redirect('https://' + req.headers.host + req.url);
-    // })
-    app.get('*', function(req, res, next) {
-            if ((req.get('x-forwarded-proto') !== "https") || !(req.secure) ){
-                res.set('x-forwarded-proto', 'https');
-                res.redirect('https://www.' + req.headers.host + req.url);
-            } else {
-                next();     
-            }
-        });
+if(process.env.NODE_ENV === 'production') {
+    app.enable('trust proxy');
+    app.use((req, res, next) => {
+        if (req.header('x-forwarded-proto') !== 'https')
+        res.redirect(`https://${req.header('host')}${req.url}`)
+        else
+        next()
+    })
 }
+
 
 app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
