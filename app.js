@@ -3,6 +3,7 @@ if(process.env.NODE_ENV !== "production") {
 }
 
 const express = require("express");
+const redirectSSL = require('redirect-ssl')
 const path = require("path");
 const favicon = require("serve-favicon")
 const mongoose = require("mongoose");
@@ -48,16 +49,9 @@ mongoose.plugin(castAggregation);
 
 const app = express();
 
-if(process.env.NODE_ENV === 'production') {
-    app.enable('trust proxy');
-    app.use((req, res, next) => {
-        if (req.header('x-forwarded-proto') !== 'https')
-        res.redirect(`https://${req.header('host')}${req.url}`)
-        else
-        next()
-    })
-}
-
+app.use(redirectSSL.create({
+    enabled: process.env.NODE_ENV === 'production'
+  }))
 
 app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
