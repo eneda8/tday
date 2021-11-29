@@ -3,7 +3,7 @@ if(process.env.NODE_ENV !== "production") {
 }
 
 const express = require("express");
-const redirectSSL = require('redirect-ssl')
+const redirectSSL = require('redirect-ssl');
 const path = require("path");
 const favicon = require("serve-favicon")
 const mongoose = require("mongoose");
@@ -49,9 +49,9 @@ mongoose.plugin(castAggregation);
 
 const app = express();
 
-app.use(redirectSSL.create({
-    enabled: process.env.NODE_ENV === 'production'
-  }))
+if(process.env.NODE_ENV == "production") {
+   app.use(redirectSSL)
+}
 
 app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
