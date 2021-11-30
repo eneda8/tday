@@ -1,9 +1,9 @@
 if(process.env.NODE_ENV !== "production") {
     require("dotenv").config();
 }
-
 const express = require("express");
-const redirectSSL = require('redirect-ssl');
+import sslRedirect from 'heroku-ssl-redirect'
+// const redirectSSL = require('redirect-ssl');
 const path = require("path");
 const favicon = require("serve-favicon")
 const mongoose = require("mongoose");
@@ -50,13 +50,14 @@ mongoose.plugin(castAggregation);
 const app = express();
 
 if(process.env.NODE_ENV == "production") {
-   app.use(redirectSSL);
-   app.use((req, res, next) => {
-    if (req.header('x-forwarded-proto') !== 'https')
-      res.redirect(`https://${req.header('host')}${req.url}`)
-    else
-      next()
-  })
+//    app.use(redirectSSL);
+//    app.use((req, res, next) => {
+//     if (req.header('x-forwarded-proto') !== 'https')
+//       res.redirect(`https://${req.header('host')}${req.url}`)
+//     else
+//       next()
+//   })
+    app.use(sslRedirect(['production'], 301));
 }
 
 app.engine("ejs", ejsMate);
