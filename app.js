@@ -52,9 +52,11 @@ const app = express();
 if(process.env.NODE_ENV == "production") {
    app.use(redirectSSL);
    app.use((req, res, next) => {
-        res.redirect(`https://www.tday.co/${req.url}`)
-        next()
-})
+    if (req.header('x-forwarded-proto') !== 'https')
+      res.redirect(`https://${req.header('host')}${req.url}`)
+    else
+      next()
+  })
 }
 
 app.engine("ejs", ejsMate);
