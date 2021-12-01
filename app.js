@@ -47,14 +47,14 @@ mongoose.plugin(castAggregation);
 
 const app = express();
 
-if(process.env.NODE_ENV == "production") {
-   app.use((req, res, next) => {
-    if (req.header('x-forwarded-proto') !== 'https')
-      res.redirect(`https://${req.header('host')}${req.url}`)
-    else
-      next()
-  })
-}
+// if(process.env.NODE_ENV == "production") {
+//    app.use((req, res, next) => {
+//     if (req.header('x-forwarded-proto') !== 'https')
+//       res.redirect(`https://${req.header('host')}${req.url}`)
+//     else
+//       next()
+//   })
+// }
 
 app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
@@ -109,6 +109,7 @@ const scriptSrcUrls = [
     "https://cdnjs.cloudflare.com",
     "https://cdn.jsdelivr.net",
     "https://code.jquery.com",
+    "https://app.termly.io"
 ];
 const styleSrcUrls = [
     "https://kit-free.fontawesome.com",
@@ -119,8 +120,8 @@ const styleSrcUrls = [
 ];
 const connectSrcUrls = [
     "https://charts.mongodb.com",
-    "https://global-mind.org/"
-
+    "https://global-mind.org/",
+    "https://app.termly.io",
 ];
 const fontSrcUrls = [
     "https://fonts.gstatic.com",
@@ -177,7 +178,7 @@ app.use((req, res, next) => {
     res.locals.currentUser = req.user;
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
-    console.log(req.headers)
+    // console.log(req.headers)
     next();
 })
 
