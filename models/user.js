@@ -113,6 +113,10 @@ const userSchema = new Schema({
     },
     verifyEmailToken: String,
     verifyTokenExpires: Date,
+    termsAgreement: {
+        type: Boolean,
+        default: false
+    },
 }, {timestamps: true}) 
 
 userSchema.plugin(passportLocalMongoose);

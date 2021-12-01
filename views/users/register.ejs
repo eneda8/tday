@@ -24,7 +24,7 @@
                                     <span class="input-group-text border-0"><i class="fas fa-at text-primary" data-toggle="tooltip" data-placement="bottom" title="Must be 3-16 alphanumeric characters that may contain an underscore."></i></span>
                                 </div>
                                 <input class="form-control border-0" type="text" id="username" name="username" placeholder ="Username" pattern="^[a-z0-9_]{3,16}$" required>
-                                <div class="valid-feedback">Looks good!</div>
+                                <div class="valid-feedback"></div>
                                 <div class="invalid-feedback">Please enter a valid username.</div>
                             </div>
                             <div class="col-md-6 input-group">
@@ -33,7 +33,7 @@
                                 </div>
                                 <input class="form-control border-0" type="text" id="displayName" name="displayName" placeholder = "Display Name" required>
 
-                                <div class="valid-feedback">Looks good!</div>
+                                <div class="valid-feedback"></div>
                                 <div class="invalid-feedback">Please enter a valid display name.</div>
                             </div>
                         </div>
@@ -43,7 +43,7 @@
                                     <label class="input-group-text border-0" for="email"><i class="fas fa-envelope text-primary"></i></label>
                                 </div>
                                 <input class="form-control border-0" type="email" id="email" name="email" placeholder ="Email" required>
-                                <div class="valid-feedback">Looks good!</div>
+                                <div class="valid-feedback"></div>
                                 <div class="invalid-feedback">Please enter a valid email.</div>
                             </div>
                             <div class="col-md-6 input-group">
@@ -52,7 +52,7 @@
                                     </label>
                                 </div>
                                 <input class="form-control border-0" type="password" id="password" name="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[.@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$" placeholder="Password" required >
-                                <div class="valid-feedback">Looks good!</div>
+                                <div class="valid-feedback"></div>
                                 <div class="invalid-feedback">Please enter a valid password.</div>
                             </div>
                         </div>
@@ -80,7 +80,7 @@
                                     <option value="Millennials">Millennials (1981-1996)</option>
                                     <option value="Gen Z">Gen Z (1997-2012)</option>
                                 </select>
-                                <div class="valid-feedback">Looks good!</div>
+                                <div class="valid-feedback"></div>
                                 <div class="invalid-feedback">Please select a valid option.</div>
                             </div>
                             <div class="col-md-6 input-group">
@@ -90,7 +90,7 @@
                                     <option value="male">male</option>   
                                     <option value="female">female</option>          
                                 </select>
-                                <div class="valid-feedback">Looks good!</div>
+                                <div class="valid-feedback"></div>
                                 <div class="invalid-feedback">Please select a valid option.</div>
                             </div>
                         </div>
@@ -102,8 +102,15 @@
                                     <option value="<%=country["name"]%>"><%=country["name"]%></option>
                                 <%}%>        
                             </select>
-                            <div class="valid-feedback">Looks good!</div>
+                            <div class="valid-feedback"></div>
                             <div class="invalid-feedback">Please select a valid option</div>
+                        </div>
+                        <div class="form-check mb-3 ml-1">
+                            <input class="form-check-input" type="checkbox" value="true" id="" name="termsAgreement" required>
+                            <label class="form-check-label small sr-only" for="termsAgreement"></label>
+                            <small>I agree to t'day's <a href="/terms">Terms of Use</a>, <a href="/privacy">Privacy Policy</a>, and <a href="/cookies">Cookie Policy.</a></small>
+                            <div class="valid-feedback"></div>
+                            <div class="invalid-feedback">Please agree to our policies to continue.</div>
                         </div>
                         <button class="btn btn-warning btn-block">Sign Up</button>
                         <p class="text-center mt-3 mb-0">Already registered? <a href="/login">Login</a></p>

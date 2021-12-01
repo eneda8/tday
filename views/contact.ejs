@@ -1,0 +1,174 @@
+<% layout("layouts/boilerplate")%>
+
+<div class="container px-5 mt-5 pt-5 w-50">
+    <div class="row px-auto bg-transparent shadow pr-0 pb-2 w-75 ml-5">
+        <h3 class="my-0 mx-0 font-weight-bold px-4 pt-4 bg-light w-100">Contact <span class="logo text-warning mr-2">t'day</span> </h3>
+        <h6 class="mt-0 mb-3 mx-0 px-4 pb-3 pt-2 bg-light w-100">We'd love to hear from you! <i class="fas fa-heart text-danger"></i></h6>
+        <div class="col bg-white ">
+            <form action="/contact" method="POST" class="validated-form ml-3" novalidate>
+                <div class="form-group">
+                    <label for="email">Email address</label>
+                    <input type="email" class="form-control w-50" name="email" placeholder="yourname@email.com" required>
+                    <div class="valid-feedback"></div>
+                    <div class="invalid-feedback">Please enter a valid email.</div>  
+                </div>
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <select name="subject" id="" class="form-control w-50" required>
+                        <option value="">Please Select An Option</option>
+                        <option value="Account Question">Account Question</option>
+                        <option value="Technical Support">Technical Support</option>
+                        <option value="Feedback">Feedback</option>
+                        <option value="Business Inquiry">Business Inquiry</option>
+                        <option value="Privacy Inquiry">Privacy Question</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <div class="valid-feedback"></div>
+                    <div class="invalid-feedback">Please select a valid option.</div>  
+                </div>
+                <div class="form-group">
+                    <label for="message" class="">Message</label>
+                    <textarea name="message" id="" cols="30" rows="10" class="form-control" required></textarea>
+                    <div class="valid-feedback"></div>
+                    <div class="invalid-feedback">Please enter a valid message.</div>  
+                </div>
+                <button class="btn btn-warning float-right" type="submit">
+                    Send
+                    <i class="fas fa-paper-plane plane text-black"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- <style> -->
+
+    <!-- .box{
+        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" ><path fill="rgb(247, 248, 249)" d=" M476 3.2L12.5 270.6c-18.1 10.4-15.8 35.6 2.2 43.2L121 358.4l287.3-253.2c5.5-4.9 13.3 2.6 8.6 8.3L176 407v80.5c0 23.6 28.5 32.9 42.5 15.8L282 426l124.6 52.2c14.2 6 30.4-2.9 33-18.2l72-432C515 7.8 493.3-6.8 476 3.2z"></path></svg>') top left/50px 90px;
+    }  -->
+
+<!-- 
+ .frame {
+    width: 500px;
+    height: auto;
+    margin: 15% auto 0;
+    position: absolute;
+    width: 100%;
+}
+
+svg {
+    max-width: 100%;
+    height: auto;
+    display: block;
+} 
+
+
+     Paper Plane
+    
+/*Paper Plane: Container*/
+ .plane-container {
+    width: 200px;
+    margin: 0px auto;
+    z-index: 3;
+} 
+    /*Paper Plane: Image*/
+ .plane {
+    width: 100%;
+    height: 60px;
+} 
+
+/* Paper Plane: Animation
+.plane-container {
+    -webkit-animation: paper-plane-scoping 2s alternate infinite;
+    -moz-animation: paper-plane-scoping 2s alternate infinite;
+    animation: paper-plane-scoping 2s alternate infinite;
+
+    -webkit-animation-timing-function: linear;
+    -moz-animation-timing-function: linear;
+    animation-timing-function: linear;
+}
+
+@-webkit-keyframes paper-plane-scoping {
+    0% {
+    -webkit-transform: translateY(0px);
+    -moz-transform: translateY(0px);
+    transform: translateY(0px);
+    }
+    100% {
+    -webkit-transform: translateY(200px);
+    -moz-transform: translateY(200px);
+    transform: translateY(200px);
+    }
+}
+
+.plane {
+    -webkit-animation-timing-function: ease-in-out;
+    -moz-animation-timing-function: ease-in-out;
+    animation-timing-function: ease-in-out;
+
+    -webkit-animation: paper-plane-soaring 4s forwards infinite;
+    -moz-animation: paper-plane-soaring 4s forwards infinite;
+    animation: paper-plane-soaring 4s forwards infinite;
+}
+@-webkit-keyframes paper-plane-soaring {
+    0% {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    transform: rotate(0deg);
+    }
+    40% {
+    -webkit-transform: rotate(15deg);
+    -moz-transform: rotate(15deg);
+    transform: rotate(15deg);
+    }
+    50% {
+    -webkit-transform: rotate(25deg);
+    -moz-transform: rotate(25deg);
+    transform: rotate(25deg);
+    }
+    60% {
+    -webkit-transform: rotate(-20deg);
+    -moz-transform: rotate(-20deg);
+    transform: rotate(-20deg);
+    }
+    70% {
+    -webkit-transform: rotate(-10deg);
+    -moz-transform: rotate(-10deg);
+    transform: rotate(-10deg);
+    }
+    100% {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    transform: rotate(0deg);
+    }
+} 
+
+
+ .slow {
+    -webkit-animation-duration: 9.2s;
+    -moz-animation-duration: 9.2s;
+    animation-duration: 9.2s;
+}
+
+.slower {
+    -webkit-animation-duration: 11.2s;
+    -moz-animation-duration: 11.2s;
+    animation-duration: 11.2s;
+}
+
+.slowest {
+    -webkit-animation-duration: 13.5s;
+    -moz-animation-duration: 13.5s;
+    animation-duration: 13.5s;
+}
+
+.super-slow {
+    -webkit-animation-duration: 20.5s;
+    -moz-animation-duration: 20.5s;
+    animation-duration: 20.5s;
+} 
+ -->
+
+<!-- </style> -->

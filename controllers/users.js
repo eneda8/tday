@@ -22,8 +22,8 @@ module.exports.renderRegisterForm = (req, res) => {
 
 module.exports.register = async (req,res, next) => {
     try{
-        const {username, displayName, email, password, ageGroup, gender, country, avatar} = req.body;
-        const user = new User({username, displayName, email, ageGroup, gender, country, avatar});
+        const {username, displayName, email, password, ageGroup, gender, country, avatar, termsAgreement} = req.body;
+        const user = new User({username, displayName, email, ageGroup, gender, country, avatar, termsAgreement});
         if(req.file){
         user.avatar = req.file;
         } else {
