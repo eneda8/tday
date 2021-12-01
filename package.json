@@ -11,7 +11,6 @@
     "express-session": "^1.17.1",
     "faker": "^5.5.3",
     "helmet": "^4.6.0",
-    "heroku-ssl-redirect": "^0.1.1",
     "joi": "^17.4.0",
     "method-override": "^3.0.0",
     "mongoose": "^5.12.2",
@@ -25,7 +24,6 @@
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^6.1.0",
     "random-avatar-generator": "^2.0.0",
-    "redirect-ssl": "^3.0.0",
     "sanitize-html": "^2.5.3",
     "serve-favicon": "^2.5.0",
     "stripe": "^8.176.0"
