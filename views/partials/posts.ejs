@@ -10,7 +10,7 @@
                         <div class="dropdown-menu" >
                         <% if(within24Hours(post) === true) { %>
                             <!-- modal buttons specific to user profile page-->
-                            <% if(title.includes("@") && !title.includes("day")) { %> 
+                            <% if(title === `@${currentUser.username} / t'day`) { %> 
                                 <% if(post.date == getToday()) {  %>
                             <a href="" data-toggle="modal" id="editTodayPostLink" data-target="#editTodayPostModal" class="dropdown-item pl-2  text-primary"><i class="fas fa-edit text-warning"></i> Edit</a>
                                 <% } else {%> 
@@ -93,3 +93,5 @@
 </div>
 
 <%- include("../partials/toasts/copyToast") %>
+
+<%- include("../partials/userProfile/modals/editTodayAndYesterday") %>

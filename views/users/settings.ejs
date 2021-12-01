@@ -1,12 +1,15 @@
 <% layout("layouts/boilerplate")%>
 <div class="container-fluid">
-
-<div class="row mt-5 px-4 " style="padding-bottom: 15vh; padding-top: 5vh; overflow-y: hidden;">
+<div class="row mt-5 px-4">
     <div class="col-md-8 col-lg-8 mx-auto ">
         <div class="card border-0 shadow rounded px-3 pt-3 bg-light">
-            <a href="/home"><h6><i class="fas fa-arrow-left"></i> Back to Home</h6></a>
-            <h4 class="px-2 pt-2 mb-0 pb-0">Settings</h4>
-            <p class="px-2 mb-2 text-muted">User: <%=user.displayName%> | @<%=user.username%>  <br>Account created: <%=user.createdAt%></p>
+            <div class="bg-transparent px-2 mx-2 pt-2">
+                <a href="/home"><h6><i class="fas fa-arrow-left"></i> Back to Home</h6></a>
+                <h4 class="px-2 pt-2 mb-0 pb-0">Settings</h4>
+                <img class="img-fluid img-thumbnail rounded-circle p-0" src="<%=currentUser.avatar.profile%>" style= "width: 100px;"alt="">
+                <p class="px-2 mb-2 text-muted">User: <%=user.displayName%> | @<%=user.username%>  <br>Account created: <%=user.createdAt%></p>
+            </div>
+
             <div class="row pl-2 pr-4 pt-2  pb-5">
                 <div class="col-4 pr-0 border-right">
                   <div class="list-group border-top" id="list-tab" role="tablist">
@@ -49,7 +52,7 @@
                                         <small id="" class="mt-1">
                                             Changing your username will end this session and require you to log back in with your new username.
                                         </small>
-                                        <div class="valid-feedback">Looks good!</div>
+                                        <div class="valid-feedback"></div>
                                         <div class="invalid-feedback">Please enter a valid username.</div>
                                     </div>
                                 </div>
@@ -59,7 +62,7 @@
                                             <label class="input-group-text border-0" for="email"><i class="fas fa-envelope text-primary"></i></label>
                                         </div>
                                         <input class="form-control border-0" type="email" id="email" name="email" placeholder ="Email">
-                                        <div class="valid-feedback">Looks good!</div>
+                                        <div class="valid-feedback"></div>
                                         <div class="invalid-feedback">Please enter a valid email.</div>
                                     </div>
                                 </div>
@@ -70,7 +73,7 @@
                                         ">
                                             <option selected value="<%=user.ageGroup%>"><%=user.ageGroup%></option>         
                                         </select>
-                                        <div class="valid-feedback">Looks good!</div>
+                                        <div class="valid-feedback"></div>
                                         <div class="invalid-feedback">Please select a valid option.</div>
                                     </div>
                                 </div> 
@@ -92,7 +95,7 @@
                                                 <option value="<%=country["name"]%>" <%= country["name"] === user.country.name ? 'selected' : '' %>><%=country["name"]%></option>
                                             <%}%>        
                                         </select>
-                                        <div class="valid-feedback">Looks good!</div>
+                                        <div class="valid-feedback"></div>
                                         <div class="invalid-feedback">Please select a valid option</div>
                                     </div>
                                 </div>
@@ -116,7 +119,7 @@
                                     <div class="col-md-6">
                                         <label class="form-label mb-0" for="newPassword">New Password</label>
                                         <input class="form-control" type="password" id="newPassword" name="newPassword" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$" required>
-                                        <div class="valid-feedback">Looks good!</div>
+                                        <div class="valid-feedback"></div>
                                         <div class="invalid-feedback">Please enter a valid password.</div>
                                     </div>
                                 </div>
@@ -124,7 +127,7 @@
                                     <div class="col-md-6">
                                         <label class="form-label mb-0" for="confirmPassword">Confirm New Password</label>
                                         <input class="form-control" type="password" id="confirmPassword" name="confirmPassword" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$" required>
-                                        <div class="valid-feedback">Looks good!</div>
+                                        <div class="valid-feedback"></div>
                                         <div class="invalid-feedback">Please enter a valid password.</div>
                                     </div>
                                 </div> 
