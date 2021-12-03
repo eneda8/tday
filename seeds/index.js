@@ -7,7 +7,6 @@ const countries = require("./countries");
 require("dotenv").config();
 const {AvatarGenerator} = require("random-avatar-generator");
 const generator = new AvatarGenerator();
-
 const dbUrl = process.env.DB_URL;
 
 mongoose.connect(dbUrl, {
@@ -74,13 +73,14 @@ const seedDB = async () => {
     //     if(i % 2 == 0 ) {
     //         body = faker.lorem.sentence()
     //     } else {body = faker.lorem.sentences()}
-    //     const user = await User.findOne().where({ "postedToday" : false }) .where({"bio": {$ne: "creator of this website" }})
+    //     const user = await User.findOne().where({ "postedToday" : false }) .where({"bio": "This is a fake account used to generate data for demonstration purposes." })
     //     if(user){
     //         const post = new Post({rating, body});
     //         if(i % 2 == 0) {
     //             post.image = {}
     //             post.image.path = "https://placeimg.com/640/480/any";
     //         }     
+                // post.date = new Date().toLocaleDateString( 'en-US',{year: 'numeric',month: 'short',day: 'numeric'})
     //         post.author = user;
     //         post.authorID = user._id;
     //         post.authorCountry = user.country.name;
@@ -103,18 +103,17 @@ const seedDB = async () => {
     //          });
     //         await user.updateOne({$set: {average:  userAverage}});
     //         await user.save();
-    //      // ----------------------------
     //     }
     // }
 
     //fix user data
 
-    const users = await User.find({});
-    for(let user of users){
-        // UPDATE AVATARS
-        await user.updateOne({$set: {"avatar.path": generator.generateRandomAvatar()}});
-        console.log("user updated:", user.avatar.path)
-        await user.save();
+    // const users = await User.find({});
+    // for(let user of users){
+    //     // UPDATE AVATARS
+    //     await user.updateOne({$set: {"avatar.path": generator.generateRandomAvatar()}});
+    //     console.log("user updated:", user.avatar.path)
+    //     await user.save();
         // if(user.birthyear >= 1901 && user.birthyear <=1927){
         //     user.ageGroup = "Greatest Generation"
         // }else if(user.birthyear >=1928 && user.birthyear <= 1945){
@@ -129,9 +128,7 @@ const seedDB = async () => {
         //     user.ageGroup = "Gen Z"
         // } 
         // await user.save();
-    }
-
-
+    // }
 
     // fix posts
     // const posts = await Post.find({}).populate("author");
@@ -157,8 +154,7 @@ const seedDB = async () => {
     //make fake comments
     // for(let i = 0; i<4000; i++){
     //     const body = faker.lorem.sentence();
-    //     const timestamp = new Date().toLocaleString("en-US");
-    //     const comment = new Comment({body, timestamp});
+    //     const comment = new Comment({body});
     //     const randUser = await User.aggregate([{ $sample: { size: 1 } }]);
     //     const randPost = await Post.aggregate([{$match: {"date": "Oct 29, 2021"}}, { $sample: { size: 1 } }]);        
     //     const user = await User.findById(randUser[0]._id);

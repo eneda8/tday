@@ -2,7 +2,10 @@
 <% if(journal.title) {%> 
   <h6 class="text-muted text-center text-monospace font-weight-bold"><%=journal.title%></h6>
   <% } %> 
-<h6 class="text-muted text-center text-monospace"><%=journal.date%></h6>
+<h6 class="text-muted text-center text-monospace" title="<%=new Date(journal.createdAt).toLocaleString()%>"><%=journal.date%></h6>
+<% if(journal.updatedAt) { %>
+<small class="text-muted text-center text-monospace">Edited: <%=new Date(journal.updatedAt).toLocaleString()</small>
+<% } %> 
 <div class="paper text-wrap" spellcheck="false">
         <textarea  id="journalBody" autofocus="autofocus" class="text-monospace text-wrap pr-1 py-1 ml-0 border-0" rows="50" cols="100" name="journal[body]"  style="white-space: pre-line;"><%=journal.body%></textarea>
       <a class="btn btn-sm btn-primary my-3" href="/write/<%=journal._id%>/edit" role="button">Edit</a>

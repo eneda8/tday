@@ -7,7 +7,7 @@
                 <a href="/home"><h6><i class="fas fa-arrow-left"></i> Back to Home</h6></a>
                 <h4 class="px-2 pt-2 mb-0 pb-0">Settings</h4>
                 <img class="img-fluid img-thumbnail rounded-circle p-0" src="<%=currentUser.avatar.profile%>" style= "width: 100px;"alt="">
-                <p class="px-2 mb-2 text-muted">User: <%=user.displayName%> | @<%=user.username%>  <br>Account created: <%=user.createdAt%></p>
+                <p class="px-2 mb-2 text-muted">User: <%=user.displayName%> | @<%=user.username%>  <br>Account created: <%= new Date(user.createdAt).toLocaleString("en-US")%></p>
             </div>
 
             <div class="row pl-2 pr-4 pt-2  pb-5">

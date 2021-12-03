@@ -1,7 +1,8 @@
 <% layout("layouts/boilerplate")%>
+<% const today = new Date().toLocaleDateString('en-US',{year: 'numeric', month: 'short', day: 'numeric',})%>
 <div class="container-fluid ml-3 my-3 px-5 pt-1" style="line-height:20px">
    <h4 class="text-centered font-weight-bold pt-0 pb-0 ml-3 d-inline">Today's Charts</h4>
-   <h5 class="text-centered pt-0 pb-0 ml-2 mb-0 d-inline"><%=longToday%> <sup><i class="fas fa-asterisk text-muted small" data-placement="right" data-toggle="tooltip" title="The below charts are based on randomly generated data."></i></sup></h5>
+   <h5 class="text-centered pt-0 pb-0 ml-2 mb-0 d-inline"><%=new Date().toLocaleDateString( 'en-US', {year: 'numeric', month: 'long', day: 'numeric'})%> <sup><i class="fas fa-asterisk text-muted small" data-placement="right" data-toggle="tooltip" title="The below charts are based on randomly generated data."></i></sup></h5>
    <div class="mb-0 ml-3 mt-3">
       <a href="/charts/all" class="">All Charts |</a>
       <a href="/charts/me" class="">My Charts |</a>

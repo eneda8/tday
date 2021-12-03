@@ -1,4 +1,5 @@
 <% layout("layouts/boilerplate")%>
+<% const today = new Date().toLocaleDateString('en-US',{year: 'numeric', month: 'short', day: 'numeric',})%>
 <div class="container-fluid ml-3 my-3 px-5 pt-1" style="line-height:20px">
    <h4 class="text-centered font-weight-bold pt-0 pb-1 ml-3">All Charts <sup><i class="fas fa-asterisk text-muted small" data-placement="right" data-toggle="tooltip" title="The below charts are based on randomly generated data."></i></sup></h4>
    <div class="mb-0 ml-3">
@@ -9,12 +10,14 @@
    <div class="accordion p-1 mt-0 " id="filtersAccordion" style="width:70%">
       <div class="card border-0 bg-transparent">
           <div id="filters" class="collapse show px-3 pt-3" aria-labelledby="showFilters" data-parent="#filtersAccordion">
-              <form action="/charts/all" method="GET" class="mb-3">
+              <form action="/charts/all" method="GET" class="mb-3" class="validated-form" novalidate>
                <div class="form-row mb-3">
                   <div class="col input-group shadow-sm mr-3 pl-0">
                      <label for="date" class="input-group-text border-0"><i class="far fa-calendar-alt text-primary"></i></label>
-                     <input type="date" name="date" id="date" class="form-control border-0">
+                     <input type="date" name="date" id="date" class="form-control border-0" value="<%=query.date%>" max="<%=new Date().toISOString().split('T')[0]%>">
                   </div>
+                  <div class="valid-feedback"></div>
+                  <div class="invalid-feedback">Date cannot be in the future. Please enter a valid date.</div>
                   <div class="col input-group">
                      <div class="input-group-prepend border-right">
                         <label class="input-group-text border-0" for="countryName"><i class="fas fa-globe-americas text-primary"></i></label>
@@ -62,7 +65,7 @@
   <div class="my-3 d-flex justify-content-around">
      <!-- our day (number) -->
      <div class="col-sm">
-         <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="300" height="250" src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=dda07755-dc27-41e9-a57f-cbc6b8178aff&maxDataAge=60&theme=light&autoRefresh=true&filter={'date':'<%=getToday()%>'<%if(query.gender){%>,'authorGender':'<%=user.gender%>'<%}%><%if(query.country){%>,'authorCountry': '<%=query.country%>'<%}%><%if(query.ageGroup) {%>,'authorAgeGroup': '<%=query.ageGroup%>'<%}%>}"></iframe>
+         <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="300" height="250" src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=dda07755-dc27-41e9-a57f-cbc6b8178aff&maxDataAge=60&theme=light&autoRefresh=true&filter={'date':'<%=today%>'<%if(query.gender){%>,'authorGender':'<%=user.gender%>'<%}%><%if(query.country){%>,'authorCountry': '<%=query.country%>'<%}%><%if(query.ageGroup) {%>,'authorAgeGroup': '<%=query.ageGroup%>'<%}%>}"></iframe>
          <% if(query.country || query.ageGroup || query.gender || query.date ) { %> 
             <p class="small text-muted mb-0 mt-1"><span class="font-weight-bold">Filters applied:</span>
             <%=query.date ? dbQuery['date']: "" %>

@@ -11,7 +11,7 @@
                         <% if(within24Hours(post) === true) { %>
                             <!-- modal buttons specific to user profile page-->
                             <% if(title === `@${currentUser.username} / t'day`) { %> 
-                                <% if(post.date == getToday()) {  %>
+                                <% if(post.date == getToday(currentUser.timezone)) {  %>
                             <a href="" data-toggle="modal" id="editTodayPostLink" data-target="#editTodayPostModal" class="dropdown-item pl-2  text-primary"><i class="fas fa-edit text-warning"></i> Edit</a>
                                 <% } else {%> 
                             <a href="" data-toggle="modal" id="editYesterdayPostLink" data-target="#editYesterdayPostModal" class="dropdown-item pl-2 text-primary"><i class="fas fa-edit text-warning"></i> Edit</a>
@@ -47,7 +47,7 @@
             <% } %> 
             <div class="d-flex justify-content-between mt-2">
                 <div>
-                    <small class="pb-1"><a href="/posts/<%=post._id%>" class="card-link"><%=post.timestamp%></a></small>
+                    <small class="pb-1"><a href="/posts/<%=post._id%>" class="card-link" title="<%=post.createdAt%>"><%=new Date(post.createdAt).toLocaleString()%></a></small>
                     <% if(post.edited){ %>
                     <small class="pb-1 text-muted" title="<%=post.updatedAt%>">Edited</small>
                     <% } %>

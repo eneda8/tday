@@ -3,6 +3,7 @@ const Post = require("../models/post");
 const Comment = require("../models/comment");
 const Journal = require("../models/journal");
 const countries = require("../countries");
+const timezones = require("../timezones");
 const {cloudinary} = require("../cloudinary");
 const {within24Hours, getToday} = require("../utils/getToday");
 const util = require('util');
@@ -11,24 +12,33 @@ const sgMail = require("@sendgrid/mail")
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
+
+function validTZ(string){
+    return !(/\d/.test(string));
+}
 // ---------------REGISTER ---------------------------------------
 module.exports.renderRegisterForm = (req, res) => {
     if (req.isAuthenticated()) {
         req.flash("error", "You are already logged in!");
         return res.redirect('/home');
     }
-    res.render("users/register", {countries, title: "Register / t'day"})
+    res.render("users/register", {countries, timezones, title: "Register / t'day"})
 }
 
 module.exports.register = async (req,res, next) => {
     try{
-        const {username, displayName, email, password, ageGroup, gender, country, avatar, termsAgreement} = req.body;
-        const user = new User({username, displayName, email, ageGroup, gender, country, avatar, termsAgreement});
+        const {username, displayName, email, password, ageGroup, gender, country, timezone, defaultTimezone, avatar, termsAgreement} = req.body;
+        const user = new User({username, displayName, email, ageGroup, gender, country, defaultTimezone, timezone, avatar, termsAgreement});
         if(req.file){
         user.avatar = req.file;
         } else {
             user.avatar = {}
         }
+        if(validTZ(timezone)){
+            user.timezone = timezone;
+        } else {
+            user.timezone = user.defaultTimezone;
+        };
         user.postedToday = false;
         user.country.flag = countries.filter(obj => Object.values(obj).includes(user.country.name))[0]["flag"];
         const registeredUser = await User.register(user, password);
@@ -107,7 +117,14 @@ module.exports.renderLoginForm = (req,res) => {
     res.render("users/login", {title:"Login / t'day"})
 }
 
-module.exports.login =  (req,res) => {
+module.exports.login = async (req,res) => {
+    const user = await User.findById(req.user._id);
+    if(validTZ(req.body.timezone)){
+        user.timezone = req.body.timezone;
+    } else {
+        user.timezone = user.defaultTimezone;
+    }
+    await user.save()
     delete req.session.returnTo;
     const redirectUrl = req.session.returnTo || "/home";
     req.flash("success", `Welcome back, ${req.user.displayName}!`);
@@ -199,9 +216,8 @@ module.exports.logout = (req,res) => {
 //------------------------- HOME -------------------------
 
 module.exports.renderHomePage= async (req, res) =>{
+    const today = getToday(req.user.timezone)
     const user = await User.findById(req.user._id).populate("posts");
-    const longToday = new Date().toLocaleDateString( 'en-US', {year: 'numeric', month: 'long', day: 'numeric'});
-    const today = getToday();
     try{
         //show today's rating, if available
         let todaysPost;
@@ -209,17 +225,17 @@ module.exports.renderHomePage= async (req, res) =>{
             todaysPost = await Post.findById(user.todaysPost);
         }  else {todaysPost = "null"}
           //show 10 random posts
-        let count = await Post.countDocuments().where({date: getToday()}).where({$or: [{body:{$exists: true}}, {image:{$exists: true}}]});
+        let count = await Post.countDocuments().where({date: today}).where({$or: [{body:{$exists: true}}, {image:{$exists: true}}]});
         let posts;
         if (count <= 10){
-            posts = await Post.find({date: getToday()}).where({$or: [{body:{$exists: true}}, {image:{$exists: true}}]});
+            posts = await Post.find({date: today}).where({$or: [{body:{$exists: true}}, {image:{$exists: true}}]});
         } else {
             const random = async function (num){
                 const randomDocs = [];
                 const {dbQuery} = res.locals; 
                 for(let i =0; i < num; i++) {
                     const rand = Math.floor(Math.random() * count);
-                    const filter = dbQuery ? dbQuery : {date: getToday()}
+                    const filter = dbQuery ? dbQuery : {date: today}
                     const randomDoc = await Post.findOne(filter).skip(rand);
                     if(randomDoc){
                         randomDocs.push(randomDoc);
@@ -234,7 +250,7 @@ module.exports.renderHomePage= async (req, res) =>{
             post.populate("author").execPopulate();
             }
         }
-        res.render("users/home", {posts, longToday, today, within24Hours, todaysPost, user, countries, title: "Home / t'day"});
+        res.render("users/home", {posts, today, within24Hours, todaysPost, user, countries, title: "Home / t'day"});
     } catch(e) {
         console.log(e)
         req.flash("error", `Oops, something went wrong!`)
@@ -254,7 +270,7 @@ module.exports.showUserProfile = async(req, res) => {
         return res.redirect("/home");
     }
     const comments = await Comment.find({"author": user}).sort({"createdAt": -1}).populate("post")
-    res.render("users/show", {user, comments, within24Hours, getToday, title: `@${user.username} / t'day`});
+    res.render("users/show", {user, comments, within24Hours, title: `@${user.username} / t'day`});
 };
 
 module.exports.updateProfile = async(req, res) => {

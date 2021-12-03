@@ -2,11 +2,9 @@ const Post = require("../models/post");
 const User = require("../models/user");
 const Journal = require("../models/journal");
 const ObjectId = require('mongodb').ObjectId;
-const {getToday, getTimestamp} = require("../utils/getToday");
 
 module.exports.renderJournal =  async (req, res) => {
-    const today = getTimestamp()
-    res.render("journals/write", {today, title: "Write / t'day"});
+    res.render("journals/write", {title: "Write / t'day"});
 }
 
 module.exports.createJournal = async (req, res, next) => {

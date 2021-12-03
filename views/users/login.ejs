@@ -24,6 +24,7 @@
                 <!-- add this in pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,10}$" -->
                             <div class="invalid-feedback">Please provide a valid password.</div>
                         </div>
+                        <input type="text" hidden value="<%=new Date().toLocaleTimeString('en-us',{timeZoneName:'short'}).split(' ')[2]%>" name="timezone">
                         <button class="btn btn-warning btn-block">Login</button>
                         <div class="mt-3 text-center">
                             <a href="/forgot-password">Forgot password?</a> <span> | </span> <a href="/register">Register</a>

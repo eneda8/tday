@@ -10,7 +10,7 @@
                 <%- include("../partials/sidebars/left/GCP") %>
             </div>
             <div class="col-5 shadow rounded bg-light mx-5" >
-                <h5 class="text-left font-weight-bold mt-3"><%=longToday%></h5>
+                <h5 class="text-left font-weight-bold mt-3"><%=new Date().toLocaleDateString( 'en-US', {year: 'numeric', month: 'long', day: 'numeric'})%></h5>
                 <div>
                 </div>
                 <% if(!posts.includes(null)){ %>

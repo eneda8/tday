@@ -1,7 +1,6 @@
 const Post = require("../models/post");
 const User = require("../models/user");
 const Comment = require("../models/comment");
-const {getTimestamp} = require("../utils/getToday");
 
 module.exports.createComment = async (req, res) => {
     const post = await Post.findById(req.params.id);
@@ -9,7 +8,6 @@ module.exports.createComment = async (req, res) => {
     const comment = new Comment(req.body.comment);
     comment.author = user;
     comment.post = post;
-    comment.timestamp = getTimestamp();
     post.comments.push(comment);
     user.comments.unshift(comment);
     await comment.save();

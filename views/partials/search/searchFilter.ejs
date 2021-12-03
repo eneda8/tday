@@ -16,7 +16,7 @@
         <div class="input-group-prepend border-right">
             <label class="input-group-text text-muted border-0" for="date"><i class="far fa-calendar-alt text-primary"></i></label>
         </div>
-        <input type="date" class="form-control border-0" id="date" placeholder="Date" name="date" value="<%=query.date%>">
+        <input type="date" class="form-control border-0" id="date" placeholder="Date" name="date" value="<%=query.date%>" max="<%=new Date()%>">
      </div>
     <div class="input-group mb-3 border-0">
         <div class="input-group-prepend border-right">
@@ -58,5 +58,6 @@
         <input class="form-check-input" type="checkbox" aria-label="Has image?" name="image" <%=query.image ? 'checked' : ''%>>
       </div>
     </div>
+    <button class="btn btn-sm btn-primary mb-2" type="button" onclick="window.location = window.location.href.split('?')[0]">Clear filters</button>
     <button class="btn btn-sm btn-warning float-right mb-5" type="submit" id="submit" >Submit</button>
 </form>

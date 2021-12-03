@@ -1,7 +1,7 @@
 const Post = require("../models/post");
 const User = require("../models/user");
 const Comment = require("../models/comment");
-const {getToday, getTimestamp, within24Hours} = require("../utils/getToday");
+const {getToday, within24Hours} = require("../utils/getToday");
 const ObjectID = require('mongodb').ObjectID;
 const {cloudinary} = require("../cloudinary");
 const countries = require("../countries");
@@ -13,8 +13,6 @@ module.exports.renderNewForm = (req, res) => {
 module.exports.createPost = async (req, res, next) => {
     const user = await User.findById(req.user._id);
     const post = new Post(req.body.post);
-    post.date = getToday();
-    post.timestamp = getTimestamp();
     post.image = req.file;
     post.author = req.user._id;
     post.authorCountry = user.country.name;
@@ -59,7 +57,7 @@ module.exports.showPost = async (req,res) => {
         req.flash("error", "Rating not found!")
         return res.redirect("/home");
     }
-    res.render("posts/show", {user, post, within24Hours, getToday, title: `@${post.author.username}'s day / t'day `})
+    res.render("posts/show", {user, post, within24Hours, title: `@${post.author.username}'s day / t'day `})
 }
 
 module.exports.bookmarkPost = async(req, res) => {
@@ -134,7 +132,7 @@ module.exports.updatePost = async (req,res) => {
 module.exports.deletePost = async(req, res) => {
     const {id} = req.params;
     const user = await User.findById(req.user._id).populate("posts");
-    const today = getToday();
+    const today = getToday(user.timezone);
     const post = await Post.findById(id).populate("author").populate("comments");
 
     if(post.date === today){
@@ -169,6 +167,7 @@ module.exports.search = async (req, res) => {
     let posts, docsFound;
     delete res.locals.dbQuery;
     if(dbQuery) {
+        console.log(dbQuery)
         posts = await Post.paginate(dbQuery, {
             page: req.query.page || 1,
             limit: 10,

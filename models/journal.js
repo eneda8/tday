@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const mongooseFieldEncryption = require("mongoose-field-encryption").fieldEncryption;
 const Schema = mongoose.Schema;
 const User = require("./user");
-// const {getToday, getTimestamp} = require("../utils/getToday");
 
 const JournalSchema = new Schema({
     date: String,
@@ -16,10 +15,6 @@ const JournalSchema = new Schema({
       ref: "User"
       },
     edited: Boolean,
-    editedTime: {
-      type: String,
-      default: this.updatedAt
-    }
   },
   //options
   {timestamps: true,

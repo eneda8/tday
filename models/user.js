@@ -58,6 +58,13 @@ const userSchema = new Schema({
             // default: "/images/flags/US.png"
         }
     },
+    timezone: {
+        type: String,
+        // required: true
+    },
+    defaultTimezone: {
+        type: String
+    },
     avatar: AvatarSchema,
     displayName: String,
     bio: String,

@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const User = require("./user");
-const {getToday, getTimestamp} = require("../utils/getToday");
 const {cloudinary} = require("../cloudinary");
 const mongoosePaginate = require("mongoose-paginate");
 
@@ -23,11 +22,6 @@ ImageSchema.virtual("fullsize").get(function() {
 const PostSchema = new Schema({
     date: {
       type: String,
-      default: getToday()
-    },
-    timestamp: {
-      type: String,
-      default: getTimestamp()
     },
     rating: {
       type: Number,

@@ -7,8 +7,7 @@ module.exports.renderLandingPage = (req, res) => {
     if(req.user){
         return res.redirect("/home");
     } else {
-        let today =new Date().toLocaleString('en-us', {weekday:'long'});
-        res.render("landing", {today, title: "t'day"});
+        res.render("landing", {title: "t'day"});
     }
 }
 

@@ -54,7 +54,6 @@ module.exports.alreadyVerified = (req, res, next) => {
     next();
 }
 
-
 module.exports.isAuthor = async(req, res, next) => {
     const {id} = req.params;
     const post = await Post.findById(id);
@@ -86,8 +85,8 @@ module.exports.isJournalAuthor = async(req, res, next) => {
 }
 
 module.exports.setPostedToday = async(req, res, next) => {
-    const today = getToday();
     const user = await User.findById(req.user._id);
+    const today = getToday(user.timezone);
     const post = await Post.find({"author": user, "date": today});
     if(post.length){
         user.postedToday = true;
@@ -100,9 +99,8 @@ module.exports.setPostedToday = async(req, res, next) => {
 }
 
 module.exports.blockDuplicatePost = async (req, res, next) => {
-    const today = getToday();
-    const user = await User.findById(req.user._id);
-    const post = await Post.find({"author": user, "date": today});
+    const today = getToday(req.user.timezone);
+    const post = await Post.find({"author": req.user, "date": today});
     if(post.length){
         req.flash("error", "Sorry, you've already posted once today!")
         return res.redirect("/home")
@@ -110,6 +108,7 @@ module.exports.blockDuplicatePost = async (req, res, next) => {
 }
 
 module.exports.checkPostStreak = async(req, res, next) => {
+    const user = await User.findById(req.user._id);
     const today = new Date()
     let yesterday = new Date(today);
     yesterday.setDate(today.getDate() -1)
@@ -119,11 +118,11 @@ module.exports.checkPostStreak = async(req, res, next) => {
         year: 'numeric',
         month: 'short',
         day: 'numeric',
+        timeZone: user.timezone
         }
     );
-    const user = await User.findById(req.user._id);
     const yesterdayPost = await Post.find({"author": user, "date": yesterday});
-    const todayPost = await Post.find({"author": user, "date": getToday()})
+    const todayPost = await Post.find({"author": user, "date": getToday(user.timezone)})
     if(!yesterdayPost.length) {
         if(todayPost.length){
             await user.updateOne({$set: {postStreak:  1}});      
@@ -167,9 +166,12 @@ module.exports.searchAndFilterPosts = async(req, res, next) => {
             dbQueries.push({$or: [{authorUsername: username}, {authorDisplayName: username}]});
         }
         if(date) {
+            console.log(date)
             date = new Date(date).toLocaleDateString( 'en-US',
-            {timeZone: "UTC", year: 'numeric', month: 'short', day: 'numeric'});
+            {year: 'numeric', month: 'short', day: 'numeric', timeZone: "UTC"}); // keep it UTC in order to search date string only
+            console.log(date)
             date = new RegExp(escapeRegExp(date), "gi");
+            console.log("middleware date:", date)
             dbQueries.push({date: date});
         }
         if(rating) {
@@ -187,13 +189,13 @@ module.exports.searchAndFilterPosts = async(req, res, next) => {
 
     const delimiter = queryKeys.length ? '&' : '?';
 	queryKeys.splice(queryKeys.indexOf('page'), 1);
-
+    console.log("res.locals.query:", res.locals.query)
 	res.locals.paginateUrl = req.originalUrl.replace(/(\?|\&)page=\d+/g, '') + `${delimiter}page=`;
 	next();
 }
 
 module.exports.filterPosts = async(req, res, next) => {
-    const today = getToday();
+    const today = getToday(req.user.timezone);
     const queryKeys = Object.keys(req.query); 
     const dbQueries = [{date: today}];
     if(queryKeys.length) {
@@ -224,7 +226,7 @@ module.exports.filterCharts = async(req, res, next) => {
         let {country, ageGroup, date, gender} = req.query;
         if(date) {
             date = new Date(date).toLocaleDateString( 'en-US',
-            {timeZone: "UTC", year: 'numeric', month: 'short', day: 'numeric'});
+            {timeZone: "UTC", year: 'numeric', month: 'short', day: 'numeric'}); // keep it UTC in order to search date string only
             dbQueries['date'] = date;
         }
         if(country){
@@ -254,3 +256,4 @@ module.exports.comingFromStripe = (req, res, next) => {
         return res.redirect("/home")
     }
 }
+
