@@ -4,8 +4,8 @@
 <div class="paper text-wrap">
   <form id="form" action="/write" class="validated-form" method="POST" novalidate>
     <div>
-      <label for="journal[date]" class="text-monospace small mb-0"><%=new Date().toLocaleString()%></label>
-      <input type="hidden" class="" name="journal[date]" for="journal[date]" value="<%=new Date().toLocaleString()%>">
+      <label for="journal[date]" class="text-monospace small mb-0"><%=new Date().toLocaleString({timeZone: currentUser.timezone})%></label>
+      <input type="hidden" class="" name="journal[date]" for="journal[date]" value="<%=new Date().toLocaleString({timeZone: currentUser.timezone})%>">
       <div class="mt-3">
         <label for="journal[title]" class="text-monospace d-inline">Title<span class="text-muted">(optional)</span>:</label>
       <input type="text" name="journal[title]" class="d-inline py-0" style="height: 20px;">

@@ -47,7 +47,7 @@
             <% } %> 
             <div class="d-flex justify-content-between mt-2">
                 <div>
-                    <small class="pb-1"><a href="/posts/<%=post._id%>" class="card-link" title="<%=post.createdAt%>"><%=new Date(post.createdAt).toLocaleString()%></a></small>
+                    <small class="pb-1"><a href="/posts/<%=post._id%>" class="card-link" title="<%=post.createdAt%>"><%=new Date(post.createdAt).toLocaleString({timeZone: currentUser.timezone})%></a></small>
                     <% if(post.edited){ %>
                     <small class="pb-1 text-muted" title="<%=post.updatedAt%>">Edited</small>
                     <% } %>
