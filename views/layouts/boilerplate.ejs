@@ -23,6 +23,10 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
     <script type="text/javascript" src="https://app.termly.io/embed.min.js" data-auto-block="on" data-website-uuid="b109be21-5c06-45f8-8920-4ea13242b77e" ></script>
     <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.min.js"></script>
+    <script>
+      const timezone = new Date().toLocaleTimeString('en-us',{timeZoneName:'short'}).split(' ')[2]
+      alert(timezone)
+    </script>
 </head>
 <body class="d-flex flex-column h-100 m-0" style="width:100%; display: table-cell; margin:0; padding: 0;">
       <%- include("../partials/navbar") %>

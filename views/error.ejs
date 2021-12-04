@@ -2,12 +2,12 @@
 
 <div style="display:table; width: 100%; height: 100%">
     <div  class="rounded bg-transparent text-center p-3 mt-5" style="vertical-align: middle; display:table-cell">
-        <h4 class="alert-heading text-danger mb-3">Uh oh, there seems to be an error...</h4>
+        <h3 class="alert-heading text-danger mb-3">Uh oh, there seems to be an error...</h3>
         <i class="far fa-dizzy mb-3" style="font-size: 100px"></i>
-        <h5 class="font-weight-bold mb-3"><%=err.message%></h5>
         <% if(process.env.NODE_ENV !== "production") {%> 
+        <h5 class="font-weight-bold mb-3"><%=err.message%></h5>
         <p class="text-danger"><pre><%=err.stack%></pre></p>
-        <% } %> 
+        <% }%> 
         <a class="text-primary d-block" role="button" onclick="window.history.back()"><i class="fas fa-arrow-left mr-3"></i>Go Back</a>
         <a href="/home"><i class="fas fa-home text-primary mr-3"></i>Go Home</a>
     </div>

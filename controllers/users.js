@@ -270,7 +270,7 @@ module.exports.showUserProfile = async(req, res) => {
         return res.redirect("/home");
     }
     const comments = await Comment.find({"author": user}).sort({"createdAt": -1}).populate("post")
-    res.render("users/show", {user, comments, within24Hours, title: `@${user.username} / t'day`});
+    res.render("users/show", {user, comments, getToday, within24Hours, title: `@${user.username} / t'day`});
 };
 
 module.exports.updateProfile = async(req, res) => {
