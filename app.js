@@ -220,8 +220,8 @@ app.use((err, req, res, next) => {
     res.status(statusCode).render("error", {err, title: "Error / t'day"});
 })
 
-// const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3000;
 
 app.listen(3000, () => {
-  console.log(`Serving on port 3000`)
+  console.log(`Serving on port ${port}`)
 })
