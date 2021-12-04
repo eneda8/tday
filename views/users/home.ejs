@@ -48,5 +48,5 @@
 
 <script>
     const timezone = new Date().toLocaleTimeString('en-us',{timeZoneName:'short'}).split(' ')[2]
-    document.getElementById("today-header").innerText = new Date().toLocaleDateString('en-US',{year: 'numeric', month: 'short',day: 'numeric', timeZone: timezone});
+    document.getElementById("today-header").innerText = new Date().toLocaleDateString( 'en-US', {year: 'numeric', month: 'long', day: 'numeric'})
 </script>

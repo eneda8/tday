@@ -1,7 +1,7 @@
 <% layout("layouts/boilerplate")%>
 <div class="container-fluid ml-3 my-3 px-5 pt-1" style="line-height:20px">
    <h4  class="text-centered font-weight-bold pt-0 pb-0 ml-3 d-inline">Today's Charts</h4>
-   <h5 id="today-header" class="text-centered pt-0 pb-0 ml-2 mb-0 d-inline"> <sup><i class="fas fa-asterisk text-muted small" data-placement="right" data-toggle="tooltip" title="The below charts are based on randomly generated data."></i></sup></h5>
+   <h5 id="today-header" class="text-centered pt-0 pb-0 ml-2 mb-0 d-inline"></h5><sup><i class="fas fa-asterisk text-muted small" data-placement="right" data-toggle="tooltip" title="The below charts are based on randomly generated data."></i></sup>
    <div class="mb-0 ml-3 mt-3">
       <a href="/charts/all" class="">All Charts |</a>
       <a href="/charts/me" class="">My Charts |</a>
@@ -199,5 +199,5 @@
  </div>
 
  <script>
-      document.getElementById("today-header").innerText = new Date().toLocaleDateString('en-US',{year: 'numeric', month: 'short',day: 'numeric', timeZone: timezone});
+      document.getElementById("today-header").innerText = new Date().toLocaleDateString( 'en-US', {year: 'numeric', month: 'long', day: 'numeric'})
  </script>
