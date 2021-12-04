@@ -2,6 +2,7 @@ if(process.env.NODE_ENV !== "production") {
     require("dotenv").config();
 }
 const express = require("express");
+const forceSsl = require("force-ssl-heroku");
 const path = require("path");
 const favicon = require("serve-favicon")
 const mongoose = require("mongoose");
@@ -46,7 +47,9 @@ db.once("open", () => {
 mongoose.plugin(castAggregation);
 
 const app = express();
+app.use(forceSsl);
 
+// app.enable("trust proxy");
 // if(process.env.NODE_ENV == "production") {
 //    app.use((req, res, next) => {
 //     if (req.header('x-forwarded-proto') !== 'https')
@@ -55,6 +58,8 @@ const app = express();
 //       next()
 //   })
 // }
+
+
 
 app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
@@ -69,6 +74,17 @@ app.use(mongoSanitize({
     replaceWith: '_'
 }));
 
+app.use(function(req, res, next) {
+    res.header('Access-Control-Allow-Credentials', true);
+    res.header('Access-Control-Allow-Origin', req.headers.origin);
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
+    if ('OPTIONS' == req.method) {
+         res.send(200);
+     } else {
+         next();
+     }
+});
 
 
 const secret = process.env.SECRET  || "81aa3b3f55029ad11b7f040b2064f31b7420633b"
@@ -92,15 +108,30 @@ const sessionConfig = {
     resave: false,
     saveUninitialized: true,
     cookie: {
+        sameSite: 'none',
         secure: true,
-        httpOnly: false,
-        expires: Date.now() + 1000 * 60 * 60,
+        httpOnly: true,
+        expires: Date.now() + 1000 * 60 * 60 ,
         maxAge: 1000 * 60 * 60 
     }
 }
 
 app.use(session(sessionConfig))
 app.use(flash());
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate(), {passReqToCallback: true}));
+
+passport.serializeUser(function(user, done) {
+    done(null, user.id);
+});
+  
+passport.deserializeUser(function(id, done) {
+    User.findById(id, function(err, user) {
+        done(err, user);
+    });
+});
 app.use(helmet());
 
 const scriptSrcUrls = [
@@ -155,20 +186,6 @@ app.use(
     })
 );
 
-app.use(passport.initialize());
-app.use(passport.session());
-passport.use(new LocalStrategy(User.authenticate(), {passReqToCallback: true}));
-
-passport.serializeUser(function(user, done) {
-    done(null, user.id);
-});
-  
-passport.deserializeUser(function(id, done) {
-    User.findById(id, function(err, user) {
-        done(err, user);
-    });
-});
-
 app.use((req, res, next) => {
     if (!['/login', '/register', '/'].includes(req.originalUrl)) {
         req.session.returnTo = req.originalUrl;
@@ -178,7 +195,6 @@ app.use((req, res, next) => {
     res.locals.currentUser = req.user;
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
-    // console.log(req.headers)
     next();
 })
 
@@ -204,8 +220,8 @@ app.use((err, req, res, next) => {
     res.status(statusCode).render("error", {err, title: "Error / t'day"});
 })
 
-const port = process.env.PORT || 3000;
+// const port = process.env.PORT || 3000;
 
-app.listen(port, () => {
+app.listen(3000, () => {
   console.log(`Serving on port ${port}`)
 })
