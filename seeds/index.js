@@ -67,44 +67,44 @@ const seedDB = async () => {
     // }
 
     // /make fake posts
-    // for(let i = 0; i<1000; i++){
-    //     const rating = Math.floor(Math.random() * 5) + 1;
-    //     let body;
-    //     if(i % 2 == 0 ) {
-    //         body = faker.lorem.sentence()
-    //     } else {body = faker.lorem.sentences()}
-    //     const user = await User.findOne().where({ "postedToday" : false }) .where({"bio": "This is a fake account used to generate data for demonstration purposes." })
-    //     if(user){
-    //         const post = new Post({rating, body});
-    //         if(i % 2 == 0) {
-    //             post.image = {}
-    //             post.image.path = "https://placeimg.com/640/480/any";
-    //         }     
-                // post.date = new Date().toLocaleDateString( 'en-US',{year: 'numeric',month: 'short',day: 'numeric'})
-    //         post.author = user;
-    //         post.authorID = user._id;
-    //         post.authorCountry = user.country.name;
-    //         post.authorUsername = user.username;
-    //         post.authorGender = user.gender;
-    //         post.authorAgeGroup= user.ageGroup;
-    //         post.authorDisplayName = user.displayName;
-    //         await post.save();
-    //         user.postedToday = true;
-    //         user.posts.unshift(post);
-    //         user.todaysPost = post._id;
-    //         user.postStreak ++; 
-    //         // update user average
-    //         let userAverage;
-    //         await Post.aggregate([
-    //             {$match: {"author": user._id}},
-    //             {$group: {_id: null, avgRating: {$avg: "$rating"}}}
-    //         ]).then(function(res) {
-    //          userAverage = res[0].avgRating.toFixed(2)
-    //          });
-    //         await user.updateOne({$set: {average:  userAverage}});
-    //         await user.save();
-    //     }
-    // }
+    for(let i = 0; i<1000; i++){
+        const rating = Math.floor(Math.random() * 5) + 1;
+        let body;
+        if(i % 2 == 0 ) {
+            body = faker.lorem.sentence()
+        } else {body = faker.lorem.sentences()}
+        const user = await User.findOne().where({ "postedToday" : false }) .where({"bio": "This is a fake account used to generate data for demonstration purposes." })
+        if(user){
+            const post = new Post({rating, body});
+            if(i % 2 == 0) {
+                post.image = {}
+                post.image.path = "https://placeimg.com/640/480/any";
+            }     
+            post.date = new Date().toLocaleDateString( 'en-US',{year: 'numeric',month: 'short',day: 'numeric'})
+            post.author = user;
+            post.authorID = user._id;
+            post.authorCountry = user.country.name;
+            post.authorUsername = user.username;
+            post.authorGender = user.gender;
+            post.authorAgeGroup= user.ageGroup;
+            post.authorDisplayName = user.displayName;
+            await post.save();
+            user.postedToday = true;
+            user.posts.unshift(post);
+            user.todaysPost = post._id;
+            user.postStreak ++; 
+            // update user average
+            let userAverage;
+            await Post.aggregate([
+                {$match: {"author": user._id}},
+                {$group: {_id: null, avgRating: {$avg: "$rating"}}}
+            ]).then(function(res) {
+             userAverage = res[0].avgRating.toFixed(2)
+             });
+            await user.updateOne({$set: {average:  userAverage}});
+            await user.save();
+        }
+    }
 
     //fix user data
 
