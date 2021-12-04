@@ -189,7 +189,6 @@ module.exports.searchAndFilterPosts = async(req, res, next) => {
 
     const delimiter = queryKeys.length ? '&' : '?';
 	queryKeys.splice(queryKeys.indexOf('page'), 1);
-    console.log("res.locals.query:", res.locals.query)
 	res.locals.paginateUrl = req.originalUrl.replace(/(\?|\&)page=\d+/g, '') + `${delimiter}page=`;
 	next();
 }

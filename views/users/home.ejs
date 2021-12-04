@@ -10,9 +10,7 @@
                 <%- include("../partials/sidebars/left/GCP") %>
             </div>
             <div class="col-5 shadow rounded bg-light mx-5" >
-                <h5 class="text-left font-weight-bold mt-3"><%=new Date().toLocaleDateString( 'en-US', {year: 'numeric', month: 'long', day: 'numeric'})%></h5>
-                <div>
-                </div>
+                <h5 id="today-header" class="text-left font-weight-bold mt-3">Today</h5>
                 <% if(!posts.includes(null)){ %>
                     <h6 class="text-left mb-0">10 random ratings from today <i class="fas fa-random text-right text-primary" title="Refresh for 10 more" onclick="location.reload()"></i>
                     </h6>
@@ -48,42 +46,7 @@
 
 <%- include("../partials/posts/new") %>
 
-<!-- <style>
-   .paper{
-    color: #444;
-    /* line-height: 20px; */
-    border: 1px solid #d2d2d2;
-    background: #fff;
-    background: -webkit-gradient(linear, 0 0, 0 100%, from(#d9eaf3), color-stop(4%, #fff)) 0 4px;
-    background: -webkit-linear-gradient(top, #d9eaf3 0%, #fff 8%) 0 4px;
-    background: -moz-linear-gradient(top, #d9eaf3 0%, #fff 8%) 0 4px;
-    background: -ms-linear-gradient(top, #d9eaf3 0%, #fff 8%) 0 4px;
-    background: -o-linear-gradient(top, #d9eaf3 0%, #fff 8%) 0 4px;
-    background: linear-gradient(top, #d9eaf3 0%, #fff 8%) 0 4px;
-    -webkit-background-size: 100% 20px;
-    -moz-background-size: 100% 20px;
-    -ms-background-size: 100% 20px;
-    -o-background-size: 100% 20px;
-    background-size: 100% 20px;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.07);
-    -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.07);
-    box-shadow: 0 1px 2px rgba(0,0,0,0.07);
-    width: 100%;
-    height: 100%;
-}
-
-.paper::before {
-    content: '';
-    position: absolute;
-    width: 4px;
-    top: 0;
-    left: 50px;
-    bottom: 0;
-    border: 1px solid;
-    border-color: transparent #efe4e4;
-    height: 170%;
-}
-</style> -->
+<script>
+    const timezone = new Date().toLocaleTimeString('en-us',{timeZoneName:'short'}).split(' ')[2]
+    document.getElementById("today-header").innerText = new Date().toLocaleDateString('en-US',{year: 'numeric', month: 'short',day: 'numeric', timeZone: timezone});
+</script>

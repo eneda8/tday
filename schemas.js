@@ -27,7 +27,7 @@ const Joi = BaseJoi.extend(extension)
 module.exports.postSchema = Joi.object({
     post: Joi.object({
         rating: Joi.number().required().min(1).max(5),
-        date: Joi.string().required(),
+        date: Joi.string(),
         body: Joi.string().optional().allow("").escapeHTML(),
         image: Joi.string()
     }).required(),

@@ -15,7 +15,7 @@
             <% } else { %> 
             <p class="my-1">@[deleted] <%=comment.body%></p>
             <% }%>
-            <small class="pb-1" title="<%=comment.createdAt%>"><%=new Date(comment.createdAt).toLocaleString({timeZone: currentUser.timezone})%></small>
+            <small class="pb-1 timestamp" title="<%=comment.createdAt%>"><%=comment.createdAt%></small>
             <% if(currentUser && comment.author.equals(currentUser._id)) { %> 
             <button class="btn btn-link btn-sm d-inline pb-0" title="Delete comment" data-toggle="modal" data-target="#commentDeleteModal-<%=comment._id%>"><i class="fas fa-trash-alt text-danger"></i></button>
             <% } %> 

@@ -167,7 +167,6 @@ module.exports.search = async (req, res) => {
     let posts, docsFound;
     delete res.locals.dbQuery;
     if(dbQuery) {
-        console.log(dbQuery)
         posts = await Post.paginate(dbQuery, {
             page: req.query.page || 1,
             limit: 10,

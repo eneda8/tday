@@ -15,7 +15,7 @@
               <h6 class="my-0 card-subtitle d-inline"><strong><a href="/u/<%=comment.author.username%>"><%=comment.author.displayName%></a></strong>  <img class="d-inline" style="width: 17px" src="<%=comment.author.country.flag%>" title="<%=comment.author.country.name%>" alt=""></h6>
                 <small class="text-muted mb-1 d-block">@<%=comment.author.username%></small>
                 <p class="my-1"><%=comment.body%></p>
-                <small class="pb-1" title="<%=comment.createdAt%>"><%=new Date(comment.createdAt).toLocaleString({timeZone: currentUser.timezone})%></small>
+                <small class="pb-1 timestamp" title="<%=comment.createdAt%>"><%=comment.createdAt%></small>
                 <% if(currentUser && comment.author.equals(currentUser._id)) { %> 
                   <button class="btn btn-link btn-sm d-inline pb-0" title="Delete comment" data-toggle="modal" data-target="#commentDeleteModal-<%=comment._id%>"><i class="fas fa-trash-alt text-danger"></i></button>
                   <div class="modal fade" id="commentDeleteModal-<%=comment._id%>" tabindex="-1" aria-labelledby="commentDeleteModalLabel-<%=comment._id%>" aria-hidden="true">
