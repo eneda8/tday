@@ -29,8 +29,8 @@ router.route("/login")
 router.get("/logout", users.logout);
 
 router.route("/forgot-password")
-    .get(isVerified, users.getForgotPw)
-    .put(isVerified, catchAsync(users.putForgotPw));
+    .get(users.getForgotPw)
+    .put(catchAsync(users.putForgotPw));
 
 router.route("/reset/:token")
     .get(catchAsync(users.getReset))
