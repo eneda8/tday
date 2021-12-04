@@ -19,7 +19,7 @@
          <div class="first px-5 bg-white shadow-lg " >
             <div class="row mt-4">
                 <div class="col content">
-                     <h1 class="logo">How's y<span class='text-warning'>(our)</span><span id="day"></span>?</h1>
+                     <h1 class="logo">How's y<span class='text-warning'>(</span>our<span class="text-warning">)</span> <span id="landingDay"></span>?</h1>
                </div>
             </div>
             <div class="pl-5 row d-flex justify-content-end">
@@ -94,9 +94,7 @@
         </div>
     </div>
     
-<script>
-     document.querySelector("#day").innerText = new Date().toLocaleString('en-us', {weekday:'long'});
-</script>
+
 
 <style>
     .first {
@@ -113,3 +111,7 @@
         right: 2.5%;
     }
 </style>
+
+<script>
+    document.getElementById("landingDay").textContent= new Date().toLocaleString('en-us', {weekday:'long'});
+</script>

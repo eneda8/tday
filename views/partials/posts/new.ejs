@@ -9,7 +9,7 @@
         </div>
         <div class="modal-body pb-0">
           <form action="/posts" method="POST" novalidate class="validated-form" enctype="multipart/form-data">
-            <h6 class=" mb-0">How's your <span id="day">day</span>?</h6>
+            <h6 class=" mb-0">How's your <span id="dayNew">day</span>?</h6>
             <div>
               <fieldset class="rating">
                 <input type="radio" id="star5" name="post[rating]" value=5 required/><label class = "mb-0" for="star5" title="Amazing"></label>
@@ -45,5 +45,5 @@
 
   <script>
     document.querySelector("#postDate").value = new Date().toLocaleDateString('en-US',{year: 'numeric', month: 'short',day: 'numeric'});
-    document.querySelector("#day").innerText = new Date().toLocaleString('en-us', {weekday:'long'});
+    document.querySelector("#dayNew").textContent= new Date().toLocaleString('en-us', {weekday:'long'});
   </script>
