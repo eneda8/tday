@@ -108,7 +108,7 @@ const sessionConfig = {
     resave: false,
     saveUninitialized: true,
     cookie: {
-        sameSite: 'none',
+        sameSite: 'lax',
         // secure: true,
         httpOnly: true,
         expires: Date.now() + 1000 * 60 * 60 ,
