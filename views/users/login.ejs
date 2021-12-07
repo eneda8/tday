@@ -38,4 +38,5 @@
 
 <script>
     document.getElementById("tz").value = new Date().toLocaleTimeString('en-us',{timeZoneName:'short'}).split(' ')[2]; 
+    console.log("TIME ZONE SET TO", new Date().toLocaleTimeString('en-us',{timeZoneName:'short'}).split(' ')[2])
 </script>

@@ -14,8 +14,9 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 
 function validTZ(string){
-    return !(/\d/.test(string));
+    return !(/\d/.test(String(string)));
 }
+
 // ---------------REGISTER ---------------------------------------
 module.exports.renderRegisterForm = (req, res) => {
     if (req.isAuthenticated()) {
@@ -120,7 +121,7 @@ module.exports.renderLoginForm = (req,res) => {
 module.exports.login = async (req,res) => {
     const user = await User.findById(req.user._id);
     if(validTZ(req.body.timezone)){
-        user.timezone = req.body.timezone;
+        user.timezone = String(req.body.timezone);
     } else {
         user.timezone = user.defaultTimezone;
     }

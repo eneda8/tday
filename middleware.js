@@ -85,15 +85,19 @@ module.exports.isJournalAuthor = async(req, res, next) => {
 }
 
 module.exports.setPostedToday = async(req, res, next) => {
-    const user = await User.findById(req.user._id);
-    const today = getToday(user.timezone);
-    const post = await Post.find({"author": user, "date": today});
-    if(post.length){
-        user.postedToday = true;
-        await user.save();
-    } else {
-        user.postedToday = false;
-        await user.save()
+    try{
+        const user = await User.findById(req.user._id);
+        const today = getToday(user.timezone);
+        const post = await Post.find({"author": user, "date": today});
+        if(post.length){
+            user.postedToday = true;
+            await user.save();
+        } else {
+            user.postedToday = false;
+            await user.save()
+        }
+    }catch(e){
+        console.log(e);
     }
     next()
 }

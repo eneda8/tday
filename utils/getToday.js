@@ -5,6 +5,7 @@ module.exports.getToday = function(userTZ) {
       year: 'numeric',
       month: 'short',
       day: 'numeric',
+      timeZoneName: 'short',
       timeZone: userTZ
     }
   );
