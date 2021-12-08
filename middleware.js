@@ -129,7 +129,6 @@ module.exports.checkPostStreak = async(req, res, next) => {
     }
     try{ 
        const yesterday = await getYesterday(user);
-       console.log("yesterday is:", yesterday)
         const yesterdayPost = await Post.find({"author": user, "date": yesterday});
         const todayPost = await Post.find({"author": user, "date": res.locals.cookie['today']})
         if(!yesterdayPost.length) {
@@ -256,13 +255,3 @@ module.exports.filterCharts = async(req, res, next) => {
     res.locals.query = req.query;
 	next();
 }
-
-module.exports.comingFromStripe = (req, res, next) => {
-    if(req.headers.referer && (req.headers.referer =="https://www.checkout.stripe.com")){
-        next()
-    } else {
-        req.flash("error", "You don't have permission to do that!")
-        return res.redirect("/home")
-    }
-}
-
