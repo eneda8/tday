@@ -1,16 +1,15 @@
 const countries = require("../countries");
 const User = require("../models/user");
 const Post = require("../models/post");
-const {getToday} = require("../utils/getToday");
 
 module.exports.renderTodaysCharts = async (req, res) => {
     const user = await User.findById(req.user.id)
     const escapedCountry = escape(user.country.name);
-    const today = getToday(user);
+    const today = res.locals.cookie['today'];
     const {dbQuery} = res.locals;
     delete res.locals.dbQuery
-    dbQuery['date'] = getToday();
-    const count = await Post.countDocuments({"date": getToday(user)})
+    dbQuery['date'] = today;
+    const count = await Post.countDocuments({"date": today})
     res.render("charts/today", {countries, user, today, escapedCountry, count, dbQuery, title:"Charts - Today / t'day"})
 }
 
@@ -26,6 +25,6 @@ module.exports.renderAllCharts = async (req, res) => {
 
 module.exports.renderMyCharts = async (req, res) => {
     const user = await User.findById(req.user.id)
-    const today = getToday(user);
+    const today = res.locals.cookie['today'];
     res.render("charts/me", {countries, user, today, title:"Charts - Me / t'day"})
 }

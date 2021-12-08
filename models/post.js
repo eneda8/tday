@@ -61,31 +61,7 @@ const PostSchema = new Schema({
   } 
 ) 
 
-
 PostSchema.plugin(require("mongoose-autopopulate"));
-
-// PostSchema.statics.random = async function(num) {
-//   let randomDocs = [];
-//   const today = getToday();
-//   for(let i =0; i<num; i++){
-//     const count = await this.countDocuments().where({ 'date': today });
-//     const rand = Math.floor(Math.random() * count);
-//     const randomDoc = await this.findOne({date: today}).skip(rand);
-//     randomDocs.push(randomDoc);
-//   }
-//   return randomDocs;
-// };
-
-
-// PostSchema.post("findOneAndDelete", async function (doc) {
-//   if(doc){
-//     await Comment.deleteMany({
-//       _id: {
-//         $in: doc.comments
-//       }
-//     })
-//   }
-// })
 
 PostSchema.virtual("desc").get(function(){
   let desc;

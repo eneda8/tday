@@ -4,7 +4,6 @@ const Post = require("./models/post");
 const Comment = require("./models/comment");
 const User = require("./models/user");
 const Journal = require("./models/journal");
-const {getToday} = require("./utils/getToday");
 
 function escapeRegExp(str) {
     return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); 
@@ -87,7 +86,7 @@ module.exports.isJournalAuthor = async(req, res, next) => {
 module.exports.setPostedToday = async(req, res, next) => {
     try{
         const user = await User.findById(req.user._id);
-        const today = getToday(user);
+        const today = res.locals.cookie['today'];
         const post = await Post.find({"author": user, "date": today});
         if(post.length){
             user.postedToday = true;
@@ -103,7 +102,7 @@ module.exports.setPostedToday = async(req, res, next) => {
 }
 
 module.exports.blockDuplicatePost = async (req, res, next) => {
-    const today = getToday(req.user);
+    const today = res.locals.cookie['today'];
     const post = await Post.find({"author": req.user, "date": today});
     if(post.length){
         req.flash("error", "Sorry, you've already posted once today!")
@@ -132,7 +131,7 @@ module.exports.checkPostStreak = async(req, res, next) => {
        const yesterday = await getYesterday(user);
        console.log("yesterday is:", yesterday)
         const yesterdayPost = await Post.find({"author": user, "date": yesterday});
-        const todayPost = await Post.find({"author": user, "date": getToday(user)})
+        const todayPost = await Post.find({"author": user, "date": res.locals.cookie['today']})
         if(!yesterdayPost.length) {
             if(todayPost.length){
                 await user.updateOne({$set: {postStreak:  1}});      
@@ -207,7 +206,7 @@ module.exports.searchAndFilterPosts = async(req, res, next) => {
 }
 
 module.exports.filterPosts = async(req, res, next) => {
-    const today = getToday(req.user);
+    const today = res.locals.cookie['today'];
     const queryKeys = Object.keys(req.query); 
     const dbQueries = [{date: today}];
     if(queryKeys.length) {
@@ -231,9 +230,7 @@ module.exports.filterCharts = async(req, res, next) => {
     const queryKeys = Object.keys(req.query); 
     const dbQueries = {};
     const userQueries = {};
-    // if(!req.path === "/all" || "/me") {
-    //     dbQueries['date'] = getToday();
-    // } 
+
     if(queryKeys.length) {
         let {country, ageGroup, date, gender} = req.query;
         if(date) {

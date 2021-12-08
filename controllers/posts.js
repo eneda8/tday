@@ -1,7 +1,7 @@
 const Post = require("../models/post");
 const User = require("../models/user");
 const Comment = require("../models/comment");
-const {getToday, within24Hours} = require("../utils/getToday");
+const {within24Hours} = require("../utils/getToday");
 const ObjectID = require('mongodb').ObjectID;
 const {cloudinary} = require("../cloudinary");
 const countries = require("../countries");
@@ -132,7 +132,7 @@ module.exports.updatePost = async (req,res) => {
 module.exports.deletePost = async(req, res) => {
     const {id} = req.params;
     const user = await User.findById(req.user._id).populate("posts");
-    const today = getToday(user);
+    const today = res.locals.cookie['today'];
     const post = await Post.findById(id).populate("author").populate("comments");
 
     if(post.date === today){

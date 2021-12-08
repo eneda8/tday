@@ -1,4 +1,8 @@
 (function(){
+    const today =  new Date().toLocaleDateString('en-US', {year: 'numeric', month: 'short', day: 'numeric'});
+    document.cookie = `today=${today}`; // set user today in cookie
+    console.log("TODAY'S DATE SET TO:", today); // for transparency purposes
+
     const timestamps = document.querySelectorAll(".timestamp");
     for (let timestamp of timestamps){
         const stamp = timestamp.innerText;
@@ -16,7 +20,7 @@
         const timezone = new Date().toLocaleTimeString('en-us',{timeZoneName:'short'}).split(' ')[2];
         document.getElementById("tz").value = timezone; // set user timezone in the database
         document.cookie = `timezone=${timezone}`; // set user timezone in cookie
-        console.log("TIME ZONE SET TO:", document.getElementById("tz").value); // for transparency purposes
+        console.log("TIME ZONE SET TO:", timezone); // for transparency purposes
     }
     if(document.getElementById("today-header")){
         document.getElementById("today-header").innerText = new Date().toLocaleDateString( 'en-US', {year: 'numeric', month: 'long', day: 'numeric'})

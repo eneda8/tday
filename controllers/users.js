@@ -5,7 +5,7 @@ const Journal = require("../models/journal");
 const countries = require("../countries");
 const timezones = require("../timezones");
 const {cloudinary} = require("../cloudinary");
-const {within24Hours, getToday} = require("../utils/getToday");
+const {within24Hours} = require("../utils/getToday");
 const util = require('util');
 const crypto = require("crypto");
 const sgMail = require("@sendgrid/mail")
@@ -219,7 +219,7 @@ module.exports.renderHomePage= async (req, res) =>{
     // console.log(res.locals.cookie['timezone'])
     try{
         const user = await User.findById(req.user._id).populate("posts");
-        const today = getToday(user)
+        const today = res.locals.cookie['today'];
         //show today's rating, if available
         let todaysPost;
         if(user.postedToday == true && user.todaysPost.length) {
@@ -271,7 +271,7 @@ module.exports.showUserProfile = async(req, res) => {
         return res.redirect("/home");
     }
     const comments = await Comment.find({"author": user}).sort({"createdAt": -1}).populate("post")
-    res.render("users/show", {user, comments, getToday, within24Hours, title: `@${user.username} / t'day`});
+    res.render("users/show", {user, comments, within24Hours, title: `@${user.username} / t'day`});
 };
 
 module.exports.updateProfile = async(req, res) => {
