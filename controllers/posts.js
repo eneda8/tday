@@ -68,13 +68,12 @@ module.exports.bookmarkPost = async(req, res) => {
         user.bookmarks.unshift(post);
         user.save()
         req.flash("success", "Bookmark added!");
-        // res.redirect(`/u/${user.username}#nav-bookmarks`)
-        res.redirect("back")
+        return res.redirect(`/posts/${post._id}`);
     } catch (e){
-        console.log(e)
+        console.log(e);
         req.flash("error", "Oops something went wrong!");
-        res.redirect(`/posts/${post._id}`)
-    }   
+        return res.redirect(`/posts/${post._id}`);
+    } 
 }
 
 module.exports.unbookmarkPost = async(req, res) => {
@@ -82,13 +81,14 @@ module.exports.unbookmarkPost = async(req, res) => {
         const {id} = req.params;
         const user = await User.findById(req.user._id);
         await user.bookmarks.pull(id);
-        await user.save()
+        await user.save();
         req.flash("success", "Bookmark removed!");
+        return res.redirect(`/u/${user.username}#bookmarks`);
     } catch (e){
-        console.log(e)
+        console.log(e);
         req.flash("error", "Oops something went wrong!");
+        return res.redirect(`/u/${req.username}#bookmarks`);
     }   
-    res.redirect("back")
 }
 
 module.exports.renderEditForm = async (req,res) => {
@@ -132,7 +132,7 @@ module.exports.updatePost = async (req,res) => {
 module.exports.deletePost = async(req, res) => {
     const {id} = req.params;
     const user = await User.findById(req.user._id).populate("posts");
-    const today = getToday(user.timezone);
+    const today = getToday(user);
     const post = await Post.findById(id).populate("author").populate("comments");
 
     if(post.date === today){

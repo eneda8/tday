@@ -14,7 +14,7 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 
 function validTZ(string){
-    return !(/\d/.test(String(string)));
+    return !(/\d/.test(string));
 }
 
 // ---------------REGISTER ---------------------------------------
@@ -121,9 +121,11 @@ module.exports.renderLoginForm = (req,res) => {
 module.exports.login = async (req,res) => {
     const user = await User.findById(req.user._id);
     if(validTZ(req.body.timezone)){
-        user.timezone = String(req.body.timezone);
+        user.timezone = req.body.timezone;
+        res.locals.timezone = req.body.timezone;
     } else {
         user.timezone = user.defaultTimezone;
+        res.locals.timezone = user.defaultTimezone;
     }
     await user.save()
     delete req.session.returnTo;
@@ -207,8 +209,6 @@ module.exports.putReset = async (req, res) => {
 }
 // -------------------------------LOGOUT-----------------------------
 module.exports.logout = (req,res) => {
-    const today = new Date();
-    const hour = today.getHours()
     req.logout();
     req.flash("success", "Signed out, have a good day!");
     res.redirect("/");
@@ -216,9 +216,10 @@ module.exports.logout = (req,res) => {
 //------------------------- HOME -------------------------
 
 module.exports.renderHomePage= async (req, res) =>{
-    const today = getToday(req.user.timezone)
-    const user = await User.findById(req.user._id).populate("posts");
+    // console.log(res.locals.cookie['timezone'])
     try{
+        const user = await User.findById(req.user._id).populate("posts");
+        const today = getToday(user)
         //show today's rating, if available
         let todaysPost;
         if(user.postedToday == true && user.todaysPost.length) {
@@ -320,7 +321,7 @@ module.exports.updateUserInfo = async(req, res) => {
         const user = await User.findById(req.user._id).populate("posts");
         if(!user) {
             req.flash("error", "Oops, something went wrong! Please try again.")
-            return res.redirect("back");
+            return res.redirect(`/home`);
         }
         const oldEmail = user.email;
         const {username, email, country} = req.body;
@@ -385,7 +386,7 @@ module.exports.changePassword = async(req, res) => {
         }
         await sgMail.send(msg);
         req.flash("success", "Password successfully updated!");
-        res.redirect("back")
+        res.redirect("/home")
         }
     } catch(err) {
         console.log(err);
@@ -422,6 +423,6 @@ module.exports.deleteAccount = async(req, res) => {
     } catch (e){
         console.log(e);
         req.flash("error", "Password is incorrect.");
-        return res.redirect("back")
+        return res.redirect("/settings")
     }
 }

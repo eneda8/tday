@@ -23,13 +23,13 @@ module.exports.showJournal = async(req, res, next) => {
     const {journalId} = req.params;
     if (!ObjectId.isValid(journalId)) {
         req.flash("error", "Journal not found!")
-        return res.redirect(`/u/${user.username}#nav-journals`);
+        return res.redirect(`/u/${user.username}#journals`);
     } else {
         const journal = await Journal.findById(journalId);
         await journal.populate("author").execPopulate();
         if(!journal){
             req.flash("error", "Journal not found!")
-            return res.redirect(`/u/${user.username}#nav-journals`);
+            return res.redirect(`/u/${user.username}#journals`);
         }
         res.render("journals/show", {journal, user, title: "Journal / t'day"});
     }

@@ -12,7 +12,7 @@ const deleteComment = async (req,res) =>{
     await User.findByIdAndUpdate(req.user._id, {$pull: {comments: commentId}});
     await Comment.findByIdAndDelete(commentId); 
     req.flash("success", "Successfully deleted comment");
-    res.redirect("back");
+    res.redirect("/home");
 }
 
 router.delete("/:commentId", isLoggedIn, isVerified, isCommentAuthor, catchAsync(deleteComment));

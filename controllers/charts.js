@@ -6,11 +6,11 @@ const {getToday} = require("../utils/getToday");
 module.exports.renderTodaysCharts = async (req, res) => {
     const user = await User.findById(req.user.id)
     const escapedCountry = escape(user.country.name);
-    const today = getToday(user.timezone);
+    const today = getToday(user);
     const {dbQuery} = res.locals;
     delete res.locals.dbQuery
     dbQuery['date'] = getToday();
-    const count = await Post.countDocuments({"date": getToday(user.timezone)})
+    const count = await Post.countDocuments({"date": getToday(user)})
     res.render("charts/today", {countries, user, today, escapedCountry, count, dbQuery, title:"Charts - Today / t'day"})
 }
 
@@ -26,6 +26,6 @@ module.exports.renderAllCharts = async (req, res) => {
 
 module.exports.renderMyCharts = async (req, res) => {
     const user = await User.findById(req.user.id)
-    const today = getToday(user.timezone);
+    const today = getToday(user);
     res.render("charts/me", {countries, user, today, title:"Charts - Me / t'day"})
 }

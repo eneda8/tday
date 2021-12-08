@@ -87,7 +87,7 @@ module.exports.isJournalAuthor = async(req, res, next) => {
 module.exports.setPostedToday = async(req, res, next) => {
     try{
         const user = await User.findById(req.user._id);
-        const today = getToday(user.timezone);
+        const today = getToday(user);
         const post = await Post.find({"author": user, "date": today});
         if(post.length){
             user.postedToday = true;
@@ -97,13 +97,13 @@ module.exports.setPostedToday = async(req, res, next) => {
             await user.save()
         }
     }catch(e){
-        console.log(e);
+        console.log("setPostedToday middleware failed:", e);
     }
     next()
 }
 
 module.exports.blockDuplicatePost = async (req, res, next) => {
-    const today = getToday(req.user.timezone);
+    const today = getToday(req.user);
     const post = await Post.find({"author": req.user, "date": today});
     if(post.length){
         req.flash("error", "Sorry, you've already posted once today!")
@@ -113,29 +113,38 @@ module.exports.blockDuplicatePost = async (req, res, next) => {
 
 module.exports.checkPostStreak = async(req, res, next) => {
     const user = await User.findById(req.user._id);
-    const today = new Date()
-    let yesterday = new Date(today);
-    yesterday.setDate(today.getDate() -1)
-    yesterday = yesterday.toLocaleDateString(
-        'en-US',
-        {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
-        timeZone: user.timezone
-        }
-    );
-    const yesterdayPost = await Post.find({"author": user, "date": yesterday});
-    const todayPost = await Post.find({"author": user, "date": getToday(user.timezone)})
-    if(!yesterdayPost.length) {
-        if(todayPost.length){
-            await user.updateOne({$set: {postStreak:  1}});      
-        } else {
-            await user.updateOne({$set: {postStreak:  0}}); 
-        }     
-        user.save()
-        next()
-    } else next() 
+    const getYesterday = async function(currentUser){
+        const today = new Date()
+        let yesterday = new Date(today);
+        yesterday.setDate(today.getDate() -1)
+        yesterday = yesterday.toLocaleDateString(
+            'en-US',
+            {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            timeZone: currentUser.timezone  || currentUser.defaultTimezone
+            }
+        );
+        return yesterday;
+    }
+    try{ 
+       const yesterday = await getYesterday(user);
+       console.log("yesterday is:", yesterday)
+        const yesterdayPost = await Post.find({"author": user, "date": yesterday});
+        const todayPost = await Post.find({"author": user, "date": getToday(user)})
+        if(!yesterdayPost.length) {
+            if(todayPost.length){
+                await user.updateOne({$set: {postStreak:  1}});      
+            } else {
+                await user.updateOne({$set: {postStreak:  0}}); 
+            }     
+            user.save()
+        } 
+    } catch(e) {
+        console.log("checkPostStreak middleware failed:", e)
+    }
+    next() 
 }
 
 module.exports.isAccountOwner = async(req, res, next) => {
@@ -198,7 +207,7 @@ module.exports.searchAndFilterPosts = async(req, res, next) => {
 }
 
 module.exports.filterPosts = async(req, res, next) => {
-    const today = getToday(req.user.timezone);
+    const today = getToday(req.user);
     const queryKeys = Object.keys(req.query); 
     const dbQueries = [{date: today}];
     if(queryKeys.length) {
