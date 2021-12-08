@@ -111,14 +111,14 @@
                                 <div class="form-row mt-3">
                                     <div class="col-md-6">
                                         <label class="form-label mb-0" for="oldPassword">Current Password</label>
-                                        <input class="form-control" type="password" id="oldPassword" name="oldPassword" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$" required>
+                                        <input class="form-control" type="password" id="oldPassword" name="oldPassword" pattern="^(?=(.*[a-z]))(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[!@#$%^&*()\-__+.]){1,}).{8,20}$" required>
                                         <div class="invalid-feedback">Please enter a valid password.</div>
                                     </div>
                                 </div>
                                 <div class="form-row mt-3">
                                     <div class="col-md-6">
                                         <label class="form-label mb-0" for="newPassword">New Password</label>
-                                        <input class="form-control" type="password" id="newPassword" name="newPassword" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$" required>
+                                        <input class="form-control" type="password" id="newPassword" name="newPassword" pattern="^(?=(.*[a-z]))(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[!@#$%^&*()\-__+.]){1,}).{8,20}$" required>
                                         <div class="valid-feedback"></div>
                                         <div class="invalid-feedback">Please enter a valid password.</div>
                                     </div>
@@ -126,7 +126,7 @@
                                 <div class="form-row mt-3">
                                     <div class="col-md-6">
                                         <label class="form-label mb-0" for="confirmPassword">Confirm New Password</label>
-                                        <input class="form-control" type="password" id="confirmPassword" name="confirmPassword" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$" required>
+                                        <input class="form-control" type="password" id="confirmPassword" name="confirmPassword" pattern="^^(?=(.*[a-z]))(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[!@#$%^&*()\-__+.]){1,}).{8,20}$" required>
                                         <div class="valid-feedback"></div>
                                         <div class="invalid-feedback">Please enter a valid password.</div>
                                     </div>
@@ -150,7 +150,7 @@
                                 <div class="form-row mt-3">
                                     <div class="col-md-6">
                                         <label class="form-label mb-0" for="password">Password</label>
-                                        <input class="form-control" type="password" id="password" name="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$" required>
+                                        <input class="form-control" type="password" id="password" name="password" pattern="^(?=(.*[a-z]))(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[!@#$%^&*()\-__+.]){1,}).{8,20}$" required>
                                         <small>Enter your password to verify your identity.</small>
                                         <div class="invalid-feedback">Please enter a valid password.</div>
                                     </div>

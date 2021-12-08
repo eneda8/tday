@@ -51,7 +51,7 @@
                                     <label class="input-group-text border-0" for="password"><i class="fas fa-key text-primary" data-toggle="tooltip" data-placement="bottom" title="Must be 8-20 characters. Must contain at least one number, one uppercase letter, and one special character."></i>
                                     </label>
                                 </div>
-                                <input class="form-control border-0" type="password" id="password" name="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[.@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$" placeholder="Password" required >
+                                <input class="form-control border-0" type="password" id="password" name="password" pattern="^(?=(.*[a-z]))(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[!@#$%^&*()\-__+.]){1,}).{8,20}$" placeholder="Password" required >
                                 <div class="valid-feedback"></div>
                                 <div class="invalid-feedback">Please enter a valid password.</div>
                             </div>
@@ -135,6 +135,3 @@
     </div>
 </div>
   
-<script>
-    document.getElementById("tz").value = new Date().toLocaleTimeString('en-us',{timeZoneName:'short'}).split(' ')[2]; 
-</script>
