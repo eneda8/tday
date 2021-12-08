@@ -11,7 +11,7 @@
                         <% if(within24Hours(post) === true) { %>
                             <!-- modal buttons specific to user profile page-->
                             <% if(title === `@${currentUser.username} / t'day`) { %> 
-                                <% if(post.date == res.locals.cookie['today']) {  %>
+                                <% if(post.date == cookie['today']) {  %>
                             <a href="" data-toggle="modal" id="editTodayPostLink" data-target="#editTodayPostModal" class="dropdown-item pl-2  text-primary"><i class="fas fa-edit text-warning"></i> Edit</a>
                                 <% } else {%> 
                             <a href="" data-toggle="modal" id="editYesterdayPostLink" data-target="#editYesterdayPostModal" class="dropdown-item pl-2 text-primary"><i class="fas fa-edit text-warning"></i> Edit</a>
