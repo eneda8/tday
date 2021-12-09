@@ -124,7 +124,6 @@ module.exports.checkPostStreak = async(req, res, next) => {
             month: 'short',
             day: 'numeric',
             timeZone: timezone,
-            timeZoneName: 'short'
             }
         );
         return yesterday;
