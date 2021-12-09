@@ -112,8 +112,8 @@ module.exports.blockDuplicatePost = async (req, res, next) => {
 
 module.exports.checkPostStreak = async(req, res, next) => {
     const user = await User.findById(req.user._id);
-    const getYesterday = async function(currentUser){
-        const today = new Date()
+    const getYesterday = async function(){
+        const today = new Date (res.locals.cookie['today']);
         let yesterday = new Date(today);
         yesterday.setDate(today.getDate() -1)
         yesterday = yesterday.toLocaleDateString(
@@ -122,13 +122,13 @@ module.exports.checkPostStreak = async(req, res, next) => {
             year: 'numeric',
             month: 'short',
             day: 'numeric',
-            timeZone: currentUser.timezone  || currentUser.defaultTimezone
+            timeZone: res.locals.cookie['timezone']
             }
         );
         return yesterday;
     }
     try{ 
-       const yesterday = await getYesterday(user);
+       const yesterday = await getYesterday();
         const yesterdayPost = await Post.find({"author": user, "date": yesterday});
         const todayPost = await Post.find({"author": user, "date": res.locals.cookie['today']})
         if(!yesterdayPost.length) {
