@@ -1,8 +1,14 @@
 (function(){
+    ///set time-keeping cookies
     const today =  new Date().toLocaleDateString('en-US', {year: 'numeric', month: 'short', day: 'numeric'});
     document.cookie = `today=${today}`; // set user today in cookie
     console.log("TODAY'S DATE SET TO:", today); // for transparency purposes
+    let yesterday = new Date(today)
+    yesterday.setDate(yesterday.getDate() -1)
+    yesterday = yesterday.toLocaleDateString('en-US',{year: 'numeric', month: 'short', day: 'numeric'})
+    document.cookie = `yesterday=${yesterday}`
 
+    //set timestamps
     const timestamps = document.querySelectorAll(".timestamp");
     for (let timestamp of timestamps){
         const stamp = timestamp.innerText;
@@ -16,18 +22,22 @@
         stamp.setAttribute("title", new Date(editedAt).toLocaleString())
     }
 
+    //set database timezones
     if(document.title.includes("Register") || document.title.includes("Login")){
         const timezone = new Date().toLocaleTimeString('en-us',{timeZoneName:'short'}).split(' ')[2];
         document.getElementById("tz").value = timezone; // set user timezone in the database
         document.cookie = `timezone=${timezone}`; // set user timezone in cookie
         console.log("TIME ZONE SET TO:", timezone); // for transparency purposes
     }
+    //set day of the week and date headers
     if(document.getElementById("today-header")){
         document.getElementById("today-header").innerText = new Date().toLocaleDateString( 'en-US', {year: 'numeric', month: 'long', day: 'numeric'})
     }
     if(document.getElementById("dayOfTheWeek")){
         document.getElementById("dayOfTheWeek").textContent = new Date().toLocaleString('en-us', {weekday:'long'});
     }
+
+    //set journal and rating/post date inputs
     if(document.querySelector("#postDate")){
         document.querySelector("#postDate").value = new Date().toLocaleDateString('en-US',{year: 'numeric', month: 'short',day: 'numeric'});
     }
