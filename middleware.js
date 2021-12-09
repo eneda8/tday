@@ -114,6 +114,7 @@ module.exports.checkPostStreak = async(req, res, next) => {
     const user = await User.findById(req.user._id);
     const getYesterday = async function(){
         const today = new Date (res.locals.cookie['today']);
+        const timezone = res.locals.cookie['timezone'];
         let yesterday = new Date(today);
         yesterday.setDate(today.getDate() -1)
         yesterday = yesterday.toLocaleDateString(
@@ -122,7 +123,8 @@ module.exports.checkPostStreak = async(req, res, next) => {
             year: 'numeric',
             month: 'short',
             day: 'numeric',
-            timeZone: res.locals.cookie['timezone']
+            timeZone: timezone,
+            timeZoneName: 'short'
             }
         );
         return yesterday;
