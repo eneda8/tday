@@ -92,7 +92,16 @@ const seedDB = async () => {
             user.postedToday = true;
             user.posts.unshift(post);
             user.todaysPost = post._id;
-            user.postStreak ++; 
+            //update post streak
+            const today =  new Date().toLocaleDateString('en-US', {year: 'numeric', month: 'short', day: 'numeric'});
+            let yesterday = new Date(today);
+            yesterday.setDate(yesterday.getDate() -1);
+            yesterday = yesterday.toLocaleDateString('en-US',{year: 'numeric', month: 'short', day: 'numeric'});
+            const yesterdayPost = await Post.find({"author": user, "date": yesterday});
+            const todayPost = await Post.find({"author": user, "date": today})
+            if(!yesterdayPost.length) {
+               user.postStreak = 1;
+            }
             // update user average
             let userAverage;
             await Post.aggregate([
@@ -107,6 +116,32 @@ const seedDB = async () => {
     }
 
     //fix user data
+    // for(let i=0; i < 2000; i++){
+    //     const user = await User.findOne().where({"bio": "This is a fake account used to generate data for demonstration purposes." });
+    //      user.posts = [];
+    //     user.comments = [];
+    //      user.journals = [];
+    //     user.bookmarks = [];
+    //     await user.save()
+    //     await Post.remove({"authorUsername": user.username});
+    //      await Comment.remove({"author": user._id});
+    // }
+    // const users = await User.find({"bio": "This is a fake account used to generate data for demonstration purposes."}).populate("posts");
+    // for (let user of users) {
+    //     if(!user.posts[0].date == "Dec 8, 2021"){
+    //         user.postStreak = 0;
+    //     } else if((user.posts[0].date == "Dec 8, 2021") && !(user.posts[1].date == "Dec 7, 2021")) {
+    //         user.postStreak = 1;
+    //     } else if((user.posts[0].date == "Dec 8, 2021") && (user.posts[1].date == "Dec 7, 2021") && !(user.posts[2].date == "Dec 6, 2021")){
+    //          user.postStreak = 2;
+    //     } else {
+    //         user.postStreak = 3;
+    //     }
+    //     user.save()
+    // }
+
+
+
 
     // const users = await User.find({});
     // for(let user of users){

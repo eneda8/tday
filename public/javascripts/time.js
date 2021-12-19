@@ -38,9 +38,13 @@
     }
 
     //set journal and rating/post date inputs
-    if(document.querySelector("#postDate")){
-        document.querySelector("#postDate").value = new Date().toLocaleDateString('en-US',{year: 'numeric', month: 'short',day: 'numeric'});
+    if(document.querySelectorAll(".postDate")){
+        const inputs = document.querySelectorAll(".postDate");
+        for (let input of inputs) {
+            input.value = new Date().toLocaleDateString('en-US',{year: 'numeric', month: 'short',day: 'numeric'});
+        }
     }
+    
     if(document.getElementById("journalDate")){
         document.getElementById("journalDate").value = new Date().toLocaleString();
         document.getElementById("journalLabel").innerText = new Date().toLocaleString();

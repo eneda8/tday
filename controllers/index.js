@@ -7,29 +7,29 @@ module.exports.renderLandingPage = (req, res) => {
     if(req.user){
         return res.redirect("/home");
     } else {
-        res.render("landing", {title: "t'day"});
+        res.render("index/landing", {title: "t'day"});
     }
 }
 
 // ---------------------ABOUT ---------------------------------------
 module.exports.renderAbout = (req, res) => {
-    res.render("about", {title: "About / t'day"})
+    res.render("index/about", {title: "About / t'day"})
 }
 
 module.exports.renderTerms = (req, res) => {
-    res.render("terms", {title: "Terms of Use / t'day"})
+    res.render("index/terms", {title: "Terms of Use / t'day"})
 }
 
 module.exports.renderPrivacy = (req, res) => {
-    res.render("privacy", {title: "Privacy Policy / t'day"})
+    res.render("index/privacy", {title: "Privacy Policy / t'day"})
 }
 
 module.exports.renderCookies = (req, res) => {
-    res.render("cookies", {title: "Cookie Policy / t'day"})
+    res.render("index/cookies", {title: "Cookie Policy / t'day"})
 }
 
 module.exports.renderContact = (req, res) => {
-    res.render("contact", {title: "Contact Us / t'day"})
+    res.render("index/contact", {title: "Contact Us / t'day"})
 }
 
 module.exports.postContact = async (req, res) => {
