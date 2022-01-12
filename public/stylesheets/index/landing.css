@@ -1,7 +1,57 @@
-/* stars and headline */
-
 .logo {
   font-family: "Courgette", cursive;
+}
+
+main {
+  flex-direction: column;
+  justify-content: start;
+}
+
+.col {
+  width: 400px;
+}
+#featuresDiv{
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon {
+  display: block;
+  font-size: 45px;
+  height: 80px;
+  text-align: center;
+}
+
+.post {
+  position: fixed;
+  z-index: 5;
+  top: 10%;
+  right: 2%;
+  border: 2px dashed black;
+  width: 500px;
+  padding: 20px;
+}
+
+@media screen and (max-width: 990px){
+  .row{
+      justify-content: center;
+  }
+  .feature-item{
+      width: 400px;
+  }
+}
+
+@media screen and (max-width: 1200px){
+  .post{
+      opacity:0;
+  }
+}v
+
+.post {
+  transition: opacity 1s linear;
 }
 
 .content {
@@ -12,7 +62,7 @@
   display: block;
   border: none;
   font-size: 14px;
-  transform: translateX(-35%);
+  transform: translateX(-10%);
   }
   
   .wrapper input {
@@ -35,7 +85,7 @@
   margin: 5px;
   content: "★";
   display: inline-block;
-  font-size: 3.5em;
+  font-size: 2.5em;
   color: #ccc;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -57,7 +107,7 @@
 /* blinking cursor  */
 .blinking-cursor {
     font-weight: 100;
-    font-size: 30px;
+    font-size: 25px;
     color: #2E3D48;
     -webkit-animation: 1s blink step-end infinite;
     -moz-animation: 1s blink step-end infinite;
@@ -103,23 +153,11 @@
   }
   
   @-o-keyframes "blink" {
-    from, to {
-      color: transparent;
-    }
+    from, to {color: transparent;}
     50% {
       color: black;
     }
   }
 
-  /* features */
-  .icon-round {
-    display: inline-block;
-    width: 100%;
-    font-size: 45px;
-    line-height: 80px;
-    text-align: center;
-}
 
-.features {
-    left: 135px
-}
+

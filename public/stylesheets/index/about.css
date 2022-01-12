@@ -1,0 +1,36 @@
+@media screen and (max-width: 500px) {
+    .btn {
+        display: block;
+        padding: .375rem .75rem;
+    }
+}
+@media screen and (max-width: 768px){
+    .this {
+        background-color: transparent;
+        box-shadow: 0px 0px !important;
+    }
+    .card-body{
+        padding: .5em 0px;
+    }
+    .btn{
+        padding: .375rem 2rem;
+    }
+}
+@media screen and (min-width: 768px) and (max-width: 992px) {
+    .this {
+        max-width: 80%;
+        margin: 1em;
+    }
+    main {
+        justify-content: center;
+    }
+}
+@media screen and (min-width: 992px) {
+    .this {
+        max-width: 60%;
+        margin: 1em;
+    }
+    main {
+        justify-content: center;
+    }
+}

@@ -7,29 +7,29 @@ module.exports.renderLandingPage = (req, res) => {
     if(req.user){
         return res.redirect("/home");
     } else {
-        res.render("index/landing", {title: "t'day"});
+        res.render("index/landing", {title: "t'day", style: "index/landing"});
     }
 }
 
 // ---------------------ABOUT ---------------------------------------
 module.exports.renderAbout = (req, res) => {
-    res.render("index/about", {title: "About / t'day"})
+    res.render("index/about", {title: "About / t'day", style: "index/about"})
 }
 
 module.exports.renderTerms = (req, res) => {
-    res.render("index/terms", {title: "Terms of Use / t'day"})
+    res.render("index/terms", {title: "Terms of Use / t'day", style: "styles"})
 }
 
 module.exports.renderPrivacy = (req, res) => {
-    res.render("index/privacy", {title: "Privacy Policy / t'day"})
+    res.render("index/privacy", {title: "Privacy Policy / t'day", style: "styles"})
 }
 
 module.exports.renderCookies = (req, res) => {
-    res.render("index/cookies", {title: "Cookie Policy / t'day"})
+    res.render("index/cookies", {title: "Cookie Policy / t'day", style: "styles"})
 }
 
 module.exports.renderContact = (req, res) => {
-    res.render("index/contact", {title: "Contact Us / t'day"})
+    res.render("index/contact", {title: "Contact Us / t'day", style: "index/contact"})
 }
 
 module.exports.postContact = async (req, res) => {
