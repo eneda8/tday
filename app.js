@@ -2,7 +2,6 @@ if(process.env.NODE_ENV !== "production") {
     require("dotenv").config();
 }
 const express = require("express");
-const forceSsl = require("force-ssl-heroku");
 const path = require("path");
 const favicon = require("serve-favicon")
 const mongoose = require("mongoose");
@@ -47,7 +46,6 @@ db.once("open", () => {
 mongoose.plugin(castAggregation);
 
 const app = express();
-app.use(forceSsl);
 
 // app.enable("trust proxy");
 // if(process.env.NODE_ENV == "production") {
