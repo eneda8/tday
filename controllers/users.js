@@ -23,18 +23,18 @@ module.exports.renderRegisterForm = (req, res) => {
         req.flash("error", "You are already logged in!");
         return res.redirect('/home');
     }
-    res.render("users/register", {countries, timezones, title: "Register / t'day"})
+    res.render("users/register", {countries, timezones, title: "Register / t'day", style: "users/register"})
 }
 
 module.exports.register = async (req,res, next) => {
     try{
-        const {username, displayName, email, password, ageGroup, gender, country, timezone, defaultTimezone, avatar, termsAgreement} = req.body;
+        const {username, displayName, email, password, ageGroup, gender, country, timezone, defaultTimezone, termsAgreement} = req.body;
         const user = new User({username, displayName, email, ageGroup, gender, country, defaultTimezone, timezone, avatar, termsAgreement});
-        if(req.file){
-        user.avatar = req.file;
-        } else {
-            user.avatar = {}
-        }
+        // if(req.file){
+        // user.avatar = req.file;
+        // } else {
+        //     user.avatar = {}
+        // }
         if(validTZ(timezone)){
             user.timezone = timezone;
         } else {
@@ -66,7 +66,7 @@ module.exports.register = async (req,res, next) => {
 }
 
 module.exports.renderVerify = (req, res) => {
-     res.render("users/verify", {title: "Verify Email / t'day"})
+     res.render("users/verify", {title: "Verify Email / t'day", style: "styles"})
 }
 
 module.exports.putVerify = async (req, res) => {
@@ -115,7 +115,7 @@ module.exports.renderLoginForm = (req,res) => {
         req.flash("error", "You are already logged in!");
         return res.redirect('/home');
     }
-    res.render("users/login", {title:"Login / t'day"})
+    res.render("users/login", {title:"Login / t'day", style: "users/login"})
 }
 
 module.exports.login = async (req,res) => {
@@ -175,7 +175,7 @@ module.exports.getReset= async (req, res) => {
         req.flash("error", "Password reset token is invalid or has expired.")
         return res.redirect("/forgot-password")
     }
-    res.render("users/reset", {token, title: `Reset Password / t'day`})
+    res.render("users/reset", {token, title: `Reset Password / t'day`, style: "styles"})
 }
 
 module.exports.putReset = async (req, res) => {
@@ -251,7 +251,7 @@ module.exports.renderHomePage= async (req, res) =>{
             post.populate("author").execPopulate();
             }
         }
-        res.render("users/home", {posts, today, within24Hours, todaysPost, user, countries, title: "Home / t'day"});
+        res.render("users/home", {posts, today, within24Hours, todaysPost, user, countries, title: "Home / t'day", style: "styles"});
     } catch(e) {
         console.log(e)
         req.flash("error", `Oops, something went wrong!`)
@@ -271,7 +271,7 @@ module.exports.showUserProfile = async(req, res) => {
         return res.redirect("/home");
     }
     const comments = await Comment.find({"author": user}).sort({"createdAt": -1}).populate("post")
-    res.render("users/show", {user, comments, within24Hours, title: `@${user.username} / t'day`});
+    res.render("users/show", {user, comments, within24Hours, title: `@${user.username} / t'day`, style: "styles"});
 };
 
 module.exports.updateProfile = async(req, res) => {
@@ -313,7 +313,7 @@ module.exports.showUserSettings = async(req, res) => {
         req.flash("error", "Oops, something went wrong!")
         return res.redirect("/home");
     }
-    res.render("users/settings", {user, countries, title: "Settings / t'day"});
+    res.render("users/settings", {user, countries, title: "Settings / t'day", style: "styles"});
 };
 
 module.exports.updateUserInfo = async(req, res) => {

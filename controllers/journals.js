@@ -4,7 +4,7 @@ const Journal = require("../models/journal");
 const ObjectId = require('mongodb').ObjectId;
 
 module.exports.renderJournal =  async (req, res) => {
-    res.render("journals/write", {title: "Write / t'day"});
+    res.render("journals/write", {title: "Write / t'day", style: "styles"});
 }
 
 module.exports.createJournal = async (req, res, next) => {
@@ -31,7 +31,7 @@ module.exports.showJournal = async(req, res, next) => {
             req.flash("error", "Journal not found!")
             return res.redirect(`/u/${user.username}#journals`);
         }
-        res.render("journals/show", {journal, user, title: "Journal / t'day"});
+        res.render("journals/show", {journal, user, title: "Journal / t'day", style: "styles"});
     }
 }
 
@@ -43,7 +43,7 @@ module.exports.renderEditJournal = async(req, res, next) => {
         req.flash("error", "Journal not found!")
         return res.redirect("/home");
     }
-    res.render("journals/edit", {journal, title: "Edit Journal / t'day"});
+    res.render("journals/edit", {journal, title: "Edit Journal / t'day", style: "styles"});
 }
 
 module.exports.updateJournal = async (req,res) => {

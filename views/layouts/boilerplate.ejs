@@ -31,7 +31,7 @@
     <% if(title.includes("Write") || title.includes("Journal")) { %> 
     <main class="container-fluid px-0" >
     <% } else { %> 
-    <main class="paper" >
+    <main class="paper overflow-hidden">
     <% } %> 
       <%-body -%> 
     </main>
@@ -45,6 +45,9 @@
     <script src='/javascripts/toasts.js'></script>
     <% if(title === "Search / t'day") {%> 
     <script src="/javascripts/Hilitor.js"></script>
+    <% } %> 
+    <% if(title === "Register / t'day"){ %> 
+    <script src="/javascripts/register.js"></script>
     <% } %> 
 </body>
 </html>

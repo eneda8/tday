@@ -6,9 +6,9 @@ const ObjectID = require('mongodb').ObjectID;
 const {cloudinary} = require("../cloudinary");
 const countries = require("../countries");
 
-module.exports.renderNewForm = (req, res) => { 
-    res.render("posts/new")
-}
+// module.exports.renderNewForm = (req, res) => { 
+//     res.render("partials/posts/new", {style: "styles"})
+// }
 
 module.exports.createPost = async (req, res, next) => {
     const user = await User.findById(req.user._id);
@@ -57,7 +57,7 @@ module.exports.showPost = async (req,res) => {
         req.flash("error", "Rating not found!")
         return res.redirect("/home");
     }
-    res.render("posts/show", {user, post, within24Hours, title: `@${post.author.username}'s day / t'day `})
+    res.render("posts/show", {user, post, within24Hours, title: `@${post.author.username}'s day / t'day `, style: "styles"})
 }
 
 module.exports.bookmarkPost = async(req, res) => {
@@ -97,7 +97,7 @@ module.exports.renderEditForm = async (req,res) => {
         req.flash("error", "Rating not found!")
         return res.redirect("/home");
     }
-    res.render("posts/edit", {post, title: "Edit rating / t'day"})
+    res.render("posts/edit", {post, title: "Edit rating / t'day", style: "styles"})
 }
 
 module.exports.updatePost = async (req,res) => {
@@ -187,5 +187,5 @@ module.exports.search = async (req, res) => {
             res.locals.error = "No results match that query. Please try a broader search.";
         }
     }
-    res.render("posts/search", {posts, user, within24Hours, countries, docsFound, title: "Search / t'day"});
+    res.render("posts/search", {posts, user, within24Hours, countries, docsFound, title: "Search / t'day", style: "styles"});
 }
