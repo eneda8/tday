@@ -2,9 +2,10 @@ const express = require("express");
 const router = express.Router();
 const index = require("../controllers/index");
 const catchAsync = require("../utils/catchAsync");
+const {globalAverage} = require("../middleware");
 
 router.route("/")
-    .get(index.renderLandingPage)
+    .get(globalAverage, index.renderLandingPage)
     // .post(passport.authenticate("local", {failureFlash: true, failureRedirect: "/login", }), index.login)
 
  router.route("/about")

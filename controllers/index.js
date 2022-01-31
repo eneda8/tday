@@ -1,13 +1,15 @@
 const sgMail = require("@sendgrid/mail");
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 //------------------------- LANDING -------------------------
 module.exports.renderLandingPage = (req, res) => {
     if(req.user){
         return res.redirect("/home");
     } else {
-        res.render("index/landing", {title: "t'day", style: "index/landing"});
+    const today = res.locals.cookie["today"];
+    const average = res.locals.cookie["average"];
+    res.render("index/landing", {title: "t'day", today, average, style: "index/landing"});
     }
 }
 
@@ -17,15 +19,15 @@ module.exports.renderAbout = (req, res) => {
 }
 
 module.exports.renderTerms = (req, res) => {
-    res.render("index/terms", {title: "Terms of Use / t'day", style: "styles"})
+    res.render("index/terms", {title: "Terms of Use / t'day", style: "index/terms"})
 }
 
 module.exports.renderPrivacy = (req, res) => {
-    res.render("index/privacy", {title: "Privacy Policy / t'day", style: "styles"})
+    res.render("index/privacy", {title: "Privacy Policy / t'day", style: "index/privacy"})
 }
 
 module.exports.renderCookies = (req, res) => {
-    res.render("index/cookies", {title: "Cookie Policy / t'day", style: "styles"})
+    res.render("index/cookies", {title: "Cookie Policy / t'day", style: "index/cookie"})
 }
 
 module.exports.renderContact = (req, res) => {

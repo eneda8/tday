@@ -241,3 +241,23 @@ module.exports.filterCharts = async(req, res, next) => {
     res.locals.query = req.query;
 	next();
 }
+
+module.exports.globalAverage = async(req, res, next) => {
+    const today = res.locals.cookie['today'];
+    let average;
+    try{
+        await Post.aggregate([
+            {$match: {"date": today}},
+            {$group: {_id: null, avgRating: {$avg: "$rating"}}}
+        ]).then(function(res) {
+            if(res){
+            average = res[0].avgRating.toFixed(2)
+            } else average = 3.0
+        })
+    }catch(e){
+        console.log(e)
+        average = 3.0.toFixed(2);
+    }
+    res.locals.cookie["average"] = average;
+    next()
+}
