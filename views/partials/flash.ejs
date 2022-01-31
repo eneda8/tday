@@ -1,5 +1,5 @@
 <% if(success && success.length) {%>
-<div class="alert alert-light alert-dismissible fade show rounded border-success shadow-sm  bg-white position-fixed bottom-0 right-0 p-2 text-center mt-2 " role="alert">
+<div class="msg alert alert-light alert-dismissible fade show rounded border-success shadow-sm  bg-white position-fixed bottom-0 right-0 p-2 text-center mt-2 " role="alert">
     <div class="">
         <%= success %>
     </div>
@@ -7,13 +7,13 @@
 <% } %>
     
 <% if(error && error.length) {%>
-<div class="alert alert-light alert-dismissible fade show rounded border-danger shadow-sm my-0 bg-white position-fixed bottom-0 right-0 p-2 text-center" role="alert">
+<div class="msg alert alert-light alert-dismissible fade show rounded border-danger shadow-sm my-0 bg-white position-fixed bottom-0 right-0 p-2 text-center" role="alert">
     <div class=""><%= error %></div>
 </div>
 <% } %>
 
 <style>
-    .alert{
+    .msg{
         z-index: 5;
         top: 4.5em;
         position: fixed;

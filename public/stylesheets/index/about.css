@@ -1,11 +1,12 @@
-@media screen and (max-width: 500px) {
+@media screen and (min-width: 500px) {
     .btn {
-        display: block;
+        display: inline-block;
         padding: .375rem .75rem;
     }
 }
-@media screen and (max-width: 768px){
-    .this {
+
+/* @media screen and (max-width: 768px){
+    .card {
         background-color: transparent;
         box-shadow: 0px 0px !important;
     }
@@ -17,7 +18,7 @@
     }
 }
 @media screen and (min-width: 768px) and (max-width: 992px) {
-    .this {
+    .card {
         max-width: 80%;
         margin: 1em;
     }
@@ -26,11 +27,11 @@
     }
 }
 @media screen and (min-width: 992px) {
-    .this {
+    .card {
         max-width: 60%;
         margin: 1em;
     }
     main {
         justify-content: center;
     }
-}
+} */

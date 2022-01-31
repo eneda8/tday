@@ -67,7 +67,8 @@ const seedDB = async () => {
     // }
 
     // /make fake posts
-    for(let i = 0; i<299; i++){
+    for(let i = 0; i<1500; i++){
+        try{
         const rating = Math.floor(Math.random() * 5) + 1;
         let body;
         if(i % 2 == 0 ) {
@@ -93,16 +94,17 @@ const seedDB = async () => {
             user.posts.unshift(post);
             user.todaysPost = post._id;
             //update post streak
-            // const today =  new Date().toLocaleDateString('en-US', {year: 'numeric', month: 'short', day: 'numeric'});
-            // let yesterday = new Date(today);
-            // yesterday.setDate(yesterday.getDate() -1);
-            // yesterday = yesterday.toLocaleDateString('en-US',{year: 'numeric', month: 'short', day: 'numeric'});
-            // const yesterdayPost = await Post.find({"author": user, "date": yesterday});
-            // const todayPost = await Post.find({"author": user, "date": today})
-            // if(!yesterdayPost.length) {
-            //    user.postStreak = 1;
-            // }
-            user.postStreak = 1;
+            const today =  new Date().toLocaleDateString('en-US', {year: 'numeric', month: 'short', day: 'numeric'});
+            let yesterday = new Date(today);
+            yesterday.setDate(yesterday.getDate() -1);
+            yesterday = yesterday.toLocaleDateString('en-US',{year: 'numeric', month: 'short', day: 'numeric'});
+            const yesterdayPost = await Post.find({"author": user, "date": yesterday});
+            if(!yesterdayPost.length) {
+               user.postStreak = 1;
+            } else {
+                user.postStreak ++ 
+            }
+            // user.postStreak = 1;
             // update user average
             let userAverage;
             await Post.aggregate([
@@ -113,6 +115,9 @@ const seedDB = async () => {
              });
             await user.updateOne({$set: {average:  userAverage}});
             await user.save();
+        }
+        }catch(e){
+            console.log(e)
         }
     }
 

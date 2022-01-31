@@ -1,4 +1,11 @@
-.container-md {
+@media screen and (max-width: 500px) {
+    .btn {
+        display: block;
+        padding: .375rem .75rem;
+    }
+}
+
+/* .container-md {
     margin-bottom: 20vh;
     overflow-y: hidden;
 }
@@ -38,4 +45,4 @@
     .container-md {
         max-width: 40%;
     }
-}
+} */

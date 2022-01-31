@@ -1,0 +1,50 @@
+main, .container{
+  overflow-y:hidden;
+}
+
+.container{
+  /* padding-bottom: 10vh;
+  padding-top: 10vh; */
+  overflow-y:hidden;
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-height: 100vh;
+}
+
+@media screen and (max-width: 300px){
+  img{
+    display:none;
+  }
+  .card {
+    margin-top: 10vh;
+  }
+}
+
+@media screen and (max-width: 576px){
+  .container {
+    margin-top: 0px;
+    padding-top: 0px;
+  }
+}
+
+@media screen and (min-width: 576px){
+  .card {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  .container {
+    padding-top: 10vh;
+    padding-bottom: 0;
+  }
+  footer {
+      margin-left: 50px;
+  }
+}
+
+@media screen and (min-width: 576px) and (max-width: 990px){
+  .container{
+    padding-top: 0;
+  }
+}

@@ -1,62 +1,76 @@
 <% layout("layouts/boilerplate")%>
-<div class="shadow  card this border-0 " >
-    <div class="card-body">
-        <h3>What is <span class="logo text-warning">t'day</span>?</h3>
-    <p>t'day is the world's first collective online journal. Users rate their days and track how they're doing over time. t'day aggregates everyone's ratings so we can all see how we're doing, together. </p>
-    <h3>How does <span class="logo text-warning">t'day</span> work?</h3>
-    <div class="d-flex justify-content-start bg-light p-2">
-        <i class="fas fa-user-secret text-warning lead mr-3 " style="font-size: 2.8rem;"></i>
-        <p class="font-weight-bold p-0 m-0">Step 1: Sign up for an anonymous account </p> 
-    </div>
-    <p>We don't and will never ask for your full name, date of birth, or phone number, just an email. </p>
-    <p>To create a space where everyone can be their authentic selves, we encourage complete anonymity (no real names and no selfies).</p>  
-    <p>However, we do ask for broad demographic information (your <span class="font-weight-bold">age group</span>, <span class="font-weight-bold">country</span> where you currently reside, and <span class="font-weight-bold">gender</span>) to compile our average aggregate rating charts.</p> 
-    <p>Your country's flag is included on all posts and comments, as well as your profile. Gender and age group are completely private (and cannot be changed after you sign up.)</p>
-    <div class="d-flex justify-content-start bg-light p-2">
-        <i class="far fa-clock text-warning lead mr-3" style="font-size: 2.8rem;"></i>
-        <p class="mb-0 font-weight-bold">Step 2: Before the clock hits midnight in your time zone...</p>
-    </div>
-    <p><span class="font-weight-bold">Rate your day</span> on a scale of 1-5, with 1 being "Terrible" and 5 being "Amazing"</p> 
-    <div class="mt-1" style="line-height: 20px">
-        <span class="text-warning mb-0">★</span><span class="ml-3">1 (Terrible)</span><br>
-        <span class="text-warning mb-0">★★</span><span class="ml-3">2 (Very bad)</span><br>
-        <span  class="text-warning mb-0">★★★</span><span class="ml-3">3 (Average)</span><br>
-        <span class="text-warning mb-0">★★★★</span><span class="ml-3">4 (Very good)</span><br>
-        <span class="text-warning mb-0">★★★★★</span><span class="ml-3">5 (Amazing)</span>
-    </div>
-        <p class="mt-3"> Optionally, jot down a few thoughts to explain your rating. Mark a milestone or post a photo that defines your day.  </p>
-        <div>
-            <p class="font-weight-bold mb-0 bg-primary p-2 text-white">Some rules: </p>
-            <ul class="">
-                <li>You can only post 1 rating per day. </li>
-                <li>You have until midnight in your time-zone to rate the day.</li>
-                <li>At midnight, the day resets. If you haven't already done so, you can no longer rate the previous day and your post streak (number of consecutive days you've submitted a rating) resets to 0.</li>
-                <li>You have 24 hours to change your rating. After 24 hours, it can no longer be changed (but can still be deleted at any time.) </li>
-            </ul>
+<div class="container">
+    <div class="card shadow border-0 " >
+        <div class="card-body">
+            <h3>What is <span class="logo text-warning">t'day</span>?</h3>
+            <p>t'day is the world's first collective online journal. Users rate each day and track how their days are going over time. t'day aggregates all ratings so everyone can see how all we're doing as a community. </p>
+            <h3>How does <span class="logo text-warning">t'day</span> work?</h3>
+            <div class="d-flex justify-content-start bg-light p-2">
+                <i class="fas fa-user-secret text-warning lead mr-3 " style="font-size: 2.8rem;"></i>
+                <p class="font-weight-bold p-0 m-0">Step 1: Sign up for an anonymous account </p> 
+            </div>
+            <p>We don't and will never ask for your full name, date of birth, or phone number, just an email. </p>
+            <p>To create a space where everyone can be their authentic selves, we encourage complete anonymity (no real names and no selfies).</p>  
+            <p>However, we do ask for broad demographic information (your <span class="font-weight-bold">age group</span>, <span class="font-weight-bold">country</span> where you currently reside, and <span class="font-weight-bold">gender</span>) to compile our average aggregate rating charts.</p> 
+            <p>Your country's flag is included on all posts and comments, as well as your profile. Gender and age group are completely private (and cannot be changed after you sign up.)</p>
+            <div class="d-flex justify-content-start bg-light p-2">
+                <i class="far fa-clock text-warning lead mr-3" style="font-size: 2.8rem;"></i>
+                <p class="mb-0 font-weight-bold">Step 2: Before the clock hits midnight in your time zone...</p>
+            </div>
+            <p><span class="font-weight-bold">Rate your day</span> on a scale of 1-5, with 1 being "Terrible" and 5 being "Amazing"</p> 
+            <div class="mt-1" style="line-height: 20px">
+                <span class="text-warning mb-0">★</span><span class="ml-3">1 (Terrible)</span><br>
+                <span class="text-warning mb-0">★★</span><span class="ml-3">2 (Very bad)</span><br>
+                <span  class="text-warning mb-0">★★★</span><span class="ml-3">3 (Average)</span><br>
+                <span class="text-warning mb-0">★★★★</span><span class="ml-3">4 (Very good)</span><br>
+                <span class="text-warning mb-0">★★★★★</span><span class="ml-3">5 (Amazing)</span>
+            </div>
+            <p class="mt-3"> Optionally, jot down a few thoughts to explain your rating. Mark a milestone or post a photo that defines your day.  </p>
+            <div>
+                <p class="font-weight-bold mb-0 bg-primary p-2 text-white">Some rules: </p>
+                <ul class="pl-4">
+                    <li>You can only post 1 rating per day. </li>
+                    <li>You have until midnight in your time-zone to rate the day.</li>
+                    <li>At midnight, the day resets. If you haven't already done so, you can no longer rate the previous day and your post streak (number of consecutive days you've submitted a rating) resets to 0.</li>
+                    <li>You have 24 hours to change your rating. After 24 hours, it can no longer be changed (but can still be deleted at any time.) </li>
+                </ul>
+            </div>
+            <div class="d-flex justify-content-start bg-light p-2">
+                    <i class="far fa-chart-bar text-warning lead mr-3" style="font-size: 2.8rem;"></i>
+                    <p class="mb-0 font-weight-bold">Step 3: Track your ratings over time</p>
+            </div>
+            <p>Your charts page shows you your average rating for the week, month, year, and all-time.</p>
+            <p>Find out what's your best month of the year or which day of the week you consistently rate the highest or lowest over time!</p>
+            <p>Compare your days, track your progress, and use that insight to gain a better understanding of your life. </p>
+        
+            <div class="d-flex justify-content-start bg-light p-2">
+                <i class="fas fa-heart text-warning lead mr-3" style="font-size: 2.8rem;"></i>
+                <p class="mb-0 font-weight-bold">Step 4: Connect without the toxicity</p>
+            </div>
+            <p>Here, in this tiny corner of the internet, no one's following you or counting likes. But your post may very well end up on a stranger's randomized home page halfway around the world.</p>
+            <p>Feel free to be as open and honest, with yourself and others. <u>Only t'day users who are logged in can view profiles or comment on ratings.</u></p>
+            <p class="font-weight-bold mb-0">What are journals?</p>
+            <p>Journals are a <span class="font-weight-bold">private</span> place for you to write about anything at all, with no character limit, separate from public t'day ratings. Journals have an additional layer of AES-256-CBC encryption on top of your hashed and encrypted account password. </p>
+            
+            <p>Public or private, daily self-reflection is important for growth, individually and collectively. </p>
+            <p>Let's see how we're all doing, one t'day at a time. :)</p>
+
+            <a class="btn btn-warning px-5 mr-2" href="/register" role="button">Sign up</a>
         </div>
-    <div class="d-flex justify-content-start bg-light p-2">
-            <i class="far fa-chart-bar text-warning lead mr-3" style="font-size: 2.8rem;"></i>
-            <p class="mb-0 font-weight-bold">Step 3: Track your ratings over time</p>
-    </div>
-    <p>Your charts page shows you your average rating for the week, month, year, and all-time.</p>
-    <p>What's your best month of the year? Which day of the week do you consistently rate the highest or lowest over time?</p>
-    <p>Compare your days, track your progress, and use that insight to gain a better understanding of your life. </p>
-   
-    <div class="d-flex justify-content-start bg-light p-2">
-        <i class="fas fa-heart text-warning lead mr-3" style="font-size: 2.8rem;"></i>
-        <p class="mb-0 font-weight-bold">Step 4: Connect without the toxicity</p>
-    </div>
-    <p>Here, in this tiny corner of the internet, no one's following you or counting likes. But your post may very well end up on a stranger's randomized home page halfway around the world.</p>
-    <p>Feel free to be as open and honest, with yourself and others. Only t'day users who are logged in can view profiles or comment on ratings.</p>
-    <p class="font-weight-bold mb-0">What are journals?</p>
-    <p>Journals are a <span class="font-weight-bold">private</span> place for you to write about anything at all, with no character limit, separate from public t'day ratings. Journals have an additional layer of AES-256-CBC encryption on top of your already hashed and encrypted account password. </p>
-     
-    <p>Public or private, daily self-reflection is important for growth, individually and collectively. </p>
-    <p>Let's see how we're all doing, one t'day at a time. :)</p>
-
-    <a class="btn btn-warning px-5 mr-2" href="/register" role="button">Sign up</a>
-    </div>
-    
-
+        <footer class="pt-4 px-2 mb-0 mt-1 d-flex justify-content-between">
+            <div class="">
+                <a class="d-inline" href="#" >About</a> <span class="small">|</span>
+                <a class="d-inline" href="/privacy" >Privacy Policy</a> <span class="small">|</span>
+                <a class="d-inline" href="/terms" >Terms of Use</a> <span class="small">|</span>
+                <a class="d-inline" href="/cookies" >Cookie Policy</a> <span class="small">|</span>
+                <a class="d-inline" href="/contact" >Contact</a>
+            </div>
+            <div class="text-right">
+                <p class="mb-0 d-inline">© 2021 t'day |</p>
+                <p class="d-inline">made with <i class="fas fa-heart text-danger"></i> by <a href="https://github.com/eneda8">eneda</a></p>
+            </div>
+        </footer> 
+    </div> 
 </div>
+
 
