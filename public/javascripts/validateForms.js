@@ -13,8 +13,18 @@
                     event.preventDefault()
                     event.stopPropagation()
                 }
-
                 form.classList.add('was-validated')
-            }, false)
+            }, false);
         })
+    // register form
+    if(document.title=== "Register / t'day"){
+        const registerForm = document.querySelector("#register");
+        registerForm.addEventListener('input', function(event){
+            if(!registerForm.checkValidity()){
+                event.preventDefault()
+                event.stopPropagation()
+            }
+            registerForm.classList.add('was-validated');
+        }, false)
+    }
 })()

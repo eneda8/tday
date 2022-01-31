@@ -28,6 +28,15 @@
         document.getElementById("tz").value = timezone; // set user timezone in the database
         document.cookie = `timezone=${timezone}`; // set user timezone in cookie
         console.log("TIME ZONE SET TO:", timezone); // for transparency purposes
+        // pre-select default timezone on register page
+        if(document.title.includes("Register")){
+            const options = document.getElementById("timezone").getElementsByTagName('option');
+            for (let option of options){
+                if (option.value === timezone) {
+                    option.selected = 'selected'
+                }
+            }
+        }
     }
     //set day of the week and date headers
     if(document.getElementById("today-header")){

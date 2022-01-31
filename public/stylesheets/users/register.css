@@ -1,0 +1,37 @@
+main{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.small-logo{
+  display:none;
+}
+
+.container.overflow-hidden{
+  margin-top:0;
+  padding-top: 0;
+}
+
+@media screen and (min-width: 576px){
+  footer {
+      margin-left: 50px;
+  }
+}
+
+@media screen and (max-height: 870px){
+  .container.overflow-hidden{
+    margin-top: 0;
+    padding-top: 0;
+  }
+}
+
+@media screen and (max-height: 670px){
+  .logo{
+    display:none;
+  }
+  .small-logo{
+    display: inline
+  }
+}
