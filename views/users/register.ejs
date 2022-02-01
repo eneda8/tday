@@ -1,66 +1,91 @@
 <% layout("layouts/boilerplate")%>
-<div class="container h-100 overflow-hidden align-middle">
-    <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col-lg-8 col-xl-6">
-            <div class="card border-0 shadow mb-3 bg-light">
-                <div class="card-body">
-                    <div class="jumbotron jumbotron-fluid pt-3 pb-2 mb-2 bg-white">
-                        <div class="container">
-                            <p class="lead text-center mb-0">Join <span class="small-logo text-warning logo">t'day<span class="text-dark small lead">,</span></span> the world's first collective online journal</p>
-                            <p class="text-warning text-center my-0">──────<span>★</span>──────</p>
-                            <h1 class="display-4 text-center text-warning font-weight-bold logo">t'day</h1>
+    <div class="container h-100 overflow-hidden align-middle">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-lg-8 col-xl-6">
+                <div class="card border-0 shadow mb-3 bg-light">
+                    <div class="card-body">
+                        <div class="jumbotron jumbotron-fluid pt-3 pb-2 mb-2 bg-white">
+                            <div class="container">
+                                <p class="lead text-center mb-0">Join <span
+                                        class="small-logo text-warning logo">t'day<span
+                                            class="text-dark small lead">,</span></span> the world's first collective
+                                    online journal</p>
+                                <p class="text-warning text-center my-0">──────<span>★</span>──────</p>
+                                <h1 class="display-4 text-center text-warning font-weight-bold logo">t'day</h1>
+                            </div>
                         </div>
-                    </div>
-                    <h5 class="text-center">Register</h5>
-                    <hr class="my-1">
-                    <form action="/register" method="POST" id="register" class="validated-form" novalidate enctype="multipart/form-data">
-                        <div id="registerCarousel" class="carousel slide" data-interval="false" data-keyboard="false" data-ride="false" >
-                            <div class="carousel-inner">
-                                <div id="" class="carousel-item active">
-                                    <p class="my-0 font-weight-bold">Account Information <i class="fas fa-info-circle text-primary mr-1" data-toggle="tooltip" title="Password must be 8-20 characters and must contain at least one number, one uppercase letter, and one special character."></i></p>
-                                                <small id="" class="text-muted mt-0">
-                                                    t'day encourages anonymity. - Please don't use your real name (and no selfies!)
-                                                </small>
-                                                <hr class="my-1">
-                                                <div class="form-row mt-3">
-                                                    <div class="col-md-6 input-group has-validation">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text border-0"><i class="fas fa-at text-primary" data-toggle="tooltip" data-placement="bottom" title="Must be 3-16 alphanumeric characters that may contain an underscore."></i></span>
-                                                        </div>
-                                                        <input class="form-control border-0" type="text" id="username" name="username" placeholder ="Username" pattern="^[a-z0-9_]{3,16}$" required>
-                                                        <div class="valid-feedback"></div>
-                                                        <div class="invalid-feedback">Please enter a valid username.</div>
-                                                    </div>
-                                                    <div class="col-md-6 input-group has-validation">
-                                                        <div class="input-group-prepend">
-                                                            <label for="displayName" class="input-group-text border-0"><i class="fas fa-user text-primary"></i></label>
-                                                        </div>
-                                                        <input class="page1Input form-control border-0" type="text" id="displayName" name="displayName" placeholder = "Display Name" required>
+                        <h5 class="text-center">Register</h5>
+                        <hr class="my-1">
+                        <form action="/register" method="POST" id="register" class="validated-form" novalidate
+                            enctype="multipart/form-data">
+                            <div id="registerCarousel" class="carousel slide" data-interval="false"
+                                data-keyboard="false" data-ride="false">
+                                <div class="carousel-inner">
+                                    <div id="" class="carousel-item active">
+                                        <p class="my-0 font-weight-bold">Account Information <i
+                                                class="fas fa-info-circle text-primary mr-1" data-toggle="tooltip"
+                                                title="Password must be 8-20 characters and must contain at least one number, one uppercase letter, and one special character."></i>
+                                        </p>
+                                        <small id="" class="text-muted mt-0">
+                                            t'day encourages anonymity. - Please don't use your real name (and no
+                                            selfies!)
+                                        </small>
+                                        <hr class="my-1">
+                                        <div class="form-row mt-3">
+                                            <div class="col-md-6 input-group has-validation">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text border-0"><i
+                                                            class="fas fa-at text-primary" data-toggle="tooltip"
+                                                            data-placement="bottom"
+                                                            title="Must be 3-16 alphanumeric characters that may contain an underscore."></i></span>
+                                                </div>
+                                                <input class="form-control border-0" type="text" id="username"
+                                                    name="username" placeholder="Username" pattern="^[a-z0-9_]{3,16}$"
+                                                    required>
+                                                <div class="valid-feedback"></div>
+                                                <div class="invalid-feedback">Please enter a valid username.</div>
+                                            </div>
+                                            <div class="col-md-6 input-group has-validation">
+                                                <div class="input-group-prepend">
+                                                    <label for="displayName" class="input-group-text border-0"><i
+                                                            class="fas fa-user text-primary"></i></label>
+                                                </div>
+                                                <input class="page1Input form-control border-0" type="text"
+                                                    id="displayName" name="displayName" placeholder="Display Name"
+                                                    required>
 
-                                                        <div class="valid-feedback"></div>
-                                                        <div class="invalid-feedback">Please enter a valid display name.</div>
-                                                    </div>
+                                                <div class="valid-feedback"></div>
+                                                <div class="invalid-feedback">Please enter a valid display name.</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row mt-3 mb-2">
+                                            <div class="col-md-6 input-group has-validation">
+                                                <div class="input-group-prepend">
+                                                    <label class="input-group-text border-0" for="email"><i
+                                                            class="fas fa-envelope text-primary"></i></label>
                                                 </div>
-                                                <div class="form-row mt-3 mb-2">
-                                                    <div class="col-md-6 input-group has-validation">
-                                                        <div class="input-group-prepend">
-                                                            <label class="input-group-text border-0" for="email"><i class="fas fa-envelope text-primary"></i></label>
-                                                        </div>
-                                                        <input class="page1Input form-control border-0" type="email" id="email" name="email" placeholder ="Email" required>
-                                                        <div class="valid-feedback"></div>
-                                                        <div class="invalid-feedback">Please enter a valid email.</div>
-                                                    </div>
-                                                    <div class="col-md-6 input-group has-validation">
-                                                        <div class="input-group-prepend">
-                                                            <label class="input-group-text border-0" for="password"><i class="fas fa-key text-primary" data-toggle="tooltip" data-placement="bottom" title="Must be 8-20 characters. Must contain at least one number, one uppercase letter, and one special character."></i>
-                                                            </label>
-                                                        </div>
-                                                        <input class="page1Input form-control border-0" type="password" id="password" name="password" pattern="^(?=(.*[a-z]))(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[!@#$%^&*()\-__+.]){1,}).{8,20}$" placeholder="Password" required >
-                                                        <div class="valid-feedback"></div>
-                                                        <div class="invalid-feedback">Please enter a valid password.</div>
-                                                    </div>
+                                                <input class="page1Input form-control border-0" type="email" id="email"
+                                                    name="email" placeholder="Email" required>
+                                                <div class="valid-feedback"></div>
+                                                <div class="invalid-feedback">Please enter a valid email.</div>
+                                            </div>
+                                            <div class="col-md-6 input-group has-validation">
+                                                <div class="input-group-prepend">
+                                                    <label class="input-group-text border-0" for="password"><i
+                                                            class="fas fa-key text-primary" data-toggle="tooltip"
+                                                            data-placement="bottom"
+                                                            title="Must be 8-20 characters. Must contain at least one number, one uppercase letter, and one special character."></i>
+                                                    </label>
                                                 </div>
-                                                <!-- <div class=" input-group mt-2 has-validation">
+                                                <input class="page1Input form-control border-0" type="password"
+                                                    id="password" name="password"
+                                                    pattern="^(?=(.*[a-z]))(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[!@#$%^&*()\-__+.]){1,}).{8,20}$"
+                                                    placeholder="Password" required>
+                                                <div class="valid-feedback"></div>
+                                                <div class="invalid-feedback">Please enter a valid password.</div>
+                                            </div>
+                                        </div>
+                                        <!-- <div class=" input-group mt-2 has-validation">
                                                     <div class="input-group-prepend">
                                                         <label class="input-group-text border-0" for="avatar"><i class="fas fa-user text-primary"></i></label>
                                                     </div>
@@ -70,101 +95,130 @@
                                                     </div>
                                                 </div>
                                                 <img class="img-fluid my-2 d-block" id="preview" width="100px">  -->
-                                                <button id="next-1" class="btn btn-warning next" data-target="#registerCarousel" data-slide-to="1" data-interval="3000" disabled>Next</button>
-                                </div>
-                                <div class="carousel-item">
-                                    <p class="my-0 font-weight-bold">Demographic Information <i class="fas fa-info-circle text-info small" data-toggle="tooltip" data-placement="bottom" title="We collect demographic information for data aggregation purposes (e.g. our average rating charts). Your country is displayed on your profile. Age group and gender private."></i></p>
-                                    <hr class="my-1 py-0">
-                                    <div class="form-row mt-3">
-                                        <div class="col-md-6 input-group has-validation">
-                                            <label class="input-group-text border-0" for="ageGroup"><i class="fas fa-birthday-cake text-primary"></i></label>
-                                            <select name="ageGroup" id="ageGroup" class="custom-select border-0" required>
-                                                <option selected value="">Age Group</option>
-                                                <option value="Greatest Generation">Greatest Generation (1901-1927)</option>
-                                                <option value="Silent Generation">Silent Generation (1928-1945)</option>
-                                                <option value="Baby Boomers">Baby Boomers (1946-1964)</option>
-                                                <option value="Gen X">Gen X (1965-1980)</option>
-                                                <option value="Millennials">Millennials (1981-1996)</option>
-                                                <option value="Gen Z">Gen Z (1997-2012)</option>
+                                        <button id="next-1" class="btn btn-warning next" data-target="#registerCarousel"
+                                            data-slide-to="1" data-interval="3000" disabled>Next</button>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <p class="my-0 font-weight-bold">Demographic Information <i
+                                                class="fas fa-info-circle text-info small" data-toggle="tooltip"
+                                                data-placement="bottom"
+                                                title="We collect demographic information for data aggregation purposes (e.g. our average rating charts). Your country is displayed on your profile. Age group and gender private."></i>
+                                        </p>
+                                        <hr class="my-1 py-0">
+                                        <div class="form-row mt-3">
+                                            <div class="col-md-6 input-group has-validation">
+                                                <label class="input-group-text border-0" for="ageGroup"><i
+                                                        class="fas fa-birthday-cake text-primary"></i></label>
+                                                <select name="ageGroup" id="ageGroup" class="custom-select border-0"
+                                                    required>
+                                                    <option selected value="">Age Group</option>
+                                                    <option value="Greatest Generation">Greatest Generation (1901-1927)
+                                                    </option>
+                                                    <option value="Silent Generation">Silent Generation (1928-1945)
+                                                    </option>
+                                                    <option value="Baby Boomers">Baby Boomers (1946-1964)</option>
+                                                    <option value="Gen X">Gen X (1965-1980)</option>
+                                                    <option value="Millennials">Millennials (1981-1996)</option>
+                                                    <option value="Gen Z">Gen Z (1997-2012)</option>
+                                                </select>
+                                                <div class="valid-feedback"></div>
+                                                <div class="invalid-feedback">Please select a valid option.</div>
+                                            </div>
+                                            <div class="col-md-6 input-group has-validation">
+                                                <label class="input-group-text border-0" for="gender"><i
+                                                        class="fas fa-venus-mars text-primary"></i></label>
+                                                <select class="custom-select border-0" id="gender" name="gender"
+                                                    required>
+                                                    <option selected value="">Gender</option>
+                                                    <option value="male">male</option>
+                                                    <option value="female">female</option>
+                                                </select>
+                                                <div class="valid-feedback"></div>
+                                                <div class="invalid-feedback">Please select a valid option.</div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3 mb-3 input-group has-validation">
+                                            <label class="input-group-text border-0" for="country[name]"><i
+                                                    class="fas fa-globe-americas text-primary"></i></label>
+                                            <select class="custom-select border-0" id="countryName" name="country[name]"
+                                                required>
+                                                <option value="">Country</option>
+                                                <% for (let country of countries) { %>
+                                                    <option value="<%=country[" name"]%>"><%=country["name"]%>
+                                                    </option>
+                                                    <%}%>
                                             </select>
                                             <div class="valid-feedback"></div>
-                                            <div class="invalid-feedback">Please select a valid option.</div>
+                                            <div class="invalid-feedback">Please select a valid option</div>
                                         </div>
-                                        <div class="col-md-6 input-group has-validation">
-                                            <label class="input-group-text border-0" for="gender"><i class="fas fa-venus-mars text-primary"></i></label>
-                                            <select class="custom-select border-0" id="gender" name="gender" required>
-                                                <option selected value="">Gender</option>
-                                                <option value="male">male</option>   
-                                                <option value="female">female</option>          
-                                            </select>
-                                            <div class="valid-feedback"></div>
-                                            <div class="invalid-feedback">Please select a valid option.</div>
-                                        </div>
+                                        <button class="btn btn-secondary" data-target="#registerCarousel"
+                                            data-slide-to="0">Back</button>
+                                        <button id="next-2" class="btn btn-warning next" data-target="#registerCarousel"
+                                            data-slide-to="2" disabled>Next</button>
                                     </div>
-                                    <div class="mt-3 mb-3 input-group has-validation">
-                                        <label class="input-group-text border-0" for="country[name]"><i class="fas fa-globe-americas text-primary"></i></label>
-                                        <select class="custom-select border-0" id="countryName" name="country[name]" required>
-                                            <option value="">Country</option> 
-                                            <%  for (let country of countries) { %>
-                                                <option value="<%=country["name"]%>"><%=country["name"]%></option>
-                                            <%}%>        
-                                        </select>
-                                        <div class="valid-feedback"></div>
-                                        <div class="invalid-feedback">Please select a valid option</div>
-                                    </div>
-                                    <button class="btn btn-secondary" data-target="#registerCarousel" data-slide-to="0">Back</button>
-                                    <button id="next-2" class="btn btn-warning next" data-target="#registerCarousel" data-slide-to="2" disabled>Next</button>
-                                </div>
-                                <div class="carousel-item">
-                                    <p class="my-0 font-weight-bold">Default Time Zone <i class="fas fa-info-circle text-info small" data-toggle="tooltip" data-placement="bottom" title="We ask for your default timezone to render date-specific data accurately across timezones. This information is not displayed on your profile."></i></p>
-                                    <!-- <small id="" class="text-muted mt-0">
+                                    <div class="carousel-item">
+                                        <p class="my-0 font-weight-bold">Default Time Zone <i
+                                                class="fas fa-info-circle text-info small" data-toggle="tooltip"
+                                                data-placement="bottom"
+                                                title="We ask for your default timezone to render date-specific data accurately across timezones. This information is not displayed on your profile."></i>
+                                        </p>
+                                        <!-- <small id="" class="text-muted mt-0">
                                         We ask for your default timezone to render date-specific data accurately across timezones. This information is not displayed on your profile.
                                     </small> -->
-                                    <hr class="my-1 py-0">
-                                    <div class="mt-3 mb-3 input-group has-validation">
-                                        <label class="input-group-text border-0" for="defaultTimezone"><i class="fas fa-clock text-primary"></i></label>
-                                        <select class="custom-select border-0" id="timezone" name="defaultTimezone" required>
-                                            <option value="">Default Timezone</option> 
-                                            <%  for (let timezone of timezones) { %>
-                                                <option value="<%=timezone["code"]%>"><%=timezone["name"]%></option>
-                                            <%}%>        
-                                        </select>
-                                        <div class="valid-feedback"></div>
-                                        <div class="invalid-feedback">Please select a valid option</div>
+                                        <hr class="my-1 py-0">
+                                        <div class="mt-3 mb-3 input-group has-validation">
+                                            <label class="input-group-text border-0" for="defaultTimezone"><i
+                                                    class="fas fa-clock text-primary"></i></label>
+                                            <select class="custom-select border-0" id="timezone" name="defaultTimezone"
+                                                required>
+                                                <option value="">Default Timezone</option>
+                                                <% for (let timezone of timezones) { %>
+                                                    <option value="<%=timezone[" code"]%>"><%=timezone["name"]%>
+                                                    </option>
+                                                    <%}%>
+                                            </select>
+                                            <div class="valid-feedback"></div>
+                                            <div class="invalid-feedback">Please select a valid option</div>
+                                        </div>
+                                        <input id="tz" type="text" hidden value="" name="timezone">
+                                        <div class="form-check mb-3 ml-1">
+                                            <input class="form-check-input" type="checkbox" value="true" id=""
+                                                name="termsAgreement" required>
+                                            <label class="form-check-label small sr-only" for="termsAgreement"></label>
+                                            <small>I agree to t'day's <a href="/terms">Terms of Use</a>, <a
+                                                    href="/privacy">Privacy Policy</a>, and <a href="/cookies">Cookie
+                                                    Policy.</a></small>
+                                            <div class="valid-feedback"></div>
+                                            <div class="invalid-feedback">Please agree to our policies to continue.
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-secondary" data-target="#registerCarousel"
+                                            data-slide-to="1">Back</button>
+                                        <button class="btn btn-warning" type="submit">Submit</button>
                                     </div>
-                                    <input id="tz" type="text" hidden value="" name="timezone">
-                                    <div class="form-check mb-3 ml-1">
-                                        <input class="form-check-input" type="checkbox" value="true" id="" name="termsAgreement" required>
-                                        <label class="form-check-label small sr-only" for="termsAgreement"></label>
-                                        <small>I agree to t'day's <a href="/terms">Terms of Use</a>, <a href="/privacy">Privacy Policy</a>, and <a href="/cookies">Cookie Policy.</a></small>
-                                        <div class="valid-feedback"></div>
-                                        <div class="invalid-feedback">Please agree to our policies to continue.</div>
-                                    </div>
-                                    <button class="btn btn-secondary" data-target="#registerCarousel" data-slide-to="1">Back</button>
-                                    <button class="btn btn-warning" type="submit">Submit</button>
                                 </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
+        <footer class="pt-4 px-2 mb-0 mt-5 d-flex justify-content-between small fixed-bottom">
+            <div class="">
+                <a class="d-inline" href="#">About</a> <span class="small">|</span>
+                <a class="d-inline" href="/privacy">Privacy Policy</a> <span class="small">|</span>
+                <a class="d-inline" href="/terms">Terms of Use</a> <span class="small">|</span>
+                <a class="d-inline" href="/cookies">Cookie Policy</a> <span class="small">|</span>
+                <a class="d-inline" href="/contact">Contact</a>
+            </div>
+            <div class="text-right">
+                <p class="mb-0 d-inline">© 2022 t'day |</p>
+                <p class="d-inline">made with <i class="fas fa-heart text-danger"></i> by <a
+                        href="https://github.com/eneda8">eneda</a></p>
+            </div>
+        </footer>
     </div>
-    <footer class="pt-4 px-2 mb-0 mt-5 d-flex justify-content-between small fixed-bottom">
-        <div class="">
-            <a class="d-inline" href="#" >About</a> <span class="small">|</span>
-            <a class="d-inline" href="/privacy" >Privacy Policy</a> <span class="small">|</span>
-            <a class="d-inline" href="/terms" >Terms of Use</a> <span class="small">|</span>
-            <a class="d-inline" href="/cookies" >Cookie Policy</a> <span class="small">|</span>
-            <a class="d-inline" href="/contact" >Contact</a>
-        </div>
-        <div class="text-right">
-            <p class="mb-0 d-inline">© 2021 t'day |</p>
-            <p class="d-inline">made with <i class="fas fa-heart text-danger"></i> by <a href="https://github.com/eneda8">eneda</a></p>
-        </div>
-    </footer>
-</div>
 
-<script>
+    <script>
 
-</script>
+    </script>
