@@ -1,5 +1,5 @@
-<nav class="navbar sticky-top navbar-expand-lg navbar-light bg-warning " style="top: 0;">
-  <div class="container-fluid">
+<nav class="navbar sticky-top navbar-expand-lg navbar-light bg-warning" style="top: 0;">
+  <div id="non-mobile-nav" class="container-fluid">
     <a class="navbar-brand font-weight-bold logo" href="/">t'day</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -43,10 +43,10 @@
             </form>
           </div>
         </div>
-        
       <li class="nav-item dropdown mr-3">
         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="/u/<%=currentUser.username%>" role="button" aria-haspopup="true" aria-expanded="false"> <img class="img-fluid img-thumbnail rounded-circle p-0" src="<%=currentUser.avatar.profile%>" style= "width: 30px;"alt=""></a>
-        <div class="dropdown-menu" style="min-width: 5rem">
+        <div class="dropdown-menu" style="min-width: 5rem; transform: translate(-15px);">
+          <small class="font-weight-bold pl-2 text-wrap" disabled ><%=currentUser.displayName%></small>
           <a class="dropdown-item p-2" href="/u/<%=currentUser.username%>"><i class="fas fa-user text-warning"></i> profile</a>
           <a class="dropdown-item p-2" href="/charts/me"><i class="fas fa-chart-line text-warning"></i> my charts</a>
           <a class="dropdown-item p-2" href="/settings"><i class="fas fa-cog text-warning"></i> settings</a>
@@ -55,11 +55,65 @@
       </li>
       <% }  %>
       </div>
-      </div>
     </div>
+  </div>
+  <div id="mobile-nav" class="container-fluid">
+    <a class="navbar-brand font-weight-bold logo d-inline" href="/">t'day</a>
+    <div class="d-flex justify-content-center">
+      <div class="input-group d-inline">
+        <div class="form-outline pt-2">
+          <form action="/posts/search" method="GET" class="form-inline mr-3 validated-form">
+            <input id="mobile-search" class="form-control border-0" type="search" placeholder="Search t'day..." style="height: 30px" aria-label="Search"  id="search" name="text" required>
+            <div class="input-group-append">
+              <button class="btn btn-sm btn-dark my-2 my-sm-0" style="height: 30px" type="submit"><i class="fas fa-search small"></i></button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <!-- <a class="nav-link d-inline pb-0" href="/settings"><i class="fas fa-cog text-primary" style="font-size: 25px;"></i></a>
+      <a href="" class="nav-link dropdown-toggle rounded-circle" data-toggle="dropdown" role="button" ><i class="fas fa-ellipsis-h text-primary mr-3 bg-light"></i></a>
+      <div class="dropdown-menu">
+          <a class="dropdown-item text-primary" href="/donate" ><i class="fas fa-hand-holding-usd text-primary mr-3"></i>Donate</a>
+          <a class="dropdown-item text-primary" href="/terms" ><i class="fas fa-scroll text-primary mr-3"></i>Terms of Use</a>
+          <a class="dropdown-item text-primary" href="/privacy" ><i class="fas fa-user-shield text-primary mr-3"></i>Privacy Policy</a>
+          <a class="dropdown-item text-primary" href="/cookies" ><i class="fas fa-cookie-bite text-primary mr-3"></i>Cookie Policy</a>
+          <a class="dropdown-item text-primary" href="/contact" ><i class="fas fa-envelope text-primary mr-3"></i>Contact Us</a>
+          <a class="dropdown-item text-primary" href="/logout"><i class="fas fa-sign-out-alt text-primary mr-3"></i>Log out</a>
+      </div> -->
+    </div>
+      
   </div>
 </nav>
 
 <% if(currentUser){%>
 <%- include("../partials/posts/new")%>
 <%} %> 
+
+<% if(currentUser) {%> 
+  <nav class="mobile-footer navbar fixed-bottom navbar-light bg-warning py-0">
+    <a class="nav-link" href="/home"><i class="fas fa-home footer-icon"></i></a>
+    <% if(user.postedToday === false) {%> 
+    <a class="nav-link" href="" data-toggle="modal" id="newPostLink" data-target="#newPostModal"><i class="far fa-star"></i></a>
+    <% } else {%>
+    <a href="/posts/<%=user.todaysPost%>" class="nav-link"><i class="far fa-calendar-check footer-icon"></i></a>
+    <% } %>
+    <div class="dropup">
+      <a class="nav-link dropup dropdown-toggle" data-toggle="dropdown" role="button"><i class="far fa-chart-bar footer-icon"></i></a>
+      <div class="dropdown-menu">
+        <a href="/charts" class="dropdown-item text-primary">Today's Charts</a>
+        <a href="/charts/all" class="dropdown-item text-primary">All Charts</a>
+        <a href="/charts/me" class="dropdown-item text-primary">My Charts</a>
+      </div>
+    </div>
+    <a class="nav-link" href="/write"><i class="fas fa-pencil-alt footer"></i></a>
+    <div class="dropup">
+      <a class="nav-link dropup dropdown-toggle" data-toggle="dropdown" href="/u/<%=currentUser.username%>" role="button" aria-haspopup="true" aria-expanded="false"> <img class="img-fluid img-thumbnail rounded-circle p-0" src="<%=currentUser.avatar.profile%>" style= "width: 30px;"alt=""></a>
+      <div class="dropdown-menu" style="transform: translate(-17px)">
+        <a href="/settings" class="dropdown-item text-primary">Settings</a>
+        <a href="/donate" class="dropdown-item text-primary">Donate</a>
+        <a href="/contact" class="dropdown-item text-primary">Contact Us</a>
+        <a href="/logout" class="dropdown-item text-primary">Log out</a>
+      </div>
+    </div>
+  </nav>
+<% } %> 

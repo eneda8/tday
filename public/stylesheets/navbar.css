@@ -1,0 +1,21 @@
+.footer-icon {
+  font-size: 20px;
+}
+
+@media screen and (min-width: 990px){
+  .mobile-footer{
+    display: none; 
+  }
+  #mobile-nav{
+    display: none;
+  }
+}
+
+@media screen and (max-width: 990px){
+  #non-mobile-nav {
+    display: none
+  }
+  #mobile-search{
+    width: 250px;
+  }
+}
