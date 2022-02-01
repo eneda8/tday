@@ -14,10 +14,10 @@
     "helmet": "^4.6.0",
     "joi": "^17.4.0",
     "method-override": "^3.0.0",
-    "mongoose": "^5.12.2",
+    "mongoose": "^6.1.10",
     "mongoose-autopopulate": "^0.16.0",
-    "mongoose-cast-aggregation": "^0.1.2",
-    "mongoose-field-encryption": "4.0.2",
+    "mongoose-cast-aggregation": "^0.2.1",
+    "mongoose-field-encryption": "^5.0.0",
     "mongoose-paginate": "^5.0.3",
     "multer": "^1.4.2",
     "multer-storage-cloudinary": "^4.0.0",
@@ -31,6 +31,10 @@
   },
   "name": "tday",
   "version": "1.0.0",
+  "engines": {
+    "node": "16.x",
+    "npm": "8.x"
+  },
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -38,9 +42,18 @@
   },
   "author": "Eneda Xhambazi",
   "license": "ISC",
-  "description": "",
   "devDependencies": {
     "dotenv": "^8.6.0",
     "locus": "^2.0.4"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eneda8/tday.git"
+  },
+  "bugs": {
+    "url": "https://github.com/eneda8/tday/issues"
+  },
+  "homepage": "https://github.com/eneda8/tday#readme",
+  "keywords": [],
+  "description": ""
 }
