@@ -1,10 +1,10 @@
-<nav class="navbar sticky-top navbar-expand-lg navbar-light bg-warning" style="top: 0;">
-  <div id="non-mobile-nav" class="container-fluid">
+<nav class="navbar sticky-top navbar-expand-lg navbar-light bg-warning d-none d-lg-block" style="top: 0;">
+  <div class="container-fluid">
     <a class="navbar-brand font-weight-bold logo" href="/">t'day</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#lg-navbar" aria-controls="lg-navbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="collapse navbar-collapse" id="lg-navbar">
       <div class="navbar-nav">
         <% if(currentUser) {  %> 
           <a class="nav-link" href="/home"><i class="fas fa-home"></i> home</a>
@@ -57,58 +57,63 @@
       </div>
     </div>
   </div>
-  <div id="mobile-nav" class="container-fluid">
-    <a class="navbar-brand font-weight-bold logo d-inline" href="/">t'day</a>
-    <div class="d-flex justify-content-center">
-      <div class="input-group d-inline">
-        <div class="form-outline pt-2">
-          <form action="/posts/search" method="GET" class="form-inline mr-3 validated-form">
-            <input id="mobile-search" class="form-control border-0" type="search" placeholder="Search t'day..." style="height: 30px" aria-label="Search"  id="search" name="text" required>
-            <div class="input-group-append">
-              <button class="btn btn-sm btn-dark my-2 my-sm-0" style="height: 30px" type="submit"><i class="fas fa-search small"></i></button>
-            </div>
-          </form>
-        </div>
-      </div>
-      <!-- <a class="nav-link d-inline pb-0" href="/settings"><i class="fas fa-cog text-primary" style="font-size: 25px;"></i></a>
-      <a href="" class="nav-link dropdown-toggle rounded-circle" data-toggle="dropdown" role="button" ><i class="fas fa-ellipsis-h text-primary mr-3 bg-light"></i></a>
-      <div class="dropdown-menu">
-          <a class="dropdown-item text-primary" href="/donate" ><i class="fas fa-hand-holding-usd text-primary mr-3"></i>Donate</a>
-          <a class="dropdown-item text-primary" href="/terms" ><i class="fas fa-scroll text-primary mr-3"></i>Terms of Use</a>
-          <a class="dropdown-item text-primary" href="/privacy" ><i class="fas fa-user-shield text-primary mr-3"></i>Privacy Policy</a>
-          <a class="dropdown-item text-primary" href="/cookies" ><i class="fas fa-cookie-bite text-primary mr-3"></i>Cookie Policy</a>
-          <a class="dropdown-item text-primary" href="/contact" ><i class="fas fa-envelope text-primary mr-3"></i>Contact Us</a>
-          <a class="dropdown-item text-primary" href="/logout"><i class="fas fa-sign-out-alt text-primary mr-3"></i>Log out</a>
-      </div> -->
-    </div>
-      
-  </div>
 </nav>
 
 <% if(currentUser){%>
 <%- include("../partials/posts/new")%>
 <%} %> 
 
+<nav class="navbar sticky-top container-fluid navbar-light bg-warning d-lg-none d-flex justify-content-between flex-nowrap" style="top: 0;">
+    <a class="navbar-brand font-weight-bold logo d-inline" href="/">t'day</a>
+    <% if(!currentUser){ %> 
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sm-navbar" aria-controls="sm-navbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div id="sm-navbar" class="collapse navbar-collapse">
+      <div class="navbar-nav ml-auto mr-2">
+        <button class="btn btn-link p-0"><a class="nav-link text-decoration-none" href="/login">login</a></button>
+        <button class="btn btn-link p-0"><a class="nav-link text-decoration-none" href="/register">sign up</a></button>
+      </div>
+    </div>
+    <% } else { %> 
+    <form action="/posts/search" method="GET" class="validated-form">
+      <div class="form-row align-items-end">
+        <div class="col-auto">
+          <div class="input-group">
+            <input class="form-control border-0" type="search" placeholder="Search t'day..."  aria-label="Search"  id="search" name="text" required>
+            <div class="input-group-append">
+              <button class="btn btn-sm btn-dark pb-2"  type="submit"><i class="fas fa-search"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+      
+    <!-- <a class="nav-link d-inline pb-0" href="/settings"><i class="fas fa-cog text-primary" style="font-size: 25px;"></i></a> -->
+    <% } %> 
+</nav>
+
 <% if(currentUser) {%> 
-  <nav class="mobile-footer navbar fixed-bottom navbar-light bg-warning py-0">
-    <a class="nav-link" href="/home"><i class="fas fa-home footer-icon"></i></a>
-    <% if(user.postedToday === false) {%> 
-    <a class="nav-link" href="" data-toggle="modal" id="newPostLink" data-target="#newPostModal"><i class="far fa-star"></i></a>
+  <nav class="mobile-footer navbar fixed-bottom navbar-light bg-warning p-0 d-lg-none d-flex justify-content-around flex-nowrap pt-2 container-fluid">
+       <a class="nav-link" href="/home"><i class="fas fa-home footer-icon" style="font-size: 20px;"></i></a>
+    <% if(currentUser.postedToday === false) {%> 
+    <a class="nav-link" href="" data-toggle="modal" id="newPostLink" data-target="#newPostModal"><i class="far fa-star" style="font-size: 20px;"></i></a>
     <% } else {%>
-    <a href="/posts/<%=user.todaysPost%>" class="nav-link"><i class="far fa-calendar-check footer-icon"></i></a>
+    <a href="/posts/<%=currentUser.todaysPost%>" class="nav-link"><i class="far fa-calendar-check footer-icon" style="font-size: 20px;"></i></a>
     <% } %>
     <div class="dropup">
-      <a class="nav-link dropup dropdown-toggle" data-toggle="dropdown" role="button"><i class="far fa-chart-bar footer-icon"></i></a>
+      <a class="nav-link dropup dropdown-toggle" data-toggle="dropdown" role="button"><i class="far fa-chart-bar footer-icon" style="font-size: 20px;"></i></a>
       <div class="dropdown-menu">
         <a href="/charts" class="dropdown-item text-primary">Today's Charts</a>
         <a href="/charts/all" class="dropdown-item text-primary">All Charts</a>
         <a href="/charts/me" class="dropdown-item text-primary">My Charts</a>
       </div>
     </div>
-    <a class="nav-link" href="/write"><i class="fas fa-pencil-alt footer"></i></a>
+    <a class="nav-link" href="/write"><i class="fas fa-pencil-alt footer" style="font-size: 20px;"></i></a>
     <div class="dropup">
-      <a class="nav-link dropup dropdown-toggle" data-toggle="dropdown" href="/u/<%=currentUser.username%>" role="button" aria-haspopup="true" aria-expanded="false"> <img class="img-fluid img-thumbnail rounded-circle p-0" src="<%=currentUser.avatar.profile%>" style= "width: 30px;"alt=""></a>
+      <a class="nav-link dropup dropdown-toggle pt-1 " data-toggle="dropdown" href="/u/<%=currentUser.username%>" role="button" aria-haspopup="true" aria-expanded="false"> <img class="img-fluid img-thumbnail rounded-circle p-0 m-0" src="<%=currentUser.avatar.profile%>" style= "width: 25px;"alt=""></a>
       <div class="dropdown-menu" style="transform: translate(-17px)">
+        <a href="/u/<%=currentUser.username%>" class="dropdown-item text-primary">Profile</a>
         <a href="/settings" class="dropdown-item text-primary">Settings</a>
         <a href="/donate" class="dropdown-item text-primary">Donate</a>
         <a href="/contact" class="dropdown-item text-primary">Contact Us</a>
@@ -117,3 +122,4 @@
     </div>
   </nav>
 <% } %> 
+
