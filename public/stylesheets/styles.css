@@ -13,6 +13,9 @@ html, body {
     flex-direction: column;
 }
 
+body {
+    zoom: .9;
+}
 main{
     overflow-x: hidden;
     overflow-y: hidden;
@@ -40,14 +43,14 @@ i {
 
 /* right side bar */
 
-/* .upper {
+.upper {
     width: 100%;
     border-top-left-radius: .25rem;
     border-top-right-radius: .25rem;
     background-size:cover; 
     background-repeat: no-repeat; 
     height: 150px;
-} */
+}
 
 #profilePreviewCover {
     object-fit: cover;
