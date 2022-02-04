@@ -52,7 +52,7 @@ module.exports.showPost = async (req,res) => {
     await post.populate({
         path: "comments",
         populate:{path: "author"}
-    }).execPopulate();
+    });
     if(!post){
         req.flash("error", "Rating not found!")
         return res.redirect("/home");

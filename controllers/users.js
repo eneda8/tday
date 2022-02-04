@@ -248,7 +248,7 @@ module.exports.renderHomePage= async (req, res) =>{
         }
         for(let post of posts) {
             if(!post === null){
-            post.populate("author").execPopulate();
+            post.populate("author");
             }
         }
         res.render("users/home", {posts, today, within24Hours, todaysPost, user, countries, title: "Home / t'day", style: "styles"});
