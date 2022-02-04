@@ -1,3 +1,6 @@
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:weight@100;200;300;400;500;600;700;800&display=swap");
+
 * {
     margin: 0;
     padding: 0;
@@ -5,7 +8,7 @@
  }
 
 html, body {
-    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: "Poppins", 'Helvetica Neue', Helvetica, Arial, sans-serif;
     display: flex;
     flex-direction: column;
 }
@@ -13,14 +16,6 @@ html, body {
 main{
     overflow-x: hidden;
     overflow-y: hidden;
-}
-
-
-nav{
-    width: 100%;
-}
-
-main {
     min-height: 100vh;
     display: flex;
     flex-direction: row;
@@ -28,18 +23,135 @@ main {
     padding: 10px;
 }
 
-.logo {
-     font-family: "Courgette", cursive;
+
+nav{
+    width: 100%;
 }
 
-/* larger screen sizes */
-@media screen and (min-width: 576px ) {
-    main {
-        padding-left: 60px;
-    }
+
+.logo {
+    font-family: "Courgette", cursive;
 }
 
 i {
     padding: 0;
     margin: 0;
+}
+
+/* right side bar */
+
+/* .upper {
+    width: 100%;
+    border-top-left-radius: .25rem;
+    border-top-right-radius: .25rem;
+    background-size:cover; 
+    background-repeat: no-repeat; 
+    height: 150px;
+} */
+
+#profilePreviewCover {
+    object-fit: cover;
+}
+.user {
+    position: relative
+}
+
+.profile img {
+    height: 100px;
+    width: 100px;
+    margin-top: 2px
+}
+
+.profile {
+    position: absolute;
+    top: -65px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    height: 110px;
+    width: 110px;
+    border: 3px solid #fff;
+    border-radius: 50%
+}
+
+/* breakpoints */
+@media screen and (min-width: 576px ) {
+    main {
+        padding-left: 20px;
+    }
+}
+
+@media screen and (max-width: 600px){
+    .mainContent{
+        width: 100%;
+    }
+
+}
+
+@media screen and (max-width: 992px){
+    .leftSidebar, .rightSidebar {
+        display: none;
+    }
+    main {
+        padding-bottom: 60px;
+    }
+}
+
+@media screen and (min-width: 600px) and (max-width:992px){
+    .mainContent{
+        width: 600px;
+    }
+}
+
+@media screen and (min-width: 993px) and (max-width:1189px) {
+    .mainContent{
+        width: 70%;
+    }
+    .leftSidebar {
+        width: 30%;
+    }
+    .menu, #home {
+        padding-left: 30px;
+    }
+    .rightSidebar {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 1190px) and (max-width:1288px) {
+    .mainContent{
+        width: 525px;
+    }
+    .leftSidebar{
+        width: 235px;
+    }
+    .rightSidebar{
+        width: 300px;
+    }
+}
+
+@media screen and (min-width: 1288px) and (max-width:1470px) {
+    .mainContent{
+        width: 600px;
+        /* width: 52%; */
+    }
+    .leftSidebar{
+        width: 235px;
+        /* width: 20%; */
+    }
+    .rightSidebar{
+        width: 320px;
+        /* width: 28%; */
+    }
+}
+
+@media screen and (min-width: 1471px) {
+    .mainContent{
+        width: 700px;
+    }
+    .leftSidebar{
+        width: 235px;
+    }
+    .rightSidebar{
+        width: 350px;
+    }
 }

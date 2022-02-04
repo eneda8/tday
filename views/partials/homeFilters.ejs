@@ -30,32 +30,32 @@
                             <%}%>        
                         </select>
                     </div>
-                    <div class="input-group mb-3 bg-white rounded">
-                        <div class="input-group-prepend">
-                          <label class="input-group-text border-0 " id="rating-addon"><i class="far fa-star text-primary"></i></label>
-                        </div>
-                        <div>
-                            <p class="pl-2 pt-2 ml-1 pb-0 mb-0 text-muted" style="font-size: 16px;">Rating</p>
-                            <div class="form-check form-check-inline ml-3 pt-1 border-0">
-                                <label for="one-star" class="star form-check-label small">★</label><br>
-                                <input type="checkbox" id="one-star" name="rating[]" value="1" <%= query.rating && query.rating.includes('1') ? 'checked' : '' %> class="form-check-input">
-                                <label for="two-stars" class="star form-check-label small">★★</label><br>
-                                <input type="checkbox" id="two-stars" name="rating[]" value="2" <%= query.rating && query.rating.includes('2') ? 'checked' : '' %> class="form-check-input">
-                                <label for="three-stars" class="star form-check-label small">★★★</label><br>
-                                <input type="checkbox" id="three-stars" name="rating[]" value="3" <%= query.rating && query.rating.includes('3') ? 'checked' : '' %> class="form-check-input">
-                                <label for="four-stars" class="star form-check-label small">★★★★</label><br>
-                                <input type="checkbox" id="four-stars" name="rating[]" value="4" <%= query.rating && query.rating.includes('4') ? 'checked' : '' %> class="form-check-input">
-                                <label for="five-stars" class="star form-check-label small">★★★★★</label>
-                                <input type="checkbox" id="five-stars" name="rating[]" value="5" <%= query.rating && query.rating.includes('5') ? 'checked' : '' %> class="form-check-input">
-                            </div>
-                        </div>
-                    </div>
+                    <div class="input-group mb-3 bg-white">
+                      <div class="input-group-prepend">
+                        <label class="input-group-text border-0 " id="rating-addon"><i class="far fa-star text-primary"></i></label>
+                      </div>
+                      <div>
+                          <p class="pl-2 pt-2 ml-1 pb-0 mb-0 text-muted" style="font-size: 16px;">Rating</p>
+                          <div class="form-check ml-3 pt-1">
+                              <input type="checkbox" id="one-star" name="rating[]" value="1" <%= query.rating && query.rating.includes('1') ? 'checked' : '' %> class="form-check-input">
+                              <label for="one-star" class="star form-check-label">★</label><br>
+                              <input type="checkbox" id="two-stars" name="rating[]" value="2" <%= query.rating && query.rating.includes('2') ? 'checked' : '' %> class="form-check-input">
+                              <label for="two-stars" class="star form-check-label">★★</label><br>
+                              <input type="checkbox" id="three-stars" name="rating[]" value="3" <%= query.rating && query.rating.includes('3') ? 'checked' : '' %> class="form-check-input">
+                              <label for="three-stars" class="star form-check-label">★★★</label><br>
+                              <input type="checkbox" id="four-stars" name="rating[]" value="4" <%= query.rating && query.rating.includes('4') ? 'checked' : '' %> class="form-check-input">
+                              <label for="four-stars" class="star form-check-label">★★★★</label><br>
+                              <input type="checkbox" id="five-stars" name="rating[]" value="5" <%= query.rating && query.rating.includes('5') ? 'checked' : '' %> class="form-check-input">
+                              <label for="five-stars" class="star form-check-label">★★★★★</label>
+                          </div>
+                      </div>
+                  </div>
                     <div class="input-group mb-3 bg-white">
                         <div class="input-group-prepend ">
                           <label class="input-group-text border-0 py-2 pr-3"><i class="fas fa-file-image text-primary"></i></label>
                         </div>
-                        <div class="form-check form-check-inline">
-                          <label for="image" class="form-check-label text-muted ml-3 mr-1 ">Has image?</label>
+                        <div class="form-check pl-1 pt-1">
+                          <label for="image" class="form-check-label text-muted mr-4 ">Includes image</label>
                           <input class="form-check-input" type="checkbox" aria-label="Has image?" name="image" <%=query.image ? 'checked' : ''%>>
                         </div>
                       </div>

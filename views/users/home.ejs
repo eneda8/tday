@@ -1,47 +1,49 @@
 <% layout("layouts/boilerplate")%>
 
-<div class="px-0 mx-0">
-    <div class="container-fluid mb-4 mt-4" style="padding-left: 100px; padding-right: 100px;">
-        <h3 class="mb-2">Home</h3>
-        <div class="row">
-            <div class="col">
-                <%- include("../partials/sidebars/left/menu") %>
-                <%- include("../partials/sidebars/left/globalChart") %>
-                <%- include("../partials/sidebars/left/GCP") %>
+<div class="mainContainer d-flex justify-content-center container-fluid w-100 px-0">
+   <div class="row w-100 d-flex flex-nowrap justify-content-center px-0">
+    <div class="leftSidebar px-0 mt-lg-3">
+        <h3 id="home" class="mb-2" style="font-size: 1.7rem">Home</h3>
+        <%- include("../partials/leftSidebar") %>
+    </div>
+    <div class="mainContent mx-3 bg-light mt-lg-3 px-3 shadow rounded">
+        <h5 class="mt-3 mb-0"><span id="today-header">Today</span> 
+        <% if(!posts.includes(null)){ %>
+         <span id="10-ratings" class="text-muted small">· 10 random ratings<i class="fas fa-random text-right text-white btn btn-sm btn-primary ml-2" title="Refresh for 10 more" onclick="location.reload()"></i> 
+        <%}%> 
+        </h5> 
+        </span>
+        <% if(!posts.includes(null)){ %>
+        <%- include('../partials/homeFilters')%>
+        <%for (post of posts) { %> 
+            <%- include('../partials/posts/edit')%>
+            <%- include('../partials/posts')%>
+            <% } %> 
+            <% if(posts.length) { %> 
+                <button class="btn btn-primary w-100 mb-2"><i class="fas fa-random text-white mr-2" onclick="location.reload()"></i>Refresh for 10 more ratings </button>
+            <% } else {%> 
+            <div class="card border-0">
+                <div class="text-center py-5">                            
+                    <h5 class="">No ratings found</h5>
+                    <a class="text-primary d-block" role="button"><i class="fas fa-random text-right text-primary mr-1" onclick="location.reload()"></i>Refresh</a>
+                    <a class="mb-5" href="" data-toggle="modal" id="newPostLink" data-target="#newPostModal"><i class="far fa-star text-primary mr-1"></i>Submit a rating</a>
+                </div>
             </div>
-            <div class="col-5 shadow rounded bg-light mx-5" >
-                <h5 id="today-header" class="text-left font-weight-bold mt-3">Today</h5>
-                <% if(!posts.includes(null)){ %>
-                    <h6 class="text-left mb-0">10 random ratings from today <i class="fas fa-random text-right text-primary" title="Refresh for 10 more" onclick="location.reload()"></i>
-                    </h6>
-                    <%- include('../partials/homeFilters')%>
-                    <%for (post of posts) { %> 
-                        <%- include('../partials/posts/edit')%>
-                        <%- include('../partials/posts')%>
-                        <% } %> 
-                        <% if(posts.length) { %> 
-                        <i class="fas fa-random text-right text-primary" title="refresh for 10 more" onclick="location.reload()"></i>
-                        <% } else {%> 
-                        <div class="card border-0">
-                            <div class="text-center py-5">                            
-                                <h5 class="font-weight-bold">No ratings found</h5>
-                                <a class="text-primary d-block" role="button"><i class="fas fa-random text-right text-primary mr-1" onclick="location.reload()"></i>Refresh</a>
-                                <a class="mb-5" href="" data-toggle="modal" id="newPostLink" data-target="#newPostModal"><i class="far fa-star text-primary mr-1"></i>Submit a rating</a>
-                        </div>
-
-                        </div>
-                        <% } %> 
-                <% } %>
-            </div>
-            <div class="col">
-                <%- include("../partials/sidebars/right/userPreview") %>
-                <%- include("../partials/sidebars/right/todaysRating") %>
-                <%- include("../partials/sidebars/right/myWeek") %>
-                <%- include("../partials/sidebars/right/donateLinks") %>
-                <%- include("../partials/sidebars/right/footer") %>
-            </div>
-        </div> 
+            <% } %> 
+        <% } %>
+    </div>
+    <div class="rightSidebar mt-lg-3 px-0">
+        <%- include("../partials/rightSidebar") %>
     </div>
 </div>
+ 
+</div>
+
+
 
 <%- include("../partials/posts/new") %>
+
+<style>
+
+
+</style>

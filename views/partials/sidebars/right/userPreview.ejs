@@ -1,35 +1,69 @@
-<div class="bg-light shadow-sm rounded overflow-hidden card border-0">
+<div class="container d-flex justify-content-center align-items-center px-0">
+    <div class="card rounded border-0 shadow-sm bg-light w-100">
         <% if(user.coverPhoto) { %> 
-            <div class="px-4 pt-0 pb-4 cover" style="background-image: url('<%=user.coverPhoto.profile%>'); background-size:cover; background-repeat: no-repeat; height: 150px;">
-            <% } else {%> 
-            <div class="px-4 pt-0 pb-4 cover" style="background-color: <%=user.coverColor%>; height: 130px">
-            <% } %> 
-            <div class="media align-items-end">
-                <div class="mr-3">
-                    <img src="<%=user.avatar.profile%>" alt="" width="125" height="125" class="rounded-circle my-3 img-fluid img-thumbnail" style="transform: translateY(2.3rem)">
+        <!-- <div class="upper" style="background-image: url('<%=user.coverPhoto.profile%>');"></div> -->
+        <img class="card-img-top" src="<%=user.coverPhoto.profile" alt="">
+        <% } else { %> 
+        <div class="upper" style="background-color: <%=user.coverColor%>;"></div>
+        <% } %> 
+        <div class="user text-center">
+            <div class="profile"> <img src="<%=user.avatar.profile%>" class="rounded-circle"></div>
+        </div>
+        <div class="mt-5 text-center">
+            <h4 class="mb-0 font-weight-light"><%=user.displayName%></h4>
+            <span class="d-block">@<%=user.username%></span>
+            <span class="text-muted d-block mb-2">
+                <img class="mr-1" title="<%=user.country.name %>" src="<%=user.country.flag%>" width="17px"><%=user.country.name %>
+            </span> 
+            <div class="d-flex justify-content-around align-items-center mt-4 mb-2 px-1">
+                <div class="stats">
+                    <h5 class=" mb-0 d-block"><%=user.posts.length%></h5><small class="text-muted">Ratings</small>
                 </div>
-                <div class="text-white pl-2" style="transform: translateY(-1rem)">
-                    <h4 class="my-0 py-0"><a href="/u/<%=user.username%>" class="text-decoration-none text-white stretched-link"><%=user.displayName%></a></h4>
-                    <p class="my-0 py-0"><span style="font-size: 10px"> @</span><%=user.username%></p>
-                    <p class="small"><i class="fas fa-map-marker-alt text-white mr-1"></i>  <img class="mr-1" title="<%=user.country.name %>" src="<%=user.country.flag%>" width="17px"><%=user.country.name %></p>
+                <div class="stats">
+                    <h5 class="mb-0 d-block"><%=user.comments.length%></h5><small class="text-muted">Comments</small>
+                </div>
+                <div class="stats">
+                    <h5 class="mb-0 d-block"><%=user.postStreak%></h5><small class="text-muted">Streak</small>
+                </div>
+                <div class="stats">
+                    <h5 class="mb-0 d-block"><%=user.average%></h5><small class="text-muted">Avg. Rating</small>
                 </div>
             </div>
         </div>
-        <div class="bg-light text-dark py-3 pr-3 pl-0 d-flex justify-content-end text-center">
-                <ul class="list-inline mb-0">
-                    <li class="list-inline-item">
-                        <h5 class="font-weight-bold mb-0 d-block"><%=user.posts.length%></h5><small class="text-muted">Ratings</small>
-                    </li>
-                    <li class="list-inline-item">
-                        <h5 class="font-weight-bold mb-0 d-block"><%=user.comments.length%></h5><small class="text-muted">Comments</small>
-                    </li>
-                    <li class="list-inline-item">
-                        <h5 class="font-weight-bold mb-0 d-block"><%=user.postStreak%></h5><small class="text-muted">Streak</small>
-                    </li>
-                    <li class="list-inline-item">
-                        <h5 class="font-weight-bold mb-0 d-block"><%=user.average%></h5><small class="text-muted">Avg. Rating</small>
-                    </li>
-                </ul>
-        </div>
     </div>
-    
+</div>
+
+ 
+<style>
+
+/* .upper {
+    width: 100%;
+    border-top-left-radius: .25rem;
+    border-top-right-radius: .25rem;
+    background-size:cover; 
+    background-repeat: no-repeat; 
+    height: 150px;
+} */
+
+.user {
+    position: relative
+}
+
+.profile img {
+    height: 100px;
+    width: 100px;
+    margin-top: 2px
+}
+
+.profile {
+    position: absolute;
+    top: -65px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    height: 110px;
+    width: 110px;
+    border: 3px solid #fff;
+    border-radius: 50%
+}
+
+</style>

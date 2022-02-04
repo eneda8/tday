@@ -63,7 +63,7 @@
 <%- include("../partials/posts/new")%>
 <%} %> 
 
-<nav class="navbar sticky-top container-fluid navbar-light bg-warning d-lg-none d-flex justify-content-between flex-nowrap" style="top: 0;">
+<nav class="navbar sticky-top container=fluid navbar-light bg-warning d-lg-none d-flex justify-content-between flex-nowrap px-5" style="top: 0;">
     <a class="navbar-brand font-weight-bold logo d-inline" href="/">t'day</a>
     <% if(!currentUser){ %> 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sm-navbar" aria-controls="sm-navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -94,24 +94,24 @@
 </nav>
 
 <% if(currentUser) {%> 
-  <nav class="mobile-footer navbar fixed-bottom navbar-light bg-warning p-0 d-lg-none d-flex justify-content-around flex-nowrap pt-2 container-fluid">
-       <a class="nav-link" href="/home"><i class="fas fa-home footer-icon" style="font-size: 20px;"></i></a>
+  <nav class="navbar navbar-light fixed-bottom bg-warning d-lg-none d-flex justify-content-around flex-nowrap pt-2 mt-5 container-fluid">
+       <a class="nav-link text-dark" href="/home"><i class="fas fa-home footer-icon" style="font-size: 20px;"></i></a>
     <% if(currentUser.postedToday === false) {%> 
-    <a class="nav-link" href="" data-toggle="modal" id="newPostLink" data-target="#newPostModal"><i class="far fa-star" style="font-size: 20px;"></i></a>
+    <a class="nav-link text-dark" href="" data-toggle="modal" id="newPostLink" data-target="#newPostModal"><i class="far fa-star" style="font-size: 20px;"></i></a>
     <% } else {%>
-    <a href="/posts/<%=currentUser.todaysPost%>" class="nav-link"><i class="far fa-calendar-check footer-icon" style="font-size: 20px;"></i></a>
+    <a href="/posts/<%=currentUser.todaysPost%>" class="nav-link text-dark"><i class="far fa-calendar-check footer-icon" style="font-size: 20px;"></i></a>
     <% } %>
     <div class="dropup">
-      <a class="nav-link dropup dropdown-toggle" data-toggle="dropdown" role="button"><i class="far fa-chart-bar footer-icon" style="font-size: 20px;"></i></a>
+      <a class="nav-link text-dark dropup dropdown-toggle" data-toggle="dropdown" role="button"><i class="far fa-chart-bar footer-icon" style="font-size: 20px;"></i></a>
       <div class="dropdown-menu">
         <a href="/charts" class="dropdown-item text-primary">Today's Charts</a>
         <a href="/charts/all" class="dropdown-item text-primary">All Charts</a>
         <a href="/charts/me" class="dropdown-item text-primary">My Charts</a>
       </div>
     </div>
-    <a class="nav-link" href="/write"><i class="fas fa-pencil-alt footer" style="font-size: 20px;"></i></a>
+    <a class="nav-link text-dark" href="/write"><i class="fas fa-pencil-alt footer" style="font-size: 20px;"></i></a>
     <div class="dropup">
-      <a class="nav-link dropup dropdown-toggle pt-1 " data-toggle="dropdown" href="/u/<%=currentUser.username%>" role="button" aria-haspopup="true" aria-expanded="false"> <img class="img-fluid img-thumbnail rounded-circle p-0 m-0" src="<%=currentUser.avatar.profile%>" style= "width: 25px;"alt=""></a>
+      <a class="nav-link text-dark dropup dropdown-toggle pt-1 " data-toggle="dropdown" href="/u/<%=currentUser.username%>" role="button" aria-haspopup="true" aria-expanded="false"> <img class="img-fluid img-thumbnail rounded-circle p-0 m-0" src="<%=currentUser.avatar.profile%>" style= "width: 25px;"alt=""></a>
       <div class="dropdown-menu" style="transform: translate(-17px)">
         <a href="/u/<%=currentUser.username%>" class="dropdown-item text-primary">Profile</a>
         <a href="/settings" class="dropdown-item text-primary">Settings</a>
