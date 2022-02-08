@@ -16,6 +16,17 @@ html, body {
 body {
     zoom: .9;
 }
+
+.msg{
+    z-index: 5;
+    top: 4.5em;
+    position: fixed;
+    left: 50%;
+    margin-left: -150px;
+    width: fit-content;
+    border-left: 6px solid #7f7f84;
+}
+
 main{
     overflow-x: hidden;
     overflow-y: hidden;
@@ -41,7 +52,16 @@ i {
     margin: 0;
 }
 
-/* right side bar */
+/* fix modal backdrop*/
+.modal-backdrop {
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+.mainContent {
+    height: fit-content;
+}
+/* right sidebar */
 
 .upper {
     width: 100%;
@@ -112,7 +132,7 @@ i {
     .leftSidebar {
         width: 30%;
     }
-    .menu, #home {
+    .menu, .title {
         padding-left: 30px;
     }
     .rightSidebar {

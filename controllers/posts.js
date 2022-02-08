@@ -42,7 +42,14 @@ module.exports.createPost = async (req, res, next) => {
 }
 
 module.exports.showPost = async (req,res) => { 
-    const user = await User.findById(req.user._id);
+    const user = await User.findById(req.user._id).populate("posts");
+    const today = res.locals.cookie['today'];
+    //show today's rating, if available (right sidebar)
+    let todaysPost;
+    if(user.postedToday == true && user.todaysPost.length) {
+        todaysPost = await Post.findById(user.todaysPost);
+    }  else {todaysPost = "null"};
+    //show post
     const {id} = req.params;
     if (!ObjectID.isValid(id)) {
         req.flash("error", "Rating not found!")
@@ -57,7 +64,7 @@ module.exports.showPost = async (req,res) => {
         req.flash("error", "Rating not found!")
         return res.redirect("/home");
     }
-    res.render("posts/show", {user, post, within24Hours, title: `@${post.author.username}'s day / t'day `, style: "styles"})
+    res.render("posts/show", {user, today, todaysPost, post, within24Hours, title: `@${post.author.username}'s day / t'day `, style: "styles"})
 }
 
 module.exports.bookmarkPost = async(req, res) => {

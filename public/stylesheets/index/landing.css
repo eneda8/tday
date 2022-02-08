@@ -6,6 +6,7 @@ main {
   flex-direction: column;
   justify-content: start;
   padding-right: 0px;
+  padding-bottom: 0px;
 }
 
 .content{
@@ -78,6 +79,9 @@ div.feature-item:hover .fa-plus-circle {
 @media screen and (max-width: 576px){
   .jumbotron{
     height: 50%;
+  }
+  main {
+    padding-left: 0px
   }
 }
 @media screen and (max-width: 990px){

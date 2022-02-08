@@ -63,14 +63,15 @@
 <%- include("../partials/posts/new")%>
 <%} %> 
 
-<nav class="navbar sticky-top container=fluid navbar-light bg-warning d-lg-none d-flex justify-content-between flex-nowrap px-5" style="top: 0;">
+<!-- mobile top navbar -->
+<nav class="navbar navbar-expand-lg sticky-top navbar-light bg-warning d-lg-none d-flex justify-content-between" style="top: 0;">
     <a class="navbar-brand font-weight-bold logo d-inline" href="/">t'day</a>
     <% if(!currentUser){ %> 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sm-navbar" aria-controls="sm-navbar" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div id="sm-navbar" class="collapse navbar-collapse">
-      <div class="navbar-nav ml-auto mr-2">
+      <div class="navbar-nav">
         <button class="btn btn-link p-0"><a class="nav-link text-decoration-none" href="/login">login</a></button>
         <button class="btn btn-link p-0"><a class="nav-link text-decoration-none" href="/register">sign up</a></button>
       </div>
@@ -93,6 +94,7 @@
     <% } %> 
 </nav>
 
+<!-- mobile bottom navbar -->
 <% if(currentUser) {%> 
   <nav class="navbar navbar-light fixed-bottom bg-warning d-lg-none d-flex justify-content-around flex-nowrap pt-2 mt-5 container-fluid">
        <a class="nav-link text-dark" href="/home"><i class="fas fa-home footer-icon" style="font-size: 20px;"></i></a>
