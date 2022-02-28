@@ -3,7 +3,7 @@ const sgMail = require("@sendgrid/mail");
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 //------------------------- LANDING -------------------------
-module.exports.renderLandingPage = (req, res) => {
+module.exports.renderLandingPage =  (req, res) => {
     if(req.user){
         return res.redirect("/home");
     } else {

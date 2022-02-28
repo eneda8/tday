@@ -261,6 +261,7 @@ module.exports.renderHomePage= async (req, res) =>{
 
 // ------------------------USER PROFILE-----------------------------
 module.exports.showUserProfile = async(req, res) => {
+    const today = res.locals.cookie['today'];
     const user = await User.findOne({username : req.params.username})
         .populate("journals").populate("posts").populate("comments").populate({
             path: "bookmarks",
@@ -271,7 +272,7 @@ module.exports.showUserProfile = async(req, res) => {
         return res.redirect("/home");
     }
     const comments = await Comment.find({"author": user}).sort({"createdAt": -1}).populate("post")
-    res.render("users/show", {user, comments, within24Hours, title: `@${user.username} / t'day`, style: "styles"});
+    res.render("users/show", {user, comments, today, within24Hours, title: `@${user.username} / t'day`, style: "styles"});
 };
 
 module.exports.updateProfile = async(req, res) => {

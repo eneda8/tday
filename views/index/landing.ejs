@@ -5,12 +5,7 @@
     class="alert alert-light alert-dismissible fade show rounded border-success bg-white p-2 text-center text-dark mt-2"
     role="alert" style="font-size: 18px;">
     <div class="mr-5">
-      Current global average rating for <span class="font-weight-bold">
-        <%=today%>
-      </span>: <span class="star star<%=Math.trunc(average)%>-result" style="font-size: 18px"></span> <span
-        class="font-weight-bold">
-        <%=average%>/5
-      </span>
+      Current global average rating for <span id="today" class=""></span>:  <span class="font-weight-bold"><%=average%></span> <span class="star star<%=Math.trunc(average)%>-result" style="font-size: 18px"></span>
     </div>
     <button type="button" class="close py-0" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>

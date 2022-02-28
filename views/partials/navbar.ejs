@@ -46,7 +46,7 @@
       <li class="nav-item dropdown mr-3">
         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="/u/<%=currentUser.username%>" role="button" aria-haspopup="true" aria-expanded="false"> <img class="img-fluid img-thumbnail rounded-circle p-0" src="<%=currentUser.avatar.profile%>" style= "width: 30px;"alt=""></a>
         <div class="dropdown-menu" style="min-width: 5rem; transform: translate(-15px);">
-          <small class="font-weight-bold pl-2 text-wrap" disabled ><%=currentUser.displayName%></small>
+          <small class="dropdown-item disabled font-weight-bold pl-2 text-wrap border-bottom" disabled >@<%=currentUser.username%></small>
           <a class="dropdown-item p-2" href="/u/<%=currentUser.username%>"><i class="fas fa-user text-warning"></i> profile</a>
           <a class="dropdown-item p-2" href="/charts/me"><i class="fas fa-chart-line text-warning"></i> my charts</a>
           <a class="dropdown-item p-2" href="/settings"><i class="fas fa-cog text-warning"></i> settings</a>

@@ -2,6 +2,9 @@
     ///set time-keeping cookies
     const today =  new Date().toLocaleDateString('en-US', {year: 'numeric', month: 'short', day: 'numeric'});
     document.cookie = `today=${today}`; // set user today in cookie
+    if(document.title === "t'day"){
+        document.querySelector("#today").innerText = today;
+    }
     console.log("TODAY'S DATE SET TO:", today); // for transparency purposes
     let yesterday = new Date(today)
     yesterday.setDate(yesterday.getDate() -1)
