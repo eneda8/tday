@@ -2,7 +2,6 @@
 <div class="mainContainer d-flex justify-content-center container-fluid w-100 px-0">
     <div class="row w-100 d-flex flex-nowrap justify-content-center px-0">
         <div class="leftSidebar px-0 mt-lg-3">
-            <!-- <h3 class="title mb-2" style="font-size: 1.7rem">Home</h3> -->
             <%- include("../partials/leftSidebar") %>
         </div>
         <div class="mainContent mx-3 bg-white mt-lg-3 px-0 shadow-sm rounded">
@@ -16,29 +15,27 @@
                         <a href="" data-toggle="modal" id ="avatarPreviewLink" data-target="#avatarPreviewModal">
                             <img src="<%=user.avatar.profile%>" alt="" width="150" height="150" style="border-radius: 50%; margin-top: 2px;" class="rounded-circle my-3 img-fluid img-thumbnail">
                         </a>
-                        <h4 class="mb-0 font-weight-light"><%=user.displayName%></h4>
-                        <span class="d-block text-muted text-center">@<%=user.username%></span>
+                        <div id="names">
+                            <h4 class="mb-0 font-weight-light"><%=user.displayName%></h4>
+                            <span class="d-block text-muted text-center">@<%=user.username%></span>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="bg-light px-4 pt-5 pb-3 mb-2 d-flex justify-content-end">
-                <!-- <div class="text-center">
-                    <h4 class="mb-0 font-weight-light"><%=user.displayName%></h4>
-                    <span class="d-block text-muted">@<%=user.username%></span>
-                </div> -->
-                <ul class="list-inline mb-0 d-flex justify-content-end text-center">
-                    <li class="list-inline-item">
-                        <h5 class="font-weight-bold mb-0 d-block"><%=user.posts.length%></h5><small class="text-muted">Ratings</small>
+            <div id="stats" class="bg-light px-4 pt-5 pb-3 mb-2 d-flex justify-content-end">
+                <ul class="list-inline mb-0 d-flex justify-content-end text-center flex-wrap">
+                    <li class="stats list-inline-item">
+                        <h5 class="stats font-weight-bold mb-0 d-block"><%=user.posts.length%></h5><small id="ratings" class="text-muted">Ratings</small>
                     </li>
-                    <li class="list-inline-item">
-                        <h5 class="font-weight-bold mb-0 d-block"><%=user.comments.length%></h5><small class="text-muted">Comments</small>
+                    <li class="stats list-inline-item">
+                        <h5 class="stats font-weight-bold mb-0 d-block"><%=user.comments.length%></h5 id="comments"><small class="text-muted">Comments</small>
                     </li>
-                    <li class="list-inline-item">
-                        <h5 class="font-weight-bold mb-0 d-block"><%=user.postStreak%></h5><small class="text-muted">Streak</small>
+                    <li class="stats list-inline-item">
+                        <h5 class="stats font-weight-bold mb-0 d-block"><%=user.postStreak%></h5><small id="streak" class="text-muted">Streak</small>
                     </li>
                     <% if(currentUser && user._id.equals(currentUser._id)) { %>
-                    <li class="list-inline-item">
-                        <h5 class="font-weight-bold mb-0 d-block"><%=user.average%></h5><small class="text-muted">Avg. Rating</small>
+                    <li class="stats list-inline-item">
+                        <h5 class="stats font-weight-bold mb-0 d-block"><%=user.average%></h5><small id="avg" class="text-muted">Avg. Rating</small>
                     </li>
                     <% } %> 
                 </ul>
@@ -108,3 +105,21 @@
 <%- include("../partials/userProfile/modals/avatarPreview") %>
 <%- include("../partials/userProfile/modals/editTodayAndYesterday") %>
 <%- include("../partials/toasts/donateToast") %>
+
+<style>
+    @media screen and (max-width: 567px){
+        main{
+            padding-left: 0;
+            padding-right: 0;
+        }
+        .stats, #names{
+            font-size: 12px;
+        }
+    }
+    @media screen and (max-width: 300px){
+        body {
+            zoom: .8;
+        }
+    }
+
+</style>
