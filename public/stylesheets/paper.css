@@ -22,7 +22,7 @@
     height: 100%;
 }
 
-@media screen and (720px <= width <= 992px), (min-width: 1300px){
+@media screen and (720px <= width <= 992px), (min-width: 1200px){
     .paper::before {
     content: '';
     position: absolute;
