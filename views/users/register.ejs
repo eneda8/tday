@@ -34,13 +34,12 @@
                                         <div class="form-row mt-3">
                                             <div class="col-md-6 input-group has-validation">
                                                 <div class="input-group-prepend">
-                                                    <span class="input-group-text border-0"><i
-                                                            class="fas fa-at text-primary" data-toggle="tooltip"
-                                                            data-placement="bottom"
-                                                            title="Must be 3-16 alphanumeric characters that may contain an underscore."></i></span>
+                                                    <span class="input-group-text border-0">
+                                                        <i class="fas fa-at text-primary" data-toggle="tooltip" data-placement="bottom" title="Must be 3-16 alphanumeric characters that may contain an underscore."></i>
+                                                    </span>
                                                 </div>
                                                 <input class="form-control border-0" type="text" id="username"
-                                                    name="username" placeholder="Username" pattern="^[a-z0-9_]{3,16}$"
+                                                    name="username" placeholder="Username" pattern="^[A-Za-z0-9_]{3,16}$"
                                                     required>
                                                 <div class="valid-feedback"></div>
                                                 <div class="invalid-feedback">Please enter a valid username.</div>
@@ -144,7 +143,7 @@
                                                 required>
                                                 <option value="">Country</option>
                                                 <% for (let country of countries) { %>
-                                                    <option value="<%=country[" name"]%>"><%=country["name"]%>
+                                                    <option value="<%=country["name"]%>"><%=country["name"]%>
                                                     </option>
                                                     <%}%>
                                             </select>

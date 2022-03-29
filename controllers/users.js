@@ -29,7 +29,8 @@ module.exports.renderRegisterForm = (req, res) => {
 module.exports.register = async (req,res, next) => {
     try{
         const {username, displayName, email, password, ageGroup, gender, country, timezone, defaultTimezone, termsAgreement} = req.body;
-        const user = new User({username, displayName, email, ageGroup, gender, country, defaultTimezone, timezone, avatar, termsAgreement});
+        console.log(req.body)
+        const user = new User({username, displayName, email, ageGroup, gender, country, defaultTimezone, timezone, termsAgreement});
         // if(req.file){
         // user.avatar = req.file;
         // } else {
@@ -40,7 +41,9 @@ module.exports.register = async (req,res, next) => {
         } else {
             user.timezone = user.defaultTimezone;
         };
+        user.avatar = {};
         user.postedToday = false;
+        console.log(user.country);
         user.country.flag = countries.filter(obj => Object.values(obj).includes(user.country.name))[0]["flag"];
         const registeredUser = await User.register(user, password);
         req.login(registeredUser, err => {
@@ -61,6 +64,7 @@ module.exports.register = async (req,res, next) => {
         await sgMail.send(msg)
     } catch(err) {
         req.flash("error", `${err.message}. Please try again!`);
+        console.log(err)
         res.redirect("/register")
     }               
 }
@@ -142,7 +146,7 @@ module.exports.login = async (req,res) => {
 // -----------------------FORGOT PASSWORD------------------
 
 module.exports.getForgotPw = (req, res) => {
-    res.render("users/forgot", {title: "Forgot Password / t'day"})
+    res.render("users/forgot", {title: "Forgot Password / t'day", style: "styles"})
 }
 
 module.exports.putForgotPw = async (req, res) => {
