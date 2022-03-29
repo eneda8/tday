@@ -1,24 +1,32 @@
 <% layout("layouts/boilerplate")%>
-<h6 class="text-muted text-center text-monospace">Write to your heart's content.</h6>
-<small class="text-muted text-center text-monospace d-block">(Journal entries are 100% private and encrypted.)</small>
-<div class="paper text-wrap">
-  <form id="form" action="/write" class="validated-form" method="POST" novalidate>
-    <div>
-      <label id="journalLabel" for="journal[date]" class="text-monospace small mb-0 timestamp"></label>
-      <input id="journalDate" type="hidden" class="journal" name="journal[date]" for="journal[date]" value="">
-      <div class="mt-3">
-        <label for="journal[title]" class="text-monospace d-inline">Title<span class="text-muted">(optional)</span>:</label>
-      <input type="text" name="journal[title]" class="d-inline py-0" style="height: 20px;">
-      </div>
-      <textarea id= "journalBody" autofocus="autofocus" class="text-monospace text-wrap px-0 ml-0" rows="50" cols="100" name="journal[body]" required></textarea>
-      <div class="invalid-feedback">
-        This field cannot be empty!
-      </div>  
+<div class="container-fluid mb-3 px-0">
+  <div class="row vw-100 d-flex justify-content-center mx-auto">
+    <div class="col text-center">
+      <h6 class="text-muted text-center text-monospace">Write to your heart's content.</h6>
+      <small class="text-muted text-center text-monospace d-block">(Journal entries are 100% private and encrypted.)</small>
     </div>
-    <button type="button" class="btn btn-sm btn-link text-danger" data-toggle="modal" data-target="#deleteModal" >Discard</button>
-    <button class="btn btn-sm btn-link my-3" type="submit">Submit</button>  
-  </form>
+  </div>
+  <div class="container row vw-100 pb-0 d-flex justify-content-center mx-auto px-0">
+    <div class="col paper text-wrap">
+      <form id="form" action="/write" class="validated-form" method="POST" novalidate>
+          <label id="journalLabel" for="journal[date]" class="text-monospace small mb-0 timestamp"></label>
+          <input id="journalDate" type="hidden" class="journal" name="journal[date]" for="journal[date]" value="">
+          <div class="my-3 pt-1">
+            <label for="journal[title]" class="text-monospace d-inline">Title<span class="text-muted">(optional)</span>:</label>
+            <input type="text" name="journal[title]" class="d-inline py-0 text-break" style="height: 20px; width: 250px">
+          </div>
+          <textarea id= "journalBody" autofocus="autofocus" class="text-monospace text-wrap text-break px-0 ml-0" rows="50" cols="100" name="journal[body]" required></textarea>
+          <div class="invalid-feedback">
+            This field cannot be empty!
+          </div>  
+        <button type="button" class="btn btn-sm btn-link text-danger" data-toggle="modal" data-target="#deleteModal" >Discard</button>
+        <button class="btn btn-sm btn-link my-3" type="submit">Submit</button>  
+      </form>
+    </div>
+  </div>
 </div>
+
+
 
 <%- include("../partials/confirmDeleteModals/journal")%>
 

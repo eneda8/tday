@@ -1,14 +1,22 @@
 <% layout("layouts/boilerplate")%>
-<h6 class="text-muted text-center text-monospace">Edit Journal</h6>
-<div class="paper text-wrap" spellcheck="false">
-    <form action="/write/<%=journal._id%>?_method=PUT" class="mb-3" method="POST" novalidate>
-    <div class="mt-3">
-        <label for="journal[title]" class="text-monospace d-inline">Title<span class="text-muted">(optional)</span>:</label>
-        <input type="text" name="journal[title]" class="d-inline py-0" value="<%=journal.title%>">
+<div class="container mb-3 px-0">
+    <h6 class="text-muted text-center text-monospace">Edit Journal</h6>
+    <div class="container mb-1 px-0 text-wrap text-break">
+        <div class="row h-100 p-0 mx-2 mx-lg-5 d-flex justify-content-center">
+            <div class="col paper h-100 text-wrap text-break mb-3" spellcheck="false">
+                <form action="/write/<%=journal._id%>?_method=PUT" class="mb-3" method="POST" novalidate>
+                    <div class="mt-3">
+                        <label for="journal[title]" class="text-monospace d-inline">Title<span class="text-muted">(optional)</span>:</label>
+                        <input type="text" name="journal[title]" class="d-inline py-0" value="<%=journal.title%>">
+                    </div>
+                    <textarea id="journalBody" autofocus="autofocus" class="text-monospace text-wrap px-0 py-1 ml-0 mb-3" rows="50" cols="100" name="journal[body]" style="white-space: pre-wrap;"><%=journal.body%></textarea>                     
+                    <button class="btn btn-sm btn-warning" type="submit">Update</button>
+                    <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal" >Cancel</button>               
+                </form>
+            </div>
+        </div>
     </div>
-    <textarea id="journalBody" autofocus="autofocus" class="text-monospace text-wrap px-0 py-1 ml-0 mb-3" rows="50" cols="100" name="journal[body]" style="white-space: pre-line;"><%=journal.body%></textarea>                     
-    <button class="btn btn-sm btn-warning" type="submit">Update</button>
-    <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal" >Cancel</button>               
-    </form>
 </div>
+
+
 <%- include("../partials/confirmDeleteModals/journal")%>
