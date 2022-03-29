@@ -1,17 +1,17 @@
 <% layout("layouts/boilerplate")%>
 <div class="mainContainer d-flex justify-content-center container-fluid w-100 px-0">
-    <div class="row w-100 d-flex flex-nowrap justify-content-center px-0">
-        <div class="leftSidebar px-0 mt-lg-3">
+    <div class="row w-100 d-flex flex-nowrap justify-content-center px-0 mx-lg-5">
+        <div class="col-3 px-0 mt-lg-3 d-none d-md-block">
             <%- include("../partials/leftSidebar") %>
         </div>
-        <div class="mainContent mx-3 bg-white mt-lg-3 px-0 shadow-sm rounded">
+        <div class="col flex-grow-1 mx-3 bg-white mt-lg-3 px-0 shadow-sm rounded">
             <% if(user.coverPhoto) { %> 
             <div class="px-4 pt-0 pb-4 rounded" style="background-image: url('<%=user.coverPhoto.profile%>'); background-size:cover; background-repeat: no-repeat;">
             <% } else {%> 
             <div class="px-4 pt-0 pb-4" style="background-color: <%=user.coverColor%>;background-size:cover; background-repeat: no-repeat;">
             <% } %> 
                 <div class="media align-items-end" style="transform: translateY(8em)">
-                    <div class="mr-3">
+                    <div class="">
                         <a href="" data-toggle="modal" id ="avatarPreviewLink" data-target="#avatarPreviewModal">
                             <img src="<%=user.avatar.profile%>" alt="" width="150" height="150" style="border-radius: 50%; margin-top: 2px;" class="rounded-circle my-3 img-fluid img-thumbnail">
                         </a>
@@ -23,19 +23,19 @@
                 </div>
             </div>
             <div id="stats" class="bg-light px-4 pt-5 pb-3 mb-2 d-flex justify-content-end">
-                <ul class="list-inline mb-0 d-flex justify-content-end text-center flex-wrap">
-                    <li class="stats list-inline-item">
-                        <h5 class="stats font-weight-bold mb-0 d-block"><%=user.posts.length%></h5><small id="ratings" class="text-muted">Ratings</small>
+                <ul class="list-inline mb-0 d-flex justify-content-end text-center flex-wrap p-1 pl-2">
+                    <li class=" list-inline-item">
+                        <h4 class="mb-0 d-block"><%=user.posts.length%></h5><small id="ratings" class="text-muted">Ratings</small>
                     </li>
-                    <li class="stats list-inline-item">
-                        <h5 class="stats font-weight-bold mb-0 d-block"><%=user.comments.length%></h5 id="comments"><small class="text-muted">Comments</small>
+                    <li class=" list-inline-item">
+                        <h4 class="mb-0 d-block"><%=user.comments.length%></h5 id="comments"><small class="text-muted">Comments</small>
                     </li>
-                    <li class="stats list-inline-item">
-                        <h5 class="stats font-weight-bold mb-0 d-block"><%=user.postStreak%></h5><small id="streak" class="text-muted">Streak</small>
+                    <li class=" list-inline-item">
+                        <h4 class="mb-0 d-block"><%=user.postStreak%></h5><small id="streak" class="text-muted">Streak</small>
                     </li>
                     <% if(currentUser && user._id.equals(currentUser._id)) { %>
-                    <li class="stats list-inline-item">
-                        <h5 class="stats font-weight-bold mb-0 d-block"><%=user.average%></h5><small id="avg" class="text-muted">Avg. Rating</small>
+                    <li class=" list-inline-item">
+                        <h4 class="mb-0 d-block"><%=user.average%></h5><small id="avg" class="text-muted">Avg. Rating</small>
                     </li>
                     <% } %> 
                 </ul>
@@ -72,7 +72,7 @@
                 <%} %> 
             </div>
         </div>
-        <div class="rightSidebar mt-lg-3 px-0">
+        <div class="col-3 mt-lg-3 px-0 d-none d-lg-block">
             <div class="w-100">
                     <div class="rounded shadow-sm border-0 bg-light w-100 p-2 mb-3">
                         <iframe style="background: #FFFFFF;border: none;border-radius: 2px; padding: 0;" width="100%" height="250" src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=3e56620a-ac24-464e-9793-3f5065281e6f&maxDataAge=3600&autoRefresh=true&theme=light&filter={'authorID':'<%=user._id%>'}"></iframe>
@@ -112,9 +112,17 @@
             padding-left: 0;
             padding-right: 0;
         }
-        .stats, #names{
+        ul{
+            transform: translateX(18px);
+            border-left: 1px solid gray
+        }
+        li, #names{
             font-size: 12px;
         }
+        #names{
+            transform:translate(-9px, -6px)
+        }
+
     }
     @media screen and (max-width: 300px){
         body {

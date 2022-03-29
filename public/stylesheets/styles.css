@@ -1,5 +1,5 @@
 
-@import url("https://fonts.googleapis.com/css2?family=Poppins:weight@100;200;300;400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:weight@100;200;300;400;500;600;700;800");
 
 * {
     margin: 0;
@@ -9,6 +9,7 @@
 
 html, body {
     font-family: "Poppins", 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-style: inherit;
     display: flex;
     flex-direction: column;
 }
@@ -58,10 +59,6 @@ i {
     height: 100% !important;
   }
 
-.mainContent {
-    height: fit-content;
-}
-/* right sidebar */
 
 .upper {
     width: 100%;
@@ -104,78 +101,21 @@ i {
     }
 }
 
-@media screen and (max-width: 600px){
-    .mainContent{
-        width: 100%;
-    }
-
-}
-
 @media screen and (max-width: 992px){
-    .leftSidebar, .rightSidebar {
-        display: none;
-    }
     main {
         padding-bottom: 60px;
     }
 }
 
-@media screen and (min-width: 600px) and (max-width:992px){
-    .mainContent{
-        width: 600px;
-    }
-}
-
 @media screen and (min-width: 993px) and (max-width:1189px) {
-    .mainContent{
-        width: 70%;
-    }
-    .leftSidebar {
-        width: 30%;
-    }
     .menu, .title {
         padding-left: 30px;
     }
-    .rightSidebar {
-        display: none;
-    }
 }
 
-@media screen and (min-width: 1190px) and (max-width:1288px) {
-    .mainContent{
-        width: 525px;
+@media screen and (min-width: 2000px) {
+    .mainContainer{
+        margin: 0 22% 
     }
-    .leftSidebar{
-        width: 235px;
-    }
-    .rightSidebar{
-        width: 300px;
-    }
-}
 
-@media screen and (min-width: 1288px) and (max-width:1470px) {
-    .mainContent{
-        width: 600px;
-        /* width: 52%; */
-    }
-    .leftSidebar{
-        width: 235px;
-        /* width: 20%; */
-    }
-    .rightSidebar{
-        width: 320px;
-        /* width: 28%; */
-    }
-}
-
-@media screen and (min-width: 1471px) {
-    .mainContent{
-        width: 700px;
-    }
-    .leftSidebar{
-        width: 235px;
-    }
-    .rightSidebar{
-        width: 350px;
-    }
 }
