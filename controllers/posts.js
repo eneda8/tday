@@ -172,6 +172,10 @@ module.exports.search = async (req, res) => {
     const user = await User.findById(req.user._id).populate("posts");
     const {dbQuery} = res.locals;
     let posts, docsFound;
+    let todaysPost;
+    if(user.postedToday == true && user.todaysPost.length) {
+        todaysPost = await Post.findById(user.todaysPost);
+    }  else {todaysPost = "null"};
     delete res.locals.dbQuery;
     if(dbQuery) {
         posts = await Post.paginate(dbQuery, {
@@ -194,5 +198,5 @@ module.exports.search = async (req, res) => {
             res.locals.error = "No results match that query. Please try a broader search.";
         }
     }
-    res.render("posts/search", {posts, user, within24Hours, countries, docsFound, title: "Search / t'day", style: "styles"});
+    res.render("posts/search", {posts, user, todaysPost, within24Hours, countries, docsFound, title: "Search / t'day", style: "styles"});
 }

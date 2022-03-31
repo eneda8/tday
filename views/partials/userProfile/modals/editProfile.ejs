@@ -1,6 +1,6 @@
 <div>
     <div class="modal fade " id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModal" aria-hidden="true">
-        <div class="modal-dialog ">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content bg-light p-3">
                 <div class="modal-header pb-0">
                     <h5 class="modal-title font-weight-bold" id="editProfileLableModal">Edit Profile</h5>
@@ -24,11 +24,12 @@
                                     
                                 </div>
                             </div>
-                            <div class="mb-3">
+                            <!-- <div class="mb-3">
                                 <label for="coverColor" class="mb-0">Profile cover color:</label>
                                 <input type="color" name="coverColor" id="coverColor" value="<%=user.coverColor%>">
-                            </div>
+                            </div> -->
                             <p class="mb-0">Avatar</p>
+                            <small class="text-muted">We recommend <a target="_blank" rel="noopener noreferrer" href="https://getavataaars.com/">this <sup><i class="fas fa-external-link-alt small"></i></sup></a> free avatar generator.</small>
                             <div class="custom-file mb-3">
                                 <input type="file" class="custom-file-input border-0" id="avatar" name="avatar" onchange="document.getElementById('preview1').src = window.URL.createObjectURL(this.files[0])">
                                 <label class="custom-file-label border-0" for="avatar">Choose an image...</label>

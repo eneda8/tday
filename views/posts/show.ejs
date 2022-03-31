@@ -1,12 +1,12 @@
 <% layout("layouts/boilerplate")%>
 
 <div class="mainContainer container-fluid d-flex justify-content-center w-100 px-0">
-  <div class="row w-100 d-flex flex-nowrap justify-content-center px-0" >
+  <div class="row mx-lg-5 w-100 d-flex flex-nowrap justify-content-center px-0" >
     <div class="col-3 px-0 mt-lg-3 d-none d-md-block">
       <h5 id="" class="title mb-2 d-flex flex-wrap">@<%=post.author.username%>'s Rating</h5>
       <%- include("../partials/leftSidebar") %>
     </div>
-    <div class="col flex-grow-1 mx-3 bg-light mt-lg-3 px-3 shadow-sm rounded">
+    <div class="col flex-grow-1 bg-light mt-lg-3 mx-lg-3 px-3 shadow-sm rounded">
       <%- include('../partials/posts/edit')%>
       <%- include("../partials/posts") %>
       <div id="commentDiv" class="bg-white p-3 mb-3">
@@ -58,7 +58,7 @@
           <% }} %>
       </div>
     </div>
-    <div class="col mt-lg-3 px-0 d-none d-lg-block">
+    <div class="col-3 mt-lg-3 px-0 d-none d-lg-block">
       <%- include("../partials/rightSidebar") %>
     </div>
   </div>
