@@ -29,7 +29,6 @@ module.exports.renderRegisterForm = (req, res) => {
 module.exports.register = async (req,res, next) => {
     try{
         const {username, displayName, email, password, ageGroup, gender, country, timezone, defaultTimezone, termsAgreement} = req.body;
-        console.log(req.body)
         const user = new User({username, displayName, email, ageGroup, gender, country, defaultTimezone, timezone, termsAgreement});
         // if(req.file){
         // user.avatar = req.file;
@@ -167,13 +166,7 @@ module.exports.putForgotPw = async (req, res) => {
     text: `Hi ${user.displayName}, Forgot your password? We received a request to reset the password for your account. To reset your password, click this link: https://${req.headers.host}/reset/${token}. Or, copy and paste the URL into your browser: https://${req.headers.host}/reset/${token}. If you didn't request a password reset, you can ignore this email - your password won't be changed. -the t'day team `,
     html: `Hi ${user.displayName}, <br> <br> Forgot your password? We received a request to reset the password for your account. <br> <br> To reset your password, click this link: <a href="https://${req.headers.host}/reset/${token}">Reset Password</a> <br> Or, copy and paste the URL into your browser: https://${req.headers.host}/reset/${token} <br> <br> If you didn't request a password reset, you can ignore this email. Your password won't be changed. <br> <br> <strong>-the t'day team</strong>`,
     }
-    try{
-        await sgMail.send(msg)
-        console.log("email sent")
-    } catch(err){
-        console.log(err)
-    }
-    
+    await sgMail.send(msg)    
     req.flash("success", `An email has been sent to ${email} with further instructions.`);
     res.redirect("/forgot-password");
 }

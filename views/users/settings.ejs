@@ -1,186 +1,372 @@
 <% layout("layouts/boilerplate")%>
-<div class="container-fluid">
-<div class="row mt-5 px-4">
-    <div class="col-md-8 col-lg-8 mx-auto ">
-        <div class="card border-0 shadow rounded px-3 pt-3 bg-light">
-            <div class="bg-transparent px-2 mx-2 pt-2">
-                <a href="/home"><h6><i class="fas fa-arrow-left"></i> Back to Home</h6></a>
-                <h4 class="px-2 pt-2 mb-0 pb-0">Settings</h4>
-                <a href="/u/<%=currentUser.username%>"><img class="img-fluid img-thumbnail rounded-circle p-0" src="<%=currentUser.avatar.profile%>" style= "width: 100px;"alt=""></a>
-                <p class="px-2 mb-2 text-muted">User: <%=user.displayName%> | @<%=user.username%>  <br>Account created: <span class="timestamp"><%=user.createdAt%></span></p>
+<div class="mainContainer d-flex justify-content-center container-fluid w-100 px-lg-5 mx-lg-5">
+    <div class="row mx-0 px-0 mx-lg-5 px-lg-5 w-100 d-flex justify-content-center px-0">
+        <div class="col card border-0 shadow rounded pt-3 bg-light mx-lg-5">
+            <div class="row">
+                <div class="col">
+                    <div class="bg-transparent px-0 mx-0 px-lg-2 mx-lg-2 pt-2">
+                        <a href="/home" class="d-none d-md-block"><h6><i class="fas fa-arrow-left"></i> Back to Home</h6></a>
+                        <h4 class="px-2 mb-0 pb-0">Settings</h4>
+                        <a href="/u/<%=currentUser.username%>"><img class="img-fluid img-thumbnail rounded-circle p-0" src="<%=currentUser.avatar.profile%>" style= "width: 100px;"alt=""></a>
+                        <p class="px-2 mb-2 text-muted">User: <%=user.displayName%> | @<%=user.username%>  <br>Account created: <span class="timestamp"><%=user.createdAt%></span></p>
+                    </div>
+                </div>
+            </div>
+            <div class="d-none d-md-block">
+                <div class="row">
+                    <div class="col-md-4 pr-0 border-right pb-2">
+                        <div class="list-group border-top" id="list-tab" role="tablist">
+                            <a class="list-group-item list-group-item-action active" id="list-account-list" data-toggle="tab" href="#account-info" role="tab" aria-controls="account"  data-tab-history="true" data-tab-history-changer="push" data-tab-history-update-url="true">
+                                <h5><i class="fas fa-user-circle mr-1"></i>  Account Information</h5>
+                                <small class="d-none d-md-block">Change your account information like username and email address.</small>
+                            </a>
+                            <a class="list-group-item list-group-item-action" id="list-password-list" data-toggle="tab" href="#change-password" role="tab" aria-controls="password" data-tab-history="true" data-tab-history-changer="push" data-tab-history-update-url="true">
+                                <h5><i class="fas fa-key small mr-2"></i>  Password</h5>
+                                <small class="d-none d-md-block">Change your password at any time.</small>
+                            </a>
+                            <a class="list-group-item list-group-item-action disabled" id="list-download-list" data-toggle="tab" href="#download-data" role="tab" aria-controls="download" data-tab-history="true" data-tab-history-changer="push" data-tab-history-update-url="true">
+                                <h5><i class="fas fa-download small mr-3"></i>Data</h5>
+                                <small class="d-none d-md-block">Download an archive of your data. (Coming soon!)</small>
+                            </a>
+                            <a class="list-group-item list-group-item-action" id="list-resources-list" data-toggle="tab" href="#resources" role="tab" aria-controls="resources" data-tab-history="true" data-tab-history-changer="push" data-tab-history-update-url="true">
+                                <h5><i class="fas fa-info small mr-3"></i> Additional Resources</h5>
+                                <small class="d-none d-md-block">Privacy information & ways to contact us.</small>
+                            </a>
+                            <a class="list-group-item list-group-item-action" id="list-delete-list" data-toggle="tab" href="#delete-account" role="tab" aria-controls="delete-account" data-tab-history="true" data-tab-history-changer="push" data-tab-history-update-url="true">
+                                <h5><i class="fas fa-user-times small mr-3"></i>Delete Account</h5>
+                                <small class="d-none d-md-block">Permanently delete your account.</small>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-8 pl-1 pr-0 pt-2 border-top">
+                        <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="account-info" role="tabpanel" aria-labelledby="list-account-list">
+                            <div class="px-md-4">
+                                <h5 class="mt-1">Change Account Details</h5>
+                                <form action="/settings?_method=PUT" method="POST" class="validated-form" novalidate >
+                                    <div class="form-row mt-3">
+                                        <div class="col-md-6 input-group">
+                                            <div class="input-group-prepend ">
+                                                <span class="input-group-text border-0"><i class="fas fa-at text-primary" data-toggle="tooltip" data-placement="bottom" title="Must be 3-16 alphanumeric characters that may contain an underscore."></i></span>
+                                            </div>
+                                            <input class="form-control border-0" type="text" id="username" name="username" placeholder ="Username" pattern="/^[a-z0-9_]{3,16}$/" >
+                                            <small id="" class="mt-1">
+                                                Changing your username will end this session and require you to log back in with your new username.
+                                            </small>
+                                            <div class="valid-feedback"></div>
+                                            <div class="invalid-feedback">Please enter a valid username.</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row mt-3">
+                                        <div class="col-md-6 input-group">
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text border-0" for="email"><i class="fas fa-envelope text-primary"></i></label>
+                                            </div>
+                                            <input class="form-control border-0" type="email" id="email" name="email" placeholder ="Email">
+                                            <div class="valid-feedback"></div>
+                                            <div class="invalid-feedback">Please enter a valid email.</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row mt-3">
+                                        <div class="col-md-6 input-group">
+                                            <label class="input-group-text border-0" for="ageGroup"><i class="fas fa-birthday-cake text-primary"></i></label>
+                                            <select name="ageGroup" id="ageGroup" class="custom-select border-0" disabled data-toggle="tooltip" data-placement="bottom" title="This value cannot be changed.
+                                            ">
+                                                <option selected value="<%=user.ageGroup%>"><%=user.ageGroup%></option>         
+                                            </select>
+                                            <div class="valid-feedback"></div>
+                                            <div class="invalid-feedback">Please select a valid option.</div>
+                                        </div>
+                                    </div> 
+                                    <div class="form-row mt-3">
+                                        <div class="col-md-6 input-group">
+                                            <label class="input-group-text border-0" for="gender"><i class="fas fa-venus-mars text-primary"></i></label>
+                                            <select class="custom-select border-0" id="gender" name="gender" disabled data-toggle="tooltip" data-placement="bottom" title="This value cannot be changed.
+                                            ">
+                                                <option selected value="<%=user.gender%>"><%=user.gender%></option>   
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-row mt-3">
+                                        <div class="col-md-6 input-group">
+                                            <label class="input-group-text border-0" for="country[name]"><i class="fas fa-globe-americas text-primary"></i></label>
+                                            <select class="custom-select border-0" id="countryName" name="country[name]" required>
+                                                <option value="">Country</option> 
+                                                <%  for (let country of countries) { %>
+                                                    <option value="<%=country["name"]%>" <%= country["name"] === user.country.name ? 'selected' : '' %>><%=country["name"]%></option>
+                                                <%}%>        
+                                            </select>
+                                            <div class="valid-feedback"></div>
+                                            <div class="invalid-feedback">Please select a valid option</div>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-warning mt-3" type="submit">Update</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="change-password" role="tabpanel" aria-labelledby="list-password-list">
+                            <div class="px-4">
+                                <h5 class="mt-1">Change Password</h5>
+                                <small class="text-muted">Password must be 8-20 characters and contain at least one number, one uppercase letter, and one special character.</small>
+                                <form action="/settings/password?_method=PUT" method="POST" class="validated-form" novalidate >
+                                    <div class="form-row mt-3">
+                                        <div class="col-md-6">
+                                            <label class="form-label mb-0" for="oldPassword">Current Password</label>
+                                            <input class="form-control" type="password" id="oldPassword" name="oldPassword" pattern="^(?=(.*[a-z]))(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[!@#$%^&*()\-__+.]){1,}).{8,20}$" required>
+                                            <div class="invalid-feedback">Please enter a valid password.</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row mt-3">
+                                        <div class="col-md-6">
+                                            <label class="form-label mb-0" for="newPassword">New Password</label>
+                                            <input class="form-control" type="password" id="newPassword" name="newPassword" pattern="^(?=(.*[a-z]))(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[!@#$%^&*()\-__+.]){1,}).{8,20}$" required>
+                                            <div class="valid-feedback"></div>
+                                            <div class="invalid-feedback">Please enter a valid password.</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row mt-3">
+                                        <div class="col-md-6">
+                                            <label class="form-label mb-0" for="confirmPassword">Confirm New Password</label>
+                                            <input class="form-control" type="password" id="confirmPassword" name="confirmPassword" pattern="^^(?=(.*[a-z]))(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[!@#$%^&*()\-__+.]){1,}).{8,20}$" required>
+                                            <div class="valid-feedback"></div>
+                                            <div class="invalid-feedback">Please enter a valid password.</div>
+                                        </div>
+                                    </div> 
+                                    
+                                    <button class="btn btn-warning mt-3" type="submit">Update</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="download-data" role="tabpanel" aria-labelledby="list-download-list">
+    
+                        </div>
+                        <div class="tab-pane fade" id="resources" role="tabpanel" aria-labelledby="list-resources-list">
+                            <div class="p-3">
+                                <a class="text-primary d-block" href="/contact">Contact</a>
+                                <a class="text-primary d-block" href="/donate">Donate</a>
+                                <a class="text-primary d-block" href="/terms">Terms of Use</a>
+                                <a class="text-primary d-block" href="/privacy">Privacy Policy</a>
+                                <a class="text-primary d-block" href="/cookies">Cookie Policy</a>
+                            </div>
+                       
+                        </div>
+                        <div class="tab-pane fade" id="delete-account" role="tabpanel" aria-labelledby="list-delete-list">
+                            <div class="px-4">
+                                <h5 class="alert-heading mt-1 text-danger">Delete Account</h5>
+                                <p>This will permanently, irreversibly remove content from your account and delete it from our database. This includes all of your account information, ratings, comments, bookmarks, journals, and data.</p>
+                                <form class="d-inline" action="/u/<%=user.username%>?_method=DELETE" method="POST" class="validated-form" novalidate>
+                                    <div class="form-row mt-3">
+                                        <div class="col-md-6">
+                                            <label class="form-label mb-0" for="password">Password</label>
+                                            <input class="form-control" type="password" id="password" name="password" pattern="^(?=(.*[a-z]))(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[!@#$%^&*()\-__+.]){1,}).{8,20}$" required>
+                                            <small>Enter your password to verify your identity.</small>
+                                            <div class="invalid-feedback">Please enter a valid password.</div>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-danger mt-3" type="button" data-toggle="modal" data-target="#deleteAccountModal">Delete Account</button>
+                                    <div class="modal fade" id="deleteAccountModal" tabindex="-1" aria-labelledby="deleteAccountModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="deleteAccountModalLabel">Are you sure?</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
+                                                    <button type="submit" class="btn btn-danger">Delete Account</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div> 
             </div>
 
-            <div class="row pl-2 pr-4 pt-2  pb-5">
-                <div class="col-4 pr-0 border-right">
-                  <div class="list-group border-top" id="list-tab" role="tablist">
-                    <a class="list-group-item list-group-item-action active" id="list-account-list" data-toggle="tab" href="#account-info" role="tab" aria-controls="account"  data-tab-history="true" data-tab-history-changer="push" data-tab-history-update-url="true">
-                        <h5><i class="fas fa-user-circle mr-1"></i>  Account Information</h5>
-                        <small>Change your account information like username and email address.</small>
-                    </a>
-                    <a class="list-group-item list-group-item-action" id="list-password-list" data-toggle="tab" href="#change-password" role="tab" aria-controls="password" data-tab-history="true" data-tab-history-changer="push" data-tab-history-update-url="true">
-                        <h5><i class="fas fa-key small mr-2"></i>  Password</h5>
-                        <small>Change your password at any time.</small>
-                    </a>
-                    <a class="list-group-item list-group-item-action disabled" id="list-download-list" data-toggle="tab" href="#download-data" role="tab" aria-controls="download" data-tab-history="true" data-tab-history-changer="push" data-tab-history-update-url="true">
-                        <h5><i class="fas fa-download small mr-2"></i>Data</h5>
-                        <small>Download an archive of your data. (Coming soon!)</small>
-                    </a>
-                    <a class="list-group-item list-group-item-action disabled" id="list-resources-list" data-toggle="tab" href="#resources" role="tab" aria-controls="resources" data-tab-history="true" data-tab-history-changer="push" data-tab-history-update-url="true">
-                        <h5><i class="fas fa-info small mr-2"></i>Additional Resources</h5>
-                        <small>Privacy information & ways to contact us. (Coming soon!)</small>
-                    </a>
-                    <a class="list-group-item list-group-item-action" id="list-delete-list" data-toggle="tab" href="#delete-account" role="tab" aria-controls="delete-account" data-tab-history="true" data-tab-history-changer="push" data-tab-history-update-url="true">
-                        <h5><i class="fas fa-user-times small mr-2"></i>Delete Account</h5>
-                        <small>Permanently delete your account.</small>
-                    </a>
-                    
-                  </div>
-                </div>
-      
-                <div class="col-8 pl-1 pr-0 pt-2 border-top">
-                  <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane fade show active" id="account-info" role="tabpanel" aria-labelledby="list-account-list">
-                        <div class="px-4">
-                            <h5 class="mt-1">Change Account Details</h5>
-                            <form action="/settings?_method=PUT" method="POST" class="validated-form" novalidate >
-                                <div class="form-row mt-3">
-                                    <div class="col-md-6 input-group">
-                                        <div class="input-group-prepend ">
-                                            <span class="input-group-text border-0"><i class="fas fa-at text-primary" data-toggle="tooltip" data-placement="bottom" title="Must be 3-16 alphanumeric characters that may contain an underscore."></i></span>
-                                        </div>
-                                        <input class="form-control border-0" type="text" id="username" name="username" placeholder ="Username" pattern="/^[a-z0-9_]{3,16}$/" >
-                                        <small id="" class="mt-1">
-                                            Changing your username will end this session and require you to log back in with your new username.
-                                        </small>
-                                        <div class="valid-feedback"></div>
-                                        <div class="invalid-feedback">Please enter a valid username.</div>
-                                    </div>
-                                </div>
-                                <div class="form-row mt-3">
-                                    <div class="col-md-6 input-group">
-                                        <div class="input-group-prepend">
-                                            <label class="input-group-text border-0" for="email"><i class="fas fa-envelope text-primary"></i></label>
-                                        </div>
-                                        <input class="form-control border-0" type="email" id="email" name="email" placeholder ="Email">
-                                        <div class="valid-feedback"></div>
-                                        <div class="invalid-feedback">Please enter a valid email.</div>
-                                    </div>
-                                </div>
-                                <div class="form-row mt-3">
-                                    <div class="col-md-6 input-group">
-                                        <label class="input-group-text border-0" for="ageGroup"><i class="fas fa-birthday-cake text-primary"></i></label>
-                                        <select name="ageGroup" id="ageGroup" class="custom-select border-0" disabled data-toggle="tooltip" data-placement="bottom" title="This value cannot be changed.
-                                        ">
-                                            <option selected value="<%=user.ageGroup%>"><%=user.ageGroup%></option>         
-                                        </select>
-                                        <div class="valid-feedback"></div>
-                                        <div class="invalid-feedback">Please select a valid option.</div>
-                                    </div>
-                                </div> 
-                                <div class="form-row mt-3">
-                                    <div class="col-md-6 input-group">
-                                        <label class="input-group-text border-0" for="gender"><i class="fas fa-venus-mars text-primary"></i></label>
-                                        <select class="custom-select border-0" id="gender" name="gender" disabled data-toggle="tooltip" data-placement="bottom" title="This value cannot be changed.
-                                        ">
-                                            <option selected value="<%=user.gender%>"><%=user.gender%></option>   
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-row mt-3">
-                                    <div class="col-md-6 input-group">
-                                        <label class="input-group-text border-0" for="country[name]"><i class="fas fa-globe-americas text-primary"></i></label>
-                                        <select class="custom-select border-0" id="countryName" name="country[name]" required>
-                                            <option value="">Country</option> 
-                                            <%  for (let country of countries) { %>
-                                                <option value="<%=country["name"]%>" <%= country["name"] === user.country.name ? 'selected' : '' %>><%=country["name"]%></option>
-                                            <%}%>        
-                                        </select>
-                                        <div class="valid-feedback"></div>
-                                        <div class="invalid-feedback">Please select a valid option</div>
-                                    </div>
-                                </div>
-                                <button class="btn btn-warning mt-3" type="submit">Update</button>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade" id="change-password" role="tabpanel" aria-labelledby="list-password-list">
-                        <div class="px-4">
-                            <h5 class="mt-1">Change Password</h5>
-                            <small class="text-muted">Password must be 8-20 characters and contain at least one number, one uppercase letter, and one special character.</small>
-                            <form action="/settings/password?_method=PUT" method="POST" class="validated-form" novalidate >
-                                <div class="form-row mt-3">
-                                    <div class="col-md-6">
-                                        <label class="form-label mb-0" for="oldPassword">Current Password</label>
-                                        <input class="form-control" type="password" id="oldPassword" name="oldPassword" pattern="^(?=(.*[a-z]))(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[!@#$%^&*()\-__+.]){1,}).{8,20}$" required>
-                                        <div class="invalid-feedback">Please enter a valid password.</div>
-                                    </div>
-                                </div>
-                                <div class="form-row mt-3">
-                                    <div class="col-md-6">
-                                        <label class="form-label mb-0" for="newPassword">New Password</label>
-                                        <input class="form-control" type="password" id="newPassword" name="newPassword" pattern="^(?=(.*[a-z]))(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[!@#$%^&*()\-__+.]){1,}).{8,20}$" required>
-                                        <div class="valid-feedback"></div>
-                                        <div class="invalid-feedback">Please enter a valid password.</div>
-                                    </div>
-                                </div>
-                                <div class="form-row mt-3">
-                                    <div class="col-md-6">
-                                        <label class="form-label mb-0" for="confirmPassword">Confirm New Password</label>
-                                        <input class="form-control" type="password" id="confirmPassword" name="confirmPassword" pattern="^^(?=(.*[a-z]))(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[!@#$%^&*()\-__+.]){1,}).{8,20}$" required>
-                                        <div class="valid-feedback"></div>
-                                        <div class="invalid-feedback">Please enter a valid password.</div>
-                                    </div>
-                                </div> 
-                                
-                                <button class="btn btn-warning mt-3" type="submit">Update</button>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade" id="download-data" role="tabpanel" aria-labelledby="list-download-list">
-
-                    </div>
-                    <div class="tab-pane fade" id="resources" role="tabpanel" aria-labelledby="list-resources-list">
-
-                    </div>
-                    <div class="tab-pane fade" id="delete-account" role="tabpanel" aria-labelledby="list-delete-list">
-                        <div class="px-4">
-                            <h5 class="alert-heading mt-1 text-danger">Delete Account</h5>
-                            <p>This will permanently, irreversibly remove content from your account and delete it from our database. This includes all of your account information, ratings, comments, bookmarks, journals, and data.</p>
-                            <form class="d-inline" action="/u/<%=user.username%>?_method=DELETE" method="POST" class="validated-form" novalidate>
-                                <div class="form-row mt-3">
-                                    <div class="col-md-6">
-                                        <label class="form-label mb-0" for="password">Password</label>
-                                        <input class="form-control" type="password" id="password" name="password" pattern="^(?=(.*[a-z]))(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[!@#$%^&*()\-__+.]){1,}).{8,20}$" required>
-                                        <small>Enter your password to verify your identity.</small>
-                                        <div class="invalid-feedback">Please enter a valid password.</div>
-                                    </div>
-                                </div>
-                                <button class="btn btn-danger mt-3" type="button" data-toggle="modal" data-target="#deleteAccountModal">Delete Account</button>
-                                <div class="modal fade" id="deleteAccountModal" tabindex="-1" aria-labelledby="deleteAccountModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="deleteAccountModalLabel">Are you sure?</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
-                                                <button type="submit" class="btn btn-danger">Delete Account</button>
+            <div class="row d-md-none d-flex flex-wrap">
+                <div class="col pb-3">
+                    <div class="accordion" id="settingsAccordion">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="mb-0 d-flex">
+                                    <button class="btn btn-link btn-block text-left p-0" type="button" data-toggle="collapse" data-target="#account-collapse" aria-expanded="true" aria-controls="account-collapse">
+                                       <i class="fas fa-user-circle px-0 mr-2 align-self-baseline"></i>Account Information 
+                                    </button>
+                                 </h5>
+                            </div>
+                            <div id="account-collapse" class="collapse" data-parent="#settingsAccordion">
+                                <div class="card-body">
+                                    <h5 class="mt-1">Change Account Details</h5>
+                                    <form action="/settings?_method=PUT" method="POST" class="validated-form" novalidate >
+                                        <div class="form-row mt-3">
+                                            <div class="col-md-6 input-group">
+                                                <div class="input-group-prepend ">
+                                                    <span class="input-group-text border-0"><i class="fas fa-at text-primary" data-toggle="tooltip" data-placement="bottom" title="Must be 3-16 alphanumeric characters that may contain an underscore."></i></span>
+                                                </div>
+                                                <input class="form-control border-0" type="text" id="username" name="username" placeholder ="Username" pattern="/^[a-z0-9_]{3,16}$/" >
+                                                <small id="" class="mt-1">
+                                                    Changing your username will end this session and require you to log back in with your new username.
+                                                </small>
+                                                <div class="valid-feedback"></div>
+                                                <div class="invalid-feedback">Please enter a valid username.</div>
                                             </div>
                                         </div>
-                                    </div>
+                                        <div class="form-row mt-3">
+                                            <div class="col-md-6 input-group">
+                                                <div class="input-group-prepend">
+                                                    <label class="input-group-text border-0" for="email"><i class="fas fa-envelope text-primary"></i></label>
+                                                </div>
+                                                <input class="form-control border-0" type="email" id="email" name="email" placeholder ="Email">
+                                                <div class="valid-feedback"></div>
+                                                <div class="invalid-feedback">Please enter a valid email.</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row mt-3">
+                                            <div class="col-md-6 input-group">
+                                                <label class="input-group-text border-0" for="ageGroup"><i class="fas fa-birthday-cake text-primary"></i></label>
+                                                <select name="ageGroup" id="ageGroup" class="custom-select border-0" disabled data-toggle="tooltip" data-placement="bottom" title="This value cannot be changed.
+                                                ">
+                                                    <option selected value="<%=user.ageGroup%>"><%=user.ageGroup%></option>         
+                                                </select>
+                                                <div class="valid-feedback"></div>
+                                                <div class="invalid-feedback">Please select a valid option.</div>
+                                            </div>
+                                        </div> 
+                                        <div class="form-row mt-3">
+                                            <div class="col-md-6 input-group">
+                                                <label class="input-group-text border-0" for="gender"><i class="fas fa-venus-mars text-primary"></i></label>
+                                                <select class="custom-select border-0" id="gender" name="gender" disabled data-toggle="tooltip" data-placement="bottom" title="This value cannot be changed.
+                                                ">
+                                                    <option selected value="<%=user.gender%>"><%=user.gender%></option>   
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-row mt-3">
+                                            <div class="col-md-6 input-group">
+                                                <label class="input-group-text border-0" for="country[name]"><i class="fas fa-globe-americas text-primary"></i></label>
+                                                <select class="custom-select border-0" id="countryName" name="country[name]" required>
+                                                    <option value="">Country</option> 
+                                                    <%  for (let country of countries) { %>
+                                                        <option value="<%=country["name"]%>" <%= country["name"] === user.country.name ? 'selected' : '' %>><%=country["name"]%></option>
+                                                    <%}%>        
+                                                </select>
+                                                <div class="valid-feedback"></div>
+                                                <div class="invalid-feedback">Please select a valid option</div>
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-warning mt-3" type="submit">Update</button>
+                                    </form>
                                 </div>
-                            </form>
+                            </div>
                         </div>
-                  </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="mb-0 d-flex">
+                                    <button class="btn btn-link btn-block text-left p-0" type="button" data-toggle="collapse" data-target="#password-collapse" aria-expanded="true" aria-controls="password-collapse">
+                                        <i class="fas fa-key px-0 mr-2 align-self-baseline"></i>Password
+                                    </button>
+                                </h5>
+                            </div>
+                            <div id="password-collapse" class="collapse" data-parent="#settingsAccordion">
+                                <div class="card-body">
+                                    <h5 class="mt-1">Change Password</h5>
+                                    <small class="text-muted">Password must be 8-20 characters and contain at least one number, one uppercase letter, and one special character.</small>
+                                    <form action="/settings/password?_method=PUT" method="POST" class="validated-form" novalidate >
+                                        <div class="form-row mt-3">
+                                            <div class="col-md-6">
+                                                <label class="form-label mb-0" for="oldPassword">Current Password</label>
+                                                <input class="form-control" type="password" id="oldPassword" name="oldPassword" pattern="^(?=(.*[a-z]))(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[!@#$%^&*()\-__+.]){1,}).{8,20}$" required>
+                                                <div class="invalid-feedback">Please enter a valid password.</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row mt-3">
+                                            <div class="col-md-6">
+                                                <label class="form-label mb-0" for="newPassword">New Password</label>
+                                                <input class="form-control" type="password" id="newPassword" name="newPassword" pattern="^(?=(.*[a-z]))(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[!@#$%^&*()\-__+.]){1,}).{8,20}$" required>
+                                                <div class="valid-feedback"></div>
+                                                <div class="invalid-feedback">Please enter a valid password.</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-row mt-3">
+                                            <div class="col-md-6">
+                                                <label class="form-label mb-0" for="confirmPassword">Confirm New Password</label>
+                                                <input class="form-control" type="password" id="confirmPassword" name="confirmPassword" pattern="^^(?=(.*[a-z]))(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[!@#$%^&*()\-__+.]){1,}).{8,20}$" required>
+                                                <div class="valid-feedback"></div>
+                                                <div class="invalid-feedback">Please enter a valid password.</div>
+                                            </div>
+                                        </div> 
+                                        <button class="btn btn-warning mt-3" type="submit">Update</button>
+                                    </form>
+                                   
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="card">
+                            <div class="card-header">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link btn-block text-left disabled" type="button" data-toggle="collapse" data-target="#data-collapse" aria-expanded="true" aria-controls="password-collapse">
+                                        <i class="fas fa-download small mr-3"></i>Download Data <small>(Coming soon!)</small>
+                                    </button>
+                                </h5>
+                            </div>
+                            <div id="data-collapse" class="collapse" data-parent="#settingsAccordion">
+                                <div class="card-body">
+                                </div>
+                            </div>
+                        </div> -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="mb-0 d-fkex">
+                                    <button class="btn btn-link btn-block text-left p-0" type="button" data-toggle="collapse" data-target="#resources-collapse" aria-expanded="true" aria-controls="password-collapse">
+                                        <i class="fas fa-info mr-2 px-1 align-self-baseline"></i> Additional Resources
+                                    </button>
+                                </h5>
+                            </div>
+                            <div id="resources-collapse" class="collapse" data-parent="#settingsAccordion">
+                                <div class="card-body">
+                                    <a class="text-primary d-block" href="/contact">Contact</a>
+                                    <a class="text-primary d-block" href="/donate">Donate</a>
+                                    <a class="text-primary d-block" href="/terms">Terms of Use</a>
+                                    <a class="text-primary d-block" href="/privacy">Privacy Policy</a>
+                                    <a class="text-primary d-block" href="/cookies">Cookie Policy</a>
+                                </div>
+                            </div>
+                        </div> 
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="mb-0 d-flex">
+                                    <button class="btn btn-link btn-block text-left p-0" type="button" data-toggle="collapse" data-target="#delete-collapse" aria-expanded="true" aria-controls="password-collapse">
+                                        <i class="fas fa-user-times px-0 mr-2 align-self-baseline"></i>Delete Account
+                                    </button>
+                                </h5>
+                            </div>
+                            <div id="delete-collapse" class="collapse" data-parent="#settingsAccordion">
+                                <div class="card-body">
+                                    <h5 class="alert-heading mt-1 text-danger">Delete Account</h5>
+                                    <p>This will permanently, irreversibly remove content from your account and delete it from our database. This includes all of your account information, ratings, comments, bookmarks, journals, and data.</p>
+                                    <form class="d-inline" action="/u/<%=user.username%>?_method=DELETE" method="POST" class="validated-form" novalidate>
+                                        <div class="form-row mt-3">
+                                            <div class="col-md-6">
+                                                <label class="form-label mb-0" for="password">Password</label>
+                                                <input class="form-control" type="password" id="password" name="password" pattern="^(?=(.*[a-z]))(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[!@#$%^&*()\-__+.]){1,}).{8,20}$" required>
+                                                <small>Enter your password to verify your identity.</small>
+                                                <div class="invalid-feedback">Please enter a valid password.</div>
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-danger mt-3" type="button" data-toggle="modal" data-target="#deleteAccountModal">Delete Account</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div> 
+                    </div>
                 </div>
             </div>
         </div>
     </div>
- </div>
-
-
-
 </div>
+
