@@ -57,8 +57,8 @@ module.exports.register = async (req,res, next) => {
             to: email,
             from: `t'day <no-reply@tday.co>`,
             subject: `Please verify your email`,
-            text: `Welcome to t'day! To complete your account setup, please click here: https://${req.headers.host}/verify/${token}. Or, copy and paste the URL into your browser: https://${req.headers.host}/verify/${token}. - the t'day team `,
-            html: `<strong>Welcome to t'day!</strong> <br> <br> To complete your account setup, please click here: <a href="https://${req.headers.host}/verify/${token}">Verify Email</a> <br> <br> Or, copy and paste the URL into your browser: https://${req.headers.host}/verify/${token}. <br> <br><strong>- the t'day team</strong>`,
+            text: `Welcome to t'day! To complete your account setup, please click here: https://${req.headers.host}/verify/${token}. - the t'day team `,
+            html: `<strong>Welcome to t'day!</strong> <br> <br> To complete your account setup, please click here:  https://${req.headers.host}/verify/${token}. <br> <br><strong>- the t'day team</strong>`,
         }
         await sgMail.send(msg)
     } catch(err) {
@@ -87,8 +87,8 @@ module.exports.putVerify = async (req, res) => {
         to: email,
         from: `t'day <no-reply@tday.co>`,
         subject: `Please verify your email`,
-        text: `Hello! Welcome to t'day! To complete your account setup. Please click here: https://${req.headers.host}/verify/${token}. Or, copy and paste the URL into your browser: https://${req.headers.host}/verify/${token}. - the t'day team `,
-        html: `<strong>Hello!</strong> <br> <br> Welcome to t'day! To complete your account setup, please click here: <a href="https://${req.headers.host}/verify/${token}">Verify Email</a> <br> Or, copy and paste the URL into your browser: https://${req.headers.host}/verify/${token}. <br> <br><strong>- the t'day team</strong>`,
+        text: `Hello! Welcome to t'day! To complete your account setup. Please click here: https://${req.headers.host}/verify/${token}. - the t'day team `,
+        html: `<strong>Hello!</strong> <br> <br> Welcome to t'day! To complete your account setup, please click here: https://${req.headers.host}/verify/${token}. <br> <br><strong>- the t'day team</strong>`,
         }
     await sgMail.send(msg)
     res.redirect("/verify");
@@ -163,8 +163,8 @@ module.exports.putForgotPw = async (req, res) => {
     to: email,
     from: `t'day <no-reply@tday.co>`,
     subject: `Reset Password Link`,
-    text: `Hi ${user.displayName}, Forgot your password? We received a request to reset the password for your account. To reset your password, click this link: https://${req.headers.host}/reset/${token}. Or, copy and paste the URL into your browser: https://${req.headers.host}/reset/${token}. If you didn't request a password reset, you can ignore this email - your password won't be changed. -the t'day team `,
-    html: `Hi ${user.displayName}, <br> <br> Forgot your password? We received a request to reset the password for your account. <br> <br> To reset your password, click this link: <a href="https://${req.headers.host}/reset/${token}">Reset Password</a> <br> Or, copy and paste the URL into your browser: https://${req.headers.host}/reset/${token} <br> <br> If you didn't request a password reset, you can ignore this email. Your password won't be changed. <br> <br> <strong>-the t'day team</strong>`,
+    text: `Hi ${user.displayName}, Forgot your password? We received a request to reset the password for your account. To reset your password, click this link: https://${req.headers.host}/reset/${token}. If you didn't request a password reset, you can ignore this email - your password won't be changed. -the t'day team `,
+    html: `Hi ${user.displayName}, <br> <br> Forgot your password? We received a request to reset the password for your account. <br> <br> To reset your password, click this link: https://${req.headers.host}/reset/${token} <br> <br> If you didn't request a password reset, you can ignore this email. Your password won't be changed. <br> <br> <strong>-the t'day team</strong>`,
     }
     await sgMail.send(msg)    
     req.flash("success", `An email has been sent to ${email} with further instructions.`);
@@ -340,7 +340,7 @@ module.exports.updateUserInfo = async(req, res) => {
                 from: `t'day  <support@tday.co>`,
                 subject: `Your username was changed`,
                 text: `Hi ${user.displayName}, We're sending you this email to confirm that the username for your account has been changed to ${username}. You have been signed out and will need to use your new username to log back in: https://www.tday.com/login If you did not make this change, please reply and notify us at once. -the t'day team`,
-                html: `Hi ${user.displayName}, <br> <br> We're sending you this email to confirm that the username for your account has been changed to <strong>${username}</strong>. You have been signed and will need to use your new username to log back in : <a href="https://www.tday.com/login">Login</a> <br> <br> If you did not make this change, please reply and notify us at once. <br> <br> <strong>-the t'day team</strong>`,
+                html: `Hi ${user.displayName}, <br> <br> We're sending you this email to confirm that the username for your account has been changed to <strong>${username}</strong>. You have been signed and will need to use your new username to log back in : https://www.tday.com/login <br> <br> If you did not make this change, please reply and notify us at once. <br> <br> <strong>-the t'day team</strong>`,
             }
             await sgMail.send(msg);
         }
