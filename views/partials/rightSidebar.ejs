@@ -3,9 +3,13 @@
         <div class="card rounded border-0 shadow-sm bg-light w-100">
             <% if(user.coverPhoto) { %> 
             <!-- <div class="upper" style="background-image: url('<%=user.coverPhoto.profile%>');"></div> -->
-            <img id="profilePreviewCover" height= 150px class="card-img-top" src="<%=user.coverPhoto.profile%>" alt="">
+            <a href="/u/<%=user.username%>" class="text-decoration-none p-0 m-0 stretched-link">
+                <img id="profilePreviewCover" height= 150px class="card-img-top" src="<%=user.coverPhoto.profile%>" alt="">
+            </a>
             <% } else { %> 
-            <div class="upper bg-dark" height="150px"></div>
+            <a href="/u/<%=user.username%>" class="text-decoration-none p-0 m-0 stretched-link">
+                <div class="upper bg-dark" height="150px"></div>
+            </a>
             <% } %> 
             <div class="user text-center">
                 <div class="profile"> <img src="<%=user.avatar.profile%>" class="rounded-circle"></div>

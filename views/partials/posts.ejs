@@ -1,9 +1,10 @@
 <div class=" card my-3 pt-2 pl-2 pr-2 border-0 shadow-sm">
+    <a href="/posts/<%=post._id%>" class="stretched-link text-decoration-none p-0 m-0"></a>
     <div class="media pr-3">
         <a href="/u/<%=post.author.username%>" style="z-index: 2;"><img class="img-fluid rounded-circle mr-2" style="width:45px;" src="<%=post.author.avatar.profile%>" class="pr-2" alt="" title="<%=post.author.bio%>"></a>
         <div class="media-body text-wrap">
             <div class="d-flex justify-content-between mt-2">
-                <p class="card-subtitle mb-1 d-inline" style="z-index: 2;"><strong><a href="/u/<%=post.author.username%>"><%=post.author.displayName%></a></strong>  <img class="d-inline" style="width: 17px;" src="<%=post.author.country.flag%>" title="<%=post.author.country.name%>" alt=""><small class="text-muted mb-1 d-block">@<%=post.author.username%></small></p>
+                <p class="card-subtitle mb-1 d-inline" style="z-index: 2;"><strong><a href="/u/<%=post.author.username%>"><%=post.author.displayName%></a></strong>  <img class="d-inline align-self-baseline" style="width: 17px; transform:translateY(-1px)" src="<%=post.author.country.flag%>" title="<%=post.author.country.name%>" alt=""><small class="text-muted mb-1 d-block">@<%=post.author.username%></small></p>
                 <% if(currentUser && post.author.equals(user._id)) { %> 
                     <div class="btn-group dropleft" style="z-index: 2;">
                         <button class="btn btn-sm text-dark mb-1 pb-1 bg-light rounded-circle" data-toggle="dropdown" style="height: 30px; width: 30px" title="More" >...</button>
@@ -52,7 +53,7 @@
                     <small class="pb-1 text-muted edited" title="<%=post.updatedAt%>">Edited</small>
                     <% } %>
                 </div>
-                <div class="d-flex justify-content-around">
+                <div class="d-flex justify-content-around" style="z-index:100;">
                     <a href="/posts/<%=post._id%>" class="text-decoration-none p-0" title="Comments"><span class="text-muted" style="font-size: 13px;"><%=post.comments.length%></span> <i class="fas fa-comments text-primary"></i></a>  
                     <a  class="copy btn btn-sm btn-link p-0 mx-2" role="button"  title="Copy link" ><i class="fas fa-link text-warning" onclick="navigator.clipboard.writeText(window.location.origin+'/posts/<%=post._id%>')"></i></a>
                     <% if(currentUser.bookmarks.includes(post._id)) { %>

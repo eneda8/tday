@@ -3,6 +3,7 @@
 <div class="mainContainer container-fluid d-flex justify-content-center w-100 px-0">
   <div class="row mx-lg-5 w-100 d-flex flex-nowrap justify-content-center px-0" >
     <div class="col-3 px-0 mt-lg-3 d-none d-md-block">
+      <a onclick="window.history.back()" class="d-none d-md-block text-decoration-none"><h6><i class="fas fa-arrow-left"></i> Back </h6></a>
       <h5 id="" class="title mb-2 d-flex flex-wrap">@<%=post.author.username%>'s Rating</h5>
       <%- include("../partials/leftSidebar") %>
     </div>
@@ -19,7 +20,7 @@
                 <img src="<%=comment.author.avatar.path%>" class="img-fluid rounded-circle" alt="" style="width:40px;">
               </a>
               <div class="media-body">
-                <h6 class="my-0 card-subtitle d-inline"><strong><a href="/u/<%=comment.author.username%>"><%=comment.author.displayName%></a></strong>  <img class="d-inline" style="width: 17px" src="<%=comment.author.country.flag%>" title="<%=comment.author.country.name%>" alt=""></h6>
+                <h6 class="my-0 card-subtitle d-inline"><strong><a href="/u/<%=comment.author.username%>"><%=comment.author.displayName%></a></strong>  <img class="d-inline" style="width: 17px;transform:translateY(-1px);" src="<%=comment.author.country.flag%>" title="<%=comment.author.country.name%>" alt=""></h6>
                   <small class="text-muted mb-1 d-block">@<%=comment.author.username%></small>
                   <p class="my-1"><%=comment.body%></p>
                   <small class="pb-1 timestamp" title="<%=comment.createdAt%>"><%=comment.createdAt%></small>

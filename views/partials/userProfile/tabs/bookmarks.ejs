@@ -8,7 +8,7 @@
                 </a>
                 <div class="media-body text-wrap">
                     <div class="d-flex justify-content-between mt-1">
-                        <p class="card-subtitle mt-1"><strong><a href="/u/<%=post.author.username%>"><%=post.author.displayName%></a></strong>  <img class="d-inline" style="width: 17px" src="<%=post.author.country.flag%>" alt="" title="<%=post.author.country.name %>"><small class="text-muted mb-0 d-block">@<%=post.author.username%></small></p>
+                        <p class="card-subtitle mt-1"><strong><a href="/u/<%=post.author.username%>"><%=post.author.displayName%></a></strong>  <img class="d-inline" style="width: 17px; transform:translateY(-1px);" src="<%=post.author.country.flag%>" alt="" title="<%=post.author.country.name %>"><small class="text-muted mb-0 d-block">@<%=post.author.username%></small></p>
                         <!-- edit & delete dropdown menu-->
                         <% if(currentUser && post.author.equals(currentUser._id)) { %> 
                             <div class="btn-group dropleft" title="More" >
