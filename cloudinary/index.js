@@ -11,7 +11,7 @@ const storage = new CloudinaryStorage({
     cloudinary,
     params:{
         folder: "todai",
-        allowed_formats: ["jpeg", "png", "jpg", "gif"]
+        allowed_formats: ["jpeg", "png", "jpg", "gif", "mp4", "webm", "mov"]
     }
 });
 

@@ -5,16 +5,17 @@ const passportLocalMongoose = require("passport-local-mongoose");
 const AvatarSchema = new Schema({
     path: {
         type: String,
-        default: "https://res.cloudinary.com/dw3o86f8j/image/upload/v1634179812/t'day/avatars/defaultAvatar_dhpfbw.png",
+        default: "https://res.cloudinary.com/dw3o86f8j/image/upload/v1634179812/t%27day/avatars/defaultAvatar2_qyqc9t.png",
         required: true
         
     },
     filename: {
         type: String,
-        default: "t'day/avatars/defaultAvatar_dhpfbw",
+        default: "https://res.cloudinary.com/dw3o86f8j/image/upload/v1634179812/t%27day/avatars/defaultAvatar2_qyqc9t.png",
         required: true
     }
   });
+
 
   const  coverSchema = new Schema({
     path: String,

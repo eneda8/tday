@@ -11,34 +11,39 @@ const countries = require("../countries");
 // }
 
 module.exports.createPost = async (req, res, next) => {
-    const user = await User.findById(req.user._id);
-    const post = new Post(req.body.post);
-    post.image = req.file;
-    post.author = req.user._id;
-    post.authorCountry = user.country.name;
-    post.authorGender = user.gender;
-    post.authorUsername = user.username;
-    post.authorDisplayName = user.displayName;
-    post.authorAgeGroup = user.ageGroup;
-    post.authorID = user._id;
-    user.posts.unshift(post);
-    user.postedToday = true;
-    user.postStreak ++; 
-    await post.save();
-    user.todaysPost = post._id; 
-    // update user average
-    let userAverage;
-    await Post.aggregate([
-        {$match: {"author": user._id}},
-        {$group: {_id: null, avgRating: {$avg: "$rating"}}}
-    ]).then(function(res) {
-        userAverage = res[0].avgRating.toFixed(2)
-    });
-    await user.updateOne({$set: {average:  userAverage}});
-    await user.save();
-    // ----------------------------
-    req.flash("success", "New rating submitted!");
-    res.redirect(`/posts/${post._id}`)
+    try {
+        const user = await User.findById(req.user._id);
+        const post = new Post(req.body.post);
+        post.image = req.file;
+        post.author = req.user._id;
+        post.authorCountry = user.country.name;
+        post.authorGender = user.gender;
+        post.authorUsername = user.username;
+        post.authorDisplayName = user.displayName;
+        post.authorAgeGroup = user.ageGroup;
+        post.authorID = user._id;
+        user.posts.unshift(post);
+        user.postedToday = true;
+        user.postStreak ++; 
+        await post.save();
+        user.todaysPost = post._id; 
+        // update user average
+        let userAverage;
+        await Post.aggregate([
+            {$match: {"author": user._id}},
+            {$group: {_id: null, avgRating: {$avg: "$rating"}}}
+        ]).then(function(res) {
+            userAverage = res[0].avgRating.toFixed(2)
+        });
+        await user.updateOne({$set: {average:  userAverage}});
+        await user.save();  
+        req.flash("success", "New rating submitted!");
+        res.redirect(`/posts/${post._id}`)
+    } catch (e){
+        console.log(e);
+        req.flash("error", `Oops something went wrong: ${e} - Please try again.`)
+        res.redirect("back")
+    }
 }
 
 module.exports.showPost = async (req,res) => { 
