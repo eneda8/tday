@@ -10,7 +10,7 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
     cloudinary,
     params:{
-        folder: "todai",
+        folder: "t'day",
         allowed_formats: ["jpeg", "png", "jpg", "gif", "mp4", "webm", "mov"]
     }
 });
