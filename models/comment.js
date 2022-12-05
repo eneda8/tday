@@ -5,11 +5,12 @@ const commentSchema = new Schema ({
     body: String,
     author: {
         type: Schema.Types.ObjectId,
-        ref: "User"
+        ref: "User",
+        autopopulate: true
     },
     post: {
         type: Schema.Types.ObjectId,
-        ref: "Post"
+        ref: "Post",
     }
 }, 
     {
@@ -18,4 +19,6 @@ const commentSchema = new Schema ({
     } 
 );
 
+commentSchema.plugin(require("mongoose-autopopulate"));
 module.exports = mongoose.model("Comment", commentSchema)
+
