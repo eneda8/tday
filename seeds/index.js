@@ -40,9 +40,8 @@ const seedDB = async () => {
     //     //     user.ageGroup = "Gen Z"
     //     // } 
     //     const ageGroup = "Gen Z"
-    //     const displayName = name;
     //     const gender = ["female", "male"][Math.round(Math.random())];
-    //     const user = new User({email, username, displayName, password, ageGroup, gender});
+    //     const user = new User({email, username, password, ageGroup, gender});
     //     const country = faker.address.country();
     //     user.country.name = country;
     //     user.country.flag = countries[country];
@@ -84,7 +83,6 @@ const seedDB = async () => {
             post.authorUsername = user.username;
             post.authorGender = user.gender;
             post.authorAgeGroup= user.ageGroup;
-            post.authorDisplayName = user.displayName;
             await post.save();
             user.postedToday = true;
             user.posts.unshift(post);

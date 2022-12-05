@@ -38,14 +38,21 @@ router.route("/reset/:token")
 
 router.get("/home", isLoggedIn, isVerified, setPostedToday, checkPostStreak, catchAsync(filterPosts), catchAsync(users.renderHomePage))
 
-router.route("/u/:username")
-        .get(isLoggedIn, isVerified, setPostedToday, checkPostStreak, catchAsync(users.showUserProfile))
-        .put(isLoggedIn, isVerified, upload.fields([
-            { name: 'avatar', maxCount: 1 },
-            { name: 'coverPhoto', maxCount: 1 }
-          ]), catchAsync(users.updateProfile))
-        .delete(isLoggedIn, isVerified, isAccountOwner, catchAsync(users.deleteAccount));
+// router.route("/u/:username")
+//         .get(isLoggedIn, isVerified, setPostedToday, checkPostStreak, catchAsync(users.showUserProfile))
+//         .put(isLoggedIn, isVerified, upload.fields([
+//             { name: 'avatar', maxCount: 1 },
+//             { name: 'coverPhoto', maxCount: 1 }
+//           ]), catchAsync(users.updateProfile))
+//         .delete(isLoggedIn, isVerified, isAccountOwner, catchAsync(users.deleteAccount));
 
+router.route("/profile")
+    .get(isLoggedIn, isVerified, isAccountOwner,  setPostedToday, checkPostStreak, catchAsync(users.showUserProfile))
+    .put(isLoggedIn, isVerified, upload.fields([
+        { name: 'avatar', maxCount: 1 },
+        { name: 'coverPhoto', maxCount: 1 }
+        ]), catchAsync(users.updateProfile))
+    .delete(isLoggedIn, isVerified, isAccountOwner, catchAsync(users.deleteAccount));
 
 router.route("/settings")
     .get(isLoggedIn, isVerified, isAccountOwner, catchAsync(users.showUserSettings))

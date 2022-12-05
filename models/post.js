@@ -39,7 +39,7 @@ const PostSchema = new Schema({
       },
     authorCountry: String,
     authorUsername: String,
-    authorDisplayName: String,
+    // authorDisplayName: String,
     authorGender: String,
     authorAgeGroup: String,
     authorID: String,

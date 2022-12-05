@@ -19,7 +19,6 @@ module.exports.createPost = async (req, res, next) => {
         post.authorCountry = user.country.name;
         post.authorGender = user.gender;
         post.authorUsername = user.username;
-        post.authorDisplayName = user.displayName;
         post.authorAgeGroup = user.ageGroup;
         post.authorID = user._id;
         user.posts.unshift(post);
@@ -38,7 +37,7 @@ module.exports.createPost = async (req, res, next) => {
         await user.updateOne({$set: {average:  userAverage}});
         await user.save();  
         req.flash("success", "New rating submitted!");
-        res.redirect(`/posts/${post._id}`)
+        res.redirect("/home")
     } catch (e){
         console.log(e);
         req.flash("error", `Oops something went wrong: ${e} - Please try again.`)
@@ -60,16 +59,14 @@ module.exports.showPost = async (req,res) => {
         req.flash("error", "Rating not found!")
         return res.redirect("/home");
     }
+    // const post = await Post.findById(id).populate({path: "comments", populate: { path: "author" }}); bad no no
     const post = await Post.findById(id);
-    await post.populate({
-        path: "comments",
-        populate:{path: "author"}
-    });
+
     if(!post){
         req.flash("error", "Rating not found!")
         return res.redirect("/home");
     }
-    res.render("posts/show", {user, today, todaysPost, post, within24Hours, title: `@${post.author.username}'s day / t'day `, style: "styles"})
+    res.render("posts/show", {user, today, todaysPost, post, within24Hours, title: `Anonymous Rating / t'day `, style: "styles"})
 }
 
 module.exports.bookmarkPost = async(req, res) => {
@@ -95,11 +92,11 @@ module.exports.unbookmarkPost = async(req, res) => {
         await user.bookmarks.pull(id);
         await user.save();
         req.flash("success", "Bookmark removed!");
-        return res.redirect(`/u/${user.username}#bookmarks`);
+        return res.redirect(`/profile#bookmarks`);
     } catch (e){
         console.log(e);
         req.flash("error", "Oops something went wrong!");
-        return res.redirect(`/u/${req.username}#bookmarks`);
+        return res.redirect("/profile#bookmarks");
     }   
 }
 
@@ -170,7 +167,7 @@ module.exports.deletePost = async(req, res) => {
     // ----------------------------
 
     req.flash("success", "Rating deleted");
-    res.redirect(`/u/${user.username}`);
+    res.redirect("/profile");
 }
 
 module.exports.search = async (req, res) => {

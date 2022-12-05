@@ -22,17 +22,12 @@
                                 data-keyboard="false" data-ride="false">
                                 <div class="carousel-inner">
                                     <div id="" class="carousel-item active">
-                                        <p class="my-0 font-weight-bold">Account Information <i
+                                        <p class="my-2 font-weight-bold">Account Information <i
                                                 class="fas fa-info-circle text-primary mr-1" data-toggle="tooltip"
                                                 title="Password must be 8-20 characters and must contain at least one number, one uppercase letter, and one special character."></i>
                                         </p>
-                                        <small id="" class="text-muted mt-0">
-                                            t'day encourages anonymity. - Please don't use your real name (and no
-                                            selfies!)
-                                        </small>
-                                        <hr class="my-1">
-                                        <div class="form-row mt-3">
-                                            <div class="col-md-6 input-group has-validation">
+                                        <div class="form-row">
+                                            <div class="col input-group has-validation">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text border-0">
                                                         <i class="fas fa-at text-primary" data-toggle="tooltip" data-placement="bottom" title="Must be 3-16 alphanumeric characters that may contain an underscore."></i>
@@ -44,31 +39,20 @@
                                                 <div class="valid-feedback"></div>
                                                 <div class="invalid-feedback">Please enter a valid username.</div>
                                             </div>
-                                            <div class="col-md-6 input-group has-validation">
-                                                <div class="input-group-prepend">
-                                                    <label for="displayName" class="input-group-text border-0"><i
-                                                            class="fas fa-user text-primary"></i></label>
-                                                </div>
-                                                <input class="page1Input form-control border-0" type="text"
-                                                    id="displayName" name="displayName" placeholder="Display Name"
-                                                    required>
-
-                                                <div class="valid-feedback"></div>
-                                                <div class="invalid-feedback">Please enter a valid display name.</div>
-                                            </div>
                                         </div>
                                         <div class="form-row mt-3 mb-2">
-                                            <div class="col-md-6 input-group has-validation">
+                                            <div class="col input-group has-validation">
                                                 <div class="input-group-prepend">
-                                                    <label class="input-group-text border-0" for="email"><i
-                                                            class="fas fa-envelope text-primary"></i></label>
+                                                    <label class="input-group-text border-0" for="email">
+                                                        <i class="fas fa-envelope text-primary"></i>
+                                                    </label>
                                                 </div>
                                                 <input class="page1Input form-control border-0" type="email" id="email"
                                                     name="email" placeholder="Email" required>
                                                 <div class="valid-feedback"></div>
                                                 <div class="invalid-feedback">Please enter a valid email.</div>
                                             </div>
-                                            <div class="col-md-6 input-group has-validation">
+                                            <div class="col input-group has-validation">
                                                 <div class="input-group-prepend">
                                                     <label class="input-group-text border-0" for="password"><i
                                                             class="fas fa-key text-primary" data-toggle="tooltip"
@@ -84,26 +68,15 @@
                                                 <div class="invalid-feedback">Please enter a valid password.</div>
                                             </div>
                                         </div>
-                                        <!-- <div class=" input-group mt-2 has-validation">
-                                                    <div class="input-group-prepend">
-                                                        <label class="input-group-text border-0" for="avatar"><i class="fas fa-user text-primary"></i></label>
-                                                    </div>
-                                                    <div class="custom-file">
-                                                        <input type="file" class="custom-file-input" id="avatar" name="avatar" onchange="document.getElementById('preview').src = window.URL.createObjectURL(this.files[0])">
-                                                        <label class="custom-file-label border-0" for="avatar">Avatar (optional)</label>
-                                                    </div>
-                                                </div>
-                                                <img class="img-fluid my-2 d-block" id="preview" width="100px">  -->
                                         <button id="next-1" class="btn btn-warning next" data-target="#registerCarousel"
                                             data-slide-to="1" data-interval="3000" disabled>Next</button>
                                     </div>
                                     <div class="carousel-item">
-                                        <p class="my-0 font-weight-bold">Demographic Information <i
-                                                class="fas fa-info-circle text-info small" data-toggle="tooltip"
+                                        <p class="my-2 font-weight-bold">Demographic Information <i
+                                                class="fas fa-info-circle text-primary small" data-toggle="tooltip"
                                                 data-placement="bottom"
-                                                title="We collect demographic information for data aggregation purposes (e.g. our average rating charts). Your country is displayed on your profile. Age group and gender private."></i>
+                                                title="Demographic information is used to display aggregate charts for each category, as well as to enable search and filter functions throughout the site."></i>
                                         </p>
-                                        <hr class="my-1 py-0">
                                         <div class="form-row mt-3">
                                             <div class="col-md-6 input-group has-validation">
                                                 <label class="input-group-text border-0" for="ageGroup"><i
@@ -129,8 +102,8 @@
                                                 <select class="custom-select border-0" id="gender" name="gender"
                                                     required>
                                                     <option selected value="">Gender</option>
-                                                    <option value="male">male</option>
-                                                    <option value="female">female</option>
+                                                    <option value="male">Male</option>
+                                                    <option value="female">Female</option>
                                                 </select>
                                                 <div class="valid-feedback"></div>
                                                 <div class="invalid-feedback">Please select a valid option.</div>
@@ -156,21 +129,17 @@
                                             data-slide-to="2" disabled>Next</button>
                                     </div>
                                     <div class="carousel-item">
-                                        <p class="my-0 font-weight-bold">Default Time Zone <i
-                                                class="fas fa-info-circle text-info small" data-toggle="tooltip"
+                                        <p class="my-2 font-weight-bold">Default Time Zone <i
+                                                class="fas fa-info-circle text-primary small" data-toggle="tooltip"
                                                 data-placement="bottom"
-                                                title="We ask for your default timezone to render date-specific data accurately across timezones. This information is not displayed on your profile."></i>
+                                                title="We ask for your default timezone to render date-specific data accurately across timezones. This information is not displayed publicly."></i>
                                         </p>
-                                        <!-- <small id="" class="text-muted mt-0">
-                                        We ask for your default timezone to render date-specific data accurately across timezones. This information is not displayed on your profile.
-                                    </small> -->
-                                        <hr class="my-1 py-0">
                                         <div class="mt-3 mb-3 input-group has-validation">
                                             <label class="input-group-text border-0" for="defaultTimezone"><i
                                                     class="fas fa-clock text-primary"></i></label>
                                             <select class="custom-select border-0" id="timezone" name="defaultTimezone"
                                                 required>
-                                                <option value="">Default Timezone</option>
+                                                <option value="">Select a default timezone..</option>
                                                 <% for (let timezone of timezones) { %>
                                                     <option value="<%=timezone[" code"]%>"><%=timezone["name"]%>
                                                     </option>
@@ -186,10 +155,10 @@
                                             <label class="form-check-label small sr-only" for="termsAgreement"></label>
                                             <small>I agree to t'day's <a href="/terms">Terms of Use</a>, <a
                                                     href="/privacy">Privacy Policy</a>, and <a href="/cookies">Cookie
-                                                    Policy.</a></small>
+                                                    Policy.</a>
+                                            </small>
                                             <div class="valid-feedback"></div>
-                                            <div class="invalid-feedback">Please agree to our policies to continue.
-                                            </div>
+                                            <div class="invalid-feedback">Please agree to our policies to continue.</div>
                                         </div>
                                         <button class="btn btn-secondary" data-target="#registerCarousel"
                                             data-slide-to="1">Back</button>
@@ -217,7 +186,3 @@
             </div>
         </footer>
     </div>
-
-    <script>
-
-    </script>

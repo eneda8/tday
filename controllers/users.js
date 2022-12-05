@@ -28,8 +28,8 @@ module.exports.renderRegisterForm = (req, res) => {
 
 module.exports.register = async (req,res, next) => {
     try{
-        const {username, displayName, email, password, ageGroup, gender, country, timezone, defaultTimezone, termsAgreement} = req.body;
-        const user = new User({username, displayName, email, ageGroup, gender, country, defaultTimezone, timezone, termsAgreement});
+        const {username, email, password, ageGroup, gender, country, timezone, defaultTimezone, termsAgreement} = req.body;
+        const user = new User({username, email, ageGroup, gender, country, defaultTimezone, timezone, termsAgreement});
         // if(req.file){
         // user.avatar = req.file;
         // } else {
@@ -108,7 +108,7 @@ module.exports.putVerified = async(req, res) => {
     await user.save()
     const login = util.promisify(req.login.bind(req))
     await login(user)
-    req.flash("success", `Email address successfully verified. Welcome to t'day, ${user.displayName}!`);
+    req.flash("success", `Email address successfully verified. Welcome to t'day, @${user.username}!`);
     res.redirect("/home");
     }
 }
@@ -133,7 +133,7 @@ module.exports.login = async (req,res) => {
     await user.save()
     delete req.session.returnTo;
     const redirectUrl = req.session.returnTo || "/home";
-    req.flash("success", `Welcome back, ${req.user.displayName}!`);
+    req.flash("success", `Welcome back, @${req.user.username}!`);
     if(req.user.isVerified === false){
         res.redirect("/verify")
     } else {
@@ -163,8 +163,8 @@ module.exports.putForgotPw = async (req, res) => {
     to: email,
     from: `t'day <no-reply@tday.co>`,
     subject: `Reset Password Link`,
-    text: `Hi ${user.displayName}, Forgot your password? We received a request to reset the password for your account. To reset your password, click this link: https://${req.headers.host}/reset/${token}. If you didn't request a password reset, you can ignore this email - your password won't be changed. -the t'day team `,
-    html: `Hi ${user.displayName}, <br> <br> Forgot your password? We received a request to reset the password for your account. <br> <br> To reset your password, click this link: https://${req.headers.host}/reset/${token} <br> <br> If you didn't request a password reset, you can ignore this email. Your password won't be changed. <br> <br> <strong>-the t'day team</strong>`,
+    text: `Hi @${user.username}, Forgot your password? We received a request to reset the password for your account. To reset your password, click this link: https://${req.headers.host}/reset/${token}. If you didn't request a password reset, you can ignore this email - your password won't be changed. -the t'day team `,
+    html: `Hi @${user.username}, <br> <br> Forgot your password? We received a request to reset the password for your account. <br> <br> To reset your password, click this link: https://${req.headers.host}/reset/${token} <br> <br> If you didn't request a password reset, you can ignore this email. Your password won't be changed. <br> <br> <strong>-the t'day team</strong>`,
     }
     await sgMail.send(msg)    
     req.flash("success", `An email has been sent to ${email} with further instructions.`);
@@ -203,8 +203,8 @@ module.exports.putReset = async (req, res) => {
         to: user.email,
         from: `t'day  <support@tday.co>`,
         subject: `Your password was changed`,
-        text: `Hi ${user.displayName}, We're sending you this email to confirm that your password has been changed. If you did not make this change, please reply and notify us at once.  -the t'day team`,
-        html: `Hi ${user.displayName}, <br> <br> We're sending you this email to confirm that your password has been changed. If you did not make this change, please reply and notify us at once. <br> <br> <strong>-the t'day team</strong>`,
+        text: `Hi @${user.username}, We're sending you this email to confirm that your password has been changed. If you did not make this change, please reply and notify us at once.  -the t'day team`,
+        html: `Hi @${user.username}, <br> <br> We're sending you this email to confirm that your password has been changed. If you did not make this change, please reply and notify us at once. <br> <br> <strong>-the t'day team</strong>`,
     }
     await sgMail.send(msg);
     req.flash("success", "Password successfully updated!");
@@ -219,7 +219,6 @@ module.exports.logout = (req,res) => {
 //------------------------- HOME -------------------------
 
 module.exports.renderHomePage= async (req, res) =>{
-    // console.log(res.locals.cookie['timezone'])
     try{
         const user = await User.findById(req.user._id).populate("posts");
         const today = res.locals.cookie['today'];
@@ -228,7 +227,7 @@ module.exports.renderHomePage= async (req, res) =>{
         if(user.postedToday == true && user.todaysPost.length) {
             todaysPost = await Post.findById(user.todaysPost);
         }  else {todaysPost = "null"}
-          //show 10 random posts
+        //show 10 random posts
         let count = await Post.countDocuments().where({date: today}).where({$or: [{body:{$exists: true}}, {image:{$exists: true}}]});
         let posts;
         if (count <= 10){
@@ -254,32 +253,37 @@ module.exports.renderHomePage= async (req, res) =>{
             post.populate("author");
             }
         }
+        console.log(posts)
         res.render("users/home", {posts, today, within24Hours, todaysPost, user, countries, title: "Home / t'day", style: "styles"});
     } catch(e) {
         console.log(e)
         req.flash("error", `Oops, something went wrong!`)
-        res.redirect(`/u/${user.username}`)
+        res.redirect("/profile")
     }
 }
 
 // ------------------------USER PROFILE-----------------------------
 module.exports.showUserProfile = async(req, res) => {
-    const today = res.locals.cookie['today'];
-    const user = await User.findOne({username : req.params.username})
-        .populate("journals").populate("posts").populate("comments").populate({
-            path: "bookmarks",
-            populate: {path: "author"}
-        }); 
-    if(!user){
-        req.flash("error", "User not found!")
-        return res.redirect("/home");
+    try {
+        const today = res.locals.cookie['today'];
+        const user = await User.findById(req.user._id)
+            .populate("journals").populate("posts").populate("comments").populate({
+                path: "bookmarks",
+                populate: {path: "author"}
+            }); 
+        const comments = await Comment.find({"author": user}).sort({"createdAt": -1})
+        res.render("users/show", {user, comments, today, within24Hours, title: "Profile / t'day", style: "styles"});
+    } catch (e){
+        console.log(e)
+        req.flash("error", "Oops, something went wrong!");
+        res.redirect("/home")
     }
-    const comments = await Comment.find({"author": user}).sort({"createdAt": -1}).populate("post")
-    res.render("users/show", {user, comments, today, within24Hours, title: `@${user.username} / t'day`, style: "styles"});
+
 };
 
+
 module.exports.updateProfile = async(req, res) => {
-    const {displayName, bio, coverColor} = req.body;
+    const {bio} = req.body;
     const user = await User.findById(req.user._id).populate("posts");
     await user.update({...req.body});
     const oldAvatar = user.avatar;
@@ -288,16 +292,13 @@ module.exports.updateProfile = async(req, res) => {
         if(req.files.avatar){
         user.avatar = req.files.avatar[0];
         cloudinary.uploader.destroy(oldAvatar.filename);
-        } if(req.files.coverPhoto){
+        } 
+        if(req.files.coverPhoto){
             user.coverPhoto = req.files.coverPhoto[0];
             if(oldCoverPhoto.length){
                 cloudinary.uploader.destroy(oldCoverPhoto.filename)
             }  
         }
-    }
-    for(let post of user.posts){
-        post.authorDisplayName = displayName;
-        post.save()
     }
     if(!user){
         req.flash("error", "User not found!")
@@ -305,7 +306,7 @@ module.exports.updateProfile = async(req, res) => {
     }
     await user.save()
     req.flash("success", "Profile updated!");
-    res.redirect(`/u/${user.username}`) 
+    res.redirect("/profile") 
 };
 
 
@@ -339,8 +340,8 @@ module.exports.updateUserInfo = async(req, res) => {
                 to: [{email: email}, {email: oldEmail}],
                 from: `t'day  <support@tday.co>`,
                 subject: `Your username was changed`,
-                text: `Hi ${user.displayName}, We're sending you this email to confirm that the username for your account has been changed to ${username}. You have been signed out and will need to use your new username to log back in: https://www.tday.com/login If you did not make this change, please reply and notify us at once. -the t'day team`,
-                html: `Hi ${user.displayName}, <br> <br> We're sending you this email to confirm that the username for your account has been changed to <strong>${username}</strong>. You have been signed and will need to use your new username to log back in : https://www.tday.com/login <br> <br> If you did not make this change, please reply and notify us at once. <br> <br> <strong>-the t'day team</strong>`,
+                text: `Hi @${user.username}, We're sending you this email to confirm that the username for your account has been changed to ${username}. You have been signed out and will need to use your new username to log back in: https://www.tday.com/login If you did not make this change, please reply and notify us at once. -the t'day team`,
+                html: `Hi @${user.username}, <br> <br> We're sending you this email to confirm that the username for your account has been changed to <strong>${username}</strong>. You have been signed and will need to use your new username to log back in : https://www.tday.com/login <br> <br> If you did not make this change, please reply and notify us at once. <br> <br> <strong>-the t'day team</strong>`,
             }
             await sgMail.send(msg);
         }
@@ -350,8 +351,8 @@ module.exports.updateUserInfo = async(req, res) => {
                 to: [{email: email}, {email: oldEmail}],
                 from: `t'day  <support@tday.co>`,
                 subject: `Your email was changed`,
-                text: `Hi ${user.displayName}, We're sending you this email to confirm that the email for your account has been changed from ${oldEmail} to ${email}. If you did not make this change, please reply and notify us at once.  -the t'day team`,
-                html: `Hi ${user.displayName}, <br> <br> We're sending you this email to confirm that the email for your account has been changed from ${oldEmail} to ${email}. If you did not make this change, please reply and notify us at once. <br> <br> <strong>-the t'day team</strong>`,
+                text: `Hi @${user.username}, We're sending you this email to confirm that the email for your account has been changed from ${oldEmail} to ${email}. If you did not make this change, please reply and notify us at once.  -the t'day team`,
+                html: `Hi @${user.username}, <br> <br> We're sending you this email to confirm that the email for your account has been changed from ${oldEmail} to ${email}. If you did not make this change, please reply and notify us at once. <br> <br> <strong>-the t'day team</strong>`,
             }
             await sgMail.send(msg);
         }
@@ -362,7 +363,7 @@ module.exports.updateUserInfo = async(req, res) => {
         }
         await user.save();
         req.flash("success", "Account updated!");
-        res.redirect(`/u/${user.username}`)
+        res.redirect("/profile")
     } catch(e){
         console.log(e);
         req.flash("error", "Oops something went wrong!");
@@ -385,8 +386,8 @@ module.exports.changePassword = async(req, res) => {
             to: user.email,
             from: `t'day <support@tday.co>`,
             subject: `Your password was changed`,
-            text: `Hi ${user.displayName}, We're sending you this email to confirm that your password has been changed. If you did not make this change, please reply and notify us at once.  -the t'day team`,
-            html: `Hi ${user.displayName}, <br> <br> We're sending you this email to confirm that your password has been changed. If you did not make this change, please reply and notify us at once. <br> <br> <strong>-the t'day team</strong>`,
+            text: `Hi @${user.username}, We're sending you this email to confirm that your password has been changed. If you did not make this change, please reply and notify us at once.  -the t'day team`,
+            html: `Hi @${user.usernamee}, <br> <br> We're sending you this email to confirm that your password has been changed. If you did not make this change, please reply and notify us at once. <br> <br> <strong>-the t'day team</strong>`,
         }
         await sgMail.send(msg);
         req.flash("success", "Password successfully updated!");
@@ -421,12 +422,12 @@ module.exports.deleteAccount = async(req, res) => {
         }
         await sgMail.send(msg);
         await User.remove({"_id": user._id});
-        console.log("User account deleted")
+        console.log("User account deleted");
         req.flash("success", "Account successfully deleted.");
         res.redirect("/");
     } catch (e){
         console.log(e);
         req.flash("error", "Password is incorrect.");
-        return res.redirect("/settings")
+        return res.redirect("/settings");
     }
 }

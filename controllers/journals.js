@@ -15,7 +15,7 @@ module.exports.createJournal = async (req, res, next) => {
     await journal.save();
     await user.save();
     req.flash("success", "New journal saved!");
-    res.redirect(`/u/${user.username}`)
+    res.redirect("/profile")
 }
 
 module.exports.showJournal = async(req, res, next) => {
@@ -23,13 +23,13 @@ module.exports.showJournal = async(req, res, next) => {
     const {journalId} = req.params;
     if (!ObjectId.isValid(journalId)) {
         req.flash("error", "Journal not found!")
-        return res.redirect(`/u/${user.username}#journals`);
+        return res.redirect(`/profile#journals`);
     } else {
         const journal = await Journal.findById(journalId);
         await journal.populate("author");
         if(!journal){
             req.flash("error", "Journal not found!")
-            return res.redirect(`/u/${user.username}#journals`);
+            return res.redirect(`/profile#journals`);
         }
         res.render("journals/show", {journal, user, title: "Journal / t'day", style: "styles"});
     }
@@ -68,5 +68,5 @@ module.exports.deleteJournal = async(req, res, next) => {
     await user.save();
     await journal.remove();
     req.flash("success", "Journal deleted");
-    res.redirect(`/u/${user.username}`);
+    res.redirect("/profile");
 }

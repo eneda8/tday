@@ -11,7 +11,7 @@ const AvatarSchema = new Schema({
     },
     filename: {
         type: String,
-        default: "https://res.cloudinary.com/dw3o86f8j/image/upload/v1634179812/t%27day/avatars/defaultAvatar2_qyqc9t.png",
+        default: "t%27day/avatars/defaultAvatar2_qyqc9t.png",
         required: true
     }
   });
@@ -67,7 +67,7 @@ const userSchema = new Schema({
         type: String
     },
     avatar: AvatarSchema,
-    displayName: String,
+    // displayName: String,
     bio: String,
     coverColor: {
         type: String,

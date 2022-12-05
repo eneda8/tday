@@ -3,18 +3,10 @@
     <h6 class="text-center my-5">No comments yet!</h6>
     <% } else { for (let comment of comments) {%> 
     <div class="media mb-0 mt-2 mx-4 pl-2 pt-1">
-        <a class="mr-3" href="/u/<%=user.username%>">
-            <img class="img-fluid rounded-circle" src="<%=user.avatar.profile%>" alt="" style="width:45px;">
-        </a>
+        <img class="img-fluid rounded-circle" src="<%=user.avatar.profile%>" alt="" style="width:45px;">
         <div class="media-body">
-            <p class="card-subtitle mt-1"><strong><a href="/u/<%=user.username%>"><%=user.displayName%></a></strong>  <img class="d-inline" style="width: 17px; transform:translateY(-1px);" src="<%=user.country.flag%>" alt="" title="<%=user.country.name %>"><small class="text-muted mb-0 d-block">@<%=user.username%></small></p>
-            <% if(comment.post) {%> 
-            <p class="my-1">
-                <a href="/posts/<%=comment.post._id%>"class="card-link" >@<%=comment.post.author.username%></a> <%=comment.body%>
-            </p>
-            <% } else { %> 
-            <p class="my-1">@[deleted] <%=comment.body%></p>
-            <% }%>
+            <p class="card-subtitle mt-1"><strong>Anonymous</strong><img class="d-inline" style="width: 17px; transform:translateY(-1px);" src="<%=user.country.flag%>" alt="" title="<%=user.country.name %>"></p>
+            <a href="/posts/<%=comment.post%>"class="card-link" >@Anonymous </a> <p class="my-1"><%=comment.body%></p>
             <small class="pb-1 timestamp" title="<%=comment.createdAt%>"><%=comment.createdAt%></small>
             <% if(currentUser && comment.author.equals(currentUser._id)) { %> 
             <button class="btn btn-link btn-sm d-inline pb-0" title="Delete comment" data-toggle="modal" data-target="#commentDeleteModal-<%=comment._id%>"><i class="fas fa-trash-alt text-danger"></i></button>

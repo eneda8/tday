@@ -3,11 +3,11 @@
         <div class="card rounded border-0 shadow-sm bg-light w-100">
             <% if(user.coverPhoto) { %> 
             <!-- <div class="upper" style="background-image: url('<%=user.coverPhoto.profile%>');"></div> -->
-            <a href="/u/<%=user.username%>" class="text-decoration-none p-0 m-0 stretched-link">
+            <a href="/profile" class="text-decoration-none p-0 m-0 stretched-link">
                 <img id="profilePreviewCover" height= 150px class="card-img-top" src="<%=user.coverPhoto.profile%>" alt="">
             </a>
             <% } else { %> 
-            <a href="/u/<%=user.username%>" class="text-decoration-none p-0 m-0 stretched-link">
+            <a href="/profile" class="text-decoration-none p-0 m-0 stretched-link">
                 <div class="upper bg-dark" height="150px"></div>
             </a>
             <% } %> 
@@ -15,7 +15,7 @@
                 <div class="profile"> <img src="<%=user.avatar.profile%>" class="rounded-circle"></div>
             </div>
             <div class="mt-5 text-center">
-                <h4 class="mb-0 font-weight-light"><%=user.displayName%></h4>
+                <h4 class="mb-0 font-weight-light">Anonymous</h4>
                 <span class="d-block">@<%=user.username%></span>
                 <span class="text-muted d-block mb-2">
                     <img class="mr-1" title="<%=user.country.name %>" src="<%=user.country.flag%>" width="17px"><%=user.country.name %>

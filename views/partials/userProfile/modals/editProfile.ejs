@@ -9,14 +9,7 @@
                     </button>
                 </div>
                 <div class="modal-body pb-0">
-                        <form action="/u/<%=user.username%>?_method=PUT" method="POST" class="validated-form" novalidate enctype="multipart/form-data">
-                            <div class="mb-3">
-                                <label class="form-label mb-0" for="displayName">Display name</label>
-                                <input class="form-control border-0" type="text" id="displayName" name="displayName" value="<%=user.displayName%>">
-                                <div class="valid-feedback">
-                                    
-                                </div>
-                            </div>
+                        <form action="/profile?_method=PUT" method="POST" class="validated-form" novalidate enctype="multipart/form-data">
                             <div class="mb-3">
                                 <label class="form-label mb-0" for="bio">Bio</label>
                                 <textarea class="form-control border-0" id="bio" name="bio"><%=user.bio%></textarea>
@@ -24,12 +17,7 @@
                                     
                                 </div>
                             </div>
-                            <!-- <div class="mb-3">
-                                <label for="coverColor" class="mb-0">Profile cover color:</label>
-                                <input type="color" name="coverColor" id="coverColor" value="<%=user.coverColor%>">
-                            </div> -->
                             <p class="mb-0">Avatar</p>
-                            <small class="text-muted">We recommend <a target="_blank" rel="noopener noreferrer" href="https://getavataaars.com/">this <sup><i class="fas fa-external-link-alt small"></i></sup></a> free avatar generator.</small>
                             <div class="custom-file mb-3">
                                 <input type="file" class="custom-file-input border-0" id="avatar" name="avatar" onchange="document.getElementById('preview1').src = window.URL.createObjectURL(this.files[0])">
                                 <label class="custom-file-label border-0" for="avatar">Choose an image...</label>

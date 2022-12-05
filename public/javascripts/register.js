@@ -4,7 +4,6 @@
   const registerForm = document.querySelector("#register");
   registerForm.addEventListener('input', function(event){
       if(document.querySelector("#username").checkValidity() &&
-      document.querySelector("#displayName").checkValidity() &&
       document.querySelector("#email").checkValidity() &&
       document.querySelector("#password").checkValidity()){
           first.removeAttribute("disabled")

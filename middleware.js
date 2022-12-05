@@ -85,7 +85,7 @@ module.exports.isJournalAuthor = async(req, res, next) => {
     const journal = await Journal.findById(journalId);
     if (!journal.author.equals(req.user._id)) {
         req.flash("error", "You do not have permission to do that!");
-        return res.redirect(`/u/${id}`)
+        return res.redirect("/profile")
     }
     next();
 }
@@ -152,45 +152,23 @@ module.exports.searchAndFilterPosts = async(req, res, next) => {
     const queryKeys = Object.keys(req.query); 
     if(queryKeys.length) {
         const dbQueries = [];
-        let {text, date, username, rating, country, image} = req.query;
+        let {text, date, rating, country, ageGroup, gender, image} = req.query;
         text = new RegExp(escapeRegExp(text), "gi");
-        if(text && username) {
-            dbQueries.push({ $or: [
-				{ body: text }
-			]});
-        } else if (text){
-            dbQueries.push({ $or: [
-				{ body: text },
-                {authorUsername: text},
-                {authorDisplayName: text}
-			]})
-        }
-        if(username) {
-            username = new RegExp(escapeRegExp(username), "gi");
-            dbQueries.push({$or: [{authorUsername: username}, {authorDisplayName: username}]});
-        }
+        if (text){dbQueries.push({body: text })}
         if(date) {
-            console.log(date)
             date = new Date(date).toLocaleDateString( 'en-US',
             {year: 'numeric', month: 'short', day: 'numeric', timeZone: "UTC"}); // keep it UTC in order to search date string only
-            console.log(date)
             date = new RegExp(escapeRegExp(date), "gi");
-            console.log("middleware date:", date)
             dbQueries.push({date: date});
         }
-        if(rating) {
-            dbQueries.push({rating: {$in: rating}});
-        }
-        if(country){
-            dbQueries.push({authorCountry: country})
-        }
-        if(image){
-            dbQueries.push({image: {$exists: true}})
-        }
+        if(rating) {dbQueries.push({rating: {$in: rating}})}
+        if(country){dbQueries.push({authorCountry: country})}
+        if(ageGroup){dbQueries.push({authorAgeGroup: ageGroup})}
+        if(gender){dbQueries.push({authorGender: gender})}
+        if(image){dbQueries.push({image: {$exists: true}})}
         res.locals.dbQuery = dbQueries.length ? {$and: dbQueries} : {};
     }
     res.locals.query = req.query;
-
     const delimiter = queryKeys.length ? '&' : '?';
 	queryKeys.splice(queryKeys.indexOf('page'), 1);
 	res.locals.paginateUrl = req.originalUrl.replace(/(\?|\&)page=\d+/g, '') + `${delimiter}page=`;
@@ -202,16 +180,12 @@ module.exports.filterPosts = async(req, res, next) => {
     const queryKeys = Object.keys(req.query); 
     const dbQueries = [{date: today}];
     if(queryKeys.length) {
-        let {rating, country, image} = req.query;
-        if(rating) {
-            dbQueries.push({rating: {$in: rating}});
-        }
-        if(country){
-            dbQueries.push({authorCountry: country})
-        }
-        if(image){
-            dbQueries.push({image: {$exists: true}})
-        }
+        let {rating, country, image, ageGroup, gender} = req.query;
+        if(rating) {dbQueries.push({rating: {$in: rating}});}
+        if(country){dbQueries.push({authorCountry: country})}
+        if(ageGroup){dbQueries.push({authorAgeGroup: ageGroup})}
+        if(gender){dbQueries.push({authorGender: gender})}
+        if(image){dbQueries.push({image: {$exists: true}})}
         res.locals.dbQuery = dbQueries.length ? {$and: dbQueries} : {};
     }
     res.locals.query = req.query;

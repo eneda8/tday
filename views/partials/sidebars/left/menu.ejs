@@ -5,13 +5,13 @@
             <li class="nav-item">
               <a class="nav-link active" href="/home"><i class="fas fa-home mr-3"></i>Home</a>
             </li>
-            <% if(user.postedToday === false) {%> 
+            <% if(currentUser.postedToday === false) {%> 
                 <li class="nav-item">
                     <a class="nav-link" href="" data-toggle="modal" id="newPostLink" data-target="#newPostModal"><i class="far fa-star mr-3"></i>Rate today</a>
                 </li>
                 <% } else {%>
                 <li class="nav-item">
-                    <a href="/posts/<%=user.todaysPost%>" class="nav-link"><i class="far fa-calendar-check mr-3"></i>Today's rating</a>
+                    <a href="/posts/<%=currentUser.todaysPost%>" class="nav-link"><i class="far fa-calendar-check mr-3"></i>Today's rating</a>
                 </li>
                 <% } %>
             <li class="nav-item dropdown">
@@ -26,10 +26,10 @@
               <a class="nav-link" href="/write"><i class="fas fa-pencil-alt mr-3"></i>Write</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/u/<%=currentUser.username%>#journals"><i class="fas fa-book mr-3"></i></i>Journals</a>
+                <a class="nav-link" href="/profile#journals"><i class="fas fa-book mr-3"></i></i>Journals</a>
               </li>
             <li class="nav-item">
-                <a class="nav-link" href="/u/<%=currentUser.username%>#bookmarks"><i class="fas fa-bookmark mr-3"></i></i>Bookmarks</a>
+                <a class="nav-link" href="/profile#bookmarks"><i class="fas fa-bookmark mr-3"></i></i>Bookmarks</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/posts/search"><i class="fas fa-search mr-3"></i>Search</a>
