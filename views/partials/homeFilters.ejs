@@ -21,7 +21,7 @@
                 <form action="/home" method="GET" class="mb-3">
                     <div class="input-group mb-3 ">
                         <div class="input-group-prepend">
-                          <label class="input-group-text border-0" for="countryName"><i class="fas fa-globe-americas text-primary"></i></i></label>
+                          <label class="input-group-text border-0" for="countryName"><i class="fas fa-globe-americas text-primary"></i></label>
                         </div>
                         <select class="custom-select text-muted border-0" id="countryName" name="country" >
                             <option value="" class="text-muted">Country</option> 
@@ -49,14 +49,50 @@
                               <label for="five-stars" class="star form-check-label">★★★★★</label>
                           </div>
                       </div>
-                  </div>
+                    </div>
+                    <div class="input-group mb-3 bg-white">
+                      <div class="input-group-prepend">
+                        <label for="ageGroup" class="input-group-text border-0">
+                          <i class="fas fa-birthday-cake text-primary"></i>
+                        </label>
+                      </div>
+                      <select class="custom-select text-muted border-0 pl-3" id="ageGroup" name="ageGroup">
+                        <option value="">All Ages</option>
+                        <option value="Greatest Generation" <%=query.ageGroup &&
+                           query.ageGroup=="Greatest Generation" ? 'selected' : '' %>>Greatest Generation
+                           (1901-1927)</option>
+                        <option value="Silent Generation" <%=query.ageGroup &&
+                           query.ageGroup=="Silent Generation" ? 'selected' : '' %>>Silent Generation
+                           (1928-1945)</option>
+                        <option value="Baby Boomers" <%=query.ageGroup && query.ageGroup=="Baby Boomers"
+                           ? 'selected' : '' %>>Baby Boomers (1946-1964)</option>
+                        <option value="Gen X" <%=query.ageGroup && query.ageGroup=="Gen X" ? 'selected' : '' %>
+                           >Gen X (1965-1980)</option>
+                        <option value="Millennials" <%=query.ageGroup && query.ageGroup=="Millennials"
+                           ? 'selected' : '' %>>Millennials (1981-1996)</option>
+                        <option value="Gen Z" <%=query.ageGroup && query.ageGroup=="Gen Z" ? 'selected' : '' %>
+                           >Gen Z (1997-2012)</option>
+                     </select>
+                    </div>
+                    <div class="input-group mb-3 bg-white">
+                      <div class="input-group-prepend">
+                        <label class="input-group-text border-0" for="countryName"><i class="fas fa-venus-mars text-primary"></i></label>
+                      </div>
+                      <select class="custom-select text-muted border-0" id="gender" name="gender">
+                        <option value="">All Genders</option>
+                        <option value="male" <%=query.gender && query.gender=="male" ? 'selected' : '' %>>Male
+                        </option>
+                        <option value="female" <%=query.gender && query.gender=="female" ? 'selected' : '' %>
+                           >Female</option>
+                      </select>
+                    </div>
                     <div class="input-group mb-3 bg-white">
                         <div class="input-group-prepend ">
                           <label class="input-group-text border-0 py-2 pr-3"><i class="fas fa-file-image text-primary"></i></label>
                         </div>
-                        <div class="form-check pl-1 pt-1">
+                        <div class="form-check pl-3 pt-1">
                           <label for="image" class="form-check-label text-muted mr-4 ">Includes image</label>
-                          <input class="form-check-input" type="checkbox" aria-label="Has image?" name="image" <%=query.image ? 'checked' : ''%>>
+                          <input class="form-check-input" type="checkbox" aria-label="Includes Image" name="image" <%=query.image ? 'checked' : ''%>>
                         </div>
                       </div>
                     <button class="btn btn-sm btn-warning mb-2" type="submit" id="submit" >Filter</button>
