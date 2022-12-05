@@ -32,7 +32,7 @@
   "name": "tday",
   "version": "1.0.0",
   "engines": {
-    "node": "16.x",
+    "node": "19.x",
     "npm": "8.x"
   },
   "main": "app.js",
