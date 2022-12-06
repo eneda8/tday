@@ -1,6 +1,14 @@
 (function(){
     ///set time-keeping cookies
-    const today =  new Date().toLocaleDateString('en-US', {year: 'numeric', month: 'short', day: 'numeric'});
+    function correctDate(date){  //account for date formats in mobile browsers which leave out the last space
+        if(date.lastIndexOf(" ") == 3){
+        let spaceIdx = date.length - 4;
+        date[spaceIdx] = " "
+        }
+        return date.slice(0, spaceIdx) + " " + date.slice(spaceIdx);
+    }    
+    
+    let today =  correctDate(new Date().toLocaleDateString('en-US', {year: 'numeric', month: 'short', day: 'numeric'}));
     document.cookie = `today=${today}`; // set user today in cookie
     if(document.title === "t'day"){
         document.querySelector("#today").innerText = today;
@@ -8,7 +16,7 @@
     console.log("TODAY'S DATE SET TO:", today); 
     let yesterday = new Date(today)
     yesterday.setDate(yesterday.getDate() -1)
-    yesterday = yesterday.toLocaleDateString('en-US',{year: 'numeric', month: 'short', day: 'numeric'})
+    yesterday = correctDate(yesterday.toLocaleDateString('en-US',{year: 'numeric', month: 'short', day: 'numeric'}))
     document.cookie = `yesterday=${yesterday}`
 
     //set timestamps
