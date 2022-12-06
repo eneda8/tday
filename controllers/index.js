@@ -9,6 +9,7 @@ module.exports.renderLandingPage =  (req, res) => {
     } else {
     const today = res.locals.cookie["today"];
     const average = res.locals.cookie["average"];
+    console.log("landing page average", average)
     res.render("index/landing", {title: "t'day", today, average, style: "index/landing"});
     }
 }

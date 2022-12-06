@@ -222,11 +222,14 @@ module.exports.renderHomePage= async (req, res) =>{
     try{
         const user = await User.findById(req.user._id).populate("posts");
         const today = res.locals.cookie['today'];
+        console.log("home page render controller, today:", today)
+        console.log("home page render controller, res.locals.cookie:", res.locals.cookie)
+
         //show today's rating, if available
         let todaysPost;
         if(user.postedToday == true && user.todaysPost.length) {
             todaysPost = await Post.findById(user.todaysPost);
-        }  else {todaysPost = "null"}
+        }  else {todaysPost = ""}
         //show 10 random posts
         let count = await Post.countDocuments().where({date: today}).where({$or: [{body:{$exists: true}}, {image:{$exists: true}}]});
         let posts;
@@ -253,7 +256,7 @@ module.exports.renderHomePage= async (req, res) =>{
             post.populate("author");
             }
         }
-        console.log(posts)
+        console.log("homepage posts:", posts)
         res.render("users/home", {posts, today, within24Hours, todaysPost, user, countries, title: "Home / t'day", style: "styles"});
     } catch(e) {
         console.log(e)

@@ -5,7 +5,7 @@
     if(document.title === "t'day"){
         document.querySelector("#today").innerText = today;
     }
-    console.log("TODAY'S DATE SET TO:", today); // for transparency purposes
+    console.log("TODAY'S DATE SET TO:", today); 
     let yesterday = new Date(today)
     yesterday.setDate(yesterday.getDate() -1)
     yesterday = yesterday.toLocaleDateString('en-US',{year: 'numeric', month: 'short', day: 'numeric'})
@@ -30,7 +30,7 @@
         const timezone = new Date().toLocaleTimeString('en-us',{timeZoneName:'short'}).split(' ')[2];
         document.getElementById("tz").value = timezone; // set user timezone in the database
         document.cookie = `timezone=${timezone}`; // set user timezone in cookie
-        console.log("TIME ZONE SET TO:", timezone); // for transparency purposes
+        console.log("TIME ZONE SET TO:", timezone); 
         // pre-select default timezone on register page
         if(document.title.includes("Register")){
             const options = document.getElementById("timezone").getElementsByTagName('option');
