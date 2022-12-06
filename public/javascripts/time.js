@@ -4,12 +4,12 @@
         if(date.lastIndexOf(" ") == 3){
         let spaceIdx = date.length - 4;
         date[spaceIdx] = " "
-        }
         return date.slice(0, spaceIdx) + " " + date.slice(spaceIdx);
+        }
     }    
-    
+
     let today =  correctDate(new Date().toLocaleDateString('en-US', {year: 'numeric', month: 'short', day: 'numeric'}));
-    document.cookie = `today=${today}`; // set user today in cookie
+    document.cookie = `today=${today}`; // set user's today in cookie
     if(document.title === "t'day"){
         document.querySelector("#today").innerText = today;
     }
