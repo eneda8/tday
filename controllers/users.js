@@ -222,9 +222,9 @@ module.exports.renderHomePage= async (req, res) =>{
     try{
         const user = await User.findById(req.user._id).populate("posts");
         const today = res.locals.cookie['today'];
-        console.log("home page render controller, today:", today)
-        console.log("home page render controller, res.locals.cookie:", res.locals.cookie)
-
+        console.log("res.locals.cookie:", res.locals.cookie)
+        console.log("type of today:", typeof today)
+        console.log(today.lastIndexOf(" "))
         //show today's rating, if available
         let todaysPost;
         if(user.postedToday == true && user.todaysPost.length) {
