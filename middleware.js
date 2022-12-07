@@ -9,6 +9,25 @@ function escapeRegExp(str) {
     return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); 
 }
 
+function correctDate(date){ 
+    if(date.lastIndexOf(" ") == 3){
+    let spaceIdx = date.length - 4;
+    return date.slice(0, spaceIdx) + " " + date.slice(spaceIdx);
+    } else return date
+}
+
+module.exports.correctCookies = async (req, res, next) => {
+    try{
+        let today = res.locals.cookie['today'];
+        let yesterday = res.locals.cookie['yesterday'];
+        res.locals.cookie['today'] = correctDate(today)   ;
+        res.locals.cookie['yesterday'] = correctDate(yesterday)
+    } catch(e){
+        console.log(e)
+    }
+    next()
+}
+
 module.exports.validatePost = (req, res, next) => {  
     const {error} = postSchema.validate(req.body);
     if(error) {
@@ -93,7 +112,7 @@ module.exports.isJournalAuthor = async(req, res, next) => {
 module.exports.setPostedToday = async(req, res, next) => {
     try{
         const user = await User.findById(req.user._id);
-        const today = res.locals.cookie['today'];
+        const today = correctDate(res.locals.cookie['today']);
         const post = await Post.find({"author": user, "date": today});
         if(post.length){
             user.postedToday = true;
@@ -109,7 +128,7 @@ module.exports.setPostedToday = async(req, res, next) => {
 }
 
 module.exports.blockDuplicatePost = async (req, res, next) => {
-    const today = res.locals.cookie['today'];
+    const today = correctDate(res.locals.cookie['today']);
     const post = await Post.find({"author": req.user, "date": today});
     if(post.length){
         req.flash("error", "Sorry, you've already posted once today!")
@@ -120,13 +139,14 @@ module.exports.blockDuplicatePost = async (req, res, next) => {
 module.exports.checkPostStreak = async(req, res, next) => {
     const user = await User.findById(req.user._id);
     try{ 
-        const today = res.locals.cookie['today'];
-       const yesterday = res.locals.cookie['yesterday'];
+        const today = correctDate(res.locals.cookie['today']);
+        const yesterday = correctDate(res.locals.cookie['yesterday']);
         const yesterdayPost = await Post.find({"author": user, "date": yesterday});
         const todayPost = await Post.find({"author": user, "date": today})
         if(!yesterdayPost.length) {
             if(todayPost.length){
-                await user.updateOne({$set: {postStreak:  1}});      
+                await user.updateOne({$set: {postStreak:  1}}); 
+                console.log("this is running right here")    
             } else {
                 await user.updateOne({$set: {postStreak:  0}}); 
             }     
@@ -176,7 +196,7 @@ module.exports.searchAndFilterPosts = async(req, res, next) => {
 }
 
 module.exports.filterPosts = async(req, res, next) => {
-    const today = res.locals.cookie['today'];
+    const today = correctDate(res.locals.cookie['today']);
     const queryKeys = Object.keys(req.query); 
     const dbQueries = [{date: today}];
     if(queryKeys.length) {
@@ -224,7 +244,7 @@ module.exports.filterCharts = async(req, res, next) => {
 }
 
 module.exports.globalAverage = async(req, res, next) => {
-    const today = res.locals.cookie['today'];
+    const today = correctDate(res.locals.cookie['today']);
     let average;
     try{
         await Post.aggregate([

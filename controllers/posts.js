@@ -59,9 +59,7 @@ module.exports.showPost = async (req,res) => {
         req.flash("error", "Rating not found!")
         return res.redirect("/home");
     }
-    // const post = await Post.findById(id).populate({path: "comments", populate: { path: "author" }}); bad no no
     const post = await Post.findById(id);
-
     if(!post){
         req.flash("error", "Rating not found!")
         return res.redirect("/home");

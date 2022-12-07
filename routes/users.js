@@ -3,7 +3,7 @@ const router = express.Router();
 const catchAsync = require("../utils/catchAsync");
 const passport = require("passport");
 const users = require("../controllers/users");
-const {isLoggedIn, isVerified, alreadyVerified, setPostedToday, checkPostStreak, isAccountOwner, filterPosts} = require("../middleware");
+const {isLoggedIn, isVerified, alreadyVerified, correctCookies, setPostedToday, checkPostStreak, isAccountOwner, filterPosts} = require("../middleware");
 const multer = require("multer");
 const {storage} = require("../cloudinary");
 const upload = multer({storage});
@@ -36,7 +36,7 @@ router.route("/reset/:token")
     .get(catchAsync(users.getReset))
     .put(catchAsync(users.putReset));
 
-router.get("/home", isLoggedIn, isVerified, setPostedToday, checkPostStreak, catchAsync(filterPosts), catchAsync(users.renderHomePage))
+router.get("/home", isLoggedIn, isVerified, correctCookies, setPostedToday, checkPostStreak, catchAsync(filterPosts), catchAsync(users.renderHomePage))
 
 // router.route("/u/:username")
 //         .get(isLoggedIn, isVerified, setPostedToday, checkPostStreak, catchAsync(users.showUserProfile))

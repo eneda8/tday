@@ -222,9 +222,6 @@ module.exports.renderHomePage= async (req, res) =>{
     try{
         const user = await User.findById(req.user._id).populate("posts");
         const today = res.locals.cookie['today'];
-        console.log("res.locals.cookie:", res.locals.cookie)
-        console.log("type of today:", typeof today)
-        console.log(today.lastIndexOf(" "))
         //show today's rating, if available
         let todaysPost;
         if(user.postedToday == true && user.todaysPost.length) {
@@ -256,7 +253,6 @@ module.exports.renderHomePage= async (req, res) =>{
             post.populate("author");
             }
         }
-        console.log("homepage posts:", posts)
         res.render("users/home", {posts, today, within24Hours, todaysPost, user, countries, title: "Home / t'day", style: "styles"});
     } catch(e) {
         console.log(e)
