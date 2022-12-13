@@ -102,10 +102,11 @@ const sessionConfig = {
     saveUninitialized: true,
     cookie: {
         sameSite: 'lax',
-        secure: true,
+        secure: process.env.NODE_ENV === "production",
         httpOnly: false,
         expires: Date.now() + 1000 * 60 * 60 ,
-        maxAge: 1000 * 60 * 60 
+        maxAge: 1000 * 60 * 60,
+        resave: true
     }
 }
 
@@ -121,6 +122,10 @@ app.use((req, res, next) => {
     else res.locals.cookie = {};
     next();
 });
+
+if (app.get("env") === "production") {
+    app.set("trust proxy", 1); 
+}
 
 app.use(session(sessionConfig))
 app.use(flash());
