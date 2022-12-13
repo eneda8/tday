@@ -10,7 +10,7 @@ function escapeRegExp(str) {
 }
 
 function correctDate(date){ 
-    if(date.lastIndexOf(" ") == 3){
+    if( date !== undefined && date.lastIndexOf(" ") == 3){
     let spaceIdx = date.length - 4;
     return date.slice(0, spaceIdx) + " " + date.slice(spaceIdx);
     } else return date
@@ -22,6 +22,8 @@ module.exports.correctCookies = async (req, res, next) => {
         let yesterday = res.locals.cookie['yesterday'];
         res.locals.cookie['today'] = correctDate(today)   ;
         res.locals.cookie['yesterday'] = correctDate(yesterday)
+        console.log("today is", today)
+        console.log("yesterday is", yesterday)
     } catch(e){
         console.log(e)
     }
@@ -146,7 +148,6 @@ module.exports.checkPostStreak = async(req, res, next) => {
         if(!yesterdayPost.length) {
             if(todayPost.length){
                 await user.updateOne({$set: {postStreak:  1}}); 
-                console.log("this is running right here")    
             } else {
                 await user.updateOne({$set: {postStreak:  0}}); 
             }     
