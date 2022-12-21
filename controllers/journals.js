@@ -26,7 +26,7 @@ module.exports.showJournal = async(req, res, next) => {
         return res.redirect(`/profile#journals`);
     } else {
         const journal = await Journal.findById(journalId);
-        await journal.populate("author");
+        journal.populate("author");
         if(!journal){
             req.flash("error", "Journal not found!")
             return res.redirect(`/profile#journals`);

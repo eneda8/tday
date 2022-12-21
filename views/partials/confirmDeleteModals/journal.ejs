@@ -7,16 +7,16 @@
             </button>
           </div>
           <div class="modal-header border-0 pb-1 pt-0">
-            <% let headMsg = journal.title.includes("Write") || journal.title.includes("Journal") ? "Discard draft?" : "Delete journal?" %> 
+            <% let headMsg = title.includes("Write") || title.includes("Journal") ? "Discard draft?" : "Delete journal?" %> 
             <h6 class="modal-title font-weight-bold" id="deleteModalLabel"><%=headMsg%></h6>
           </div>
           <div class="modal-body py-1">
-            <% let pMsg = journal.title.includes("Write") || journal.title.includes("Edit") ? "You will lose any changes you've made to this journal." : "This can't be undone." %> 
+            <% let pMsg = title.includes("Write") || title.includes("Edit") ? "You will lose any changes you've made to this journal." : "This can't be undone." %> 
             <p class="mb-1"><%=pMsg%></p>
           </div>
           <div class="modal-footer pt-0 border-0">
             <button type="button" class="btn btn-sm btn-warning" data-dismiss="modal">Keep Writing</button>
-            <% if(!journal.title === "Write / t'day") { %> 
+            <% if(!title === "Write / t'day") { %> 
             <form class="d-inline" action="/write/<%=journal._id%>?_method=DELETE" method="POST">
                 <button type="submit" class="btn btn-sm btn-danger">Delete</button>
             </form>
