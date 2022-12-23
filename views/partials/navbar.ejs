@@ -1,10 +1,10 @@
 <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-warning d-none d-lg-block" style="top: 0;">
-  <div class="container-fluid">
+  <div class="<%= title === "t'day" || !currentUser ? 'container px-0' : 'container-fluid'%>">
     <a class="navbar-brand font-weight-bold logo" href="/">t'day</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#lg-navbar" aria-controls="lg-navbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="lg-navbar">
+    <div class="collapse navbar-collapse px-0" id="lg-navbar">
       <div class="navbar-nav">
         <% if(currentUser) {  %> 
           <a class="nav-link" href="/home"><i class="fas fa-home"></i> home</a>
@@ -20,19 +20,14 @@
         <% } %> 
       </div>
       <div class="navbar-nav ml-auto mr-2">
-      <% if(!currentUser) {  %> 
-        <!-- <form action="/" method="POST" class="form-inline" novalidate>
-          <div class="">
-            <label class="d-inline" for="username"></label>
-            <input type="text" class="form-control" placeholder="username" name="username" aria-label="Username" required>
-            <label class="d-inline" for="password"></label>
-            <input type="password" class="form-control" placeholder="password" name="password" aria-label="Password" required>
-            <button class="btn btn-link p-0" type="submit"><a class="nav-link text-decoration-none">login</a></button>
-          </div>
-        </form> -->
-        <button class="btn btn-link p-0"><a class="nav-link text-decoration-none" href="/login">login</a></button>
-        <button class="btn btn-link p-0"><a class="nav-link text-decoration-none" href="/register">sign up</a></button>
-      <% } else { %> 
+      <% if(!currentUser && title == "t'day") {  %> 
+        <form action="/login" method="POST" class="form-inline b-0" novalidate>
+            <input type="text" class="form-control border-0 mr-1" placeholder="username" name="username" aria-label="Username" required>
+            <input type="password" class="form-control border-0 mr-1" placeholder="password" name="password" aria-label="Password" required>
+            <button class="btn btn-primary" type="submit">login</button>
+        </form>
+        <!-- <button class="btn btn-link p-0"><a class="nav-link text-decoration-none" href="/register">register</a></button> -->
+      <% } else if (currentUser){ %> 
         <div class="input-group">
           <div class="form-outline pt-2">
             <form action="/posts/search" method="GET" class="form-inline mr-3 validated-form">
@@ -66,17 +61,8 @@
 <!-- mobile top navbar -->
 <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-warning d-lg-none d-flex justify-content-between" style="top: 0;">
     <a class="navbar-brand font-weight-bold logo d-inline" href="/">t'day</a>
-    <% if(!currentUser){ %> 
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sm-navbar" aria-controls="sm-navbar" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div id="sm-navbar" class="collapse navbar-collapse">
-      <div class="navbar-nav">
-        <button class="btn btn-link p-0"><a class="nav-link text-decoration-none" href="/login">login</a></button>
-        <button class="btn btn-link p-0"><a class="nav-link text-decoration-none" href="/register">sign up</a></button>
-      </div>
-    </div>
-    <% } else { %> 
+    <% if(currentUser){ %> 
+ 
     <form action="/posts/search" method="GET" class="validated-form">
       <div class="form-row align-items-end">
         <div class="col-auto">

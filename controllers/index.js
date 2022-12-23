@@ -1,16 +1,18 @@
-const sgMail = require("@sendgrid/mail");
+const Post = require("../models/post");
 
+const sgMail = require("@sendgrid/mail");
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 //------------------------- LANDING -------------------------
-module.exports.renderLandingPage =  (req, res) => {
+module.exports.renderLandingPage = async (req, res) => {
     if(req.user){
         return res.redirect("/home");
     } else {
     const today = res.locals.cookie["today"];
-    const average = res.locals.cookie["average"];
-    console.log("landing page average", average)
-    res.render("index/landing", {title: "t'day", today, average, style: "index/landing"});
+    const longToday = new Date(today).toLocaleDateString( 'en-US',
+    {year: 'numeric', month: 'long', day: 'numeric', timeZone: "UTC"})
+    const posts = await Post.find().where({date: today}).where({body:{$exists: true}}).sort({"createdAt": -1}).limit(3)
+    res.render("index/landing", {title: "t'day", today, longToday, posts, style: "index/landing"});
     }
 }
 

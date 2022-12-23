@@ -1,356 +1,78 @@
 <% layout("layouts/boilerplate")%>
 
 <div class="container px-1">
-    <div id="average-alert"
-    class="alert alert-light alert-dismissible fade show rounded border-success bg-white p-2 text-center text-dark mt-2"
-    role="alert" style="font-size: 18px;">
-    <div class="mr-5">
-      Current global average rating for <span id="today" class=""></span>:  <span class="font-weight-bold"><%=average%></span> <span class="star star<%=Math.trunc(average)%>-result" style="font-size: 18px"></span>
-    </div>
-    <button type="button" class="close py-0" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-
-  <div class="jumbotron mt-0 mb-0 mr-1 shadow">
-    <div class="text-center">
-      <h1 class="display-4 mb-0">Welcome to <strong style="font-family: 'Courgette" class="text-warning">t<sup><i
-              class="fas fa-feather text-primary d-inline ml-2 small"
-              style="font-size: 18px; padding-bottom:2em;"></i></sup>day<sup
-            style="font-size: 12px; line-height: 0; vertical-align: 20px">&copy</sup></strong></h1>
-      <p class="lead text-center mb-0">The world's first collective online journal</p>
-      <hr class="my-3 px-5 text-center">
-      <p class="mb-3 mt-0" style="font-size: 18px;">Rate your day, track progress, and connect to the whole globe.</p>
-      <a class="btn btn-warning btn-lg mr-2" href="/register" role="button">Sign up</a>
-      <a class="btn btn-primary btn-lg" href="/#" role="button">Learn more</a>
-    </div>
-  </div>
-
-  <!-- <div class="col content float-right">
-    <div class="row">
-        <div class="post bg-white shadow-lg " >
-            <div class="row d-flex justify-content-center mt-4">
-                <h1 class="logo">How's y<span class='text-warning'>(</span>our<span class="text-warning">)</span> <span id="dayOfTheWeek"></span>?</h1>
-                <div class=" wrapper d-block">
-                    <input name="ratingRadio" type="radio" id="st1" value="1" />
-                    <label for="st1"></label>
-                    <input name="ratingRadio" type="radio" id="st2" value="2" />
-                    <label for="st2"></label>
-                    <input name="ratingRadio" type="radio" id="st3" value="3" />
-                    <label for="st3"></label>
-                    <input name="ratingRadio" type="radio" id="st4" value="4" />
-                    <label for="st4"></label>
-                    <input name="ratingRadio" type="radio" id="st5" value="5" />
-                    <label for="st5"></label>
-                </div>
-            </div>
-            <textarea disabled style="resize: none" class="blinking-cursor d-block border mx-auto rounded border-dark shadow" cols="27" row="80">|</textarea>
-            <button class="btn btn-warning shadow d-block mt-3 mr-4 float-right" type="submit">Post</button>
-        </div>
-        
-    </div>
-</div>-->
-
-  <section class="" id="">
-    <div class="container mt-3" id="featuresDiv">
-      <div class="row mt-4">
-        <div class="col-lg-6 mb-3 feature-item text-center px-4">
-          <div class="feature-preview">
-            <i class="feature-icon fas fa-star text-warning"></i>
-            <h5 class="font-weight-bold text-dark">How's your <span id="dayOfTheWeek"></span>?</h5>
-            <p class="">Rate your day on a scale of 1-5 stars and jot down a few thoughts. Over time, with daily
-              self-reflection, you'll gain a clearer picture of your weeks, months and years.</p>
-          </div>
-          <i class="fas fa-plus-circle text-primary" data-toggle="modal" data-target="#modal1"></i>
-        </div>
-        <div class="col-lg-6 mb-3 feature-item text-center px-4">
-          <div class="feature-preview">
-            <i class="feature-icon fas fa-globe text-warning"></i>
-            <h5 class="font-weight-bold text-dark">A wider perspective</h5>
-            <p class="">See what today's like for people all around the world. Your home page shows you the real-time
-              global average rating for today and randomized anonymous t'day entries, filtered by country and/or star
-              rating.</p>
-          </div>
-          <i class="fas fa-plus-circle text-primary" data-toggle="modal" data-target="#modal2"></i>
-        </div>
-        <div class="col-lg-6 mb-3 feature-item text-center px-4">
-          <div class="feature-preview">
-            <i class="feature-icon fas fa-chart-line text-warning"></i>
-            <h5 class="font-weight-bold  text-dark">Today, quantified</h5>
-            <p class="">We believe in social (and self) observation that is honest and data-driven. Track your own daily
-              ratings over time or view national and global average ratings. Filter charts by date, country, age group,
-              and gender to gain insight into our collective, day by day.</p>
-          </div>
-          <i class="fas fa-plus-circle text-primary" data-toggle="modal" data-target="#modal3"></i>
-        </div>
-        <div class="col-lg-6 mb-3 feature-item text-center px-4">
-          <div class="feature-preview">
-            <i class="feature-icon far fa-bell-slash text-warning"></i>
-            <h5 class="font-weight-bold text-dark">No addiction</h5>
-            <p class="">t'day is a minimal social network platform: no followers. no likes. no notifications. no endless
-              timeline. no addiction. t'day is designed to help us connect to ourselves and to each other, without the
-              toxicity.</p>
-          </div>
-          <i class="fas fa-plus-circle text-primary" data-toggle="modal" data-target="#modal4"></i>
-        </div>
+  <div class="jumbotron my-3 py-5 shadow">
+    <h1 class="display-3 mb-0">Welcome to <strong style="font-family: 'Courgette" class="text-warning">t<sup><i
+      class="fas fa-feather text-primary d-inline ml-2 small"
+      style="font-size: 18px; padding-bottom:2em;"></i></sup>day<sup
+    style="font-size: 12px; line-height: 0; vertical-align: 20px">&copy</sup></strong>             
+    <span disabled style="resize: none" class="blinking-cursor background-color-none d-none d-sm-inline-block px-0 mx-0" cols="1" row="1">|</span>
+  </h1>
+    <hr class="mt-0 pt-0">
+    <p class="my-0"><span class="logo font-weight-bold">t'day</span> is the world's first collective online journal – Rate your day anonymously on a scale of 1-5, <br> track changes over time, and read ratings from all around the world.</p>
+    <p class="mb-0 mt-3 mb-0 mr-3 font-weight-bold"> <i class="far fa-calendar-alt text-primary"></i></i> Today is: <%=longToday%></p>
+    <div id="starDiv" class="d-block float-left mb-0">
+      <div class="d-block wrapper p-0 m-0">
+        <input name="ratingRadio" type="radio" id="st1" value="1" />
+        <label for="st1" class="my-0 p-0"></label>
+        <input name="ratingRadio" type="radio" id="st2" value="2" />
+        <label for="st2" class="my-0 p-0"></label>
+        <input name="ratingRadio" type="radio" id="st3" value="3" />
+        <label for="st3" class="my-0 p-0"></label>
+        <input name="ratingRadio" type="radio" id="st4" value="4" />
+        <label for="st4" class="my-0 p-0"></label>
+        <input name="ratingRadio" type="radio" id="st5" value="5" />
+        <label for="st5" class="my-0 p-0"></label>
       </div>
     </div>
-  </section>
-  <footer class="pt-4 mb-0 mt-1 d-flex justify-content-between small">
-    <div class="d-none d-lg-block">
-      <a class="d-inline" href="#">About</a> <span class="small">|</span>
-      <a class="d-inline" href="/privacy">Privacy Policy</a> <span class="small">|</span>
-      <a class="d-inline" href="/terms">Terms of Use</a> <span class="small">|</span>
-      <a class="d-inline" href="/cookies">Cookie Policy</a> <span class="small">|</span>
-      <a class="d-inline" href="/contact">Contact</a>
+    <div id="landingButtons" class="d-block my-0">
+      <a class="btn btn-warning btn mr-2 mt-0" href="/register" role="button">Register</a>
+      <a class="btn btn-primary btn d-none d-lg-inline-block mt-0" href="/about" role="button">Learn more</a>
+      <a class="btn btn-primary btn d-inline-block d-lg-none mt-0" href="/login" role="button">Log in</a>
     </div>
-    <div class="text-right">
-      <p class="mb-0 d-inline">© 2022 t'day |</p>
-      <p class="d-inline">made with <i class="fas fa-heart text-danger"></i> by <a
-          href="https://github.com/eneda8">eneda</a></p>
+  </div>
+  <div class="container mt-4">  
+    <div class="row mt-4">
+      <div class="col-sm mb-2 pl-0">
+        <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="100%" height="250" src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=dab42b0e-905e-459c-951b-6a8dde5b28ed&maxDataAge=10&autoRefresh=true&theme=light&filter={'date':'<%=today%>'}"></iframe>
+      </div>
+      <div class="col-sm mb-2 pr-0">
+        <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="100%" height="250" src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=35455c10-5c28-4885-874a-18bbeb448c97&maxDataAge=3600&filter={'date':'<%=today%>'}&theme=light&autoRefresh=true"></iframe>
+      </div>
     </div>
-
-  </footer>
+    <section>
+      <h4 class=" mt-2 mb-0 text-underline">Recent Ratings</h4>
+      <p class="mt-1 mb-0">
+      <span class="font-weight-bold">Anonymous</span>  <img src="<%=posts[0].author.country.flag%>" title="<%=posts[0].author.country.name%>" style="width:17px;">: 
+      <span class="star star<%=posts[0].rating%>-result"></span> <span class="font-italic"><%=posts[0].body.substring(0, 100)%>...</span>
+      </p>
+      <p class="mb-0"> 
+        <span class="font-weight-bold">Anonymous</span>  <img src="<%=posts[1].author.country.flag%>" title="<%=posts[1].author.country.name%>" style="width:17px;">:  
+        <span class="star star<%=posts[1].rating%>-result"></span> <span class="font-italic"><%=posts[1].body.substring(0, 100)%>...</span>
+      </p>
+      <p class="mb-0"> 
+        <span class="font-weight-bold">Anonymous</span>  <img src="<%=posts[2].author.country.flag%>" title="<%=posts[2].author.country.name%>" style="width:17px;">:  
+        <span class="star star<%=posts[2].rating%>-result"></span> <span class="font-italic"><%=posts[2].body.substring(0, 100)%>...</span>
+      </p>
+    </section>
+    <footer class="pt-4 my-5 mt-1 d-flex justify-content-between small">
+      <div class="d-none d-lg-block">
+        <a class="d-inline" href="#">About</a> <span class="small">|</span>
+        <a class="d-inline" href="/privacy">Privacy Policy</a> <span class="small">|</span>
+        <a class="d-inline" href="/terms">Terms of Use</a> <span class="small">|</span>
+        <a class="d-inline" href="/cookies">Cookie Policy</a> <span class="small">|</span>
+        <a class="d-inline" href="/contact">Contact</a>
+      </div>
+      <div class="text-right">
+        <p class="mb-0 d-inline">© 2022 t'day |</p>
+        <p class="d-inline">made with <i class="fas fa-heart text-danger"></i> by <a
+            href="https://github.com/eneda8">eneda</a></p>
+      </div>
+    </footer>
+  </div>
 </div>
 
 
-
-
-
-  <!-- Modal 1 -->
-  <div class="modal fade" id="modal1" tabindex="-1" aria-labelledby="modal1Label" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="modal1Label">Quick Reflection</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <div id="carousel1" class="carousel slide" data-interval=false data-ride="false">
-            <div class="carousel-inner">
-              <div class="carousel-item active">
-                <img src="/images/landing/image1.1.png" class="d-block w-100" alt="...">
-                <div class="mt-2">
-                  <hr>
-                  <h6 class="text-center font-weight-bold">Rate your day</h6>
-                </div>
-              </div>
-              <div class="carousel-item">
-                <img src="/images/landing/image1.2.png" class="d-block w-100" alt="...">
-                <div class="mt-2">
-                  <hr>
-                  <h6 class="text-center font-weight-bold">Reflect</h6>
-                </div>
-              </div>
-              <div class="carousel-item">
-                <img src="/images/landing/image1.3.png" class="d-block w-100" alt="...">
-                <div class="mt-2">
-                  <hr>
-                  <h6 class="text-center font-weight-bold">Track progress</h6>
-                </div>
-              </div>
-              <div class="carousel-item">
-                <img src="/images/landing/image1.4.png" class="d-block w-100" alt="...">
-                <div class="mt-2">
-                  <hr>
-                  <h6 class="text-center font-weight-bold">Gain insight</h6>
-                  <span class="text-muted text-center small d-block">(Maybe Wednesdays aren't so bad!)</span>
-                </div>
-              </div>
-            </div>
-            <button class="carousel-control-prev border-0 bg-transparent" type="button" data-target="#carousel1"
-              data-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="sr-only">Previous</span>
-            </button>
-            <button class="carousel-control-next border-0 bg-transparent" type="button" data-target="#carousel1"
-              data-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="sr-only">Next</span>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal 2 -->
-  <div class="modal fade" id="modal2" tabindex="-1" aria-labelledby="modal2Label" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="modal2Label">What's today like for everyone?</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <div id="carousel2" class="carousel slide" data-interval=false data-ride="false">
-            <div class="carousel-inner">
-              <div class="carousel-item active">
-                <img src="/images/landing/image2.1.png" class="d-block w-100" alt="...">
-                <div class="mt-2">
-                  <hr>
-                  <h6 class="text-center font-weight-bold">Read about 10 strangers' days</h6>
-                </div>
-              </div>
-              <div class="carousel-item">
-                <img src="/images/landing/image2.2.png" class="d-block w-100" alt="...">
-                <div class="mt-2">
-                  <hr>
-                  <h6 class="text-center font-weight-bold">Choose your filters</h6>
-                </div>
-              </div>
-              <div class="carousel-item">
-                <img src="/images/landing/image2.3.png" class="d-block w-100" alt="...">
-                <div class="mt-2">
-                  <hr>
-                  <h6 class="text-center font-weight-bold">See how we're all doing today</h6>
-                </div>
-              </div>
-              <!-- <div class="carousel-item">
-              <img src="/images/landing/image1.4.png" class="d-block w-100" alt="...">
-              <div class="mt-2">
-                <hr>
-                <h6 class="text-center font-weight-bold">Gain insight</h6>
-                <span class="text-muted text-center small d-block">(Maybe Wednesdays aren't so bad!)</span>
-              </div>
-            </div> -->
-            </div>
-            <button class="carousel-control-prev border-0 bg-transparent" type="button" data-target="#carousel2"
-              data-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="sr-only">Previous</span>
-            </button>
-            <button class="carousel-control-next border-0 bg-transparent" type="button" data-target="#carousel2"
-              data-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="sr-only">Next</span>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal 3 -->
-  <div class="modal fade" id="modal3" tabindex="-1" aria-labelledby="modal1Label" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="modal3Label">Track our days</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <div id="carousel3" class="carousel slide" data-interval=false data-ride="false">
-            <div class="carousel-inner">
-              <div class="carousel-item active">
-                <img src="/images/landing/image3.1.png" class="d-block w-100" alt="...">
-                <div class="mt-2">
-                  <hr>
-                  <h6 class="text-center font-weight-bold">Today, quantified</h6>
-                </div>
-              </div>
-              <div class="carousel-item">
-                <img src="/images/landing/image3.2.png" class="d-block w-100" alt="...">
-                <div class="mt-2">
-                  <hr>
-                  <h6 class="text-center font-weight-bold">Our days over time</h6>
-                </div>
-              </div>
-              <div class="carousel-item">
-                <img src="/images/landing/image3.3.png" class="d-block w-100" alt="...">
-                <div class="mt-2">
-                  <hr>
-                  <h6 class="text-center font-weight-bold">Filter the data you want to see</h6>
-                </div>
-              </div>
-            </div>
-            <button class="carousel-control-prev border-0 bg-transparent" type="button" data-target="#carousel3"
-              data-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="sr-only">Previous</span>
-            </button>
-            <button class="carousel-control-next border-0 bg-transparent" type="button" data-target="#carousel3"
-              data-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="sr-only">Next</span>
-            </button>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal 4 -->
-  <div class="modal fade" id="modal4" tabindex="-1" aria-labelledby="modal4Label" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="modal4Label">Healthy Social Interaction</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <div id="carousel4" class="carousel slide" data-interval=false data-ride="false">
-            <div class="carousel-inner">
-              <div class="carousel-item active">
-                <img src="/images/landing/image4.1.png" class="d-block w-100" alt="...">
-                <div class="mt-2">
-                  <hr>
-                  <h6 class="text-center font-weight-bold">Complete anonymity</h6>
-                  <p class="text-muted text-center">Feel free to be your authentic self</p>
-                </div>
-              </div>
-              <div class="carousel-item">
-                <img src="/images/landing/image4.2.png" class="d-block w-100" alt="...">
-                <div class="mt-2">
-                  <hr>
-                  <h6 class="text-center font-weight-bold">No endless timeline or infinite scroll </h6>
-                  <p class="text-muted text-center">Your timeline is randomized and shows you only 10 posts at a time.
-                  </p>
-                </div>
-              </div>
-              <div class="carousel-item">
-                <img src="/images/landing/image4.3.png" class="d-block w-100" alt="...">
-                <div class="mt-2">
-                  <hr>
-                  <h6 class="text-center font-weight-bold">No followers, no likes, no notifications</h6>
-                  <p class="text-muted text-center">No distractions. Only keep track of the numbers that matter.</p>
-                </div>
-              </div>
-              <div class="carousel-item">
-                <img src="/images/landing/image4.4.png" class="d-block w-100" alt="...">
-                <div class="mt-2">
-                  <hr>
-                  <h6 class="text-center font-weight-bold">Post just once a day</h6>
-                  <p class="text-muted text-center">But comment as much as you like :)</p>
-                </div>
-              </div>
-            </div>
-            <button class="carousel-control-prev border-0 bg-transparent" type="button" data-target="#carousel4"
-              data-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="sr-only">Previous</span>
-            </button>
-            <button class="carousel-control-next border-0 bg-transparent" type="button" data-target="#carousel4"
-              data-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="sr-only">Next</span>
-            </button>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
+<script>
+  document.getElementById("landingDay").textContent= new Date().toLocaleString('en-us', {weekday:'long'});
+</script>
