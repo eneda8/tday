@@ -1,12 +1,15 @@
-<div class="tab-pane fade mb-3 pt-2" id="comments" role="tabpanel" aria-labelledby="comments-tab">
+<div class="tab-pane fade" id="comments" role="tabpanel" aria-labelledby="comments-tab">
     <% if(!comments.length) { %>
     <h6 class="text-center my-5">No comments yet!</h6>
     <% } else { for (let comment of comments) {%> 
     <div class="media mb-0 mt-2 mx-4 pl-2 pt-1">
-        <img class="img-fluid rounded-circle" src="<%=user.avatar.profile%>" alt="" style="width:45px;">
         <div class="media-body">
-            <p class="card-subtitle mt-1"><strong>Anonymous</strong><img class="d-inline" style="width: 17px; transform:translateY(-1px);" src="<%=user.country.flag%>" alt="" title="<%=user.country.name %>"></p>
-            <a href="/posts/<%=comment.post%>"class="card-link" >@Anonymous </a> <p class="my-1"><%=comment.body%></p>
+            <img class="img-fluid rounded-circle mr-2" src="<%=user.avatar.profile%>" alt="" style="width:45px; height:45px; float:left">
+            <p class="card-subtitle mt-2">
+                <strong>Anonymous</strong>
+                <img class="d-inline align-self-baseline" style="width: 17px; transform:translateY(-1px);" src="<%=user.country.flag%>" alt="" title="<%=user.country.name %>">
+            </p>
+             <p class="my-1"><a href="/posts/<%=comment.post%>"class="card-link" >@Anonymous </a> <%=comment.body%></p>
             <small class="pb-1 timestamp" title="<%=comment.createdAt%>"><%=comment.createdAt%></small>
             <% if(currentUser && comment.author.equals(currentUser._id)) { %> 
             <button class="btn btn-link btn-sm d-inline pb-0" title="Delete comment" data-toggle="modal" data-target="#commentDeleteModal-<%=comment._id%>"><i class="fas fa-trash-alt text-danger"></i></button>
@@ -14,32 +17,34 @@
         </div>
     </div> 
     <hr class="my-1 mx-4">  
-    <div class="modal fade" id="commentDeleteModal-<%=comment._id%>" tabindex="-1" aria-labelledby="commentDeleteModalLabel-<%=comment._id%>" aria-hidden="true">
-        <div class="modal-dialog modal-sm modal-dialog-centered">
-            <div class="modal-content">
-                <div class="d-flex justify-content-end pr-2 pb-0 mb-0">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-header border-0 pb-1 pt-0">
-                    <h6 class="modal-title font-weight-bold d-block" id="commentDeleteModalLabel">Delete comment?</h6>
-                </div>
-                <div class="modal-body py-1">
-                    <p class="mb-0">Are you sure? This can't be undone.</p>
-                  </div>
-                <div class="modal-footer pt-1 border-0">
-                    <button type="button" class="btn btn-warning btn-sm" data-dismiss="modal">Cancel</button>
-                    <% if(comment.post) { %> 
-                    <form class="d-inline" action="/posts/<%=comment.post._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
-                    <% } else { %> 
-                    <form class="d-inline" action="/comments/<%=comment._id%>?_method=DELETE" method="POST">
-                    <% } %> 
-                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                    </form>
+    <div>
+      <div class="modal fade" id="commentDeleteModal-<%=comment._id%>" tabindex="-1" aria-labelledby="commentDeleteModalLabel-<%=comment._id%>" aria-hidden="true">
+            <div class="modal-dialog modal-sm modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="d-flex justify-content-end pr-2 pb-0 mb-0">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-header border-0 pb-1 pt-0">
+                        <h6 class="modal-title font-weight-bold" id="commentDeleteModalLabel">Delete comment?</h6>
+                    </div>
+                    <div class="modal-body py-1">
+                        <p class="mb-0">Are you sure? This can't be undone.</p>
+                    </div>
+                    <div class="modal-footer pt-1 border-0">
+                        <button type="button" class="btn btn-warning btn-sm" data-dismiss="modal">Cancel</button>
+                        <% if(comment.post) { %> 
+                        <form class="d-inline" action="/posts/<%=comment.post._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
+                        <% } else { %> 
+                        <form class="d-inline" action="/comments/<%=comment._id%>?_method=DELETE" method="POST">
+                        <% } %> 
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>    
+        </div>      
+    </div>
     <% }} %>
 </div>

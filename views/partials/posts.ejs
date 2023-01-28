@@ -1,23 +1,25 @@
 <div class=" card my-3 pt-2 pl-2 pr-2 border-0 shadow-sm">
     <a href="/posts/<%=post._id%>" class="text-decoration-none p-0 m-0"></a>
-    <div class="media pr-3">
-        <img class="img-fluid rounded-circle mr-2" style="width:45px;" src="<%=post.author.avatar.profile%>" class="pr-2" alt="" >
-        <div class="media-body text-wrap">
-            <div class="d-flex justify-content-between mt-2">
-                <p class="card-subtitle mt-1 mb-0 pb-0  d-inline" style="z-index: 2;"> 
+    <div class="media px-2">
+        <div class="media-body" style="overflow: visible">
+            <img class="img-fluid rounded-circle mr-2" style="width:45px; height: 45px; float:left " src="<%=post.author.avatar.profile%>" alt="" >
+            <div class="d-flex justify-content-between mt-0">
+                <p class="card-subtitle mt-1 mb-0 pb-0 d-inline" style="z-index: 2;"> 
                     <strong>Anonymous</strong>          
-                    <img class="d-inline align-self-baseline" style="width: 17px; transform:translateY(-1px)" src="<%=post.author.country.flag%>" title="<%=post.author.country.name%>" alt="">
-                    <% if (title.includes("Profile")) { %>
-                    <small class="text-muted mb-1 d-block">@<%=post.author.username%></small>
-                    <% } %>
+                    <img class="d-inline align-self-baseline" style="width: 17px; transform:translateY(-1px);" src="<%=post.author.country.flag%>" title="<%=post.author.country.name%>" alt="">
+                    <% if((title === "Home / t'day") || (title === `${user.username}'s day / t'day`)) {%> 
+                        <small class="mb-0 d-block" title="<%=post.rating%> - <%=post.desc%>" style="z-index: 3;"><span class="star star<%=post.rating%>-result p-0 m-0" style="z-index: 3;"></span></small>
+                        <% } else { %> 
+                        <span class="badge badge-primary mb-2 pt-2 d-block" style="font-size: 13px; z-index: 3;" title="<%=post.rating%> - <%=post.desc%>"><%=post.date%>: <span class="star star<%=post.rating%>-result" style="z-index: 2; transform:translateY(2px); font-size: 14px"></span></span>  
+                        <%}%>
                 </p>
-                <% if(currentUser && post.author.equals(user._id)) { %> 
+                <% if(currentUser && post.author.equals(currentUser._id)) { %> 
                     <div class="btn-group dropleft" style="z-index: 2;">
-                        <button class="btn btn-sm text-dark mb-1 pb-1 bg-light rounded-circle" data-toggle="dropdown" style="height: 30px; width: 30px" title="More" >...</button>
+                        <button class="btn btn-sm text-dark mb-1 px-0 pt-0 pb-1 bg-light rounded-circle font-weight-bold" data-toggle="dropdown" style="height: 30px; width: 30px; font-size: 14px" title="More" >. . .</button>
                         <div class="dropdown-menu" >
                         <% if(within24Hours(post) === true) { %>
                             <!-- modal buttons specific to user profile page-->
-                            <% if(title === `@${currentUser.username} / t'day`) { %> 
+                            <% if(title === `Profile / t'day`) { %> 
                                 <% if(post.date == cookie['today']) {  %>
                             <a href="" data-toggle="modal" id="editTodayPostLink" data-target="#editTodayPostModal" class="dropdown-item pl-2  text-primary"><i class="fas fa-edit text-warning"></i> Edit</a>
                                 <% } else {%> 
@@ -36,11 +38,7 @@
                     </div>
                     <% } %>
             </div>
-            <% if((title === "Home / t'day") || (title === `${user.username}'s day / t'day`)) {%> 
-            <p class="mb-0" title="<%=post.rating%> - <%=post.desc%>" style="z-index: 3;"><span class="star star<%=post.rating%>-result p-0 m-0" style="z-index: 3;"></span></p>
-            <% } else { %> 
-            <span class="badge badge-light mb-2" style="font-size: 13px; z-index: 3;" title="<%=post.rating%> - <%=post.desc%>"><%=post.date%>: <span class="star star<%=post.rating%>-result" style="z-index: 2;"></span></span>  
-            <%}%>
+
             <div class="text-wrap">
                 <p class="mb-0" style="white-space: pre-line;"><%=post.body%></p>
             </div>
@@ -56,24 +54,31 @@
                 <div>
                     <a href="/posts/<%=post._id%>" class="card-link"><small class="pb-1 timestamp" title="<%=post.createdAt%>"><%=post.createdAt%></small></a>
                     <% if(post.edited){ %>
-                    <small class="pb-1 text-muted edited" title="<%=post.updatedAt%>">Edited</small>
+                    <small class="pb-1 text-muted edited" title="Edited: <%=post.updatedAt%>">Edited</small>
                     <% } %>
                 </div>
                 <div class="d-flex justify-content-around" style="z-index:100;">
-                    <a href="/posts/<%=post._id%>" class="text-decoration-none p-0" title="Comments"><span class="text-muted" style="font-size: 13px;"><%=post.comments.length%></span> <i class="fas fa-comments text-primary"></i></a>  
-                    <a  class="copy btn btn-sm btn-link p-0 mx-2" role="button"  title="Copy link" ><i class="fas fa-link text-warning" onclick="navigator.clipboard.writeText(window.location.origin+'/posts/<%=post._id%>')"></i></a>
+                    <a href="/posts/<%=post._id%>" class="text-decoration-none p-0" title="Comments">
+                        <span class="text-muted" style="font-size: 13.5px;"><%=post.comments.length%></span> 
+                        <i class="far fa-comment text-primary" style="width:16px; height:16px;"></i>
+                    </a>  
+                    <a  class="copy btn btn-sm btn-link p-0 mx-2" role="button"  title="Copy link">
+                        <i class="far fa-copy text-warning" onclick="navigator.clipboard.writeText(window.location.origin+'/posts/<%=post._id%>')"></i>
+                    </a>
                     <% if(currentUser.bookmarks.includes(post._id)) { %>
-                        <% if(title === `Profile / t'day`) { %> 
-                            <a href="/profile#bookmarks">
-                            <i class="fas fa-bookmark text-danger small"></i>
-                            </a>
-                        <% } else {%> 
-                        <button id="bookmarked" class="btn btn-sm btn-link p-0" title="Remove bookmark" data-toggle="modal" data-target="#bookmarkDeleteModal-<%=post._id%>"><i class="fas fa-bookmark text-danger"></i></button>
-                        <%- include("../partials/confirmDeleteModals/bookmark") %>
-                        <% } %> 
+                    <% if(title === `Profile / t'day`) { %> 
+                    <a href="/profile#bookmarks">
+                         <i class="fas fa-bookmark text-danger small" style="width:16px; height:16px;"></i>
+                    </a>
+                    <% } else {%> 
+                    <button id="bookmarked" class="btn btn-sm btn-link p-0" title="Remove bookmark" data-toggle="modal" data-target="#bookmarkDeleteModal-<%=post._id%>"><i class="fas fa-bookmark text-danger" style="width:16px; height:16px;"></i></button>
+                    <%- include("../partials/confirmDeleteModals/bookmark") %>
+                    <% } %> 
                     <%} else { %> 
                     <form action="/posts/<%=post._id%>/bookmark" method="POST" class="d-inline p-0">
-                        <button class="btn btn-sm btn-link p-0" title="Bookmark"><i class="far fa-bookmark text-danger"></i></button>
+                        <button class="btn btn-sm btn-link p-0" title="Bookmark">
+                            <i class="far fa-bookmark text-danger" style="width:16px; height:16px;"></i>
+                        </button>
                     </form>
                     <% } %> 
                 </div>
@@ -100,5 +105,3 @@
 </div>
 
 <%- include("../partials/toasts/copyToast") %>
-
-<%- include("../partials/userProfile/modals/editTodayAndYesterday") %>

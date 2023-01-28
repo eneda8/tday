@@ -1,22 +1,26 @@
-<div class="">
-    <div class="mb-3 bg-transparent">
+<div class="" >
+    <div class="mb-3 pl-4 pt-1 bg-light" style="line-height:24px;">
+        <h6 class="mb-0 pt-1" style="font-size: 1rem">Menu</h6>
+
         <div class="menu my-2 h-50">
-            <h6 class="mb-0 pt-1" style="font-size: 1rem">Menu</h6>
             <ul class="nav flex-column" style="font-size: 0.92rem">
                 <li class="nav-item">
-                    <a class="nav-link active pl-0 pb-0" href="/home"><span class="mr-2"><i class="fas fa-home"></i></span>Home</a>
+                    <a class="nav-link active px-0 pt-0 pb-1" href="/home"><i class="fas fa-home fa-fw mr-2" style="transform:translateY(-1px)"></i>Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active px-0 pt-0 pb-1" href="/profile"><i class="fas fa-user fa-fw mr-2" style="transform:translateY(-1px)"></i>Profile</a>
                 </li>
                 <% if(user.postedToday === false) {%> 
                     <li class="nav-item">
-                        <a class="nav-link pl-0 pb-0" href="" data-toggle="modal" id="newPostLink" data-target="#newPostModal"><span class="mr-2"><i class="far fa-star"></i></span>Rate today</a>
+                        <a class="nav-link px-0 pt-0 pb-1" href="" data-toggle="modal" id="newPostLink" data-target="#newPostModal"><i class="far fa-star fa-fw mr-2" style="transform:translateY(-1px)"></i>Rate today</a>
                     </li>
                     <% } else {%>
                     <li class="nav-item">
-                        <a href="/posts/<%=user.todaysPost%>" class="nav-link pl-0 pb-0"><span class="mr-2"><i class="far fa-calendar-check"></i></span>Today's rating</a>
+                        <a href="/posts/<%=user.todaysPost%>" class="nav-link px-0 pt-0 pb-1"><i class="far fa-calendar-check fa-fw mr-2" style="transform:translateY(-1px)"></i>Today's rating</a>
                     </li>
                     <% } %>
                 <li class="nav-item dropdown">
-                    <a class="nav-link pl-0 pb-0 dropdown-toggle" data-toggle="dropdown" role="button"><span class="mr-2"><i class="far fa-chart-bar"></i></span>Charts</a>
+                    <a class="nav-link px-0 pt-0 pb-1 dropdown-toggle" data-toggle="dropdown" role="button"><i class="far fa-chart-bar fa-fw mr-2"></i>Charts</a>
                     <div class="dropdown-menu" style="font-size: 0.92rem">
                         <a href="/charts" class="dropdown-item text-primary">Today's Charts</a>
                         <a href="/charts/all" class="dropdown-item text-primary">All Charts</a>
@@ -24,32 +28,32 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link pl-0 pb-0 " href="/write"><span class="mr-2"><i class="fas fa-pencil-alt"></i></span>Write</a>
+                    <a class="nav-link px-0 pt-0 pb-1 " href="/write"><i class="fas fa-pencil-alt fa-fw mr-2"></i>Write</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link pl-0 pb-0" href="profile#journals"><span class="mr-2"><i class="fas fa-book"></i></span>Journals</a>
+                    <a class="nav-link px-0 pt-0 pb-1" href="profile#journals"><i class="fas fa-book fa-fw mr-2" style="transform:translateY(-1px)"></i>Journals</a>
                     </li>
                 <li class="nav-item">
-                    <a class="nav-link pl-0 pb-0" href="profile#bookmarks"><span class="mr-2"><i class="fas fa-bookmark"></i></span> Bookmarks</a>
+                    <a class="nav-link px-0 pt-0 pb-1" href="profile#bookmarks"><i class="fas fa-bookmark fa-fw mr-2"></i>Bookmarks</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link pl-0 pb-0" href="/posts/search"><span class="mr-2"><i class="fas fa-search"></i></span>Search</a>
+                    <a class="nav-link px-0 pt-0 pb-1" href="/posts/search"><i class="fas fa-search fa-fw mr-2"></i>Search</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link pl-0 pb-0" href="/settings"><span class="mr-2"><i class="fas fa-cog"></i></span>Settings</a>
+                    <a class="nav-link px-0 pt-0 pb-1" href="/settings"><i class="fas fa-cog fa-fw mr-2"></i>Settings</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link pl-0 pb-0" href="/logout"><i class="fas fa-sign-out-alt text-primary mr-3"></i>Log out</a>
+                    <a class="nav-link px-0 pt-0 pb-1" href="/logout"><i class="fas fa-sign-out-alt text-primary fa-fw mr-2"></i>Log out</a>
                 </li>
 
             </ul>
         </div>
     </div>
-    <div class="bg-light shadow-sm rounded p-2 mb-3" oncontextmenu = "return false">
+    <div class="bg-light shadow-sm rounded px-2 pt-2 pb-1 mb-3" oncontextmenu = "return false">
         <iframe style="background: #FFFFFF;border: none;border-radius: 2px;" width="100%" height="250px" src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=dab42b0e-905e-459c-951b-6a8dde5b28ed&&maxDataAge=10&autoRefresh=true&theme=light&filter={'date':'<%=today%>'}"></iframe>
     </div>
-    <div class="bg-light shadow-sm rounded p-3">
-        <div class="card my-2 h-50 p-3 border-0" title="This content is loaded externally. If it doesn't look right, try refreshing the page.">
+    <div class="bg-light shadow-sm rounded px-3 pt-1 pb-1">
+        <div class="card my-2 h-50 px-3 pt-0 pb-1 border-0" title="This content is loaded externally. If it doesn't look right, try refreshing the page.">
             <h6 class="text-center mt-3"><a href="https://global-mind.org/gcpdot/">Real-time Global Consciousness Project Dot</a></h6>
             <div class="d-flex justify-content-center" style="width: 100%">
                 <iframe src="https://global-mind.org/gcpdot/gcp.html" height="48" width="48" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
