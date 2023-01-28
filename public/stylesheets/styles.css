@@ -20,7 +20,7 @@ body {
 
 .msg{
     z-index: 5;
-    top: 4.5em;
+    top: 4em;
     position: fixed;
     left: 50%;
     margin-left: -150px;
@@ -94,6 +94,9 @@ i {
     border-radius: 50%
 }
 
+.modal-content{
+    border: 0px
+}
 /* breakpoints */
 @media screen and (min-width: 576px ) {
     main {

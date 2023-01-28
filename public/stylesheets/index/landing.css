@@ -2,6 +2,13 @@
   font-family: "Courgette", cursive;
 }
 
+section > p {
+  line-height: 25px;
+}
+
+.star{
+  font-size: 1.25em;
+}
 main {
   flex-direction: column;
   justify-content: start;
@@ -17,7 +24,6 @@ main {
 }
 
 .jumbotron{
-  z-index: 700;
   position: relative;
 }
 
