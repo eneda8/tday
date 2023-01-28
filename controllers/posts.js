@@ -10,6 +10,14 @@ const countries = require("../countries");
 //     res.render("partials/posts/new", {style: "styles"})
 // }
 
+function correctDate(date){ 
+    if( date !== undefined && date.lastIndexOf(" ") == 3){
+    let spaceIdx = date.length - 4;
+    return date.slice(0, spaceIdx) + " " + date.slice(spaceIdx);
+    } else return date
+}
+
+
 module.exports.createPost = async (req, res, next) => {
     try {
         const user = await User.findById(req.user._id);
@@ -139,9 +147,8 @@ module.exports.updatePost = async (req,res) => {
 module.exports.deletePost = async(req, res) => {
     const {id} = req.params;
     const user = await User.findById(req.user._id).populate("posts");
-    const today = res.locals.cookie['today'];
+    const today = correctDate(res.locals.cookie['today']);
     const post = await Post.findById(id).populate("author").populate("comments");
-
     if(post.date === today){
         user.posts.shift();
         user.postedToday = false;

@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const catchAsync = require("../utils/catchAsync");
 const charts = require("../controllers/charts");
-const {isLoggedIn, isVerified, correctCookies, setPostedToday,  blockDuplicatePost, checkPostStreak, isAccountOwner, filterCharts} = require("../middleware");
+const {isLoggedIn, isVerified, correctCookies, setPostedToday,  blockDuplicatePost, resetPostStreak, isAccountOwner, filterCharts} = require("../middleware");
 
 router.route("/")
         .get( isLoggedIn, isVerified, correctCookies, setPostedToday, filterCharts, catchAsync(charts.renderTodaysCharts));

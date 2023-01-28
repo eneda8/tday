@@ -11,14 +11,15 @@ module.exports.renderLandingPage = async (req, res) => {
     const today = res.locals.cookie["today"];
     const longToday = new Date(today).toLocaleDateString( 'en-US',
     {year: 'numeric', month: 'long', day: 'numeric', timeZone: "UTC"})
-    const posts = await Post.find().where({date: today}).where({body:{$exists: true}}).sort({"createdAt": -1}).limit(3)
+    const posts = await Post.find().where({date: today}).where({body:{$exists: true}}).sort({"createdAt": -1}).limit(4)
     res.render("index/landing", {title: "t'day", today, longToday, posts, style: "index/landing"});
     }
 }
 
 // ---------------------ABOUT ---------------------------------------
 module.exports.renderAbout = (req, res) => {
-    res.render("index/about", {title: "About / t'day", style: "index/about"})
+    const today = res.locals.cookie["today"];
+    res.render("index/about", {today, title: "About / t'day", style: "index/about"})
 }
 
 module.exports.renderTerms = (req, res) => {

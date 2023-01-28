@@ -136,23 +136,23 @@ module.exports.blockDuplicatePost = async (req, res, next) => {
     } else next()
 }
 
-module.exports.checkPostStreak = async(req, res, next) => {
+module.exports.resetPostStreak = async(req, res, next) => {
     const user = await User.findById(req.user._id);
     try{ 
-        const today = correctDate(res.locals.cookie['today']);
         const yesterday = correctDate(res.locals.cookie['yesterday']);
         const yesterdayPost = await Post.find({"author": user, "date": yesterday});
-        const todayPost = await Post.find({"author": user, "date": today})
-        if(!yesterdayPost.length) {
-            if(todayPost.length){
+        if(yesterdayPost.length == 0) {
+            if(user.postedToday){
                 await user.updateOne({$set: {postStreak:  1}}); 
+                await user.save()
+
             } else {
                 await user.updateOne({$set: {postStreak:  0}}); 
+                await user.save()
             }     
-            user.save()
         } 
     } catch(e) {
-        console.log("checkPostStreak middleware failed:", e)
+        console.log("resetPostStreak middleware failed:", e)
     }
     next() 
 }

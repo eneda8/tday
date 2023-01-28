@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const index = require("../controllers/index");
 const catchAsync = require("../utils/catchAsync");
-const {correctCookies} = require("../middleware");
+const {correctCookies, isLoggedIn, isVerified} = require("../middleware");
 
 router.route("/")
     .get(correctCookies, index.renderLandingPage)
@@ -21,6 +21,6 @@ router.route("/cookies")
     
 router.route("/contact")
     .get(index.renderContact)
-    .post(catchAsync(index.postContact))
+    .post(isLoggedIn, isVerified, catchAsync(index.postContact))
     
 module.exports = router;
