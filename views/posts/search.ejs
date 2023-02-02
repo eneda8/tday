@@ -1,11 +1,11 @@
 <% layout("layouts/boilerplate")%>
 <div class="mainContainer d-flex justify-content-center container-fluid w-100 px-0">
     <div class="row mx-lg-5 w-100 d-flex justify-content-center px-0">
-        <div class="col-sm px-0 mt-lg-3">
+        <div class="col-3 px-0 mt-lg-3 d-none d-md-block">
             <h3 class="font-weight-bold mb-2" style="font-size: 1.7rem">Search</h3>
             <%- include("../partials/search/searchFilter") %>
         </div>
-        <div class="col-sm mx-lg-3 bg-light mt-lg-3 px-3 shadow-sm rounded" id="searchResults">
+        <div class="col flex-grow-1 mx-lg-3 bg-light mt-lg-3 px-3 shadow-sm rounded" id="searchResults">
             <% if( posts && posts.docs){ %>
                 <div class="d-flex justify-content-between">
                     <h5 class="text-left mt-3 mb-0">Results</h5>

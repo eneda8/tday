@@ -187,12 +187,12 @@ module.exports.search = async (req, res) => {
     if(dbQuery) {
         posts = await Post.paginate(dbQuery, {
             page: req.query.page || 1,
-            limit: 10,
+            limit: 30,
             sort: {"createdAt": -1},
             populate: "author"
         })
         posts.page = Number(posts.page);
-        docsFound = posts.pages > 1 ? posts.pages*10 : posts.docs.length;
+        docsFound = posts.pages > 1 ? posts.pages*30 : posts.docs.length;
         for(let post of posts.docs) {
             const doesUserExist = await User.exists({_id: post.author})
             if(!doesUserExist) {

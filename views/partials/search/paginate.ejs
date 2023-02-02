@@ -10,7 +10,7 @@
         </li>
     <% } %> 
     <% if(posts.pages > 1 && posts.docs.length) {%> 
-    <% let pagesShown = posts.pages <= 15 ? posts.pages : posts.page + 5 %> 
+    <% let pagesShown = Math.min(posts.pages, posts.page + 5) %> 
     <% for(let i =posts.page; i<= pagesShown; i++) {%>
         <li class="page-item">
             <a href="<%=paginateUrl%><%= i %>" <%= i === posts.page ? 'style=color:#000' : '' %> class="page-link"><%= i %></a>
