@@ -74,7 +74,7 @@ const seedDB = async () => {
             const post = new Post({rating, body});
             if(i % 2 == 0) {
                 post.image = {}
-                post.image.path = "https://placeimg.com/640/480/any";
+                post.image.path = "https://source.unsplash.com/random";
             }     
             post.date = new Date().toLocaleDateString( 'en-US',{year: 'numeric',month: 'short',day: 'numeric'})
             post.author = user;
