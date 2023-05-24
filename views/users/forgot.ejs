@@ -1,42 +1,45 @@
 <% layout("layouts/boilerplate")%>
 
-<div class="d-flex container" style="overflow-y: hidden;">
-    <div class="row align-self-center mx-auto">
-        <div class="col col-lg-8 offset-lg-2">
-            <div class="card border-0 shadow mb-3 bg-light w-100 h-100">
-                <div class="card-body">
-                    <h5 class="card-title my-3 text-center">Forgot your password?</h5>
-                    <p class="text-center">Enter your email here to receive a link to reset your password:</p>
-                    <form action="/forgot-password?_method=PUT" method="POST" class="validated-form" novalidate>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <label class="input-group-text border-0" for="email"><i class="fas fa-envelope text-primary"></i></label>
+    <div class="d-flex container" style="overflow-y: hidden;">
+        <div class="row align-self-center mx-auto">
+            <div class="col col-lg-8 offset-lg-2">
+                <div class="card border-0 shadow mb-3 bg-light w-100 h-100">
+                    <div class="card-body">
+                        <h5 class="card-title my-3 text-center">Forgot your password?</h5>
+                        <p class="text-center">Enter your email here to receive a link to reset your password:</p>
+                        <form action="/forgot-password?_method=PUT" method="POST" class="validated-form" novalidate>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text border-0" for="email"><i
+                                            class="fas fa-envelope text-primary"></i></label>
+                                </div>
+                                <input class="form-control border-0" type="email" id="email" name="email"
+                                    placeholder="Email" required autofocus>
+                                <div class="valid-feedback"></div>
+                                <div class="invalid-feedback">Please enter a valid email.</div>
                             </div>
-                            <input class="form-control border-0" type="email" id="email" name="email" placeholder ="Email" required autofocus>
-                            <div class="valid-feedback"></div>
-                            <div class="invalid-feedback">Please enter a valid email.</div>
-                         </div>
-                        <button class="btn btn-warning btn-block">Reset Password</button>
-                    </form>
-                </div> 
-            </div> 
-        </div> 
-        <div class="row mx-auto">
-            <div class="col">
-                <footer class="pt-4 mb-0 mt-1 small">
-                    <div class="d-none d-lg-block">
-                        <a class="d-inline" href="#">About</a> <span class="small">|</span>
-                        <a class="d-inline" href="/privacy">Privacy Policy</a> <span class="small">|</span>
-                        <a class="d-inline" href="/terms">Terms of Use</a> <span class="small">|</span>
-                        <a class="d-inline" href="/cookies">Cookie Policy</a> <span class="small">|</span>
-                        <a class="d-inline mr-5" href="/contact">Contact</a>
-                        <p class="mb-0 d-inline">© 2022 t'day |</p>
-                        <p class="d-inline">made with <i class="fas fa-heart text-danger"></i> by <a href="https://github.com/eneda8">eneda</a></p>
-                        <small style="color: #66000000">Ps. 118:24</small>
+                            <button class="btn btn-warning btn-block">Reset Password</button>
+                        </form>
                     </div>
-                </footer>
+                </div>
             </div>
+            <div class="row mx-auto">
+                <div class="col">
+                    <footer class="pt-4 mb-0 mt-1 small">
+                        <div class="d-none d-lg-block">
+                            <a class="d-inline" href="#">About</a> <span class="small">|</span>
+                            <a class="d-inline" href="/privacy">Privacy Policy</a> <span class="small">|</span>
+                            <a class="d-inline" href="/terms">Terms of Use</a> <span class="small">|</span>
+                            <a class="d-inline" href="/cookies">Cookie Policy</a> <span class="small">|</span>
+                            <a class="d-inline mr-5" href="/contact">Contact</a>
+                            <p class="mb-0 d-inline">© 2023 t'day |</p>
+                            <p class="d-inline">made with <i class="fas fa-heart text-danger"></i> by <a
+                                    href="https://github.com/eneda8">eneda</a></p>
+                            <small style="color: #66000000">Ps. 118:24</small>
+                        </div>
+                    </footer>
+                </div>
+            </div>
+
         </div>
-        
-    </div> 
-</div> 
+    </div>

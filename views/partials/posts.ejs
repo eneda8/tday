@@ -45,7 +45,7 @@
             <% if(post.image) { %> 
                 <div class="d-flex justify-content-center" style="z-index: 2;">
                     <a href="" data-toggle="modal" id ="imagePreviewLink-<%=post._id%>" data-target="#imagePreviewModal-<%=post._id%>" style="z-index: 2;">
-                        <img class="img-fluid" src="<%=post.image.path%>" alt="">
+                        <img class="img-fluid" style="max-height: 350px; object-fit: scale-down;" src="<%=post.image.path%>" alt="">
                     </a>
                 </div>
                 <%- include('../partials/posts/imagePreview')%>

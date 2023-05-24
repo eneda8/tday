@@ -152,7 +152,8 @@ const scriptSrcUrls = [
     "https://cdnjs.cloudflare.com",
     "https://cdn.jsdelivr.net",
     "https://code.jquery.com",
-    "https://app.termly.io"
+    "https://app.termly.io",
+    "https://cdn.segment.com"
 ];
 const styleSrcUrls = [
     "https://kit-free.fontawesome.com",
@@ -169,6 +170,7 @@ const connectSrcUrls = [
 const fontSrcUrls = [
     "https://fonts.gstatic.com",
     "https://use.fontawesome.com",
+    "https://fonts.googleapis.com"
 ];
 
 app.use(

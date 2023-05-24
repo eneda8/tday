@@ -3,7 +3,8 @@
     let today =  new Date().toLocaleDateString('en-US', {year: 'numeric', month: 'short', day: 'numeric'});
     document.cookie = `today=${today}`; // set user's today in cookie
     if(document.title === "t'day"){
-        document.querySelector("#today").innerText = today;
+        let date = document.querySelector("#today");
+        if(date){date.innerText = today};
     }
     let yesterday = new Date(today)
     yesterday.setDate(yesterday.getDate() -1)

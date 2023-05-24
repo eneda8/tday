@@ -1,171 +1,228 @@
 <% layout("layouts/boilerplate")%>
-<div class="mainContainer d-flex justify-content-center container-fluid w-100 px-0">
-    <div class="row w-100 d-flex flex-nowrap justify-content-center px-0 mx-lg-5">
-        <div class="col-3 px-0 mt-lg-3 d-none d-md-block">
-            <h3 class="title mb-2" style="font-size: 1.7rem">Profile</h3>
-            <%- include("../partials/leftSidebar") %>
-        </div>
-        <div class="col flex-grow-1 mx-3 bg-white mt-lg-3 px-0 shadow-sm rounded">
-            <% if(user.coverPhoto) { %> 
-            <div class="px-4 pt-0 pb-4 rounded cover" style="background-image: url('<%=user.coverPhoto.profile%>'); background-size:cover; background-repeat: no-repeat; ">
-            <% } else {%> 
-            <div class="px-4 pt-0 pb-4 cover" style="background-color: <%=user.coverColor%>;background-size:cover; background-repeat: no-repeat;">
-            <% } %> 
-                <div id="avatarDiv" class="media align-items-end">
-                    <div class="">
-                        <a href="" data-toggle="modal" id ="avatarPreviewLink" data-target="#avatarPreviewModal">
-                            <img id="avatar" src="<%=user.avatar.profile%>" alt="" width="150" height="150" style="border-radius: 50%; margin-top: 2px;" class="rounded-circle my-3 img-fluid img-thumbnail">
-                        </a>
-                        <div id="names">
-                            <h4 id="anonymous" class="mb-0">Anonymous</h4>
-                            <p id="username" class="d-block text-muted">@<%=user.username%></p>
-                        </div>
+    <div class="mainContainer d-flex justify-content-center container-fluid w-100 px-0">
+        <div class="row w-100 d-flex flex-nowrap justify-content-center px-0 mx-lg-5">
+            <div class="col-3 px-0 mt-lg-3 d-none d-md-block">
+                <h3 class="title mb-2" style="font-size: 1.7rem">Profile</h3>
+                <%- include("../partials/leftSidebar") %>
+            </div>
+            <div class="col flex-grow-1 mx-3 bg-white mt-lg-3 px-0 shadow-sm rounded">
+                <% if(user.coverPhoto) { %>
+                    <div class="px-4 pt-0 pb-4 rounded cover"
+                        style="background-image: url('<%=user.coverPhoto.profile%>'); background-size:cover; background-repeat: no-repeat; ">
+                        <% } else {%>
+                            <div class="px-4 pt-0 pb-4 cover"
+                                style="background-color: <%=user.coverColor%>;background-size:cover; background-repeat: no-repeat;">
+                                <% } %>
+                                    <div id="avatarDiv" class="media align-items-end">
+                                        <div class="">
+                                            <a href="" data-toggle="modal" id="avatarPreviewLink"
+                                                data-target="#avatarPreviewModal">
+                                                <img id="avatar" src="<%=user.avatar.profile%>" alt="" width="150"
+                                                    height="150" style="border-radius: 50%; margin-top: 2px;"
+                                                    class="rounded-circle my-3 img-fluid img-thumbnail">
+                                            </a>
+                                            <div id="names">
+                                                <h4 id="anonymous" class="mb-0">Anonymous</h4>
+                                                <p id="username" class="d-block text-muted">@<%=user.username%>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                            <div id="stats" class="bg-light px-4 pt-5 mb-2 d-flex justify-content-end">
+                                <ul class="list-inline mb-0 d-flex justify-content-end text-center flex-wrap p-1 pl-2">
+                                    <li class=" list-inline-item">
+                                        <h5 class="mb-0 d-block">
+                                            <%=user.posts.length%>
+                                        </h5><small id="ratings" class="text-muted">Ratings</small>
+                                    </li>
+                                    <li class=" list-inline-item">
+                                        <h5 class="mb-0 d-block">
+                                            <%=user.comments.length%>
+                                        </h5 id="comments"><small class="text-muted">Comments</small>
+                                    </li>
+                                    <li class=" list-inline-item">
+                                        <h5 class="mb-0 d-block">
+                                            <%=user.postStreak%>
+                                        </h5><small id="streak" class="text-muted">Streak</small>
+                                    </li>
+                                    <% if(currentUser && user._id.equals(currentUser._id)) { %>
+                                        <li class=" list-inline-item">
+                                            <h5 class="mb-0 d-block">
+                                                <%=user.average%>
+                                            </h5><small id="avg" class="text-muted">Avg. Rating</small>
+                                        </li>
+                                        <% } %>
+                                </ul>
+                            </div>
+                            <div class="px-4">
+                                <a href="" data-toggle="modal" id="editProfileLink" data-target="#editProfileModal"
+                                    class="btn btn-warning btn-sm pt-2">Edit profile <i class="fas fa-user-edit "
+                                        style="transform: translateY(-2px)"></i></a>
+                                <%- include("../partials/userProfile/modals/editProfile") %>
+                            </div>
+                            <div class="px-4 py-3">
+                                <h6 class="my-1">About</h6>
+                                <div class="py-2 pl-2 rounded bg-light">
+                                    <p class="text-dark mb-2">
+                                        <%=user.bio%>
+                                    </p>
+                                    <p class="small text-muted mb-0"><img class="mr-1" title="<%=user.country.name %>"
+                                            src="<%=user.country.flag%>">
+                                        <%=user.country.name %>
+                                    </p>
+                                </div>
+                            </div>
+                            <nav>
+                                <div class="nav nav-tabs mx-3" id="nav-tab" role="tablist">
+                                    <a class="nav-link active" id="ratings-tab" data-toggle="tab" href="#ratings"
+                                        role="tab" aria-controls="ratings" aria-selected="true" data-tab-history="true"
+                                        data-tab-history-changer="push" data-tab-history-update-url="true">Ratings</a>
+                                    <a class="nav-link" id="comments-tab" data-toggle="tab" href="#comments" role="tab"
+                                        aria-controls="comments" aria-selected="false" data-tab-history="true"
+                                        data-tab-history-changer="push" data-tab-history-update-url="true">Comments</a>
+                                    <% if(currentUser && user._id.equals(currentUser._id)) { %>
+                                        <a class="nav-link" id="bookmarks-tab" data-toggle="tab" href="#bookmarks"
+                                            role="tab" aria-controls="bookmarks" aria-selected="false"
+                                            data-tab-history="true" data-tab-history-changer="push"
+                                            data-tab-history-update-url="true">Bookmarks</a>
+                                        <a class="nav-link" id="journals-tab" data-toggle="tab" href="#journals"
+                                            role="tab" aria-controls="journals" aria-selected="false"
+                                            data-tab-history="true" data-tab-history-changer="push"
+                                            data-tab-history-update-url="true">Journals</a>
+                                        <% } %>
+                                </div>
+                            </nav>
+                            <div class="tab-content" id="nav-tabContent">
+                                <%- include("../partials/userProfile/tabs/ratings") %>
+                                    <%- include("../partials/userProfile/tabs/comments") %>
+                                        <%- include("../partials/userProfile/tabs/bookmarks")%>
+                                            <%- include("../partials/userProfile/tabs/journals")%>
+                            </div>
+                            <%- include("../partials/userProfile/modals/editTodayAndYesterday") %>
                     </div>
-                </div>
-            </div>
-            <div id="stats" class="bg-light px-4 pt-5 mb-2 d-flex justify-content-end">
-                <ul class="list-inline mb-0 d-flex justify-content-end text-center flex-wrap p-1 pl-2">
-                    <li class=" list-inline-item">
-                        <h5 class="mb-0 d-block"><%=user.posts.length%></h5><small id="ratings" class="text-muted">Ratings</small>
-                    </li>
-                    <li class=" list-inline-item">
-                        <h5 class="mb-0 d-block"><%=user.comments.length%></h5 id="comments"><small class="text-muted">Comments</small>
-                    </li>
-                    <li class=" list-inline-item">
-                        <h5 class="mb-0 d-block"><%=user.postStreak%></h5><small id="streak" class="text-muted">Streak</small>
-                    </li>
-                    <% if(currentUser && user._id.equals(currentUser._id)) { %>
-                    <li class=" list-inline-item">
-                        <h5 class="mb-0 d-block"><%=user.average%></h5><small id="avg" class="text-muted">Avg. Rating</small>
-                    </li>
-                    <% } %> 
-                </ul>
-            </div>
-            <div class="px-4">
-                <a href="" data-toggle="modal" id="editProfileLink" data-target="#editProfileModal" class="btn btn-warning btn-sm pt-2">Edit profile <i class="fas fa-user-edit " style="transform: translateY(-2px)"></i></a>
-                <%- include("../partials/userProfile/modals/editProfile") %>
-            </div>
-            <div class="px-4 py-3">
-                <h6 class="my-1">About</h6>
-                <div class="py-2 pl-2 rounded bg-light">
-                    <p class="text-dark mb-2"><%=user.bio%></p>
-                    <p class="small text-muted mb-0"><img class="mr-1" title="<%=user.country.name %>" src="<%=user.country.flag%>"><%=user.country.name %></p>
-                </div>
-            </div>
-            <nav>
-                <div class="nav nav-tabs mx-3" id="nav-tab" role="tablist">
-                    <a class="nav-link active" id="ratings-tab" data-toggle="tab" href="#ratings" role="tab" aria-controls="ratings" aria-selected="true"data-tab-history="true" data-tab-history-changer="push" data-tab-history-update-url="true">Ratings</a>
-                    <a class="nav-link" id="comments-tab" data-toggle="tab" href="#comments" role="tab" aria-controls="comments" aria-selected="false" data-tab-history="true" data-tab-history-changer="push" data-tab-history-update-url="true">Comments</a>
-                    <% if(currentUser && user._id.equals(currentUser._id)) { %>
-                    <a class="nav-link" id="bookmarks-tab" data-toggle="tab" href="#bookmarks" role="tab" aria-controls="bookmarks" aria-selected="false" data-tab-history="true" data-tab-history-changer="push" data-tab-history-update-url="true">Bookmarks</a>
-                    <a class="nav-link" id="journals-tab" data-toggle="tab" href="#journals" role="tab" aria-controls="journals" aria-selected="false" data-tab-history="true" data-tab-history-changer="push" data-tab-history-update-url="true">Journals</a>
-                    <% } %> 
-                </div>
-            </nav>
-            <div class="tab-content" id="nav-tabContent">
-                <%- include("../partials/userProfile/tabs/ratings") %>
-                <%- include("../partials/userProfile/tabs/comments") %>
-                <%- include("../partials/userProfile/tabs/bookmarks")%>
-                <%- include("../partials/userProfile/tabs/journals")%>
-            </div>
-            <%- include("../partials/userProfile/modals/editTodayAndYesterday") %>
-        </div>
-        <div class="col-3 mt-lg-3 px-0 d-none d-lg-block">
-            <div class="w-100">
-                    <div class="rounded shadow-sm border-0 bg-light w-100 p-2 mb-3">
-                        <iframe style="background: #FFFFFF;border: none;border-radius: 2px; padding: 0;" width="100%" height="250" src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=3e56620a-ac24-464e-9793-3f5065281e6f&maxDataAge=3600&autoRefresh=true&theme=light&filter={'authorID':'<%=user._id%>'}"></iframe>
-                    </div>
-                    <div class="rounded shadow-sm border-0 bg-light w-100 p-2 mb-3">
-                        <div class="card my-2 border-0 shadow-none">
-                            <iframe style="background: #FFFFFF;border: none;border-radius: 2px; padding: 0px;" width="100%" height="250" src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=6a242e47-3cd5-4e76-bf01-b84e09f79fc7&theme=light&maxDataAge=60&autoRefresh=true&filter={'authorID':'<%=user._id%>'}"></iframe> 
-                        </div>
-                    </div>
-                    <div class="bg-light shadow-sm rounded p-3 mb-3">
-                        <div class="card my-2 border-0">
-                            <div class="card-body ">
-                                <h6 class="font-weight-bold">Support <span class="text-warning logo">t'day</span></h6>
-                                <small class="d-block">We are 100% funded by our users. If you <i class="fas fa-heart text-danger"></i> us, please consider making a donation to cover our operational expenses.</small>
-                                <a href="/donate" class="donate btn btn-sm btn-warning mt-2" role="button">Donate</a>
-                                <small class="d-block mt-2">Or, support us on Patreon! <span class="text-muted small">(Coming soon)</span></small>
-                                <a href="" class="donate btn btn-sm btn-danger mt-2 border-0" role="button">Become a Patron <i class="fas fa-external-link-alt small"></i></a>
+                    <div class="col-3 mt-lg-3 px-0 d-none d-lg-block">
+                        <div class="w-100">
+                            <div class="rounded shadow-sm border-0 bg-light w-100 p-2 mb-3">
+                                <iframe style="background: #FFFFFF;border: none;border-radius: 2px; padding: 0;"
+                                    width="100%" height="250"
+                                    src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=3e56620a-ac24-464e-9793-3f5065281e6f&maxDataAge=3600&autoRefresh=true&theme=light&filter={'authorID':'<%=user._id%>'}"></iframe>
+                            </div>
+                            <div class="rounded shadow-sm border-0 bg-light w-100 p-2 mb-3">
+                                <div class="card my-2 border-0 shadow-none">
+                                    <iframe style="background: #FFFFFF;border: none;border-radius: 2px; padding: 0px;"
+                                        width="100%" height="250"
+                                        src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=6a242e47-3cd5-4e76-bf01-b84e09f79fc7&theme=light&maxDataAge=60&autoRefresh=true&filter={'authorID':'<%=user._id%>'}"></iframe>
+                                </div>
+                            </div>
+                            <div class="bg-light shadow-sm rounded p-3 mb-3">
+                                <div class="card my-2 border-0">
+                                    <div class="card-body ">
+                                        <h6 class="font-weight-bold">Support <span
+                                                class="text-warning logo">t'day</span></h6>
+                                        <small class="d-block">We are 100% funded by our users. If you <i
+                                                class="fas fa-heart text-danger"></i> us, please consider making a
+                                            donation to cover our operational expenses.</small>
+                                        <a href="/donate" class="donate btn btn-sm btn-warning mt-2"
+                                            role="button">Donate</a>
+                                        <small class="d-block mt-2">Or, support us on Patreon! <span
+                                                class="text-muted small">(Coming soon)</span></small>
+                                        <a href="" class="donate btn btn-sm btn-danger mt-2 border-0"
+                                            role="button">Become a Patron <i
+                                                class="fas fa-external-link-alt small"></i></a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                        <div class="mt-4">
+                            <div style="height: 150px;">
+                                <a class="d-inline" href="#" style="font-size: 11px">About</a> ·
+                                <a class="d-inline" href="/privacy" style="font-size: 11px" target="_blank">Privacy
+                                    Policy</a>
+                                ·
+                                <a class="d-inline" href="/terms" style="font-size: 11px" target="_blank">Terms of
+                                    Use</a> ·
+                                <a class="d-inline" href="/cookies" style="font-size: 11px" target="_blank">Cookie
+                                    Policy</a>
+                                ·
+                                <a class="d-inline " href="/donate" style="font-size: 11px">Donate</a> ·
+                                <a class="d-inline" href="/contact" style="font-size: 11px">Contact</a>
+                                <small class="text-muted d-block">© 2023 <span class="logo">t'day</span></small>
+                                <small class="text-muted d-block">made with <i class="fas fa-heart text-danger"></i> by
+                                    <a href="https://github.com/eneda8">eneda</a>
+                                </small>
+                                <small style="color: #66000000">Ps. 118:24</small>
+                            </div>
+                        </div>
+
                     </div>
+
             </div>
-            <div class="mt-4">
-                <div style="height: 150px;">
-                    <a class="d-inline" href="#" style="font-size: 11px">About</a> ·
-                    <a class="d-inline" href="/privacy" style="font-size: 11px" target="_blank">Privacy Policy</a>
-                    ·
-                    <a class="d-inline" href="/terms" style="font-size: 11px" target="_blank">Terms of Use</a> ·
-                    <a class="d-inline" href="/cookies" style="font-size: 11px" target="_blank">Cookie Policy</a>
-                    ·
-                    <a class="d-inline " href="/donate" style="font-size: 11px">Donate</a> ·
-                    <a class="d-inline" href="/contact" style="font-size: 11px">Contact</a>
-                    <small class="text-muted d-block">© 2022 <span class="logo">t'day</span></small>
-                    <small class="text-muted d-block">made with <i class="fas fa-heart text-danger"></i> by 
-                        <a href="https://github.com/eneda8">eneda</a>
-                    </small>
-                    <small style="color: #66000000">Ps. 118:24</small>
-                </div>
-            </div>
-            
+
         </div>
 
-    </div>
+        <%- include("../partials/toasts/donateToast") %>
+            <%- include("../partials/userProfile/modals/avatarPreview") %>
 
-</div>
+                <style>
+                    #avatarDiv {
+                        transform: translateY(8em)
+                    }
 
-<%- include("../partials/toasts/donateToast") %>
-<%- include("../partials/userProfile/modals/avatarPreview") %>
+                    @media screen and (max-width: 567px) {
+                        main {
+                            padding-left: 0;
+                            padding-right: 0;
+                        }
 
-<style>
-    #avatarDiv {
-        transform: translateY(8em)
-    }
-    @media screen and (max-width: 567px){
-        main{
-            padding-left: 0;
-            padding-right: 0;
-        }
-        ul{
-            transform: translateX(18px);
-            border-left: 1px solid gray
-        }
-        li, #names{
-            font-size: 12px;
-        }
-        #names{
-            transform:translateY(-13px)
-        }
-        #username{
-            transform:translateY(1px);
-        }
-        #avatar{
-            width: 100px;
-            height: 100px;
-        }
-        #stats {
-            font-size: 12px;
-        }
-        .tab {
-            padding-left: 8px;
-            padding-right: 8px;
-        }
-        .cover {
-            height: 150px;
-        }
-        #avatarDiv{
-            transform: translateY(5.5em);
-        }
-        #anonymous{
-            font-size: 18px;
-        }
-    }
-    @media screen and (max-width: 300px){
-        body {
-            zoom: .8;
-        }
-    }
+                        ul {
+                            transform: translateX(18px);
+                            border-left: 1px solid gray
+                        }
 
-</style>
+                        li,
+                        #names {
+                            font-size: 12px;
+                        }
+
+                        #names {
+                            transform: translateY(-13px)
+                        }
+
+                        #username {
+                            transform: translateY(1px);
+                        }
+
+                        #avatar {
+                            width: 100px;
+                            height: 100px;
+                        }
+
+                        #stats {
+                            font-size: 12px;
+                        }
+
+                        .tab {
+                            padding-left: 8px;
+                            padding-right: 8px;
+                        }
+
+                        .cover {
+                            height: 150px;
+                        }
+
+                        #avatarDiv {
+                            transform: translateY(5.5em);
+                        }
+
+                        #anonymous {
+                            font-size: 18px;
+                        }
+                    }
+
+                    @media screen and (max-width: 300px) {
+                        body {
+                            zoom: .8;
+                        }
+                    }
+                </style>

@@ -10,8 +10,8 @@ module.exports.renderLandingPage = async (req, res) => {
     } else {
     const today = res.locals.cookie["today"];
     const longToday = new Date(today).toLocaleDateString( 'en-US',
-    {year: 'numeric', month: 'long', day: 'numeric', timeZone: "UTC"})
-    const posts = await Post.find().where({date: today}).where({body:{$exists: true}}).sort({"createdAt": -1}).limit(4)
+    {year: 'numeric', month: 'long', day: 'numeric', timeZone: "UTC"});
+    let posts = await Post.find().where({body:{$exists: true}}).sort({"createdAt": -1}).limit(4);
     res.render("index/landing", {title: "t'day", today, longToday, posts, style: "index/landing"});
     }
 }

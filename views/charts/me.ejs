@@ -1,74 +1,101 @@
 <% layout("layouts/boilerplate")%>
-<div class="mainContainer d-flex justify-content-center container-fluid w-100 px-0">
-    <div class="row w-100 d-flex flex-nowrap justify-content-center px-0">
-        <div class="pt-2 px-1 px-md-0 ml-xl-5 flex-grow-1" style="line-height: 20px">
-            <h4 class="text-centered font-weight-bold py-0 d-inline">@<%=user.username%>'s Charts</h4>
-            <div class="mb-0 mt-3">
-                <a href="/charts" class="">Today's Charts |</a>
-                <a href="/charts/all" class="">All Charts</a>
+    <div class="mainContainer d-flex justify-content-center container-fluid w-100 px-0">
+        <div class="row w-100 d-flex flex-nowrap justify-content-center px-0">
+            <div class="pt-2 px-1 px-md-0 ml-xl-5 flex-grow-1" style="line-height: 20px">
+                <h4 class="text-centered font-weight-bold py-0 d-inline">@<%=user.username%>'s Charts</h4>
+                <div class="mb-0 mt-3">
+                    <a href="/charts" class="">Today's Charts |</a>
+                    <a href="/charts/all" class="">All Charts</a>
+                </div>
+                <div class="row my-3">
+                    <!-- my day (number) -->
+                    <div class="col-sm mb-2">
+                        <iframe
+                            style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);"
+                            width="100%" height="250"
+                            src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=e822dab6-5603-40f4-b95f-bf677559ee8c&theme=light&maxDataAge=60&autoRefresh=true&filter={'authorID':'<%=user._id%>','date':'<%=today%>'}"></iframe>
+                    </div>
+                    <!-- my week (number) -->
+                    <div class="col-sm mb-2">
+                        <iframe
+                            style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);"
+                            width="100%" height="250"
+                            src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=590bc492-d062-44a2-8f69-f0916fb6fa4f&theme=light&filter={'authorID':'<%=user._id%>'}"></iframe>
+                    </div>
+                    <!-- my month (number) -->
+                    <div class="col-sm mb-2">
+                        <iframe
+                            style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);"
+                            width="100%" height="250"
+                            src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=671a6f8d-8b73-4d1a-8f69-9c6c5462325c&theme=light&maxDataAge=60&autoRefresh=true&filter={'authorID':'<%=user._id%>'}"></iframe>
+                    </div>
+                    <!-- my year (number) -->
+                    <div class="col-sm mb-2">
+                        <iframe
+                            style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);"
+                            width="100%" height="250"
+                            src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=7f4cfe42-ca41-4ad8-9813-49ada3fc61dc&theme=light&maxDataAge=60&autoRefresh=true&filter={'authorID':'<%=user._id%>'}"></iframe>
+                    </div>
+                    <!-- my all-time (number) -->
+                    <div class="col-sm mb-2">
+                        <iframe
+                            style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);"
+                            width="100%" height="250"
+                            src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=32aa6180-f28e-4b46-bc8f-c6bc3b28d570&theme=light&maxDataAge=60&autoRefresh=true&filter={'authorID':'<%=user._id%>'}"></iframe>
+                    </div>
+                </div>
+                <div class="row">
+                    <!-- my week (bar graph) -->
+                    <div class="col-sm mb-2">
+                        <iframe
+                            style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);"
+                            width="100%" height="350"
+                            src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=3e56620a-ac24-464e-9793-3f5065281e6f&maxDataAge=3600&autoRefresh=true&theme=light&filter={'authorID':'<%=user._id%>'}"></iframe>
+                    </div>
+                    <!-- average rating by day of the week (bar graph) -->
+                    <div class="col-sm mb-2">
+                        <iframe id="last"
+                            style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);"
+                            width="100%" height="350"
+                            src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=bf813e4f-506b-46e3-a5b6-b2f61d8608da&theme=light&maxDataAge=60&autoRefresh=true&filter={'authorID':'<%=user._id%>'}"></iframe>
+                    </div>
+                </div>
+                <div class="row">
+                    <!-- my month (bar graph) -->
+                    <div class="col-sm mb-2">
+                        <iframe
+                            style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);"
+                            width="100%" height="350"
+                            src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=6a242e47-3cd5-4e76-bf01-b84e09f79fc7&theme=light&maxDataAge=60&autoRefresh=true&filter={'authorID':'<%=user._id%>'}"></iframe>
+                    </div>
+                    <!-- my year (bar graph) -->
+                    <div class="col-sm mb-2">
+                        <iframe
+                            style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);"
+                            width="100%" height="350"
+                            src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=660cd833-bf1c-443f-9ee2-103ee7d4cb98&theme=light&maxDataAge=60&autoRefresh=true&filter={'authorID':'<%=user._id%>'}"></iframe>
+                    </div>
+                </div>
+                <footer class="row px-2 mb-0 mt-4 small">
+                    <div class="col d-none d-lg-block ">
+                        <div class="d-flex justify-content-between">
+                            <div class="">
+                                <a class="d-inline" href="#">About</a> <span class="small">|</span>
+                                <a class="d-inline" href="/privacy">Privacy Policy</a> <span class="small">|</span>
+                                <a class="d-inline" href="/terms">Terms of Use</a> <span class="small">|</span>
+                                <a class="d-inline" href="/cookies">Cookie Policy</a> <span class="small">|</span>
+                                <a class="d-inline" href="/contact">Contact</a>
+                            </div>
+                            <div class="">
+                                <p class="mb-0 d-inline">© 2023 t'day |</p>
+                                <p class="d-inline">made with <i class="fas fa-heart text-danger"></i> by
+                                    <a href="https://github.com/eneda8">eneda</a>
+                                </p>
+                                <small style="color: #66000000">Ps. 118:24</small>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
             </div>
-            <div class="row my-3">
-                <!-- my day (number) -->
-                <div class="col-sm mb-2">
-                    <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="100%" height="250" src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=e822dab6-5603-40f4-b95f-bf677559ee8c&theme=light&maxDataAge=60&autoRefresh=true&filter={'authorID':'<%=user._id%>','date':'<%=today%>'}"></iframe>
-                </div>
-                <!-- my week (number) -->
-                <div class="col-sm mb-2">
-                    <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="100%" height="250" src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=590bc492-d062-44a2-8f69-f0916fb6fa4f&theme=light&filter={'authorID':'<%=user._id%>'}"></iframe>
-                </div>
-                <!-- my month (number) -->
-                <div class="col-sm mb-2">
-                    <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="100%" height="250" src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=671a6f8d-8b73-4d1a-8f69-9c6c5462325c&theme=light&maxDataAge=60&autoRefresh=true&filter={'authorID':'<%=user._id%>'}"></iframe>
-                </div>
-                <!-- my year (number) -->
-                <div class="col-sm mb-2">
-                    <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="100%" height="250" src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=7f4cfe42-ca41-4ad8-9813-49ada3fc61dc&theme=light&maxDataAge=60&autoRefresh=true&filter={'authorID':'<%=user._id%>'}"></iframe>
-                </div>
-                <!-- my all-time (number) -->
-                <div class="col-sm mb-2">
-                    <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="100%" height="250" src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=32aa6180-f28e-4b46-bc8f-c6bc3b28d570&theme=light&maxDataAge=60&autoRefresh=true&filter={'authorID':'<%=user._id%>'}"></iframe>
-                </div>
-            </div>
-            <div class="row">
-                <!-- my week (bar graph) -->
-                <div class="col-sm mb-2">
-                    <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="100%" height="350" src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=3e56620a-ac24-464e-9793-3f5065281e6f&maxDataAge=3600&autoRefresh=true&theme=light&filter={'authorID':'<%=user._id%>'}"></iframe>
-                </div>
-                <!-- average rating by day of the week (bar graph) -->
-                <div class="col-sm mb-2">
-                    <iframe id="last" style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="100%" height="350" src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=bf813e4f-506b-46e3-a5b6-b2f61d8608da&theme=light&maxDataAge=60&autoRefresh=true&filter={'authorID':'<%=user._id%>'}"></iframe>
-                </div>
-            </div>
-            <div class="row">
-                <!-- my month (bar graph) -->
-                <div class="col-sm mb-2">
-                    <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="100%" height="350" src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=6a242e47-3cd5-4e76-bf01-b84e09f79fc7&theme=light&maxDataAge=60&autoRefresh=true&filter={'authorID':'<%=user._id%>'}"></iframe>
-                </div>
-                <!-- my year (bar graph) -->
-                <div class="col-sm mb-2">
-                    <iframe style="background: #FFFFFF;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="100%" height="350" src="https://charts.mongodb.com/charts-todai-fevei/embed/charts?id=660cd833-bf1c-443f-9ee2-103ee7d4cb98&theme=light&maxDataAge=60&autoRefresh=true&filter={'authorID':'<%=user._id%>'}"></iframe>
-                </div>
-            </div>
-            <footer class="row px-2 mb-0 mt-4 small">
-                <div class="col d-none d-lg-block ">
-                   <div class="d-flex justify-content-between">
-                      <div class="">
-                         <a class="d-inline" href="#">About</a> <span class="small">|</span>
-                         <a class="d-inline" href="/privacy">Privacy Policy</a> <span class="small">|</span>
-                         <a class="d-inline" href="/terms">Terms of Use</a> <span class="small">|</span>
-                         <a class="d-inline" href="/cookies">Cookie Policy</a> <span class="small">|</span>
-                         <a class="d-inline" href="/contact">Contact</a>
-                      </div>
-                      <div class="">
-                         <p class="mb-0 d-inline">© 2022 t'day |</p>
-                         <p class="d-inline">made with <i class="fas fa-heart text-danger"></i> by 
-                            <a href="https://github.com/eneda8">eneda</a>
-                         </p>
-                         <small style="color: #66000000">Ps. 118:24</small>
-                      </div>
-                   </div>
-                </div>
-             </footer>
         </div>
     </div>
- </div>
