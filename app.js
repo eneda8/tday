@@ -194,7 +194,9 @@ app.use(
                 "https://i.imgur.com",
                 "http://placeimg.com",
                 "https://cdn.fakercloud.com",
-                "https://avataaars.io"
+                "https://avataaars.io",
+                "https://picsum.photos",
+                "https://fastly.picsum.photos"
             ],
             fontSrc: ["'self'", ...fontSrcUrls],
         },

@@ -62,7 +62,7 @@ const seedDB = async () => {
     // }
 
     // /make fake posts
-    for(let i = 0; i<1500; i++){
+    for(let i = 0; i<300; i++){
         try{
         const rating = Math.floor(Math.random() * 5) + 1;
         let body;
@@ -74,7 +74,7 @@ const seedDB = async () => {
             const post = new Post({rating, body});
             if(i % 2 == 0) {
                 post.image = {}
-                post.image.path = "https://source.unsplash.com/random";
+                post.image.path = "https://picsum.photos/350?random";
             }     
             post.date = new Date().toLocaleDateString( 'en-US',{year: 'numeric',month: 'short',day: 'numeric'})
             post.author = user;
