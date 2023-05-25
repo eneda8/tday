@@ -52,7 +52,7 @@
         <% if(user.postedToday===true && user.todaysPost.length) {%>
             <h6 class="font-weight-bold mb-0 pb-0">
                 <a href="/posts/<%=todaysPost._id%>" class="text-decoration-none">
-                    Today's Rating: <span class="badge badge-light mb-2" style="font-size: 13px"><span
+                    Today's Rating: <span class="badge badge-light mb-2 p-2" style="font-size: 13px"><span
                             class="star star<%=todaysPost.rating%>-result"></span></span>
                 </a>
             </h6>

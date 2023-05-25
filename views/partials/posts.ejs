@@ -10,7 +10,7 @@
                     <% if((title === "Home / t'day") || (title === `${user.username}'s day / t'day`)) {%> 
                         <small class="mb-0 d-block" title="<%=post.rating%> - <%=post.desc%>" style="z-index: 3;"><span class="star star<%=post.rating%>-result p-0 m-0" style="z-index: 3;"></span></small>
                         <% } else { %> 
-                        <span class="badge badge-primary mb-2 pt-2 d-block" style="font-size: 13px; z-index: 3;" title="<%=post.rating%> - <%=post.desc%>"><%=post.date%>: <span class="star star<%=post.rating%>-result" style="z-index: 2; transform:translateY(2px); font-size: 14px"></span></span>  
+                        <span class="badge badge-primary mb-2 p-2 d-block" style="font-size: 13px; z-index: 3;" title="<%=post.rating%> - <%=post.desc%>"><%=post.date%>: <span class="star star<%=post.rating%>-result" style="z-index: 2; transform:translateY(2px); font-size: 14px"></span></span>  
                         <%}%>
                 </p>
                 <% if(currentUser && post.author.equals(currentUser._id)) { %> 

@@ -34,7 +34,7 @@
                                     <li class=" list-inline-item">
                                         <h5 class="mb-0 d-block">
                                             <%=user.posts.length%>
-                                        </h5><small id="ratings" class="text-muted">Ratings</small>
+                                        </h5><small id="ratings-count" class="text-muted">Ratings</small>
                                     </li>
                                     <li class=" list-inline-item">
                                         <h5 class="mb-0 d-block">
@@ -75,29 +75,27 @@
                             </div>
                             <nav>
                                 <div class="nav nav-tabs mx-3" id="nav-tab" role="tablist">
-                                    <a class="nav-link active" id="ratings-tab" data-toggle="tab" href="#ratings"
+                                    <a class="nav-link active" id="ratings-tab" data-toggle="tab" data-target="#ratings" 
                                         role="tab" aria-controls="ratings" aria-selected="true" data-tab-history="true"
                                         data-tab-history-changer="push" data-tab-history-update-url="true">Ratings</a>
-                                    <a class="nav-link" id="comments-tab" data-toggle="tab" href="#comments" role="tab"
+                                    <a class="nav-link" id="comments-tab" data-toggle="tab" data-target="#comments" role="tab"
                                         aria-controls="comments" aria-selected="false" data-tab-history="true"
                                         data-tab-history-changer="push" data-tab-history-update-url="true">Comments</a>
-                                    <% if(currentUser && user._id.equals(currentUser._id)) { %>
-                                        <a class="nav-link" id="bookmarks-tab" data-toggle="tab" href="#bookmarks"
-                                            role="tab" aria-controls="bookmarks" aria-selected="false"
-                                            data-tab-history="true" data-tab-history-changer="push"
-                                            data-tab-history-update-url="true">Bookmarks</a>
-                                        <a class="nav-link" id="journals-tab" data-toggle="tab" href="#journals"
-                                            role="tab" aria-controls="journals" aria-selected="false"
-                                            data-tab-history="true" data-tab-history-changer="push"
-                                            data-tab-history-update-url="true">Journals</a>
-                                        <% } %>
+                                    <a class="nav-link" id="bookmarks-tab" data-toggle="tab" data-target="#bookmarks" 
+                                        role="tab" aria-controls="bookmarks" aria-selected="false"
+                                        data-tab-history="true" data-tab-history-changer="push"
+                                        data-tab-history-update-url="true">Bookmarks</a>
+                                    <a class="nav-link" id="journals-tab" data-toggle="tab" data-target="#journals" 
+                                        role="tab" aria-controls="journals" aria-selected="false"
+                                        data-tab-history="true" data-tab-history-changer="push"
+                                        data-tab-history-update-url="true">Journals</a>
                                 </div>
                             </nav>
                             <div class="tab-content" id="nav-tabContent">
                                 <%- include("../partials/userProfile/tabs/ratings") %>
-                                    <%- include("../partials/userProfile/tabs/comments") %>
-                                        <%- include("../partials/userProfile/tabs/bookmarks")%>
-                                            <%- include("../partials/userProfile/tabs/journals")%>
+                                <%- include("../partials/userProfile/tabs/comments") %>
+                                <%- include("../partials/userProfile/tabs/bookmarks")%>
+                                <%- include("../partials/userProfile/tabs/journals")%>
                             </div>
                             <%- include("../partials/userProfile/modals/editTodayAndYesterday") %>
                     </div>
