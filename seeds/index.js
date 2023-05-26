@@ -62,14 +62,14 @@ const seedDB = async () => {
     // }
 
     // /make fake posts
-    for(let i = 0; i<300; i++){
+    for(let i = 0; i<3000; i++){
         try{
         const rating = Math.floor(Math.random() * 5) + 1;
         let body;
         if(i % 2 == 0 ) {
             body = faker.lorem.sentence()
         } else {body = faker.lorem.sentences()}
-        const user = await User.findOne().where({ "postedToday" : false }) .where({"bio": "This is a fake account used to generate data for demonstration purposes." })
+        const user = await User.findOne().where({ "isVerified" : false });
         if(user){
             const post = new Post({rating, body});
             if(i % 2 == 0) {
@@ -84,7 +84,7 @@ const seedDB = async () => {
             post.authorGender = user.gender;
             post.authorAgeGroup= user.ageGroup;
             await post.save();
-            user.postedToday = true;
+            // user.postedToday = true;
             user.posts.unshift(post);
             user.todaysPost = post._id;
             //update post streak
