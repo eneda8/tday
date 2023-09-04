@@ -3,6 +3,7 @@ const mongooseFieldEncryption = require("mongoose-field-encryption").fieldEncryp
 const Schema = mongoose.Schema;
 const User = require("./user");
 
+// Define the schema for the Journal model
 const JournalSchema = new Schema({
     date: String,
     title: String,
@@ -11,9 +12,9 @@ const JournalSchema = new Schema({
       required: true
     },
     author: {
-      type: Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId, // Reference the User model for the author field
       ref: "User"
-      },
+    },
     edited: Boolean,
   },
   //options
@@ -22,9 +23,10 @@ const JournalSchema = new Schema({
   } 
 ) 
 
-
-
-JournalSchema.plugin(mongooseFieldEncryption, { fields: ["body", "title"], secret: `${process.env.JOURNAL_SECRET}` });
-
+// Plugin to encrypt the "body" and "title" fields of the journal entry
+JournalSchema.plugin(mongooseFieldEncryption, { 
+  fields: ["body", "title"], 
+  secret: `${process.env.JOURNAL_SECRET}` 
+});
 
 module.exports = mongoose.model("Journal", JournalSchema)

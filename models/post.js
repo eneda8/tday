@@ -4,21 +4,22 @@ const User = require("./user");
 const {cloudinary} = require("../cloudinary");
 const mongoosePaginate = require("mongoose-paginate");
 
-
+// Define ImageSchema to store image data
 const ImageSchema = new Schema({
   path: String,
   filename: String
 });
 
+// Define virtuals for thumbnail and fullsize images based on the image path
 ImageSchema.virtual("thumbnail").get(function() {
-  return this.path.replace("/upload", "/upload/w_200")
+  return this.path.replace("/upload", "/upload/w_200");
 });
 
 ImageSchema.virtual("fullsize").get(function() {
   return this.path.replace("/upload", "/upload/c_fill_pad,g_auto,w_800,h_800")
-})
+});
 
-
+// Define PostSchema for Post model
 const PostSchema = new Schema({
     date: {
       type: String,
@@ -43,13 +44,11 @@ const PostSchema = new Schema({
     authorGender: String,
     authorAgeGroup: String,
     authorID: String,
-    comments: [
-      {
-      type: Schema.Types.ObjectId,
+    comments: [{
+      type: Schema.Types.ObjectId, //Reference the Comment model for the comments field
       ref: "Comment",
       autopopulate: true
-      }
-    ],
+    }],
     likes: {
       type: Number
     },
@@ -61,8 +60,10 @@ const PostSchema = new Schema({
   } 
 ) 
 
+// Plugin to automatically populate the "author" field when querying the Post model
 PostSchema.plugin(require("mongoose-autopopulate"));
 
+// Define a virtual for rating description based on the "rating" field
 PostSchema.virtual("desc").get(function(){
   let desc;
   switch(this.rating){
@@ -75,6 +76,7 @@ PostSchema.virtual("desc").get(function(){
   return desc;
 })
 
+// Pre middleware function to remove the "__v" field from the update when using findByIdAndUpdate
 PostSchema.pre('findByIdAndUpdate', function() {
   const update = this.getUpdate();
   if (update.__v != null) {
@@ -93,6 +95,8 @@ PostSchema.pre('findByIdAndUpdate', function() {
   update.$inc.__v = 1;
 });
 
+// Plugin to add pagination support to the Post model
 PostSchema.plugin(mongoosePaginate);
 
+// Create the Post mongoose model using the PostSchema definition and export it
 module.exports = mongoose.model("Post", PostSchema)
