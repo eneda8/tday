@@ -1,3 +1,4 @@
+//Import necessary modules and dependencies.
 const User = require("../models/user");
 const Post = require("../models/post");
 const Comment = require("../models/comment");
@@ -10,26 +11,29 @@ const util = require('util');
 const crypto = require("crypto");
 const sgMail = require("@sendgrid/mail")
 
+// Set the SendGrid API key
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-
+// Helper function to validate a timezone string
 function validTZ(string){
     return !(/\d/.test(string));
 }
-
-// ---------------REGISTER ---------------------------------------
+// Render the register form
 module.exports.renderRegisterForm = (req, res) => {
+    // Redirect to home page if the user is already authenticated
     if (req.isAuthenticated()) {
         req.flash("error", "You are already logged in!");
         return res.redirect('/home');
     }
+    // Render the register page with countries, timezones, title, and style
     res.render("users/register", {countries, timezones, title: "Register / t'day", style: "users/register"})
 }
 
 module.exports.register = async (req,res, next) => {
     try{
         const {username, email, password, ageGroup, gender, country, timezone, defaultTimezone, termsAgreement} = req.body;
-        const user = new User({username, email, ageGroup, gender, country, defaultTimezone, timezone, termsAgreement});
+        const user = new User({username, email, ageGroup, gender, country: {name: country.name}, defaultTimezone, timezone, termsAgreement});
+        console.log(req.body.country)
         // if(req.file){
         // user.avatar = req.file;
         // } else {
@@ -42,8 +46,10 @@ module.exports.register = async (req,res, next) => {
         };
         user.avatar = {};
         user.postedToday = false;
+        user.country.flag = countries.filter(obj => {
+            return obj.name === req.body.country.name;
+          })[0]?.flag || "";        
         console.log(user.country);
-        user.country.flag = countries.filter(obj => Object.values(obj).includes(user.country.name))[0]["flag"];
         const registeredUser = await User.register(user, password);
         req.login(registeredUser, err => {
             if(err) return next(err); 
@@ -62,7 +68,7 @@ module.exports.register = async (req,res, next) => {
         }
         await sgMail.send(msg)
     } catch(err) {
-        req.flash("error", `${err.message}. Please try again!`);
+        req.flash("error", "Oops, something went wrong! Please try again.");
         console.log(err)
         res.redirect("/register")
     }               
