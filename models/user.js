@@ -125,7 +125,7 @@ const UserSchema = new Schema({
 }, {timestamps: true}) // Add createdAt and updatedAt fields for tracking timestamps
 
 // Apply the passportLocalMongoose plugin to the userSchema for authentication
-userSchema.plugin(passportLocalMongoose);
+UserSchema.plugin(passportLocalMongoose);
 
 // Create the User mongoose model using the userSchema definition and export it
 module.exports = mongoose.model("User", UserSchema);
