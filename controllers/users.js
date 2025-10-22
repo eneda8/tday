@@ -34,11 +34,6 @@ module.exports.register = async (req,res, next) => {
         const {username, email, password, ageGroup, gender, country, timezone, defaultTimezone, termsAgreement} = req.body;
         const user = new User({username, email, ageGroup, gender, country: {name: country.name}, defaultTimezone, timezone, termsAgreement});
         console.log(req.body.country)
-        // if(req.file){
-        // user.avatar = req.file;
-        // } else {
-        //     user.avatar = {}
-        // }
         if(validTZ(timezone)){
             user.timezone = timezone;
         } else {
@@ -51,14 +46,12 @@ module.exports.register = async (req,res, next) => {
           })[0]?.flag || "";        
         console.log(user.country);
         const registeredUser = await User.register(user, password);
-        req.login(registeredUser, err => {
-            if(err) return next(err); 
-            res.redirect("/verify");
-        })
+
         const token =  crypto.randomBytes(20).toString("hex");
-        user.verifyEmailToken = token;
-        user.verifyTokenExpires = Date.now() + 3600000;
-        await user.save()
+        registeredUser.verifyEmailToken = token;
+        registeredUser.verifyTokenExpires = Date.now() + 3600000;
+        await registeredUser.save();
+
         const msg = {
             to: email,
             from: `t'day <no-reply@tday.co>`,
@@ -66,11 +59,16 @@ module.exports.register = async (req,res, next) => {
             text: `Welcome to t'day! To complete your account setup, please click here: https://${req.headers.host}/verify/${token}. - the t'day team `,
             html: `<strong>Welcome to t'day!</strong> <br> <br> To complete your account setup, please click here:  https://${req.headers.host}/verify/${token}. <br> <br><strong>- the t'day team</strong>`,
         }
-        await sgMail.send(msg)
+        await sgMail.send(msg);
+
+        await new Promise((resolve, reject) => {
+            req.login(registeredUser, (err) => err ? reject(err) : resolve());
+        });
+        return res.redirect("/verify");
     } catch(err) {
         req.flash("error", "Oops, something went wrong! Please try again.");
         console.log(err)
-        res.redirect("/register")
+        return res.redirect("/register")
     }               
 }
 
@@ -127,23 +125,39 @@ module.exports.renderLoginForm = (req,res) => {
     res.render("users/login", {title:"Login / t'day", style: "users/login"})
 }
 
-module.exports.login = async (req,res) => {
-    const user = await User.findById(req.user._id);
-    if(validTZ(req.body.timezone)){
-        user.timezone = req.body.timezone;
-        res.locals.timezone = req.body.timezone;
-    } else {
-        user.timezone = user.defaultTimezone;
-        res.locals.timezone = user.defaultTimezone;
-    }
-    await user.save()
-    delete req.session.returnTo;
-    const redirectUrl = req.session.returnTo || "/home";
-    req.flash("success", `Welcome back, @${req.user.username}!`);
-    if(req.user.isVerified === false){
-        res.redirect("/verify")
-    } else {
-        res.redirect(redirectUrl)
+module.exports.login = async (req, res, next) => {
+    try {
+        const {user: signedInUser = null} = req;
+        if(!signedInUser?._id){
+            req.flash("error", "Unable to sign you in. Please try again.");
+            return res.redirect("/login");
+        }
+
+        const user = await User.findById(signedInUser._id);
+        if(!user){
+            req.flash("error", "Account not found. Please try again.");
+            return res.redirect("/login");
+        }
+
+        const timezone = typeof req.body.timezone === "string" ? req.body.timezone.trim() : "";
+        if(timezone && validTZ(timezone)){
+            user.timezone = timezone;
+        } else if(user.defaultTimezone){
+            user.timezone = user.defaultTimezone;
+        }
+        await user.save();
+
+        const redirectUrl = req.session.returnTo || "/home";
+        delete req.session.returnTo;
+        delete req.session.previousReturnTo;
+
+        req.flash("success", `Welcome back, @${user.username}!`);
+        if(!user.isVerified){
+            return res.redirect("/verify");
+        }
+        return res.redirect(redirectUrl);
+    } catch (err) {
+        return next(err);
     }
 }
 
@@ -217,10 +231,14 @@ module.exports.putReset = async (req, res) => {
     res.redirect("/home");
 }
 // -------------------------------LOGOUT-----------------------------
-module.exports.logout = (req,res) => {
-    req.logout();
-    req.flash("success", "Signed out, have a good day!");
-    res.redirect("/");
+module.exports.logout = (req, res, next) => {
+    req.logout((err) => {
+        if (err) {
+            return next(err);
+        }
+        req.flash("success", "Signed out, have a good day!");
+        res.redirect("/");
+    });
 }
 //------------------------- HOME -------------------------
 
@@ -417,7 +435,9 @@ module.exports.deleteAccount = async(req, res) => {
         await Post.remove({"author": req.user._id});
         await Comment.remove({"author": req.user._id});
         await Journal.remove({"author": req.user._id});
-        await req.logout();
+        await new Promise((resolve, reject) => {
+            req.logout((err) => err ? reject(err) : resolve());
+        });
         const msg = {
             to: user.email,
             from: `t'day <support@tday.co>`,

@@ -3,7 +3,7 @@ const Post = require("../models/post");
 const sgMail = require("@sendgrid/mail");
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-//------------------------- LANDING -------------------------
+// Renders the landing page
 module.exports.renderLandingPage = async (req, res) => {
     if(req.user){
         return res.redirect("/home");
@@ -11,36 +11,43 @@ module.exports.renderLandingPage = async (req, res) => {
     const today = res.locals.cookie["today"];
     const longToday = new Date(today).toLocaleDateString( 'en-US',
     {year: 'numeric', month: 'long', day: 'numeric', timeZone: "UTC"});
+    // Fetches the latest 4 posts with the 'body' field and sorts them by 'createdAt' in descending order
     let posts = await Post.find().where({body:{$exists: true}}).sort({"createdAt": -1}).limit(4);
     res.render("index/landing", {title: "t'day", today, longToday, posts, style: "index/landing"});
     }
 }
 
-// ---------------------ABOUT ---------------------------------------
+// Renders the about page
 module.exports.renderAbout = (req, res) => {
     const today = res.locals.cookie["today"];
     res.render("index/about", {today, title: "About / t'day", style: "index/about"})
 }
 
+// Renders the terms page
 module.exports.renderTerms = (req, res) => {
     res.render("index/terms", {title: "Terms of Use / t'day", style: "index/terms"})
 }
 
+// Renders the privacy page
 module.exports.renderPrivacy = (req, res) => {
     res.render("index/privacy", {title: "Privacy Policy / t'day", style: "index/privacy"})
 }
 
+// Renders the cookies page
 module.exports.renderCookies = (req, res) => {
     res.render("index/cookies", {title: "Cookie Policy / t'day", style: "index/cookie"})
 }
 
+// Renders the contact page
 module.exports.renderContact = (req, res) => {
     res.render("index/contact", {title: "Contact Us / t'day", style: "index/contact"})
 }
 
+// Posts contact form data and sends email notifications
 module.exports.postContact = async (req, res) => {
     try{
         const {email, subject, message} =req.body;
+        // Send the message to support email
         const msg = {
             to: "support@tday.co",
             from: "support@tday.co",
@@ -48,6 +55,7 @@ module.exports.postContact = async (req, res) => {
             text: message,
         }
         await sgMail.send(msg)
+        // Send a confirmation email to the user
         const msgToUser = {
             to: email,
             from: "noreply@tday.co",

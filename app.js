@@ -27,10 +27,9 @@ const journalRoutes = require("./routes/journals");
 const donateRoutes = require("./routes/donate");
 const chartRoutes = require("./routes/charts");
 
+//MongoDB configuration
 const dbUrl = process.env.DB_URL;
-
 mongoose.connect(dbUrl)
-
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", () => {
@@ -38,35 +37,25 @@ db.once("open", () => {
 });
 
 
-mongoose.plugin(castAggregation);
+mongoose.plugin(castAggregation); //Mongoose plugin adding additional aggregation capabilities
 
 const app = express();
 
-// app.enable("trust proxy");
-// if(process.env.NODE_ENV == "production") {
-//    app.use((req, res, next) => {
-//     if (req.header('x-forwarded-proto') !== 'https')
-//       res.redirect(`https://${req.header('host')}${req.url}`)
-//     else
-//       next()
-//   })
-// }
-
-
-
+//EJS template engine configuration for rendering views 
 app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views"));
+app.set("views", path.join(__dirname, "views")); //Specify views directory
 
-app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico'))); 
 
-app.use(express.urlencoded({extended: true})); 
-app.use(methodOverride("_method"));
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.urlencoded({extended: true})); //Parse incoming requests with url-encoded payloads
+app.use(methodOverride("_method")); //allows the use of HTTP verbs such as PUT or DELTE in places where the client doesn't support it
+app.use(express.static(path.join(__dirname, 'public'))) //Serves static files
 app.use(mongoSanitize({
     replaceWith: '_'
-}));
+})); //Sanitizes user-supplied data to prevent MongoDB query injection attacks
 
+//CORS-related headers to allow cross-origin requests
 app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Credentials', true);
     res.header('Access-Control-Allow-Origin', req.headers.origin);
@@ -79,7 +68,7 @@ app.use(function(req, res, next) {
      }
 });
 
-
+//Session configuration using connect-mongo library
 const secret = process.env.SECRET  || "81aa3b3f55029ad11b7f040b2064f31b7420633b"
 
 const store = MongoStore.create({
@@ -96,7 +85,7 @@ store.on("error", function (e) {
 
 const sessionConfig = {
     store,
-    name: "cookie monster",
+    name: "cookie-monster",
     secret,
     resave: false,
     saveUninitialized: true,
@@ -109,12 +98,9 @@ const sessionConfig = {
     }
 }
 
-// if (app.get("env") === "production") {
-//     console.log("production environment")
-//     app.set("trust proxy", 1); 
-// }
-
+//Configures cookies middleware
 app.use((req, res, next) => {
+    //Parsing cookies
     const { headers: { cookie } } = req;
     if (cookie) {
         const values = cookie.split(';').reduce((res, item) => {
@@ -128,9 +114,10 @@ app.use((req, res, next) => {
 });
 
 
-app.use(session(sessionConfig))
-app.use(flash());
+app.use(session(sessionConfig)) //Configures session management middleware
+app.use(flash()); //Configures flash middleware 
 
+//Passport configuration
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate(), {passReqToCallback: true}));
@@ -144,6 +131,8 @@ passport.deserializeUser(function(id, done) {
         done(err, user);
     });
 });
+
+//Helmet configuration
 app.use(helmet());
 
 const scriptSrcUrls = [
@@ -203,6 +192,7 @@ app.use(
     })
 );
 
+//Set local variables, custom middleware
 app.use((req, res, next) => {
     if (!['/login', '/register', '/'].includes(req.originalUrl)) {
         req.session.returnTo = req.originalUrl;
@@ -215,6 +205,7 @@ app.use((req, res, next) => {
     next();
 })
 
+//Routes
 app.use("/", indexRoutes);
 app.use("/", userRoutes);
 app.use("/write", journalRoutes);
@@ -226,12 +217,17 @@ app.use("/charts", chartRoutes);
 
 app.get('/favicon.ico', (req, res) => res.status(204).end());
 
+ //Handling 404 errors
 app.all("*", (req, res, next) => {
     req.session.returnTo = req.session.previousReturnTo;
     next(new ExpressError("Page Not Found", 404))
 })
 
+//Handling application errors
 app.use((err, req, res, next) => {
+    if (res.headersSent) {
+        return next(err);
+    }
     const {statusCode = 500} = err;
     if(!err.message) err.message = "Oh no, something went wrong!"
     res.status(statusCode).render("index/error", {err, title: "Error / t'day", style: "error"});
