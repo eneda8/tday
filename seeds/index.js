@@ -5,9 +5,20 @@ const Comment = require("../models/comment");
 const faker = require('faker');
 const countries = require("./countries");
 require("dotenv").config();
-const {AvatarGenerator} = require("random-avatar-generator");
-const generator = new AvatarGenerator();
+const { createAvatar } = require('@dicebear/core');
+const { avataaars, bottts, personas, funEmoji } = require('@dicebear/collection');
 const dbUrl = process.env.DB_URL;
+
+// Helper function to generate random DiceBear avatar
+function generateAvatar(seed) {
+    const styles = [avataaars, bottts, personas, funEmoji];
+    const randomStyle = styles[Math.floor(Math.random() * styles.length)];
+    const avatar = createAvatar(randomStyle, {
+        seed: seed || Math.random().toString(36),
+        size: 200
+    });
+    return avatar.toDataUri();
+}
 
 mongoose.connect(dbUrl);
 
@@ -50,7 +61,7 @@ const seedDB = async () => {
     //     // user.country.flag = "/images/flags/US.png";
     //     // // -------------
     //     user.avatar = {};
-    //     user.avatar.path = avatar;
+    //     user.avatar.path = generateAvatar(username);
     //     user.bio = "This is a fake account used to generate data for demonstration purposes."
     //     user.coverColor = faker.internet.color();
     //     user.postedToday = false;
@@ -146,9 +157,11 @@ const seedDB = async () => {
     // const users = await User.find({});
     // for(let user of users){
     //     // UPDATE AVATARS
-    //     await user.updateOne({$set: {"avatar.path": generator.generateRandomAvatar()}});
+    //     const newAvatar = generateAvatar(user.username);
+    //     await user.updateOne({$set: {"avatar.path": newAvatar}});
     //     console.log("user updated:", user.avatar.path)
     //     await user.save();
+    // }
         // if(user.birthyear >= 1901 && user.birthyear <=1927){
         //     user.ageGroup = "Greatest Generation"
         // }else if(user.birthyear >=1928 && user.birthyear <= 1945){

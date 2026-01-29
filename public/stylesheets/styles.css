@@ -9,6 +9,14 @@ html, body {
     font-style: inherit;
     display: flex;
     flex-direction: column;
+    background-color: #F5F0E6;
+}
+
+/* Replace blue with elegant dark green throughout */
+:root {
+    --primary-green: #2D5F3F;
+    --primary-green-hover: #3D7F5F;
+    --primary-green-light: #4A9865;
 }
 
 body {
@@ -93,6 +101,188 @@ i {
 
 .modal-content{
     border: 0px
+}
+
+/* Cohesive warm beige/cream color scheme */
+.card.bg-light {
+    background-color: #FFF8F0 !important;
+    box-shadow: 0 2px 8px rgba(62, 53, 41, 0.12) !important;
+}
+
+.card {
+    background-color: #FFF8F0 !important;
+    box-shadow: 0 2px 8px rgba(62, 53, 41, 0.12) !important;
+}
+
+.jumbotron {
+    background-color: #FFF8F0 !important;
+    box-shadow: 0 2px 12px rgba(62, 53, 41, 0.15) !important;
+}
+
+iframe {
+    background: #FFF8F0 !important;
+    box-shadow: 0 2px 8px rgba(62, 53, 41, 0.12) !important;
+}
+
+/* Sidebar and menu backgrounds - soft taupe */
+.bg-light {
+    background-color: #E8DED0 !important;
+    box-shadow: 0 2px 6px rgba(62, 53, 41, 0.1) !important;
+}
+
+/* Update gray elements to warm tones */
+.text-muted {
+    color: #8B7E6F !important;
+}
+
+/* Warm borders */
+.border, .border-top, .border-bottom, .border-left, .border-right {
+    border-color: #D4C4B0 !important;
+}
+
+/* Dark elements use warm brown instead of harsh gray/black */
+.bg-dark, .btn-dark {
+    background-color: #3E3529 !important;
+    border-color: #3E3529 !important;
+}
+
+.btn-outline-dark {
+    color: #3E3529 !important;
+    border-color: #3E3529 !important;
+}
+
+.btn-outline-dark:hover {
+    background-color: #3E3529 !important;
+    color: #FFF8F0 !important;
+}
+
+/* Override Bootstrap primary colors with green */
+.btn-primary {
+    background-color: var(--primary-green) !important;
+    border-color: var(--primary-green) !important;
+    color: #FFF8F0 !important;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+    background-color: var(--primary-green-hover) !important;
+    border-color: var(--primary-green-hover) !important;
+}
+
+.text-primary {
+    color: var(--primary-green) !important;
+}
+
+.bg-primary {
+    background-color: var(--primary-green) !important;
+}
+
+a.text-primary:hover,
+a.text-primary:focus {
+    color: var(--primary-green-light) !important;
+}
+
+/* Links */
+a {
+    color: var(--primary-green);
+}
+
+a:hover {
+    color: var(--primary-green-hover);
+}
+
+/* Fix icon alignment in sidebar */
+.nav-link i.fa-fw {
+    width: 1.25em;
+    text-align: center;
+    vertical-align: middle;
+    transform: translateY(0) !important;
+}
+
+/* Consistent spacing for nav items */
+.nav-item .nav-link {
+    display: flex;
+    align-items: center;
+    padding-top: 0.25rem !important;
+    padding-bottom: 0.25rem !important;
+}
+
+/* Add subtle rounded corners for visual polish */
+.card, .bg-light {
+    border-radius: 8px !important;
+}
+
+/* Smoother transitions */
+.btn, .nav-link, a {
+    transition: all 0.2s ease-in-out;
+}
+
+/* Better visual hierarchy - headers */
+h1, h2, h3, h4, h5, h6 {
+    color: #3E3529;
+}
+
+/* Beautiful dropdown menu styling */
+.dropdown-menu {
+    background-color: #FFFFFF !important;
+    border: 1px solid rgba(212, 196, 176, 0.4) !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 12px rgba(62, 53, 41, 0.15) !important;
+    padding: 0.5rem 0 !important;
+}
+
+.dropdown-item {
+    color: #2D5F3F !important;
+    padding: 0.5rem 1rem !important;
+    transition: all 0.2s ease !important;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+    background-color: rgba(45, 95, 63, 0.1) !important;
+    color: #2D5F3F !important;
+}
+
+.dropdown-item.disabled {
+    color: #8B7E6F !important;
+    background-color: rgba(232, 222, 208, 0.3) !important;
+}
+
+.dropdown-item i {
+    color: #FFC107 !important;
+    width: 1.25em;
+    text-align: center;
+    margin-right: 0.5rem;
+}
+
+.dropdown-divider {
+    border-top-color: rgba(212, 196, 176, 0.4) !important;
+}
+
+/* Override any remaining Bootstrap blue */
+.text-info, .badge-info {
+    color: #2D5F3F !important;
+    background-color: rgba(45, 95, 63, 0.1) !important;
+}
+
+.bg-info {
+    background-color: rgba(45, 95, 63, 0.1) !important;
+}
+
+.alert-info {
+    background-color: rgba(45, 95, 63, 0.1) !important;
+    border-color: #2D5F3F !important;
+    color: #2D5F3F !important;
+}
+
+/* If you want softer blue instead of green for balance */
+.badge-primary {
+    background-color: #5A8F7B !important; /* Softer teal-green */
+}
+
+.text-secondary {
+    color: #6B8E7E !important; /* Soft sage green */
 }
 /* breakpoints */
 @media screen and (min-width: 576px ) {

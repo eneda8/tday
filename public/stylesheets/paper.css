@@ -1,12 +1,12 @@
 .paper{
     top: 0;
     position: relative;
-    background: -webkit-gradient(linear, 0 0, 0 100%, from(#d9eaf3), color-stop(4%, #fff)) 0 4px;
-    background: -webkit-linear-gradient(top, #d9eaf3 0%, #fff 8%) 0 4px;
-    background: -moz-linear-gradient(top, #d9eaf3 0%, #fff 8%) 0 4px;
-    background: -ms-linear-gradient(top, #d9eaf3 0%, #fff 8%) 0 4px;
-    background: -o-linear-gradient(top, #d9eaf3 0%, #fff 8%) 0 4px;
-    background: linear-gradient(top, #d9eaf3 0%, #fff 8%) 0 4px;
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(#E8DED0), color-stop(4%, #FFF8F0)) 0 4px;
+    background: -webkit-linear-gradient(top, #E8DED0 0%, #FFF8F0 8%) 0 4px;
+    background: -moz-linear-gradient(top, #E8DED0 0%, #FFF8F0 8%) 0 4px;
+    background: -ms-linear-gradient(top, #E8DED0 0%, #FFF8F0 8%) 0 4px;
+    background: -o-linear-gradient(top, #E8DED0 0%, #FFF8F0 8%) 0 4px;
+    background: linear-gradient(top, #E8DED0 0%, #FFF8F0 8%) 0 4px;
     -webkit-background-size: 100% 20px;
     -moz-background-size: 100% 20px;
     -ms-background-size: 100% 20px;
@@ -30,7 +30,7 @@
     left: 50px;
     bottom: 0;
     border: 1px solid;
-    border-color: transparent #efe4e4;
+    border-color: transparent #c9b8a0;
     height: 100%;
     }
 }

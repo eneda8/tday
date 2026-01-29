@@ -66,7 +66,7 @@ module.exports.deleteJournal = async(req, res, next) => {
     const journal = await Journal.findById(journalId);
     await user.journals.pull(journalId)
     await user.save();
-    await journal.remove();
+    await journal.deleteOne();
     req.flash("success", "Journal deleted");
     res.redirect("/profile");
 }

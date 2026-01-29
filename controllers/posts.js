@@ -158,7 +158,7 @@ module.exports.deletePost = async(req, res) => {
         user.posts.pull(id)
     }
     if(post.image) await cloudinary.uploader.destroy(post.image.filename);
-    await post.remove();
+    await post.deleteOne();
     // update user average
     let userAverage;
     await Post.aggregate([

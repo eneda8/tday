@@ -9,11 +9,106 @@ section > p {
 .star{
   font-size: 1.25em;
 }
+
 main {
   flex-direction: column;
   justify-content: start;
   padding-right: 0px;
   padding-bottom: 0px;
+}
+
+/* Beautiful hero section - bright white paper on beige */
+.jumbotron {
+  border-radius: 16px !important;
+  padding: 4rem 2rem !important;
+  text-align: center;
+  background: #FFFFFF !important;
+  border: 1px solid rgba(212, 196, 176, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle lined paper effect for hero */
+.jumbotron::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    transparent,
+    transparent 19px,
+    rgba(232, 222, 208, 0.3) 19px,
+    rgba(232, 222, 208, 0.3) 20px
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.jumbotron > * {
+  position: relative;
+  z-index: 1;
+}
+
+.jumbotron h1 {
+  font-weight: 300;
+  letter-spacing: -0.5px;
+  margin-bottom: 1.5rem !important;
+}
+
+.jumbotron h1 strong {
+  font-weight: 600;
+  color: #FFC107;
+}
+
+.jumbotron p#description {
+  font-size: 1.15rem;
+  line-height: 1.8;
+  color: #5C5048;
+  max-width: 700px;
+  margin: 0 auto 2rem auto !important;
+}
+
+.jumbotron hr {
+  border-top: 2px solid rgba(212, 196, 176, 0.4);
+  width: 60px;
+  margin: 1.5rem auto !important;
+}
+
+/* Better button styling */
+#landingButtons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+#landingButtons .btn {
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 8px;
+  text-transform: none;
+  letter-spacing: 0.3px;
+  box-shadow: 0 2px 8px rgba(62, 53, 41, 0.15);
+  transition: all 0.3s ease;
+}
+
+#landingButtons .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(62, 53, 41, 0.25);
+}
+
+#landingButtons .btn-warning {
+  background-color: #FFC107 !important;
+  border-color: #FFC107 !important;
+  color: #3E3529 !important;
+}
+
+#landingButtons .btn-warning:hover {
+  background-color: #FFB300 !important;
+  border-color: #FFB300 !important;
 }
 
 .content{
@@ -40,7 +135,7 @@ main {
 .blinking-cursor {
   font-weight: 100;
   font-size: 75px;
-  color: #2E3D48;
+  color: #2D5F3F;
   -webkit-animation: 1s blink step-end infinite;
   -moz-animation: 1s blink step-end infinite;
   -ms-animation: 1s blink step-end infinite;
@@ -53,7 +148,7 @@ main {
     color: transparent;
   }
   50% {
-    color: black;
+    color: #2D5F3F;
   }
 }
 
@@ -62,7 +157,7 @@ main {
     color: transparent;
   }
   50% {
-    color: black;
+    color: #2D5F3F;
   }
 }
 
@@ -71,7 +166,7 @@ main {
     color: transparent;
   }
   50% {
-    color: black;
+    color: #2D5F3F;
   }
 }
 
@@ -80,7 +175,7 @@ main {
     color: transparent;
   }
   50% {
-    color: black;
+    color: #2D5F3F;
   }
 }
 
@@ -89,7 +184,7 @@ main {
     color: transparent;
   }
   50% {
-    color: black;
+    color: #2D5F3F;
   }
 }
 
@@ -120,7 +215,7 @@ opacity: 0;
 
 .wrapper label {
 float: right;
-color: #C8C8C8;
+color: #D4C4B0;
 margin: 0px;
 }
 
@@ -129,7 +224,7 @@ margin: 0px;
 content: "★";
 display: inline-block;
 font-size: 3.0em;
-color: #ccc;
+color: #D4C4B0;
 -webkit-user-select: none;
 -moz-user-select: none;
 user-select: none;
@@ -150,4 +245,129 @@ color: #FFC107;
 
 .content {
   text-align: center;
+}
+
+/* Beautiful charts section */
+.container .row {
+  gap: 1rem;
+}
+
+.container .row .col-sm {
+  display: flex;
+  flex-direction: column;
+}
+
+.container .row iframe {
+  border-radius: 12px !important;
+  border: 1px solid rgba(212, 196, 176, 0.4) !important;
+  background: #FFFFFF !important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.container .row iframe:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(62, 53, 41, 0.2) !important;
+}
+
+/* Wrapper for charts with white background */
+.container .row .col-sm {
+  background: #FFFFFF;
+  border-radius: 12px;
+  padding: 1rem;
+  border: 1px solid rgba(212, 196, 176, 0.4);
+  box-shadow: 0 2px 8px rgba(62, 53, 41, 0.1);
+}
+
+.container .row .col-sm iframe {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Better latest ratings section - white paper like home page */
+section.card {
+  border-radius: 12px !important;
+  padding: 1.5rem !important;
+  margin-top: 2rem !important;
+  background-color: #FFFFFF !important;
+  border: 1px solid rgba(212, 196, 176, 0.4) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Add subtle paper lines to ratings section */
+section.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    transparent,
+    transparent 24px,
+    rgba(232, 222, 208, 0.25) 24px,
+    rgba(232, 222, 208, 0.25) 25px
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+section.card > * {
+  position: relative;
+  z-index: 1;
+}
+
+section.card h5 {
+  font-weight: 600;
+  color: #3E3529;
+  margin-bottom: 1rem !important;
+}
+
+section.card hr {
+  border-top: 1px solid rgba(212, 196, 176, 0.4);
+  margin: 1rem 0 !important;
+}
+
+section.card p {
+  padding: 0.75rem;
+  margin-bottom: 0.5rem !important;
+  border-radius: 8px;
+  background-color: rgba(255, 248, 240, 0.6);
+  transition: all 0.2s ease;
+  line-height: 1.6;
+  border-left: 3px solid transparent;
+}
+
+section.card p:hover {
+  background-color: rgba(255, 248, 240, 1);
+  border-left-color: #2D5F3F;
+  transform: translateX(4px);
+}
+
+section.card p .font-weight-bold {
+  color: #2D5F3F;
+}
+
+section.card p .font-italic {
+  color: #5C5048;
+  font-size: 0.95rem;
+}
+
+/* Footer improvements */
+footer {
+  border-top: 1px solid rgba(212, 196, 176, 0.4);
+  padding-top: 2rem !important;
+  margin-top: 3rem !important;
+  color: #8B7E6F;
+}
+
+footer a {
+  color: #2D5F3F;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+footer a:hover {
+  color: #4A9865;
+  text-decoration: none;
 }

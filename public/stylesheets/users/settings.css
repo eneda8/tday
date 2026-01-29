@@ -1,0 +1,159 @@
+/* Beautiful Settings Page Styling */
+
+/* Main card background - white paper */
+.settings-container .card {
+    background-color: #FFFFFF !important;
+    box-shadow: 0 4px 16px rgba(62, 53, 41, 0.15) !important;
+}
+
+/* List group sidebar */
+.list-group-item {
+    border-color: rgba(212, 196, 176, 0.3) !important;
+    background-color: transparent !important;
+    transition: all 0.2s ease;
+}
+
+.list-group-item:hover {
+    background-color: rgba(245, 240, 230, 0.5) !important;
+}
+
+.list-group-item.active {
+    background-color: #2D5F3F !important;
+    border-color: #2D5F3F !important;
+    color: #FFF8F0 !important;
+}
+
+.list-group-item.active h5,
+.list-group-item.active small,
+.list-group-item.active i {
+    color: #FFF8F0 !important;
+}
+
+.list-group-item h5 {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+    color: #3E3529;
+}
+
+.list-group-item small {
+    color: #8B7E6F;
+    line-height: 1.4;
+}
+
+.list-group-item i {
+    color: #FFC107;
+}
+
+.list-group-item.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Form inputs */
+.input-group-text {
+    background-color: rgba(232, 222, 208, 0.3) !important;
+    border-color: rgba(212, 196, 176, 0.4) !important;
+}
+
+.form-control {
+    background-color: #FFF8F0 !important;
+    border-color: rgba(212, 196, 176, 0.4) !important;
+    color: #3E3529 !important;
+}
+
+.form-control:focus {
+    border-color: #2D5F3F !important;
+    box-shadow: 0 0 0 0.2rem rgba(45, 95, 63, 0.15) !important;
+}
+
+.custom-select {
+    background-color: #FFF8F0 !important;
+    border-color: rgba(212, 196, 176, 0.4) !important;
+    color: #3E3529 !important;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: #2D5F3F !important;
+    border-color: #2D5F3F !important;
+}
+
+.btn-primary:hover {
+    background-color: #3D7F5F !important;
+    border-color: #3D7F5F !important;
+}
+
+.btn-warning {
+    background-color: #FFC107 !important;
+    border-color: #FFC107 !important;
+    color: #3E3529 !important;
+}
+
+.btn-warning:hover {
+    background-color: #FFB300 !important;
+    border-color: #FFB300 !important;
+}
+
+.btn-danger {
+    background-color: #C4574E !important;
+    border-color: #C4574E !important;
+}
+
+.btn-danger:hover {
+    background-color: #B04741 !important;
+    border-color: #B04741 !important;
+}
+
+/* Headers */
+.tab-content h5 {
+    color: #2D5F3F;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid rgba(212, 196, 176, 0.3);
+}
+
+/* Password requirements text */
+small {
+    color: #8B7E6F !important;
+}
+
+/* Alert messages */
+.alert-danger {
+    background-color: rgba(196, 87, 78, 0.1) !important;
+    border-color: #C4574E !important;
+    color: #C4574E !important;
+}
+
+.alert-success {
+    background-color: rgba(45, 95, 63, 0.1) !important;
+    border-color: #2D5F3F !important;
+    color: #2D5F3F !important;
+}
+
+/* Avatar */
+.img-thumbnail {
+    border-color: rgba(212, 196, 176, 0.4) !important;
+    background-color: #FFFFFF !important;
+}
+
+/* Mobile accordion */
+@media (max-width: 768px) {
+    .accordion .card {
+        border-color: rgba(212, 196, 176, 0.3) !important;
+    }
+
+    .accordion .card-header {
+        background-color: rgba(232, 222, 208, 0.3) !important;
+    }
+
+    .accordion .btn-link {
+        color: #2D5F3F !important;
+    }
+
+    .accordion .btn-link:hover {
+        color: #3D7F5F !important;
+        text-decoration: none;
+    }
+}

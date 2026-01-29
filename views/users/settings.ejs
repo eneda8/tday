@@ -1,5 +1,5 @@
 <% layout("layouts/boilerplate")%>
-<div class="mainContainer d-flex justify-content-center container-fluid w-100 px-lg-5 mx-lg-5">
+<div class="settings-container mainContainer d-flex justify-content-center container-fluid w-100 px-lg-5 mx-lg-5">
     <div class="row d-flex justify-content-center px-0">
         <div class="col card border-0 shadow rounded pt-3 bg-light mx-lg-5">
             <div class="row">
@@ -44,6 +44,12 @@
                             <div class="tab-pane fade show active" id="account-info" role="tabpanel" aria-labelledby="list-account-list">
                                 <div class="px-md-4">
                                     <h5 class="mt-1">Change Account Details</h5>
+                                    <% if(user.username === 'demo') { %>
+                                        <div class="alert alert-info border-0" style="background-color: rgba(45, 95, 63, 0.1) !important; border-left: 3px solid #2D5F3F !important; color: #2D5F3F !important;">
+                                            <i class="fas fa-info-circle mr-2"></i>
+                                            <strong>Demo Account:</strong> Account changes are disabled for the demo account to ensure everyone can try out t'day.
+                                        </div>
+                                    <% } else { %>
                                     <form action="/settings?_method=PUT" method="POST" class="validated-form" novalidate >
                                         <div class="form-row mt-3">
                                             <div class="col-md-6 input-group">
@@ -103,11 +109,18 @@
                                         </div>
                                         <button class="btn btn-warning mt-3" type="submit">Update</button>
                                     </form>
+                                    <% } %>
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="change-password" role="tabpanel" aria-labelledby="list-password-list">
                                 <div class="px-4">
                                     <h5 class="mt-1">Change Password</h5>
+                                    <% if(user.username === 'demo') { %>
+                                        <div class="alert alert-info border-0" style="background-color: rgba(45, 95, 63, 0.1) !important; border-left: 3px solid #2D5F3F !important; color: #2D5F3F !important;">
+                                            <i class="fas fa-info-circle mr-2"></i>
+                                            <strong>Demo Account:</strong> Password changes are disabled for the demo account to ensure everyone can try out t'day.
+                                        </div>
+                                    <% } else { %>
                                     <small class="text-muted">Password must be 8-20 characters and contain at least one number, one uppercase letter, and one special character.</small>
                                     <form action="/settings/password?_method=PUT" method="POST" class="validated-form" novalidate >
                                         <div class="form-row mt-3">
@@ -133,9 +146,10 @@
                                                 <div class="invalid-feedback">Please enter a valid password.</div>
                                             </div>
                                         </div> 
-                                        
+
                                         <button class="btn btn-warning mt-3" type="submit">Update</button>
                                     </form>
+                                    <% } %>
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="download-data" role="tabpanel" aria-labelledby="list-download-list"></div>
@@ -156,6 +170,12 @@
                             <div class="tab-pane fade" id="delete-account" role="tabpanel" aria-labelledby="list-delete-list">
                                 <div class="px-4">
                                     <h5 class="alert-heading mt-1 text-danger">Delete Account</h5>
+                                    <% if(user.username === 'demo') { %>
+                                        <div class="alert alert-info border-0" style="background-color: rgba(45, 95, 63, 0.1) !important; border-left: 3px solid #2D5F3F !important; color: #2D5F3F !important;">
+                                            <i class="fas fa-info-circle mr-2"></i>
+                                            <strong>Demo Account:</strong> This account cannot be deleted to ensure everyone can try out t'day.
+                                        </div>
+                                    <% } else { %>
                                     <p>This will permanently, irreversibly remove content from your account and delete it from our database. This includes all of your account information, ratings, comments, bookmarks, journals, and data.</p>
                                     <form class="d-inline" action="/u/<%=user.username%>?_method=DELETE" method="POST" class="validated-form" novalidate>
                                         <div class="form-row mt-3">
@@ -184,6 +204,7 @@
                                             </div>
                                         </div>
                                     </form>
+                                    <% } %>
                                 </div>
                             </div>
                         </div>
@@ -205,6 +226,12 @@
                             <div id="account-collapse" class="collapse" data-parent="#settingsAccordion">
                                 <div class="card-body">
                                     <h5 class="mt-1">Change Account Details</h5>
+                                    <% if(user.username === 'demo') { %>
+                                        <div class="alert alert-info border-0" style="background-color: rgba(45, 95, 63, 0.1) !important; border-left: 3px solid #2D5F3F !important; color: #2D5F3F !important;">
+                                            <i class="fas fa-info-circle mr-2"></i>
+                                            <strong>Demo Account:</strong> Account changes are disabled.
+                                        </div>
+                                    <% } else { %>
                                     <form action="/settings?_method=PUT" method="POST" class="validated-form" novalidate >
                                         <div class="form-row mt-3">
                                             <div class="col-md-6 input-group">
@@ -264,6 +291,7 @@
                                         </div>
                                         <button class="btn btn-warning mt-3" type="submit">Update</button>
                                     </form>
+                                    <% } %>
                                 </div>
                             </div>
                         </div>
@@ -278,6 +306,12 @@
                             <div id="password-collapse" class="collapse" data-parent="#settingsAccordion">
                                 <div class="card-body">
                                     <h5 class="mt-1">Change Password</h5>
+                                    <% if(user.username === 'demo') { %>
+                                        <div class="alert alert-info border-0" style="background-color: rgba(45, 95, 63, 0.1) !important; border-left: 3px solid #2D5F3F !important; color: #2D5F3F !important;">
+                                            <i class="fas fa-info-circle mr-2"></i>
+                                            <strong>Demo Account:</strong> Password changes are disabled for the demo account.
+                                        </div>
+                                    <% } else { %>
                                     <small class="text-muted">Password must be 8-20 characters and contain at least one number, one uppercase letter, and one special character.</small>
                                     <form action="/settings/password?_method=PUT" method="POST" class="validated-form" novalidate >
                                         <div class="form-row mt-3">
@@ -302,10 +336,10 @@
                                                 <div class="valid-feedback"></div>
                                                 <div class="invalid-feedback">Please enter a valid password.</div>
                                             </div>
-                                        </div> 
+                                        </div>
                                         <button class="btn btn-warning mt-3" type="submit">Update</button>
                                     </form>
-                                   
+                                    <% } %>
                                 </div>
                             </div>
                         </div>
@@ -351,6 +385,12 @@
                             <div id="delete-collapse" class="collapse" data-parent="#settingsAccordion">
                                 <div class="card-body">
                                     <h5 class="alert-heading mt-1 text-danger">Delete Account</h5>
+                                    <% if(user.username === 'demo') { %>
+                                        <div class="alert alert-info border-0" style="background-color: rgba(45, 95, 63, 0.1) !important; border-left: 3px solid #2D5F3F !important; color: #2D5F3F !important;">
+                                            <i class="fas fa-info-circle mr-2"></i>
+                                            <strong>Demo Account:</strong> This account cannot be deleted.
+                                        </div>
+                                    <% } else { %>
                                     <p>This will permanently, irreversibly remove content from your account and delete it from our database. This includes all of your account information, ratings, comments, bookmarks, journals, and data.</p>
                                     <form class="d-inline" action="/u/<%=user.username%>?_method=DELETE" method="POST" class="validated-form" novalidate>
                                         <div class="form-row mt-3">
@@ -363,6 +403,7 @@
                                         </div>
                                         <button class="btn btn-danger mt-3" type="button" data-toggle="modal" data-target="#deleteAccountModal">Delete Account</button>
                                     </form>
+                                    <% } %>
                                 </div>
                             </div>
                         </div> 

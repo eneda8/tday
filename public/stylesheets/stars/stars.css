@@ -34,9 +34,9 @@
   content: "★";
 }
 
-.rating > label { 
-  color: #ddd; 
-  float: right; 
+.rating > label {
+  color: #D4C4B0;
+  float: right;
 }
 
 /***** CSS Magic to Highlight Stars on Hover *****/

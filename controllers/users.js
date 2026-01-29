@@ -308,7 +308,7 @@ module.exports.showUserProfile = async(req, res) => {
 module.exports.updateProfile = async(req, res) => {
     const {bio} = req.body;
     const user = await User.findById(req.user._id).populate("posts");
-    await user.update({...req.body});
+    await user.updateOne({...req.body});
     const oldAvatar = user.avatar;
     const oldCoverPhoto = user.coverPhoto || ""
     if(req.files){
@@ -341,7 +341,7 @@ module.exports.showUserSettings = async(req, res) => {
         req.flash("error", "Oops, something went wrong!")
         return res.redirect("/home");
     }
-    res.render("users/settings", {user, countries, title: "Settings / t'day", style: "styles"});
+    res.render("users/settings", {user, countries, title: "Settings / t'day", style: "users/settings"});
 };
 
 module.exports.updateUserInfo = async(req, res) => {
@@ -432,9 +432,9 @@ module.exports.deleteAccount = async(req, res) => {
         user.comments = [];
         user.journals = [];
         user.bookmarks = [];
-        await Post.remove({"author": req.user._id});
-        await Comment.remove({"author": req.user._id});
-        await Journal.remove({"author": req.user._id});
+        await Post.deleteMany({"author": req.user._id});
+        await Comment.deleteMany({"author": req.user._id});
+        await Journal.deleteMany({"author": req.user._id});
         await new Promise((resolve, reject) => {
             req.logout((err) => err ? reject(err) : resolve());
         });
@@ -446,7 +446,7 @@ module.exports.deleteAccount = async(req, res) => {
             html: `Hi, <br> <br> We're sending you this email to confirm that your account with t'day has been deleted. We hate to see you go and hope you'll be back with us soon! <br> <br> <strong>-the t'day team</strong>`,
         }
         await sgMail.send(msg);
-        await User.remove({"_id": user._id});
+        await User.deleteOne({"_id": user._id});
         console.log("User account deleted");
         req.flash("success", "Account successfully deleted.");
         res.redirect("/");
