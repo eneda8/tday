@@ -107,7 +107,7 @@ const seedDB = async () => {
     // }
 
     // /make fake posts
-    for(let i = 0; i<1500; i++){
+    for(let i = 0; i<500; i++){
         try{
         const rating = Math.floor(Math.random() * 5) + 1;
         // Use realistic journal entries instead of lorem ipsum
