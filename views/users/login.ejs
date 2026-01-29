@@ -34,6 +34,21 @@
                                 href="/register">Register</a>
                         </div>
                     </form>
+
+                    <hr class="my-3">
+                    <div class="text-center">
+                        <p class="text-muted small mb-2">Just browsing?</p>
+                        <button id="demo-btn" class="btn btn-outline-secondary btn-block" onclick="demoLogin()">
+                            <i class="fas fa-play-circle mr-1"></i> Try Demo Account
+                        </button>
+                    </div>
+                    <script>
+                        function demoLogin() {
+                            document.getElementById('username').value = 'demo';
+                            document.getElementById('password').value = 'Demo123!';
+                            document.querySelector('form.validated-form').submit();
+                        }
+                    </script>
                 </div>
             </div>
         </div>

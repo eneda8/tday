@@ -21,11 +21,21 @@
       </div>
       <div class="navbar-nav ml-auto mr-2 pt-1">
       <% if(!currentUser && title == "t'day") {  %> 
-        <form action="/login" method="POST" class="form-inline b-0" novalidate>
-            <input type="text" class="form-control border-0 mr-1" placeholder="username" name="username" aria-label="Username" required>
-            <input type="password" class="form-control border-0 mr-1" placeholder="password" name="password" aria-label="Password" required>
+        <form id="navLoginForm" action="/login" method="POST" class="form-inline b-0" novalidate>
+            <input type="text" id="navUsername" class="form-control border-0 mr-1" placeholder="username" name="username" aria-label="Username" required>
+            <input type="password" id="navPassword" class="form-control border-0 mr-1" placeholder="password" name="password" aria-label="Password" required>
             <button class="btn btn-primary" type="submit">login</button>
+            <button type="button" class="btn btn-outline-dark ml-2" onclick="navDemoLogin()" title="Try Demo Account">
+                <i class="fas fa-play-circle"></i> demo
+            </button>
         </form>
+        <script>
+            function navDemoLogin() {
+                document.getElementById('navUsername').value = 'demo';
+                document.getElementById('navPassword').value = 'Demo123!';
+                document.getElementById('navLoginForm').submit();
+            }
+        </script>
         <!-- <button class="btn btn-link p-0"><a class="nav-link text-decoration-none" href="/register">register</a></button> -->
       <% } else if (currentUser){ %> 
         <div class="input-group">
