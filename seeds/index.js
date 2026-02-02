@@ -5,20 +5,9 @@ const Comment = require("../models/comment");
 const faker = require('faker');
 const countries = require("./countries");
 require("dotenv").config();
-const { createAvatar } = require('@dicebear/core');
-const { avataaars, bottts, personas, funEmoji } = require('@dicebear/collection');
+// Note: Avatar generation removed from daily seed - users already have avatars
+// Use update-avatars.js script if you need to regenerate avatars
 const dbUrl = process.env.DB_URL;
-
-// Helper function to generate random DiceBear avatar
-function generateAvatar(seed) {
-    const styles = [avataaars, bottts, personas, funEmoji];
-    const randomStyle = styles[Math.floor(Math.random() * styles.length)];
-    const avatar = createAvatar(randomStyle, {
-        seed: seed || Math.random().toString(36),
-        size: 200
-    });
-    return avatar.toDataUri();
-}
 
 mongoose.connect(dbUrl);
 
