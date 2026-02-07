@@ -142,7 +142,8 @@ const scriptSrcUrls = [
     "https://cdn.jsdelivr.net",
     "https://code.jquery.com",
     "https://app.termly.io",
-    "https://cdn.segment.com"
+    "https://cdn.segment.com",
+    "https://global-mind.org"
 ];
 const styleSrcUrls = [
     "https://kit-free.fontawesome.com",
@@ -150,6 +151,7 @@ const styleSrcUrls = [
     "https://fonts.googleapis.com",
     "https://use.fontawesome.com",
     "https://cdn.jsdelivr.net",
+    "https://global-mind.org"
 ];
 const connectSrcUrls = [
     "https://charts.mongodb.com",
